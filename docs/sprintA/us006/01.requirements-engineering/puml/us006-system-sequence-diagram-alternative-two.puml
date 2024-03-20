@@ -12,16 +12,16 @@ participant ":System" as System
 
 activate Employee
 
-    Employee -> System : asks to register skills that may be appointed to a collaborator
+    Employee -> System : asks to create a new task
     activate System
 
-        System --> Employee : shows list of categories and asks to select one
+        System --> Employee : shows task category list and asks to select one
     deactivate System
 
-    Employee -> System : selects a category
+    Employee -> System : selects a task category
     activate System
 
-        System --> Employee : requests data (skills, such as landscaping, maintenance, gardening, etc.)
+        System --> Employee : requests data (i.e. reference, designation, informal\ndescription, technical description, duration, cost)
     deactivate System
 
     Employee -> System : types requested data

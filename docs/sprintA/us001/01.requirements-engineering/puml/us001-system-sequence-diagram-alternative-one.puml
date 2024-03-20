@@ -15,16 +15,16 @@ activate Employee
     Employee -> System : asks to register skills that may be appointed to a collaborator
     activate System
 
-        System --> Employee : requests data (skills, such as landscaping, maintenance, gardening, etc.)
+        System --> Employee : requests name(s) of skill(s)
     deactivate System
 
-    Employee -> System : types requested data
+    Employee -> System : types requested name(s)
     activate System
 
-        System --> Employee : shows list of categories and asks to select one
+        System --> Employee : shows list of categories and asks to select one or more
     deactivate System
 
-    Employee -> System : selects a category
+    Employee -> System : selects category(ies)
     activate System
 
         System --> Employee : shows all data and requests confirmation
