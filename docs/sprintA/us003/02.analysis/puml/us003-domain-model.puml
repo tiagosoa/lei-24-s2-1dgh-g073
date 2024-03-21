@@ -23,7 +23,7 @@ class HRM {
     email
 }
 
-class Skill {
+class Job {
     reference
     description
     informalDesc
@@ -36,6 +36,15 @@ class Category {
     description
 }
 
+class Collaborator {
+    name
+    birthdate
+    admission date
+    address
+    contact info (mobile and email)
+    ID doc type and number
+}
+
 'class User {
 '    name
 '    email
@@ -43,9 +52,9 @@ class Category {
 '}
 
 'Platform "1" -- "*" HRM : has registered >
-'Platform "1" -- "*" Category : defines >
-HRM "1" - "0...*" Skill: creates >
-'Skill "*" -- "1" HRM: created by >
-'HRM "0..1" -- "1" User: acts as >
-Skill "*" - "1" Category: cataloged as >
+Job "1" -- "*" Category : has >
+HRM "1" - "1..*" Collaborator : wants to register >
+'Task "*" -- "1" Employee: created by >
+Collaborator "1" - "1..*" Job: has>
+'Employee "0..1" -- "1" User: acts as >
 @enduml

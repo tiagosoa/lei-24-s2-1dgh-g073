@@ -1,17 +1,19 @@
-# US002 - Create a Job 
+# US006 - Create a Task 
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an HRM, I want to register a job that a collaborator need to have.
+As an organization employee, I want to create a new task in order to be further published.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each job registered should only have a name.
+>	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+
+>	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
 
 **From the client clarifications:**
 
@@ -59,11 +61,11 @@ As an HRM, I want to register a job that a collaborator need to have.
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us002-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us003-system-sequence-diagram-alternative-one.svg)
 
 #### Alternative Two
 
-![System Sequence Diagram - Alternative Two](svg/us002-system-sequence-diagram-alternative-two.svg)
+![System Sequence Diagram - Alternative Two](svg/us003-system-sequence-diagram-alternative-two.svg)
 
 ### 1.7 Other Relevant Remarks
 
