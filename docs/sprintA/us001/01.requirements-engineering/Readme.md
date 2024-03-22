@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US001 - Create a Skill
 
 
 ## 1. Requirements Engineering
@@ -11,7 +11,7 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 
 **From the specifications document:**
 
->	Each skill is characterized by having a unique reference per organization, a designation, an informal and a technical description, as well as a skill category. 
+>	Each skill is characterized only by its name.
 
 >	As long as it is not attributed to a collaborator, access to the skill is exclusive to the employees of the respective organization. 
 

@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US001 - Create a Skill 
 
 ## 2. Analysis
 
