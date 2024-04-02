@@ -1,4 +1,3 @@
-
 @startuml
 'skinparam monochrome true
 skinparam packageStyle rectangle
