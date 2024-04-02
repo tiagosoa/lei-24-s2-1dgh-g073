@@ -1,0 +1,53 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+'title Domain Model
+
+'class Platform {
+'  -description
+'}
+
+class HRM {
+    name
+    vatNumber
+    phoneNumber
+    email
+}
+
+class Skill {
+    skillID
+    related Department
+    description
+}
+
+class Collaborator {
+    name
+    vatNumber
+    phoneNumber
+    email
+    currentSkills
+}
+
+
+'class User {
+'    name
+'    email
+'    password
+'}
+
+'Platform "1" -- "*" HRM : has registered >
+'Platform "1" -- "*" Category : defines >
+HRM "1" - "0...*" Skill: creates >
+'Skill "*" -- "1" HRM: created by >
+'HRM "0..1" -- "1" User: acts as >
+Skill "*" - "1" Collaborator: is assigned to >
+@enduml

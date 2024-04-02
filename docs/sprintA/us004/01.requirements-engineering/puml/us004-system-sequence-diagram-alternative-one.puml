@@ -1,0 +1,45 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "Organization\nEmployee" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : asks to register skills that may be appointed to a collaborator
+    activate System
+
+        System --> Employee : requests name(s) of skill(s)
+    deactivate System
+
+    Employee -> System : types requested name(s)
+    activate System
+
+    System --> Employee : requests collaborator name that the skill is assigned to
+    deactivate System
+
+    Employee -> System : inserts collaborator name
+    activate System
+
+    System --> Employee : validates collaborator existence
+    deactivate System
+
+        System --> Employee : shows all data and requests confirmation
+    deactivate System
+
+    Employee -> System : confirms data
+    activate System
+
+    System --> Employee : Updates collaborator skill set
+        deactivate System
+
+        System --> Employee : displays operation success
+    deactivate System
+
+@enduml
