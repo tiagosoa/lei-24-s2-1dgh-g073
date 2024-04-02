@@ -1,0 +1,52 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class Skill {
+    - name: String
+}
+
+class SkillManager {
+    + createSkill(name: String): boolean
+}
+
+class HRManager {
+    + manageSkills(): void
+}
+
+SkillManager --> Skill: Manages
+HRManager --> SkillManager: Uses
+
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+CreateSkillUI .> CreateSkillController
+
+CreateSkillController .> Repositories : repositories
+
+Repositories -> "1" TaskCategoryRepository
+
+CreateSkillController ..> TaskCategory
+
+Repositories --> "1" OrganizationRepository
+
+OrganizationRepository --> "*" Organization
+ApplicationSession --> "1" UserSession : userSession
+
+CreateSkillController ..> "1" Organization : organization
+CreateSkillController ..> ApplicationSession
+CreateSkillController ..> UserSession
+Organization "1" --> "*" Skill : attributes
+Skill --> HRM : createdBy
+
+Organization --> "*" HRM : employs
+
+@enduml

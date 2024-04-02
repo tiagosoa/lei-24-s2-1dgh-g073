@@ -15,19 +15,13 @@ activate Employee
     Employee -> System : asks to register a new job
     activate System
 
-        System --> Employee : requests job data (i.e. job type, duration, cost, description)
+        System --> Employee : requests job data (name)
     deactivate System
 
     Employee -> System : types requested job data
     activate System
 
-        System --> Employee : shows jobs category list and asks to select one
-    deactivate System
-
-    Employee -> System : selects one job category
-    activate System
-
-        System --> Employee : shows all data and requests confirmation
+    System --> Employee : shows all data and requests confirmation
     deactivate System
 
     Employee -> System : confirms data

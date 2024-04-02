@@ -21,10 +21,6 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 >
 > **Answer:** It's not required to do so.
 
-> **Question:** Monetary data is expressed in any particular currency?
->
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
-
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The fundamental characteristics must be inputted by the HRM.

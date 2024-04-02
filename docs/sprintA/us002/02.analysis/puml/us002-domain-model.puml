@@ -24,16 +24,7 @@ class HRM {
 }
 
 class Job {
-    reference
-    description
-    informalDesc
-    technicalDesc
-    duration
-    cost
-}
-
-class Category {
-    description
+    name
 }
 
 'class Collaborator {
@@ -44,9 +35,8 @@ class Category {
 
 'Platform "1" -- "*" HRM : has registered >
 'Platform "1" -- "*" Category : defines >
-HRM "1" - "0...*" Job: creates >
+HRM "1" - "1...*" Job: creates >
 'Job "*" -- "1" HRM: created by >
 'HRM "0..1" -- "1" User: acts as >
-Job "*" - "1" Category: cataloged as >
 'Job "*" - "*" Collaborator: may be attributed to >
 @enduml

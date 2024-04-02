@@ -24,12 +24,6 @@ activate Employee
         System --> Employee : shows list of categories and asks to select one or more
     deactivate System
 
-    Employee -> System : selects category(ies)
-    activate System
-
-        System --> Employee : shows all data and requests confirmation
-    deactivate System
-
     Employee -> System : confirms data
     activate System
 

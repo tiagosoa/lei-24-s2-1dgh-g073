@@ -32,7 +32,7 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 
 ### 1.4. Found out Dependencies
 
-* There must be at least one skill category already created.
+* n/a
 
 ### 1.5 Input and Output Data
 
@@ -40,13 +40,9 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 
 * Typed data:
     * name of skill
-	
-* Selected data:
-    * a skill category 
 
 **Output Data:**
 
-* List of existing skill categories
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
