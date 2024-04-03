@@ -1,4 +1,4 @@
-# Supplementary Specification (FURPS+)
+[# Supplementary Specification (FURPS+)
 
 ## Functionality
 
@@ -6,7 +6,17 @@ _Specifies functionalities that:
 &nbsp; &nbsp; (i) are common across several US/UC;  
 &nbsp; &nbsp; (ii) are not related to US/UC, namely: Audit, Reporting and Security._
 
-(fill in here)
+### (i):
+* Authentication and authorization that will ensure that only HRMs and FMs can access their respective functionalities.
+
+* Data base operations that make possible the Creation, Update or Deletion of skills, collaborators, roles, vehicles.
+### (ii):
+
+* Ability to generate team proposals, vehicle maintenance schedules, and collaborator skills.
+
+* Database that saves changes made to skills, job roles, collaborators, and vehicles, to ease the trace of information.
+
+* Security features to ensure the protection of sensitive information like collaborator contact details.
 
 ## Usability
 
