@@ -9,12 +9,12 @@ _Specifies functionalities that:
 ### (i):
 * Authentication and authorization that will ensure that only HRMs and FMs can access their respective functionalities.
 
-* Data base operations that make possible the Creation, Update or Deletion of skill, collaborators, roles, vehicles.
+* Data base operations that make possible the Creation, Update or Deletion of skills, collaborators, roles, vehicles.
 ### (ii):
 
-* Ability to generate reports on team proposals, vehicle maintenance schedules, and collaborator skills.
+* Ability to generate team proposals, vehicle maintenance schedules, and collaborator skills.
 
-* Data base that ensures the save of changes made to skills, job roles, collaborators, and vehicles, to ease the trace of information.
+* Database that saves changes made to skills, job roles, collaborators, and vehicles, to ease the trace of information.
 
 * Security features to ensure the protection of sensitive information like collaborator contact details.
 
