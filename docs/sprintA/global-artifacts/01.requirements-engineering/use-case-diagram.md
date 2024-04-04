@@ -18,7 +18,7 @@ However, be aware, this is a pedagogical simplification. On further projects and
 | US002 | [Create a Job](../../us002/Readme.md)                     |
 | US003 | [Register a Collaborator](../../us003/Readme.md)          |
 | US004 | [Assign a Skill](../../us004/Readme.md)                   |
-| US005 | [Assign a Skill](../../us005/Readme.md)                   |
+| US005 | [Generate a Team](../../us005/Readme.md)                  |
 | US006 | [Register a Vehicle](../../us006/Readme.md)               |
 | US007 | [Register a Vehicle's Check-up](../../us007/Readme.md)    |
 | US008 | [List Vehicles that need Check-up](../../us008/Readme.md) |
