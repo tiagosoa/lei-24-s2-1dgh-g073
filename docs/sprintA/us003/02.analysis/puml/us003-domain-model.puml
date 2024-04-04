@@ -24,16 +24,7 @@ class HRM {
 }
 
 class Job {
-    reference
-    description
-    informalDesc
-    technicalDesc
-    duration
-    cost
-}
-
-class Category {
-    description
+    name
 }
 
 class Collaborator {
@@ -55,6 +46,5 @@ class Collaborator {
 Job "1" -- "*" Category : has >
 HRM "1" - "1..*" Collaborator : wants to register >
 'Task "*" -- "1" Employee: created by >
-Collaborator "1" - "1..*" Job: has>
 'Employee "0..1" -- "1" User: acts as >
 @enduml

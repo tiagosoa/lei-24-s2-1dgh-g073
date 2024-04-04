@@ -24,12 +24,6 @@ class HRM {
 }
 
 class System {
-    reference
-    description
-    informalDesc
-    technicalDesc
-    duration
-    cost
 }
 
 class Team {

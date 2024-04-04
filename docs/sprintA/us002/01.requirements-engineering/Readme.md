@@ -15,42 +15,31 @@ As an HRM, I want to register a job that a collaborator need to have.
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** After register a job, should a message (sucess or failure) or a resume of the register appear?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** The UX/UI is up to dev teams.
 
-> **Question:** Monetary data is expressed in any particular currency?
+> **Question:** Is it relevant to associate a specific area or sector to the job?
 >
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:** It is not necessary, as there are no US that might make use of that.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC1:** There must be at least one name inputted.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* n/a
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
-	
-* Selected data:
-    * a task category 
+    * a name for the job
 
 **Output Data:**
 
-* List of existing task categories
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
@@ -67,4 +56,4 @@ As an HRM, I want to register a job that a collaborator need to have.
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
+* n/a
