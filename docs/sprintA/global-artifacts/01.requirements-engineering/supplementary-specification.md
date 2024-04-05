@@ -27,10 +27,26 @@ documentation; consistency and standards._
 (fill in here )
 
 ## Reliability
+The usability of the system is paramount to ensuring that the HRM and FM can effectively use the software.
+This topic addresses several key aspects of usability, including error prevention, interface aesthetics and design, help and documentation, and consistency and standards.
 
-_Refers to the integrity, compliance and interoperability of the software. The requirements to be considered are: frequency and severity of failure, possibility of recovery, possibility of prediction, accuracy, average time between failures._
+### Error Prevention
+ * Implement form validations across all user inputs to prevent errors before they occur.
+ * Utilize confirmations for irreversible actions (for example, deleting a collaborator or skill) to prevent accidental data loss.
 
-(fill in here )
+\### Interface Aesthetics and Design
+* Modern UI design that focuses on an easy off the application. 
+  * Using whitespace effectively 
+  * Choosing readable fonts and utilizing a color scheme that is appealing and are friendly to users with visual impairments.
+* Design an intuitive navigation menu that allow users to quickly access different parts of the application.
+
+### Help and Documentation
+* Provide help texts and tips for  the more complex fields or functionalities to guide the users.
+* Provide a  help center that details how to perform common tasks within the system or troubleshoot issues.
+
+### Consistency and Standards
+ * UI consistency so that it eases the new users experience on the application
+ * Offer always a good quality standard that meets the users expectations 
 
 ## Performance
 
