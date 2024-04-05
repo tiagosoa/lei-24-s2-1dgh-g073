@@ -39,8 +39,8 @@ This topic addresses several key aspects of usability, including error preventio
 * Provide a  help center that details how to perform common tasks within the system or troubleshoot issues.
 
 ### Consistency and Standards
-* UI consistency so that it eases the new users experience on the application
-* Offer always a good quality standard that meets the users expectations
+* UI consistency so that it eases the new users experience on the application.
+* Offer always a good quality standard that meets the users expectations.
 
 ## Reliability
 (fill this)
