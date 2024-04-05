@@ -40,8 +40,7 @@ class Vehicle {
 }
 
 'Platform "1" -- "*" HRM : has registered >
-Job "1" -- "*" Category : has >
-FM "1" -- "1..*" Checkup : wants to register >
+FM "1" - "1..*" Checkup : wants to register >
 'Task "*" -- "1" Employee: created by >
 Checkup "1" - "1" Vehicle: belongs to >
 'Employee "0..1" -- "1" User: acts as >

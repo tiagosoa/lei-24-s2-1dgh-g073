@@ -1,51 +1,52 @@
 # US004 - Assign a Skill
 
-US004 - Assign Skills to a Collaborator
-1. Requirements Engineering
-   ### 1.1. User Story Description
-   As a Human Resources Manager (HRM), I want to assign one or more skills to a collaborator to effectively manage and utilize the workforce's capabilities.
+### 1.1. User Story Description
+As a Human Resources Manager (HRM), I want to assign one or more skills to a collaborator to effectively manage and utilize the workforce's capabilities.
 
 ### 1.2. Customer Specifications and Clarifications
 
 From the specifications document:
 
-Each collaborator can be associated with multiple skills.
+>	Each collaborator can be associated with multiple skills.
 
-A skill can only be assigned if it is not already attributed to the collaborator.
+>	A skill can only be assigned if it is not already attributed to the collaborator.
 
 From the client clarifications:
 
-Question: Can a skill be removed from a collaborator?
+>	**Question:** Can a skill be removed from a collaborator?
+>
+>	**Answer:** Yes, but that is in a different user story.
 
-Answer: Yes,but in a different user story.
-
-Question: How is the collaborator identified for skill assignment?
-
-Answer: The collaborator is identified by their employee ID/Vatnumber .
+>	**Question:** How is the collaborator identified for skill assignment?
+>
+>	**Answer:** The collaborator is identified by their employee ID/Vatnumber .
 
 ### 1.3. Acceptance Criteria
 
-AC1: The collaborator must exist in the system.
-AC2: The skill to be assigned must exist in the system.
-AC3: A skill can be assigned to a collaborator only if it is not already assigned to them.
-AC4: The system should allow assignment of multiple skills in a single operation.
+* **AC1:** The collaborator must exist in the system.
+* **AC2:** The skill to be assigned must exist in the system.
+* **AC3:** A skill can be assigned to a collaborator only if it is not already assigned to them.
+* **AC4:** The system should allow assignment of multiple skills in a single operation.
 
 ### 1.4. Found out Dependencies
-There must be a predefined list of skills available in the system.
-Each collaborator must have a unique identifier.
+* There must be a predefined list of skills available in the system, therefore there is a dependency on "US001 - Create a Skill".
+* Each collaborator must have a unique identifier, therefore there is a dependency  on "US003 - Register a Collaborator".
 
 ### 1.5 Input and Output Data
 
-Input Data:
+**Input Data:**
 
-Collaborator's employee ID or Vatnumber
-Names of skills to be assigned
+* Selected data:
+    * Collaborator's employee ID or Vatnumber
 
-Output Data:
- Operation Successful or Operation not Succesfull
+* Typed data:
+    * Names of skills to be assigned
 
-Confirmation of successful skill assignment
-Error messages in case of invalid operations (e.g., skill already assigned, non-existent collaborator or skill)
+**Output Data:**
+
+* Operation Successful or Operation not Succesfull
+* Confirmation of successful skill assignment
+* Error messages in case of invalid operations (e.g., skill already assigned, non-existent collaborator or skill)
 
 ### 1.6. System Sequence Diagram (SSD)
 
@@ -58,9 +59,9 @@ System checks each selected skill against the collaborator's current skills.
 System assigns new skills to the collaborator.
 System provides confirmation of successful operation.
 
-Alternative Two: Batch Assignment
+Alternative Two: 
 HRM selects a collaborator by their employee ID.
-System validates collaborator existance.
+System validates collaborator existence.
 HRM selects multiple skills from the list of available skills.
 System performs a  check to ensure none of the selected skills are already assigned to the collaborator.
 System assigns all valid skills in one operation.

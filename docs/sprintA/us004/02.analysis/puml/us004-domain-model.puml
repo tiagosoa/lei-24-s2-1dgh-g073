@@ -24,17 +24,16 @@ class HRM {
 }
 
 class Skill {
-    skillID
-    related Department
-    description
+    name
 }
 
 class Collaborator {
     name
-    vatNumber
-    phoneNumber
-    email
-    currentSkills
+    birthdate
+    admission date
+    address
+    contact info (mobile and email)
+    ID doc type and number
 }
 
 

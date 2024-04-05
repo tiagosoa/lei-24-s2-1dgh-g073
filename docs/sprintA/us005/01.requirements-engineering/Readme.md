@@ -25,19 +25,21 @@ As a HRM, I want to generate a team proposal automatically.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The maximum team size and the set of skills need to be supplied by the HRM.
+* **AC1:** The maximum and minimum team size and the set of skills need to be supplied by the HRM.
 * **AC2:** The user must be allowed to either accept or refuse the generated team.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US004 - Assign a Skill" - as there must be at least one skill attributed to a collaborator - "US003 - Register a collaborator" - as there must already be at least one collaborator registered within the system - "US002 - Create a Job" - as there must already exist a job to create a team for.
+* There are dependencies found on "US004 - Assign a Skill" and "US001 - Create a Skill"  as there must be at least one skill attributed to a collaborator 
+* There is a dependency on "US003 - Register a collaborator" as there must already be at least one collaborator registered within the system
+* There is a dependency on "US002 - Create a Job" as there must already exist a job to create a team for.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-    * team size (number)
+    * team size (maximum and minimum)
     * one or more skill names
 	
 * Selected data:
@@ -46,6 +48,7 @@ As a HRM, I want to generate a team proposal automatically.
 **Output Data:**
 
 * Generated Team
+* (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 

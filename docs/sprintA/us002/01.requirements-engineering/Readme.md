@@ -11,7 +11,7 @@ As an HRM, I want to register a job that a collaborator need to have.
 
 **From the specifications document:**
 
->	Each job registered should only have a name.
+>	Each job registered should have only a name.
 
 **From the client clarifications:**
 
@@ -44,15 +44,9 @@ As an HRM, I want to register a job that a collaborator need to have.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-**_Other alternatives might exist._**
-
 #### Alternative One
 
 ![System Sequence Diagram - Alternative One](svg/us002-system-sequence-diagram-alternative-one.svg)
-
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us002-system-sequence-diagram-alternative-two.svg)
 
 ### 1.7 Other Relevant Remarks
 

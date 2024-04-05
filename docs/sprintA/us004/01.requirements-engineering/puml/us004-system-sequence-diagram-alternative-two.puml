@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - Alternative One
+title System Sequence Diagram (SSD) - Alternative Two
 
 autonumber
 
@@ -15,22 +15,19 @@ activate Employee
     Employee -> System : asks to register skills that may be appointed to a collaborator
     activate System
 
-    System --> Employee : requests collaborator name that the skill is assigned to
+    System --> Employee : shows list of collaborators and asks to select one or more
     deactivate System
 
-    Employee -> System : inserts collaborator name
+    Employee -> System : selects collaborator(s)
     activate System
 
-    System --> Employee : validates collaborator existence
+    System --> Employee : validates collaborator(s) existence
     deactivate System
 
-    System --> Employee : confirms collaborator existence
+    System --> Employee : shows list of skills and asks to select one or more
     deactivate System
 
-    System --> Employee : requests name(s) of skill(s)
-    deactivate System
-
-    Employee -> System : types requested name(s)
+    Employee -> System : selects skill(s)
     activate System
 
     System --> Employee : shows all data and requests confirmation

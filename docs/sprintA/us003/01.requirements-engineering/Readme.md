@@ -51,6 +51,7 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 
 * List of existing jobs
 * (In)Success of the operation
+* Error messages in case of invalid operations (e.g. non-existent skill)
 
 ### 1.6. System Sequence Diagram (SSD)
 

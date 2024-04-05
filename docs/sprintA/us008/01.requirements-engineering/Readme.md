@@ -19,7 +19,7 @@ As an FM, I want to list the vehicles needing the check-up.
 >
 > **Answer:** The list of vehicles is automatically created but the creation is triggered by the FM.
 
-> **Question:** Can a vehicle have more than one check-up?
+> **Question:** What data of a vehicle is shown on the list?
 >
 > **Answer:** Data that allows identification of the vehicle like the Plate, brand and model, as well as the data that allows to select/insert the vehicle in the list, which is the number of kms, frequency of checkup and the last checkup.
 

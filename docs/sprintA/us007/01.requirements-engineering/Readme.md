@@ -17,11 +17,15 @@ As an FM, I wish to register a vehicle’s check-up.
 
 > **Question:** What is the unit of measurement used to estimate the check-up frequency (Kms, months, etc.)?
 >
-> **Answer:** In real context all could be considered, in the scope of this project just kms will be considered.
+> **Answer:** In real context all could be considered, in the scope of this project just Kms will be considered.
 
-> **Question:** Can a vehicle have more than one check-up?
+> **Question:** Can a vehicle have more than one check-up date?
 >
 > **Answer:** Yes.
+
+> **Question:** In what format is the date introduced?
+> 
+> **Answer:** In the European format, that is, DD-MM-YYYY.
 
 ### 1.3. Acceptance Criteria
 
@@ -54,4 +58,4 @@ As an FM, I wish to register a vehicle’s check-up.
 
 ### 1.7 Other Relevant Remarks
 
-* Multiple check-up dates can be associated to the same vehicle.
+* n/a

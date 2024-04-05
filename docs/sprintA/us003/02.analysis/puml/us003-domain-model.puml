@@ -43,8 +43,8 @@ class Collaborator {
 '}
 
 'Platform "1" -- "*" HRM : has registered >
-Job "1" -- "*" Category : has >
 HRM "1" - "1..*" Collaborator : wants to register >
+Collaborator "1" - "1..*" Job : has >
 'Task "*" -- "1" Employee: created by >
 'Employee "0..1" -- "1" User: acts as >
 @enduml
