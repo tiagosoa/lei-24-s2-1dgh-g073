@@ -42,7 +42,32 @@ This topic addresses several key aspects of usability, including error preventio
 * Offer always a good quality standard that meets the users expectations
 
 ## Reliability
-(fill here)
+The reliability of the software system is key to ensure trust and efficiency. 
+The following topics outline the specific reliability requirements for the software:
+
+### Frequency and Severity of Failures
+
+* The system must be designed to minimize failures.
+
+* Severity of failures should be categorized and prioritized based on their impact on the system's operation and user experience [Most Important Comes First].
+
+### Possibility of Recovery
+
+* The software must include mechanisms for automatic recovery from failures whenever possible.
+
+* For failures that require manual intervention, the system should provide the according error message contribute to a quick diagnosis and resolution.
+
+### Possibility of Prediction
+
+* Implement monitoring tools that can identify potential issues before they cause system failures.
+
+### Accuracy
+
+* Consistent checks that allow for an accurate data integrity, to prevent any data loss.
+
+* The system must go through extensive testing to check his accuracy.
+### Average Time Between Failures (MTBF)
+* Aim for a high MTBF, wich will lead to an efficient and bugless application.
 
 ## Performance
 
