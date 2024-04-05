@@ -9,7 +9,7 @@ _Specifies functionalities that:
 ### (i):
 * Authentication and authorization that will ensure that only HRMs and FMs can access their respective functionalities.
 
-* Data base operations that make possible the Creation, Update or Deletion of skills, collaborators, roles, vehicles.
+* Database operations that make possible the Creation, Update or Deletion of skills, collaborators, roles, vehicles.
 ### (ii):
 
 * Ability to generate team proposals, vehicle maintenance schedules, and collaborator skills.
@@ -57,20 +57,20 @@ _Specifies or constraints the system design process. Examples may include: progr
 ### Implementation Constraints
 
 _Specifies or constraints the code or construction of a system such
-such as: mandatory standards/patterns, implementation languages,
+as: mandatory standards/patterns, implementation languages,
 database integrity, resource limits, operating system._
 
-(fill in here )
+* The system will be implemented in Java.
+* The system saves the registered skills, collaborators, and jobs in a database.
 
 ### Interface Constraints
 
 _Specifies or constraints the features inherent to the interaction of the
 system being developed with other external systems._
 
-(fill in here )
+* The system shall integrate with third-party APIs for functionalities such as irrigation systems and geolocation services.
 
 ### Physical Constraints
-
 _Specifies a limitation or physical requirement regarding the hardware used to house the system, as for example: material, shape, size or weight._
 
-(fill in here )
+* The system hardware shall meet minimum requirements such as CPU speed, RAM capacity, and disk space as specified in the system documentation.
