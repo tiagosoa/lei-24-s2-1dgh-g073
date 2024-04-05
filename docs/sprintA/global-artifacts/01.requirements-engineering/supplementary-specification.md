@@ -10,6 +10,7 @@ _Specifies functionalities that:
 * Authentication and authorization that will ensure that only HRMs and FMs can access their respective functionalities.
 
 * Database operations that make possible the Creation, Update or Deletion of skills, collaborators, roles, vehicles.
+
 ### (ii):
 
 * Ability to generate team proposals, vehicle maintenance schedules, and collaborator skills.
@@ -20,24 +21,17 @@ _Specifies functionalities that:
 
 ## Usability
 
-_Evaluates the user interface. It has several subcategories,
-among them: error prevention; interface aesthetics and design; help and
-documentation; consistency and standards._
-
-(fill in here )
-
-## Reliability
-The usability of the system is paramount to ensuring that the HRM and FM can effectively use the software.
+_The usability of the system is paramount to ensuring that the HRM and FM can effectively use the software.
 This topic addresses several key aspects of usability, including error prevention, interface aesthetics and design, help and documentation, and consistency and standards.
 
 ### Error Prevention
- * Implement form validations across all user inputs to prevent errors before they occur.
- * Utilize confirmations for irreversible actions (for example, deleting a collaborator or skill) to prevent accidental data loss.
+* Implement form validations across all user inputs to prevent errors before they occur.
+* Utilize confirmations for irreversible actions (for example, deleting a collaborator or skill) to prevent accidental data loss.
 
-\### Interface Aesthetics and Design
-* Modern UI design that focuses on an easy off the application. 
-  * Using whitespace effectively 
-  * Choosing readable fonts and utilizing a color scheme that is appealing and are friendly to users with visual impairments.
+### Interface Aesthetics and Design
+* Modern UI design that focuses on an easy off the application.
+    * Using whitespace effectively
+    * Choosing readable fonts and utilizing a color scheme that is appealing and are friendly to users with visual impairments.
 * Design an intuitive navigation menu that allow users to quickly access different parts of the application.
 
 ### Help and Documentation
@@ -45,14 +39,17 @@ This topic addresses several key aspects of usability, including error preventio
 * Provide a  help center that details how to perform common tasks within the system or troubleshoot issues.
 
 ### Consistency and Standards
- * UI consistency so that it eases the new users experience on the application
- * Offer always a good quality standard that meets the users expectations 
+* UI consistency so that it eases the new users experience on the application
+* Offer always a good quality standard that meets the users expectations
+
+## Reliability
+(fill this)
 
 ## Performance
 
 _Evaluates the performance requirements of the software, namely: response time, start-up time, recovery time, memory consumption, CPU usage, load capacity and application availability._
 
-(fill in here )
+
 
 ## Supportability
 
