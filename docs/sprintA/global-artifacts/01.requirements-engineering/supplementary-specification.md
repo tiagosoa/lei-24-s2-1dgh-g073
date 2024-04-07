@@ -94,19 +94,30 @@ significant memory demands._
 
 ## Supportability
 
-_The supportability requirements gathers several characteristics, such as:
-testability, adaptability, maintainability, compatibility,
-configurability, installability, scalability and more._
+Supportability is crucial for ensuring the software system is maintainable, adaptable, and scalable, addressing the needs of Human Resources Managers (HRM) and Fleet Managers (FM) both now and in the future. This section outlines the key supportability requirements to achieve these goals:
 
-(fill in here )
+### Testability
+* The system must be designed with testability in mind and allow for automated and manual testing.
+### Adaptability
+* It must adapt a customization by each one of the organization necessities.
+### Maintainability
+* All code should be documented, follow coding standards, and be structured for an easy readability to facilitate maintenance and updates.
+* Use a control system to manage changes.
+### Compatibility
+* Ensure compatibility with most devices, operating systems, and browsers.
+### Configurability
+* Allow users to configure their own settings, and options without needing a code change or technical support(For example UI visualization changes).
+### Installability
+* Simple installation process with clear instructions and automated installers.
 
 ## +
-
 ### Design Constraints
+Guidelines that shape the development/design off the software.
+### Programming Language
+ * The app is mainly coded using Java
 
-_Specifies or constraints the system design process. Examples may include: programming languages, software process, mandatory standards/patterns, use of development tools, class library, etc._
-
-(fill in here )
+### Development Tools
+* The app was developed on IntelliJ IDEA, with the help of GitHub and Bitbucket
 
 ### Implementation Constraints
 
