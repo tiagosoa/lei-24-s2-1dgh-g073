@@ -1,7 +1,7 @@
 # US004 - Assign a Skill 
 
-2. Analysis
-   ### 2.1. Relevant Domain Model Excerpt
+## 2. Analysis
+### 2.1. Relevant Domain Model Excerpt
 
 ### HRM (Human Resources Manager):
 Responsible for creating skills.
@@ -9,11 +9,11 @@ Attributes include name, vatNumber, phoneNumber, and email.
 
 ### Skill:
 Can be created by an HRM and assigned to one or more Collaborators.
-Attributes include skillID, relatedDepartment, and description.
+Attributes include only the name.
 
 ### Collaborator:
 Receives skill assignments.
-Attributes include name, vatNumber, phoneNumber, email, and currentSkills.
+Attributes include name, birthdate, admission date, address, contact info (mobile and email), ID doc type and a respective number.
 
 ### 2.2. System Interactions Based on Domain Model
 
@@ -33,6 +33,6 @@ Confirmation and Error Handling: The system should confirm the successful assign
 
 There should be a user interface component that allows HRMs to easily perform skill assignments.
 
-The interface might include dropdowns or search fields to select collaborators and skills, as well as confirmation dialogs to finalize the assignments.
+The interface might include dropdowns or search fields to select collaborators and skills, as well as confirmation dialogs to finalize the operations.
 
 ![Domain Model](svg/us004-domain-model.svg)

@@ -1,6 +1,6 @@
-[# Supplementary Specification (FURPS+)
+# Supplementary Specification (FURPS+)
 
-## Functionality
+### Functionality
 
 _Specifies functionalities that:  
 &nbsp; &nbsp; (i) are common across several US/UC;  
@@ -18,7 +18,7 @@ _Specifies functionalities that:
 
 * Security features to ensure the protection of sensitive information like collaborator contact details.
 
-## Usability
+### Usability
 
 _The usability of the system is paramount to ensuring that the HRM and FM can effectively use the software.
 This topic addresses several key aspects of usability, including error prevention, interface aesthetics and design, help and documentation, and consistency and standards.
@@ -27,7 +27,7 @@ This topic addresses several key aspects of usability, including error preventio
 * Implement form validations across all user inputs to prevent errors before they occur.
 * Utilize confirmations for irreversible actions (for example, deleting a collaborator or skill) to prevent accidental data loss.
 
-\### Interface Aesthetics and Design
+### Interface Aesthetics and Design
 * Modern UI design that focuses on an easy off the application.
   * Using whitespace effectively
   * Choosing readable fonts and utilizing a color scheme that is appealing and are friendly to users with visual impairments.
@@ -42,8 +42,8 @@ This topic addresses several key aspects of usability, including error preventio
 * Offer always a good quality standard that meets the users expectations
 
 ## Reliability
-The reliability of the software system is key to ensure trust and efficiency. 
-The following topics outline the specific reliability requirements for the software:
+* The reliability of the software system is key to ensure trust and efficiency. 
+* The following topics outline the specific reliability requirements for the software:
 
 ### Frequency and Severity of Failures
 
