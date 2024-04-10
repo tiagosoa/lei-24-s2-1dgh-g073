@@ -16,14 +16,14 @@ hide methods
 '  -description
 '}
 
-class FM {
+class VFM {
     name
     vatNumber
     phoneNumber
     email
 }
 
-class Checkup {
+class MaintenanceCheckup {
     date
 }
 
@@ -40,8 +40,8 @@ class Vehicle {
 }
 
 'Platform "1" -- "*" HRM : has registered >
-FM "1" - "1..*" Checkup : wants to register >
+VFM "1" - "1..*" MaintenanceCheckup : wants to register >
 'Task "*" -- "1" Employee: created by >
-Checkup "1" - "1" Vehicle: belongs to >
+MaintenanceCheckup "1" - "1" Vehicle: belongs to >
 'Employee "0..1" -- "1" User: acts as >
 @enduml

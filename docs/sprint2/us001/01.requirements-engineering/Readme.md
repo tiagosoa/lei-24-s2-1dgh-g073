@@ -29,6 +29,7 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 
 * **AC1:** At least one skill name must be inputted.
 * **AC2:** When creating a skill with a name that already exists, the system must reject such operation and the user must be able to modify the typed name.
+* **AC3:** A skill name can’t have special characters or digits.
 
 ### 1.4. Found out Dependencies
 

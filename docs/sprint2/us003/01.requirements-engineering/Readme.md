@@ -24,7 +24,8 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The fundamental characteristics must be inputted by the HRM.
-* **AC2:** At least one collaborator must be registered
+* **AC2:** At least one collaborator must be registered.
+* **AC3:** The taxpayer identification number and the citizen card number should be valid
 
 ### 1.4. Found out Dependencies
 

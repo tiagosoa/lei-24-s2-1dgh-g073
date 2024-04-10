@@ -16,14 +16,14 @@ hide methods
 '  -description
 '}
 
-class FM {
+class VFM {
     name
     vatNumber
     phoneNumber
     email
 }
 
-class Checkup {
+class MaintenanceCheckup {
     date
 }
 
@@ -42,7 +42,7 @@ class Vehicles {
     acquisition date
     maintenance/check-up frequency
 }
-FM "1" -- "1" System : requests creation of list to >
+VFM "1" -- "1" System : requests creation of list to >
 System "1" -- "0..*" Vehicles: generates list of >
-Vehicles "1" - "1..*" Checkup: that need >
+Vehicles "1" - "1..*" MaintenanceCheckup: that need >
 @enduml

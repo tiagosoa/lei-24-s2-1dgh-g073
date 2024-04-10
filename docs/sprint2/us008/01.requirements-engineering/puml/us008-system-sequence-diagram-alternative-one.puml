@@ -7,12 +7,12 @@ title System Sequence Diagram (SSD) - Alternative One
 
 autonumber
 
-actor "Fleet Manager" as Employee
+actor "Vehicle and Equipment\nFleet Manager" as Employee
 participant ":System" as System
 
 activate Employee
 
-    Employee -> System : asks to list the vehicles that need check-up
+    Employee -> System : asks to list the vehicles that need maintenance
     activate System
 
         System --> Employee : goes through all vehicles with registered check-up dates\nselects those that have e already exceeded the number of km required for the inspection\n creates a list with said vehicles and shows it

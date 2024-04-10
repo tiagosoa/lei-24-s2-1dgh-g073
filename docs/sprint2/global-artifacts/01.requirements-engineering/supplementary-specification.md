@@ -7,7 +7,7 @@ _Specifies functionalities that:
 &nbsp; &nbsp; (ii) are not related to US/UC, namely: Audit, Reporting and Security._
 
 ### (i):
-* Authentication and authorization that will ensure that only HRMs and FMs can access their respective functionalities.
+* Authentication and authorization that will ensure that only HRMs and VFMs can access their respective functionalities.
 
 * Database operations that make possible the Creation, Update or Deletion of skills, collaborators, roles, vehicles.
 ### (ii):
@@ -20,7 +20,7 @@ _Specifies functionalities that:
 
 ### Usability
 
-_The usability of the system is paramount to ensuring that the HRM and FM can effectively use the software.
+_The usability of the system is paramount to ensuring that the HRM and VFM can effectively use the software.
 This topic addresses several key aspects of usability, including error prevention, interface aesthetics and design, help and documentation, and consistency and standards.
 
 ### Error Prevention
@@ -94,7 +94,7 @@ significant memory demands._
 
 ## Supportability
 
-Supportability is crucial for ensuring the software system is maintainable, adaptable, and scalable, addressing the needs of Human Resources Managers (HRM) and Fleet Managers (FM) both now and in the future. This section outlines the key supportability requirements to achieve these goals:
+Supportability is crucial for ensuring the software system is maintainable, adaptable, and scalable, addressing the needs of Human Resources Managers (HRM) and Vehicle and Equipment Fleet Managers (VFM) both now and in the future. This section outlines the key supportability requirements to achieve these goals:
 
 ### Testability
 * The system must be designed with testability in mind and allow for automated and manual testing.

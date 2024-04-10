@@ -32,7 +32,7 @@
 **Roles of People or Organizations**
 
 * Human Resources Manager (HRM)
-* Fleet Manager (FM)
+* Vehicle and Equipment Fleet Manager (VFM)
 * Collaborator
 
 ---
@@ -119,7 +119,7 @@
 | Concept (A) 		 |          Association   	           |                         Concept (B) |
 |----------------|:----------------------------------:|------------------------------------:|
 | Organization   |              has		 	               |                                 HRM |
-| Organization   |              has		 	               |                                  FM |
+| Organization   |              has		 	               |                                 VFM |
 | Organization   |              has		 	               |                        Collaborator |
 | HRM            |      registers and manages	 	      |                        Collaborator |
 | HRM            |             creates 	              |                               Skill |
@@ -128,8 +128,8 @@
 | HRM            |  provides team size and skills to  |                              System |
 | Collaborator   |          assigned with 	           |                               Skill |
 | Collaborator   |          assigned with 	           |                                 Job |
-| FM             |       registers and manages        |                             Vehicle |
-| FM             |        requests creation of        | List of vehicles that need check-up |
+| VFM            |       registers and manages        |                             Vehicle |
+| VFM            |        requests creation of        | List of vehicles that need check-up |
 | Vehicle        |                has                 |                       Check-up date |
 | Vehicle        | is physically or logically part of | List of vehicles that need check-up |
 | System         |             generates              |                                Team |

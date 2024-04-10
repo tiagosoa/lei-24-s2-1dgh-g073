@@ -2,7 +2,7 @@
 
 ## 2. Analysis
 
-### FM (Fleet Manager):
+### VFM (Vehicle and Equipment Fleet Manager):
 Responsible for registering vehicles.
 Attributes include name, vatNumber, phoneNumber, and email.
 

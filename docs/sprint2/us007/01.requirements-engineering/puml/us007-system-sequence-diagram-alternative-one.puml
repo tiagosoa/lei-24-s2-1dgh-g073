@@ -7,15 +7,15 @@ title System Sequence Diagram (SSD) - Alternative One
 
 autonumber
 
-actor "Fleet Manager" as Employee
+actor "Vehicle and Equipment\nFleet Manager" as Employee
 participant ":System" as System
 
 activate Employee
 
-    Employee -> System : asks to register a vehicle's check-up date.
+    Employee -> System : asks to register a vehicle's maintenance date.
     activate System
 
-        System --> Employee : requests data (plate ID, current KMs and date of check-up)
+        System --> Employee : requests data (plate ID, current KMs and date of maintenance)
     deactivate System
 
     Employee -> System : types requested data

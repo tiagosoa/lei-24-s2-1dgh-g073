@@ -16,7 +16,7 @@ hide methods
 '  -description
 '}
 
-class FM {
+class VFM {
     name
     vatNumber
     phoneNumber
@@ -35,5 +35,5 @@ class Vehicle {
     maintenance/check-up frequency
 }
 
-FM "1" - "1" Vehicle : registers >
+VFM "1" - "1" Vehicle : registers >
 @enduml

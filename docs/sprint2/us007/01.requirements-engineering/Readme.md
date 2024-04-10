@@ -1,17 +1,17 @@
-# US007 - Register a Vehicle's Check-up 
+# US007 - Register a Vehicle's Maintenance 
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an FM, I wish to register a vehicle’s check-up.
+As a VFM, I wish to register a vehicle’s maintenance.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	The data inputted must be the plate ID, the date of the check-up, and the current KMs.
+>	The data inputted must be the plate ID, the date of the maintenance, and the current KMs.
 
 **From the client clarifications:**
 
@@ -19,7 +19,7 @@ As an FM, I wish to register a vehicle’s check-up.
 >
 > **Answer:** In real context all could be considered, in the scope of this project just Kms will be considered.
 
-> **Question:** Can a vehicle have more than one check-up date?
+> **Question:** Can a vehicle have more than one maintenance date?
 >
 > **Answer:** Yes.
 
@@ -30,7 +30,7 @@ As an FM, I wish to register a vehicle’s check-up.
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The fundamental characteristics must be inputted by the FM.
-* **AC2:** The date of the Check-Up must be in the following format:
+* **AC2:** The date of the maintenance must be in the following format:
 
 ### 1.4. Found out Dependencies
 
@@ -42,7 +42,7 @@ As an FM, I wish to register a vehicle’s check-up.
 
 * Typed data:
     * the vehicle ID
-    * the date of the check-up
+    * the date of the maintenance
     * the current KMs of the vehicle
 
 **Output Data:**

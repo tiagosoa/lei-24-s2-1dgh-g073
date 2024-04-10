@@ -25,7 +25,8 @@ As an HRM, I want to register a job that a collaborator need to have.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** There must be at least one name inputted.
+* **AC1:** There must be at least one job name inputted.
+* **AC2:** A job name can’t have special characters or digits.
 
 ### 1.4. Found out Dependencies
 

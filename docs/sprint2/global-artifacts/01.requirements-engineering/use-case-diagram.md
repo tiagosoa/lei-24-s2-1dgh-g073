@@ -12,13 +12,13 @@ However, be aware, this is a pedagogical simplification. On further projects and
 
 # Use Cases / User Stories
 
-| UC/US | Description                                               |                   
-|:------|:----------------------------------------------------------|
-| US001 | [Create a Skill](../../us001/Readme.md)                   |
-| US002 | [Create a Job](../../us002/Readme.md)                     |
-| US003 | [Register a Collaborator](../../us003/Readme.md)          |
-| US004 | [Assign a Skill](../../us004/Readme.md)                   |
-| US005 | [Generate a Team](../../us005/Readme.md)                  |
-| US006 | [Register a Vehicle](../../us006/Readme.md)               |
-| US007 | [Register a Vehicle's Check-up](../../us007/Readme.md)    |
-| US008 | [List Vehicles that need Check-up](../../us008/Readme.md) |
+| UC/US | Description                                                  |                   
+|:------|:-------------------------------------------------------------|
+| US001 | [Create a Skill](../../us001/Readme.md)                      |
+| US002 | [Create a Job](../../us002/Readme.md)                        |
+| US003 | [Register a Collaborator](../../us003/Readme.md)             |
+| US004 | [Assign a Skill](../../us004/Readme.md)                      |
+| US005 | [Generate a Team](../../us005/Readme.md)                     |
+| US006 | [Register a Vehicle](../../us006/Readme.md)                  |
+| US007 | [Register a Vehicle's Maintenance](../../us007/Readme.md)    |
+| US008 | [List Vehicles that need Maintenance](../../us008/Readme.md) |

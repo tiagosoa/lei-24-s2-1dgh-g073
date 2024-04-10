@@ -12,7 +12,7 @@ This manual is addressed to two primary user groups:
 
 >Human Resources Managers (HRMs): responsible for managing personnel, assigning tasks, and overseeing the skills and qualifications of collaborators within green spaces.
 
->Facility Managers (FMs): responsible for managing vehicles, equipment, and other facilities necessary for the maintenance and operation of green spaces.
+>Vehicle and Equipment Fleet Managers (VFMs): responsible for managing vehicles, equipment, and other facilities necessary for the maintenance and operation of green spaces.
 
 Whether you are an experienced user or new to the application, this manual will provide step-by-step instructions, tips, and best practices to help you make the most out of our application.
 
@@ -31,7 +31,7 @@ The application is organized into two main modules: _Human Resources Management 
 
 > HRM Module: This module focuses on managing human resources involved in green space projects. It includes features such as registering skills and jobs, assigning skills to collaborators, and generating team proposals.
 
-> FM Module: The FM module is dedicated to managing facilities and equipment associated with green spaces. It allows users to register vehicles, schedule and record vehicle check-ups, and maintain a list of vehicles needing attention.
+> VFM Module: The VFM module is dedicated to managing facilities and equipment associated with green spaces. It allows users to register vehicles, schedule and record vehicle check-ups, and maintain a list of vehicles needing attention.
 
 
 
