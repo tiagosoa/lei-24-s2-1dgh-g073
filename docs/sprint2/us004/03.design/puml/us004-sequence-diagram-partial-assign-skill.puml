@@ -1,0 +1,29 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "organization\n:Organization" as ORG
+participant "collaborator\n:Collaborator" as COLABORADOR
+
+autonumber 16
+-> ORG: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+
+autonumber 16.1
+activate ORG
+    group Create Task
+
+        ORG -> COLABORADOR**: create(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+        ORG -> ORG: addCollaborator (collaborator)
+
+        activate ORG
+            ORG -> ORG: validateSkill(collaborator)
+            activate ORG
+    end
+
+    autonumber 17
+    <-- ORG : collaborator
+deactivate ORG
+
+
+@enduml
