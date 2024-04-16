@@ -1,0 +1,65 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as ADM
+participant ":CreateJobUI" as UI
+participant ":CreateJobController" as CTRL
+participant "organization\n:Organization" as ORG
+
+activate ADM
+
+    ADM -> UI : asks to create a new task
+
+    activate UI
+
+        UI -> CTRL** : create
+
+        UI --> ADM : requests name for job
+    deactivate UI
+
+    ADM -> UI : types requested name
+    activate UI
+
+        UI --> ADM : shows typed name
+    deactivate UI
+
+    ADM -> UI : submits name
+    activate UI
+
+        UI -> CTRL : createJob(name)
+        activate CTRL
+
+            CTRL -> CTRL : getEmployeeFromSession()
+            activate CTRL
+
+                ref over CTRL
+                    Get Employee
+
+                end ref
+                CTRL -> CTRL : employee
+            deactivate CTRL
+
+            CTRL -> ORG: createJob(name, employee)
+            activate ORG
+
+                ref over ORG
+                    Create Job
+
+                end
+
+                ORG --> CTRL : job
+            deactivate ORG
+
+            CTRL --> UI: job
+            deactivate CTRL
+            UI --> ADM: displays operation success
+    deactivate UI
+
+deactivate ADM
+
+@enduml

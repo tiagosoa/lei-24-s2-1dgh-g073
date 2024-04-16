@@ -1,0 +1,67 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as ADM
+participant ":CreateSkillUI" as UI
+participant ":CreateSkillController" as CTRL
+participant "organization\n:Organization" as ORG
+
+activate ADM
+
+    ADM -> UI : asks to create a new skill
+
+    activate UI
+
+        UI -> CTRL** : create
+
+        activate CTRL
+
+        UI --> ADM : requests name of skill
+    deactivate UI
+
+    ADM -> UI : types requested name
+    activate UI
+
+        UI --> ADM : shows typed name
+    deactivate UI
+
+    ADM -> UI : submits name
+    activate UI
+
+        UI -> CTRL : createSkill(name)
+        activate CTRL
+
+            CTRL -> CTRL : getEmployeeFromSession()
+            activate CTRL
+
+                ref over CTRL
+                    Get Employee
+
+                end ref
+                CTRL -> CTRL : employee
+            deactivate CTRL
+
+            CTRL -> ORG: createSkill(name, employee)
+            activate ORG
+
+                ref over ORG
+                    Create Skill
+
+                end
+
+                ORG --> CTRL : skill
+            deactivate ORG
+
+            CTRL --> UI: skill
+            deactivate CTRL
+            UI --> ADM: displays operation success
+    deactivate UI
+
+deactivate ADM
+
+@enduml

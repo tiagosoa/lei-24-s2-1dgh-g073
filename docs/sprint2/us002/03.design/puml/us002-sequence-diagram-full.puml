@@ -6,22 +6,21 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Organization Employee" as ADM
-participant ":CreateTaskUI" as UI
-participant ":CreateTaskController" as CTRL
+actor "Human Resources Manager" as ADM
+participant ":CreateJobUI" as UI
+participant ":CreateJobController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "taskCategoryRepository:\nTaskCategoryRepository" as TaskCategoryRepository
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO
 participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
 participant "organization\n:Organization" as ORG
-participant "task\n:Task" as TAREFA
+participant "job\n:Job" as TAREFA
 
 activate ADM
 
-        ADM -> UI : asks to create a new task
+        ADM -> UI : asks to create a new job
 
         activate UI
 
@@ -29,75 +28,24 @@ activate ADM
             'create CTRL
             UI -> CTRL** : create
 
-            UI -> CTRL : getTaskCategories()
-            activate CTRL
-
                 CTRL -> RepositorySingleton : getInstance()
                 activate RepositorySingleton
 
                     RepositorySingleton --> CTRL: repositories
                 deactivate RepositorySingleton
 
-                CTRL -> PLAT : getTaskCategoryRepository()
-                activate PLAT
-
-                    PLAT --> CTRL: taskCategoryRepository
-                deactivate PLAT
-
-                CTRL -> TaskCategoryRepository : getTaskCategories()
-                activate TaskCategoryRepository
-
-                    TaskCategoryRepository --> CTRL : taskCategoryList
-                deactivate TaskCategoryRepository
-
-                CTRL --> UI : taskCategoryList
-            deactivate CTRL
-
-            UI --> ADM : shows task category list\n and asks to sleect one
-        deactivate UI
-
-    ADM -> UI : selects a task category
-    activate UI
-
-        UI --> ADM : requests data
+        UI --> ADM : requests name of job
     deactivate UI
 
-    ADM -> UI : types requested data (reference, description, \ninformal description, technical description,\nduration, cost)
+    ADM -> UI : types requested name
     activate UI
 
-        UI --> ADM : shows selected category and requested data
+        UI --> ADM : shows typed name
     deactivate UI
 
-    ADM -> UI : submits data
+    ADM -> UI : submits name
     activate UI
 
-        UI -> CTRL : createTask(reference,\ndescription,\ninformalDescription,\ntechnicalDescription,\nduration, cost,\ntaskCategoryDescription)
-        activate CTRL
-
-            CTRL -> CTRL : getTaskCategoryByDescription(taskCategoryDescription)
-            activate CTRL
-
-                CTRL -> RepositorySingleton : getInstance()
-                activate RepositorySingleton
-
-                    RepositorySingleton --> CTRL: repositories
-                deactivate RepositorySingleton
-
-                CTRL -> PLAT : getTaskCategoryRepository()
-                activate PLAT
-
-                    PLAT -> CTRL : taskCategoryRepository
-                deactivate PLAT
-
-                CTRL -> TaskCategoryRepository : getTaskCategoryByDescription(taskCategoryDescription)
-                activate TaskCategoryRepository
-
-                    TaskCategoryRepository --> CTRL : taskCategory
-                deactivate TaskCategoryRepository
-                    CTRL --> CTRL : taskCategory
-            deactivate CTRL
-
-            |||
             CTRL -> CTRL : getEmployeeFromSession()
             activate CTRL
 
@@ -150,15 +98,15 @@ activate ADM
             deactivate CTRL
 
             |||
-            CTRL -> ORG: createTask(employee, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, , taskCategory, employee)
+            CTRL -> ORG: creatJob(name, employee)
             activate ORG
 
-                ORG -> TAREFA**: create(employee, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, employee)
-                ORG -> ORG: addTask (task)
+                ORG -> TAREFA**: create(name, employee)
+                ORG -> ORG: addJob(job)
 
 
                 activate ORG
-                    ORG -> ORG: validateTask(task)
+                    ORG -> ORG: validateJob(job)
                     activate ORG
                         ORG --> ORG
                     deactivate ORG
@@ -166,11 +114,11 @@ activate ADM
                     ORG --> ORG
                 deactivate ORG
 
-                ORG --> CTRL : task
+                ORG --> CTRL : job
 
             deactivate ORG
 
-            CTRL --> UI: task
+            CTRL --> UI: job
             deactivate CTRL
             UI --> ADM: displays operation success
     deactivate UI

@@ -17,8 +17,8 @@ _**Note that SSD - Alternative One is adopted.**_
 | Step 2  		     | 							                                       |                       |                                                                                                               |
 | Step 3  		     | 	...saving the inputted data?                 | Skill                 | IE: object created in step 1 has its own data.                                                                |	|                      |                                                                                                               |              
 | Step 4 		      | 	... validating all data (local validation)?  | Skill                 | IE: owns its data.                                                                                            | 
-| 			  		        | 	... validating all data (global validation)? | Organization          | IE: knows all its tasks.                                                                                      | 
-| 			  		        | 	... saving the created task?                 | Organization          | IE: owns all its tasks.                                                                                       | 
+| 			  		        | 	... validating all data (global validation)? | Organization          | IE: knows all its skills.                                                                                     | 
+| 			  		        | 	... saving the created task?                 | Organization          | IE: owns all its skills.                                                                                      | 
 | Step 5 		      | 	... informing operation success?             | CreateSkillUI         | IE: is responsible for user interactions.                                                                     | 
 
 ### Systematization ##
@@ -36,18 +36,19 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 ## 3.2. Sequence Diagram (SD)
 
-_**Note that SSD - Alternative Two is adopted.**_
+_**Note that SSD - Alternative One is adopted.**_
 
 ### Full Diagram
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us001-sequence-diagram-full.svg)
+[Sequence Diagram - Full](svg/us001-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
-n/a
+[Sequence Diagram - Create Skill](svg/us001-sequence-diagram-partial-create-skill.svg)
+[Sequence Diagram - Get Employee](svg/us001-sequence-diagram-partial-get-employee.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us001-class-diagram.svg)
+[Class Diagram](svg/us001-class-diagram.svg)

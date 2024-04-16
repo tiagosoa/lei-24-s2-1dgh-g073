@@ -7,8 +7,8 @@ autonumber
 
 'hide footbox
 actor "Human Resources Manager" as ADM
-participant ":CreateSkillUI" as UI
-participant ":CreateSkillController" as CTRL
+participant ":RegisterCollaboratorUI" as UI
+participant ":RegisterCollaboratorController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant ":ApplicationSession" as _APP
@@ -16,11 +16,11 @@ participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO
 participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
 participant "organization\n:Organization" as ORG
-participant "task\n:Task" as TAREFA
+participant "collaborator\n:Collaborator" as COLABORADOR
 
 activate ADM
 
-        ADM -> UI : asks to create a new skill
+        ADM -> UI : asks to assign a skill to a collaborator.
 
         activate UI
 
@@ -29,13 +29,22 @@ activate ADM
             UI -> CTRL** : create
 
 
-    UI --> ADM : requests name
+    UI --> ADM : shows list of existing collaborators and asks to select one or more
     deactivate UI
 
-    ADM -> UI : types requested name
+    ADM -> UI : selects collaborator(s)
     activate UI
 
-        UI -> CTRL : createSkill(name)
+        UI -> CTRL : getCollaborator(ID number)
+        activate CTRL
+
+    UI --> ADM : shows list of existing skills and asks to select one or more
+    deactivate UI
+
+   ADM -> UI : selects skill(s)
+   activate UI
+
+        UI -> CTRL : getSkill(name)
         activate CTRL
 
             |||
@@ -91,27 +100,22 @@ activate ADM
             deactivate CTRL
 
             |||
-            CTRL -> ORG: createSkill(name)
+            CTRL -> ORG: assignSkill(ID number, skillname)
             activate ORG
-
-                ORG -> TAREFA**: create(name)
-                ORG -> ORG: addSkill (skill)
+                ORG -> ORG: saveChanges (ID number, skillname)
 
 
                 activate ORG
-                    ORG -> ORG: validateSkill(skill)
+                    ORG -> ORG: validateCollaborator(ID number)
+                    ORG -> ORG: validateSkill(skillname)
                     activate ORG
-                        ORG --> ORG
-                    deactivate ORG
 
-                    ORG --> ORG
-                deactivate ORG
 
-                ORG --> CTRL : skill
+                ORG --> CTRL : assignedcollaborator
 
             deactivate ORG
 
-            CTRL --> UI: skill
+            CTRL --> UI: assignedcollaborator
             deactivate CTRL
             UI --> ADM: displays operation success
     deactivate UI
