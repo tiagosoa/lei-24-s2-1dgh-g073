@@ -1,0 +1,34 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "organization\n:Organization" as ORG
+participant "skill\n:Skill" as TAREFA
+
+autonumber 16
+-> ORG: createSkill(name)
+
+autonumber 16.1
+activate ORG
+    group Create Task
+
+        ORG -> TAREFA**: create(name)
+        ORG -> ORG: addSkill (skill)
+
+        activate ORG
+            ORG -> ORG: validateSkill(skill)
+            activate ORG
+                ORG --> ORG
+            deactivate ORG
+
+            ORG --> ORG
+        deactivate ORG
+    end
+
+    autonumber 17
+    <-- ORG : skill
+deactivate ORG
+
+
+@enduml
