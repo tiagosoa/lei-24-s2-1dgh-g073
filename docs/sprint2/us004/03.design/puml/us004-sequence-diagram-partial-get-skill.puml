@@ -11,10 +11,8 @@ autonumber 16
 
 autonumber 16.1
 activate ORG
-    group Create Task
-
-        ORG -> COLABORADOR**: create(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
-        ORG -> ORG: addCollaborator (collaborator)
+    group Get Skill
+        ORG -> ORG: getSkill (collaborator)
 
         activate ORG
             ORG -> ORG: validateSkill(collaborator)

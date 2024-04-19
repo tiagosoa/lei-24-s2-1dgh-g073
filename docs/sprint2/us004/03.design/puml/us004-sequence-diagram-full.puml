@@ -35,17 +35,23 @@ activate ADM
     ADM -> UI : selects collaborator(s)
     activate UI
 
+    group Get Collaborator
+
         UI -> CTRL : getCollaborator(ID number)
         activate CTRL
-
+    end
     UI --> ADM : shows list of existing skills and asks to select one or more
     deactivate UI
 
    ADM -> UI : selects skill(s)
    activate UI
 
+   group Get Skill
+
         UI -> CTRL : getSkill(name)
         activate CTRL
+
+   end
 
             |||
             CTRL -> CTRL : getEmployeeFromSession()
