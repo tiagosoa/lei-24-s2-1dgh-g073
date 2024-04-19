@@ -1,0 +1,106 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+
+class VehicleFleetManager {
+  - String name
+  - String email
+  - String phone
+  + registerMaintenance(maintenanceDetails)
+}
+
+class Vehicle {
+  - String brand
+  - String model
+  - String type
+  - Double tareWeight
+  - Double grossWeight
+  - Int currentKm
+  - Int registerDate
+  - Int acquisitionDate
+  - Int maintenanceFrequency
+}
+
+class VehicleMaintenance {
+  - Date maintenanceDate
+  - String details
+  - Double cost
+  + VehicleMaintenance(maintenanceDate, details, cost)
+}
+
+class MaintenanceRepository {
+  + boolean save(VehicleMaintenance maintenanceRecord)
+  + List<VehicleMaintenance> findByVehicle(Vehicle vehicle)
+}
+
+class Organization {
+  - String name
+  - String vatNumber
+  - String address
+  - String phone
+  - String email
+  - List<Vehicle> fleet
+  - Map<Vehicle, List<VehicleMaintenance>> maintenanceRecords
+  + addVehicle(Vehicle vehicle)
+  + addMaintenance(Vehicle vehicle, VehicleMaintenance maintenance)
+  + List<VehicleMaintenance> getVehicleMaintenanceRecords(Vehicle vehicle)
+}
+
+class OrganizationRepository {
+  + boolean save(Organization organization)
+  + Organization findByName(String name)
+  + Organization findByVatNumber(String vatNumber)
+}
+
+class Repositories {
+  + getInstance() : Repositories
+  + getVehicleRepository() : VehicleRepository
+  + getOrganizationRepository() : OrganizationRepository
+  + getMaintenanceRepository() : MaintenanceRepository
+}
+
+class RegisterMaintenanceController {
+  + RegisterMaintenanceController(repositories: Repositories)
+  + boolean registerMaintenance(VehicleFleetManager vfm, Vehicle vehicle, Date maintenanceDate, String details, Double cost)
+}
+
+class MaintenanceRegistrationUI {
+  - RegisterMaintenanceController controller
+  + displayMaintenanceForm()
+  + submitMaintenanceForm(Vehicle vehicle, Date maintenanceDate,Double cost)
+}
+
+note right of RegisterMaintenanceController
+  - Maintenance details are obtained from the VFM's input
+  - Updates the Vehicle's maintenance records in the Organization
+end note
+
+note left of MaintenanceRegistrationUI
+  - UI for VFM to input vehicle maintenance details
+  - Communicates with RegisterMaintenanceController
+end note
+
+note left of Organization
+  - Manages a fleet of vehicles and their maintenance records
+end note
+
+note left of VehicleFleetManager
+  - Responsible for managing vehicle maintenance registrations
+  - Interfaces with the UI and controllers
+end note
+
+VehicleFleetManager -down-> MaintenanceRegistrationUI : interacts with
+MaintenanceRegistrationUI -right-> RegisterMaintenanceController : sends data to
+RegisterMaintenanceController -down-> Repositories : uses
+Repositories -down-> MaintenanceRepository : accesses
+Organization -right-> Vehicle : owns
+Organization -down-> VehicleMaintenance : tracks
+MaintenanceRepository ..> VehicleMaintenance : persists
+RegisterMaintenanceController ..> VehicleMaintenance : creates
+RegisterMaintenanceController ..> Organization : updates records
+
+@enduml
