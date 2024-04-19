@@ -1,4 +1,4 @@
-# US001 - Create a Skill 
+# US003 - Register a Collaborator 
 
 ## 3. Design - User Story Realization 
 
@@ -14,11 +14,11 @@ _**Note that SSD - Alternative One is adopted.**_
 | 			  		        | ... knowing the user using the system?        | UserSession                    | IE: cf. A&A component documentation.                                                                          |
 | 			  		        | 							                                       | Organization                   | IE: knows/has its own Employees/Collaborators                                                                 |
 | 			  		        | 							                                       | HRM                            | IE: knows its own data (e.g. email)                                                                           |
-| Step 2  		     | 							                                       |                                |                                                                                                               |
+| Step 2  		     | 	... assigning the job?						                 | RegisterCollaboratorController | Controller                                                                                                    |
 | Step 3  		     | 	...saving the inputted data?                 | Collaborator                   | IE: object created in step 1 has its own data.                                                                |	|                      |                                                                                                               |              
 | Step 4 		      | 	... validating all data (local validation)?  | Collaborator                   | IE: owns its data.                                                                                            | 
-| 			  		        | 	... validating all data (global validation)? | Organization                   | IE: knows all its skills.                                                                                     | 
-| 			  		        | 	... saving the created task?                 | Organization                   | IE: owns all its skills.                                                                                      | 
+| 			  		        | 	... validating all data (global validation)? | Organization                   | IE: knows all its collaborators.                                                                              | 
+| 			  		        | 	... saving the registered collaborator?      | Organization                   | IE: owns all its collaborators.                                                                               | 
 | Step 5 		      | 	... informing operation success?             | RegisterCollaboratorUI         | IE: is responsible for user interactions.                                                                     | 
 
 ### Systematization ##
@@ -44,9 +44,14 @@ This diagram shows the full sequence of interactions between the classes involve
 
 [Sequence Diagram - Full](svg/us003-sequence-diagram-full.svg)
 
-### Split Diagrams
+### Split Diagram
 
-[Sequence Diagram - Create Skill](svg/us003-sequence-diagram-partial-register-collaborator.svg)
+[Sequence Diagram - Split](svg/us003-sequence-diagram-split.svg)
+
+### Partial Diagrams
+
+[Sequence Diagram - Register Collaborator](svg/us003-sequence-diagram-partial-register-collaborator.svg)
+[Sequence Diagram - Assign Job](svg/us003-sequence-diagram-partial-assign-job.svg)
 [Sequence Diagram - Get Employee](svg/us003-sequence-diagram-partial-get-employee.svg)
 
 ## 3.3. Class Diagram (CD)

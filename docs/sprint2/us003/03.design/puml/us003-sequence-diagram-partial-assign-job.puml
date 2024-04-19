@@ -3,26 +3,32 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+participant ":RegisterCollaboratorController" as CTRL
 participant "organization\n:Organization" as ORG
-participant "collaborator\n:Collaborator" as COLABORADOR
 
 autonumber 16
--> ORG: assignjob(jobname)
+-> CTRL: assignjob(collaborator, jobname)
 
 autonumber 16.1
 activate ORG
+
     group Assign Job
+    activate CTRL
 
-        ORG -> COLABORADOR**: create(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
-        ORG -> ORG: addCollaborator (collaborator)
+           CTRL -> ORG: getJob(jobname)
+             activate ORG
 
-        activate ORG
-            ORG -> ORG: validateSkill(collaborator)
-            activate ORG
-    end
 
-    autonumber 17
-    <-- ORG : collaborator
+                CTRL -> ORG: giveJob(collaborator, job)
+
+
+                        ORG --> CTRL : collaborator
+
+                    deactivate ORG
+
+                    <-- CTRL
+                    deactivate CTRL
+
 deactivate ORG
 
 

@@ -27,19 +27,13 @@ activate Employee
     Employee -> System : selects collaborator(s)
     activate System
 
-    System --> Employee : validates collaborator(s) existence
-    deactivate System
-
-        System --> Employee : shows all data and requests confirmation
+    System --> Employee : shows all data and requests confirmation
     deactivate System
 
     Employee -> System : confirms data
     activate System
 
-    System --> Employee : Updates collaborator skill set
-        deactivate System
-
-        System --> Employee : displays operation success
+    System --> Employee : displays operation success
     deactivate System
 
 @enduml

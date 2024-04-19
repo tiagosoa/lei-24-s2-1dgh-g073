@@ -35,6 +35,11 @@ activate ADM
     ADM -> UI : types requested data
     activate UI
 
+    UI --> ADM : displays data and requests confirmation
+    deactivate UI
+    ADM -> UI : confirms data
+    activate UI
+
         UI -> CTRL : registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
         activate CTRL
 
@@ -91,21 +96,34 @@ activate ADM
             deactivate CTRL
 
             |||
-            CTRL -> ORG: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
-            activate ORG
+            CTRL -> CTRL: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+            activate CTRL
+                       
+                        CTRL -> COLABORADOR**: create(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+                        activate COLABORADOR
+                        
+                        COLABORADOR -> CTRL : collaborator
+                        deactivate COLABORADOR
+                        
+                        activate CTRL
+                        
+                        CTRL -> ORG : validateCollaborator(collaborator)
+                        activate ORG
+                        CTRL -> ORG : addCollaborator (collaborator)
 
-                ORG -> COLABORADOR**: create(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
-                ORG -> ORG: addcollaborator (collaborator)
+
+                   
+
+                       ORG -> CTRL: collaborator
+                       deactivate CTRL
+                       deactivate ORG
+
+   CTRL -> ORG: getJob(jobname)
+     activate ORG
 
 
-                activate ORG
-                    ORG -> ORG: validateCollaborator(collaborator)
-                    activate ORG
-                        ORG --> ORG
-                    deactivate ORG
+        CTRL -> ORG: giveJob(collaborator, job)
 
-                    ORG --> ORG
-                deactivate ORG
 
                 ORG --> CTRL : collaborator
 

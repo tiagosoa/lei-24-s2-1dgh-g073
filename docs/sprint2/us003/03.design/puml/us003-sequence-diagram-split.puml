@@ -46,11 +46,15 @@ activate ADM
                 CTRL -> CTRL : employee
             deactivate CTRL
 
-            CTRL -> ORG: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+            CTRL -> CTRL: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
             activate ORG
 
-                ref over ORG
+                ref over CTRL
                     Register Collaborator
+                end
+
+                                ref over ORG
+                                    Register Collaborator
 
                 end
 

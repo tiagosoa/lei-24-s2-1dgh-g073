@@ -7,13 +7,13 @@ autonumber
 
 'hide footbox
 actor "Human Resources Manager" as ADM
-participant ":RegisterCollaboratorUI" as UI
-participant ":RegisterCollaboratorController" as CTRL
+participant ":AssignSkillUI" as UI
+participant ":AssignSkillController" as CTRL
 participant "organization\n:Organization" as ORG
 
 activate ADM
 
-    ADM -> UI : asks to register a collaborator
+    ADM -> UI : asks to assign a skill to a collaborator
 
     activate UI
 
@@ -21,20 +21,51 @@ activate ADM
 
         activate CTRL
 
-        UI --> ADM : requests data (name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+        UI --> ADM : shows list of collaborators and asks to select one or more
     deactivate UI
 
-    ADM -> UI : types requested data
+    ADM -> UI : selects collaborator(s)
     activate UI
 
-        UI --> ADM : shows typed data
+        UI -> CTRL : getCollaborator(ID number)
+
+
+        CTRL -> ORG : getCollaborator(ID number)
+
+
+        ref over ORG
+        Get Collaborator(s)
+        end
+
+        ORG -> CTRL : collaborators
+
+
+
+        CTRL -> UI : collaborators
+        deactivate CTRL
+
+        UI --> ADM : shows list of skills and asks to select one or more
     deactivate UI
 
-    ADM -> UI : submits data
+    ADM -> UI : selects skill(s)
     activate UI
 
-        UI -> CTRL : registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+        UI -> CTRL : getSkill(skillname)
         activate CTRL
+
+        CTRL -> ORG : getSkill(skillname)
+
+        ref over ORG
+        Get Skill(s)
+        end
+
+        ORG -> CTRL : skills
+
+
+
+        CTRL -> UI : skills
+        deactivate CTRL
+
 
             CTRL -> CTRL : getEmployeeFromSession()
             activate CTRL
@@ -44,20 +75,20 @@ activate ADM
 
                 end ref
                 CTRL -> CTRL : employee
-            deactivate CTRL
 
-            CTRL -> ORG: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+
+            CTRL -> ORG: assignSkill(collaborators, skills)
             activate ORG
 
                 ref over ORG
-                    Register Collaborator
+                    Assign Skills
 
                 end
 
-                ORG --> CTRL : collaborator
+                ORG --> CTRL : changedcollaborator
             deactivate ORG
 
-            CTRL --> UI: collaborator
+            CTRL --> UI: changedcollaborator
             deactivate CTRL
             UI --> ADM: displays operation success
     deactivate UI
