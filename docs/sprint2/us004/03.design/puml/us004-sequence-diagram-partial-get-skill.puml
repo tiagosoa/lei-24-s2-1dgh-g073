@@ -7,20 +7,20 @@ participant "organization\n:Organization" as ORG
 participant "collaborator\n:Collaborator" as COLABORADOR
 
 autonumber 16
--> ORG: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+-> ORG: getSkill(skillname)
 
 autonumber 16.1
 activate ORG
     group Get Skill
-        ORG -> ORG: getSkill (collaborator)
+        ORG -> ORG: showSkillList()
 
-        activate ORG
-            ORG -> ORG: validateSkill(collaborator)
-            activate ORG
+
+        ORG -> ORG: validateSkill()
+
     end
 
     autonumber 17
-    <-- ORG : collaborator
+    <-- ORG : skill
 deactivate ORG
 
 

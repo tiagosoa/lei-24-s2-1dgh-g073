@@ -7,8 +7,8 @@ autonumber
 
 'hide footbox
 actor "Human Resources Manager" as ADM
-participant ":RegisterCollaboratorUI" as UI
-participant ":RegisterCollaboratorController" as CTRL
+participant ":AssignSkillUI" as UI
+participant ":AssignSkillController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant ":ApplicationSession" as _APP
@@ -16,7 +16,6 @@ participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO
 participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
 participant "organization\n:Organization" as ORG
-participant "collaborator\n:Collaborator" as COLABORADOR
 
 activate ADM
 
@@ -27,6 +26,7 @@ activate ADM
 '            UI --> ADM : requests data (name)
             'create CTRL
             UI -> CTRL** : create
+            UI -> CTRL: showColabboratorList()
 
 
     UI --> ADM : shows list of existing collaborators and asks to select one or more
@@ -39,19 +39,40 @@ activate ADM
 
         UI -> CTRL : getCollaborator(ID number)
         activate CTRL
+
+        CTRL -> ORG : getCollaborator(ID number)
+        activate ORG
+
+        ORG -> CTRL : collaborator
+        deactivate ORG
+
+        UI -> CTRL : showSkillList()
+        deactivate CTRL
     end
     UI --> ADM : shows list of existing skills and asks to select one or more
     deactivate UI
+
 
    ADM -> UI : selects skill(s)
    activate UI
 
    group Get Skill
 
-        UI -> CTRL : getSkill(name)
+        UI -> CTRL : getSkill(skillname)
         activate CTRL
 
+        CTRL -> ORG : getSkill(skillname)
+        activate ORG
+
+        ORG -> CTRL : skill
+        deactivate ORG
+
    end
+
+   UI -> ADM : shows selected data and requests confirmation
+
+   ADM -> UI : confirms data
+
 
             |||
             CTRL -> CTRL : getEmployeeFromSession()

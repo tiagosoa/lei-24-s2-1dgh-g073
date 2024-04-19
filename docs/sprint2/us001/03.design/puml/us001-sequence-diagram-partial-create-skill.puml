@@ -13,12 +13,13 @@ autonumber 16.1
 activate ORG
     group Create Task
 
-        ORG -> TAREFA**: create(name)
+        ORG -> TAREFA**: createSkill(skillname)
+        ORG -> ORG: validateSkill(skill)
         ORG -> ORG: addSkill (skill)
 
-        activate ORG
-            ORG -> ORG: validateSkill(skill)
-            activate ORG
+
+
+
     end
 
     autonumber 17

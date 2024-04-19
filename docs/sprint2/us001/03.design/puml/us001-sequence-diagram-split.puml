@@ -33,18 +33,18 @@ activate ADM
     ADM -> UI : submits name
     activate UI
 
-        UI -> CTRL : createSkill(name)
-        activate CTRL
+        UI -> CTRL : createSkill(skillname)
+
 
             CTRL -> CTRL : getEmployeeFromSession()
-            activate CTRL
+
 
                 ref over CTRL
                     Get Employee
 
                 end ref
                 CTRL -> CTRL : employee
-            deactivate CTRL
+
 
             CTRL -> ORG: createSkill(name, employee)
             activate ORG

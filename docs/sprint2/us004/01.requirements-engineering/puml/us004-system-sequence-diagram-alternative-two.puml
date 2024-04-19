@@ -21,9 +21,6 @@ activate Employee
     Employee -> System : selects collaborator(s)
     activate System
 
-    System --> Employee : validates collaborator(s) existence
-    deactivate System
-
     System --> Employee : shows list of skills and asks to select one or more
     deactivate System
 
@@ -35,9 +32,6 @@ activate Employee
 
     Employee -> System : confirms data
     activate System
-
-    System --> Employee : Updates collaborator skill set
-    deactivate System
 
     System --> Employee : displays operation success
     deactivate System
