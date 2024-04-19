@@ -1,0 +1,94 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam classAttributeIconSize 0
+
+class HumanResourcesManager {
+  - String name
+  - String email
+  - String phone
+  + generateTeamProposal(maxSize, minSize, skills[])
+}
+
+class Skill {
+  - String description
+}
+
+class Employee {
+  - String name
+  - String email
+  - List<Skill> skills
+  + hasSkill(skill: Skill) : boolean
+}
+
+class Team {
+  - List<Employee> members
+  + addMember(employee: Employee) : boolean
+  + isFull() : boolean
+  + meetsSkillRequirements(requiredSkills: List<Skill>) : boolean
+}
+
+class TeamProposalGenerator {
+  - List<Employee> allEmployees
+  - int maxSize
+  - int minSize
+  - List<Skill> requiredSkills
+  + TeamProposalGenerator(repositories: Repositories, maxSize: int, minSize: int, requiredSkills: List<Skill>)
+  + generateProposal() : Team
+}
+
+class Repositories {
+  - static instance : Repositories
+  + getInstance() : Repositories
+  + getEmployeeRepository() : EmployeeRepository
+  + getSkillRepository() : SkillRepository
+}
+
+class EmployeeRepository {
+  + List<Employee> findAll()
+  + Employee findByID(String id)
+}
+
+class SkillRepository {
+  + List<Skill> findAll()
+  + Skill findByDescription(String description)
+}
+
+class Organization {
+  - String name
+  - String vatNumber
+  - List<Employee> employees
+  + addEmployee(employee: Employee)
+  + removeEmployee(employee: Employee)
+  + findEmployeeByID(String id) : Employee
+}
+
+note right of HumanResourcesManager
+  - HRM inputs team size and skill criteria
+end note
+
+note left of TeamProposalGenerator
+  - Ensures team meets size and skill requirements
+end note
+
+note bottom of Team
+  - Maintains a list of team members
+  - Checks if team meets size and skill requirements
+end note
+
+note bottom of Organization
+  - Manages employees
+end note
+
+HumanResourcesManager -down-> TeamProposalGenerator : uses
+TeamProposalGenerator -down-> Team : generates
+Employee -left-> Skill : possesses
+Organization -right-> Employee : manages
+Organization -up-> HumanResourcesManager : belongs to
+Repositories -right-> EmployeeRepository : contains
+Repositories -right-> SkillRepository : contains
+TeamProposalGenerator -right-> Repositories : accesses
+
+@enduml
