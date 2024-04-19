@@ -65,7 +65,6 @@ class VehicleRegistrationUI {
 
 note right of RegisterVehicleController
   - Vehicle details are obtained from the VFM's input
-  - Registration triggers persistence in the VehicleRepository
   - Updates the Organization's fleet
 end note
 
