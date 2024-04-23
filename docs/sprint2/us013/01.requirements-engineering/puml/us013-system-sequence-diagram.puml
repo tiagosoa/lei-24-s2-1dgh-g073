@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title SSD US013 -
+
+autonumber
+
+actor " " as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : ask for the routes to be opened and pipes needed to be laid with a minimum accumulated cost, ensuring that all points are adequately supplied.
+    activate System
+
+        System --> Employee : Ask for information about the terrain and the points that need to be supplied.
+    deactivate System
+
+    Employee -> System : Put the typed data
+    activate System
+
+            System --> Employee : Ask about the costs of the pipes and labor.
+    deactivate System
+
+    Employee -> System : Put the typed data
+    activate System
+
+        System --> Employee : returns the routes to be opened and pipes needed to be laid with a minimum accumulated cost, ensuring that all points are adequately supplied
+    deactivate System
+
+@enduml
