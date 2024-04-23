@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US005 - Generate a Team 
 
 ## 3. Design - User Story Realization 
 
@@ -6,46 +6,48 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for... | Answer               | Justification (with patterns)                                                                                 |
-|:-------------  |:--------------------- |:---------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		 |	... interacting with the actor? | CreateTaskUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		 |	... coordinating the US? | CreateTaskController | Controller                                                                                                    |
-| 			  		 |	... instantiating a new Task? | Organization         | Creator (Rule 1): in the DM Organization has a Task.                                                          |
-| 			  		 | ... knowing the user using the system?  | UserSession          | IE: cf. A&A component documentation.                                                                          |
-| 			  		 |							 | Organization         | IE: knows/has its own Employees                                                                               |
-| 			  		 |							 | Employee             | IE: knows its own data (e.g. email)                                                                           |
-| Step 2  		 |							 |                      |                                                                                                               |
-| Step 3  		 |	...saving the inputted data? | Task                 | IE: object created in step 1 has its own data.                                                                |
-| Step 4  		 |	...knowing the task categories to show? | System               | IE: Task Categories are defined by the Administrators.                                                        |
-| Step 5  		 |	... saving the selected category? | Task                 | IE: object created in step 1 is classified in one Category.                                                   |
-| Step 6  		 |							 |                      |                                                                                                               |              
-| Step 7  		 |	... validating all data (local validation)? | Task                 | IE: owns its data.                                                                                            | 
-| 			  		 |	... validating all data (global validation)? | Organization         | IE: knows all its tasks.                                                                                      | 
-| 			  		 |	... saving the created task? | Organization         | IE: owns all its tasks.                                                                                       | 
-| Step 8  		 |	... informing operation success?| CreateTaskUI         | IE: is responsible for user interactions.                                                                     | 
+| Interaction ID | Question: Which class is responsible for...  | Answer                   | Justification (with patterns)                                                                                 |
+|:---------------|:---------------------------------------------|:-------------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1         | ... interacting with the actor?              | :TeamGeneratorUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+|                | ... coordinating the team generation?        | :TeamGeneratorController | Controller                                                                                                    |
+|                | ... instantiating a new team?                | :Organization            | Creator (Rule 1): in the Domain Model, Organization has a Team.                                               |
+|                | ... retrieving user session data?            | :ApplicationSession      | IE: responsible for managing application session data.                                                        |
+|                | ... accessing organization data?             | :Organization            | IE: Organization class encapsulates its own data.                                                             |
+| Step 2         | ... checking team size?                      | :TeamGeneratorController | Controller                                                                                                    |
+| Step 3         | ... saving the inputted data?                | :Organization            | IE: Organization class holds data relevant to team creation.                                                  |
+| Step 4         | ... knowing the required skills?             | :TeamGeneratorController | Controller                                                                                                    |
+| Step 5         | ... saving the selected skills?              | :Organization            | IE: Organization class holds data relevant to team creation.                                                  |
+| Step 6         |                                              |                          |                                                                                                               |
+| Step 7         | ... retrieving collaborator data?            | :CollaboratorRepository  | Repository: responsible for accessing collaborator data.                                                      |
+|                | ... selecting suitable collaborators?        | :CollaboratorRepository  | Repository: responsible for selecting collaborators based on criteria.                                        |
+|                | ... adding selected collaborators?           | :Organization            | IE: Organization class manages its own collaborators.                                                         |
+|                | ... validating all data (global validation)? | :Organization            | IE: Organization class validates team proposal data.                                                          |
+|                | ... validating all data (local validation)?  | Task                     | IE: owns its data                                                                                             |
+| Step 8         | ... informing operation success?             | :TeamGeneratorUI         | Pure Fabrication: UI is responsible for user interactions and feedback.                                       |
+
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are: 
 
 * Organization
-* Task
+* Team
 
 Other software classes (i.e. Pure Fabrication) identified: 
 
-* CreateTaskUI  
-* CreateTaskController
+* TeamGeneratorUI  
+* TeamGeneratorController
 
 
 ## 3.2. Sequence Diagram (SD)
 
-_**Note that SSD - Alternative Two is adopted.**_
+_**Note that SSD - Alternative One is adopted.**_
 
 ### Full Diagram
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us006-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us005-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
@@ -53,23 +55,27 @@ The following diagram shows the same sequence of interactions between the classe
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![Sequence Diagram - split](svg/us006-sequence-diagram-split.svg)
+![Sequence Diagram - Split](svg/us005-sequence-diagram-split.svg)
 
-**Get Task Category List Partial SD**
+**Check Team Size and Get Skills**
 
-![Sequence Diagram - Partial - Get Task Category List](svg/us006-sequence-diagram-partial-get-task-category-list.svg)
+![Sequence Diagram - Partial - Check Team Size and Get Skills](svg/us005-sequence-diagram-partial-check-team-size-and-get-skills.svg)
 
-**Get Task Category Object**
+**Get Required Skills**
 
-![Sequence Diagram - Partial - Get Task Category Object](svg/us006-sequence-diagram-partial-get-task-category.svg)
+![Sequence Diagram - Partial - Get Required Skills](svg/us005-sequence-diagram-partial-get-required-skills.svg)
 
 **Get Employee**
 
-![Sequence Diagram - Partial - Get Employee](svg/us006-sequence-diagram-partial-get-employee.svg)
+![Sequence Diagram - Partial - Get Employee](svg/us005-sequence-diagram-partial-get-employee.svg)
 
-**Create Task**
+**Get Collaborators**
 
-![Sequence Diagram - Partial - Create Task](svg/us006-sequence-diagram-partial-create-task.svg)
+![Sequence Diagram - Partial - Get Collaborators](svg/us005-sequence-diagram-partial-get-collaborators.svg)
+
+**Generate Team**
+
+![Sequence Diagram - Partial - Generate Team](svg/us005-sequence-diagram-partial-generate-team.svg)
 
 ## 3.3. Class Diagram (CD)
 

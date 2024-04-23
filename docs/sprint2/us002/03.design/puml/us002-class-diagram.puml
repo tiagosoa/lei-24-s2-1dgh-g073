@@ -9,6 +9,17 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
 class Job {
     - name: String
 }
@@ -17,30 +28,92 @@ class JobManager {
     + createJob(name: String): boolean
 }
 
+class JobRepository {
+  + boolean save(Job job)
+  + Job findByName(String name)
+}
+
+class Organization {
+  - String name
+  - String vatNumber
+  - String address
+  - String phone
+  - String email
+  + addJob(Job job)
+  + Job findJobByName(String name)
+}
+
+class OrganizationRepository {
+  + findByName(String name)
+  + findByVatNumber(String vatNumber)
+}
+
+class Repositories {
+  + getInstance() : Repositories
+  + getJobRepository() : JobRepository
+  + getOrganizationRepository() : OrganizationRepository
+}
+
+class CreateJobController {
+  + CreateJobController(organizationRepository, jobRepository)
+  + Job createJob(HRManager hrm, String name)
+}
+
+class CreateJobUI {
+
+}
+
 class HRManager {
-    + manageSkills(): void
+   - String name
+   - int vatNumber
+   - String email
+   - int phonenumber
+    + manageJobs(): void
 }
 
 JobManager --> Job: Manages
 HRManager --> JobManager: Uses
 
+note right of CreateJobController
+  - Job name is obtained from the HRM's input
+  - Updates the Job Repository
+end note
+
+note right of HRManager
+  - HRM initiates job creation
+end note
+
+note left of CreateJobUI
+  - UI for HRM to input and confirm job name
+  - Communicates with CreateJobController
+end note
+
+note left of Organization
+  - Manages skills
+  - Handles organizational details
+end note
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
 CreateJobUI .> CreateJobController
 
-CreateJobController .> Repositories : repositories
+CreateJobController -down-> Repositories : retrieves instances
+
+Repositories -down-> JobRepository : accesses
+Repositories -down-> OrganizationRepository : accesses
+
+CreateJobController ..> OrganizationRepository : organizationRepository
 
 Repositories --> "1" OrganizationRepository
 
-OrganizationRepository --> "*" Organization
+OrganizationRepository --> "*" Organization : persists
 ApplicationSession --> "1" UserSession : userSession
 
 CreateJobController ..> "1" Organization : organization
 CreateJobController ..> ApplicationSession
 CreateJobController ..> UserSession
-Organization "1" --> "*" Job : attributes
+Organization "1" --> "*" Job : owns
 Job --> HRManager : createdBy
 
 Organization --> "*" HRManager : employs

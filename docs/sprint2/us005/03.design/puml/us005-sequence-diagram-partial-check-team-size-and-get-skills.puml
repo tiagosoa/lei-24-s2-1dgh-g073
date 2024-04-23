@@ -1,0 +1,44 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+participant ":TeamGeneratorController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "skillRepository:\nSkillRepository" as SR
+participant "CollaboratorRepository:\ncollaboratorRepository" as CR
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
+participant "organization\n:Organization" as ORG
+participant "team\n:Team" as EQUIPA
+
+
+
+
+        -> CTRL : checkMinAndMaxTeamSize(min, max)
+        activate CTRL
+
+        -> CTRL : getSkillRepository()
+
+        CTRL -> PLAT : getSkillRepository()
+                activate PLAT
+
+            PLAT -> CTRL : skillRepository
+            deactivate PLAT
+
+        CTRL -> SR: getSkillList()
+        activate SR
+
+        SR -> CTRL : List<Skill>
+        deactivate SR
+
+        <- CTRL : List<Skill>
+        deactivate CTRL
+
+@enduml

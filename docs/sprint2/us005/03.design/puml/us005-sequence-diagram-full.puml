@@ -1,0 +1,191 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as ADM
+participant ":TeamGeneratorUI" as UI
+participant ":TeamGeneratorController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "skillRepository:\nSkillRepository" as SR
+participant "CollaboratorRepository:\ncollaboratorRepository" as CR
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
+participant "organization\n:Organization" as ORG
+participant "team\n:Team" as EQUIPA
+
+activate ADM
+
+        ADM -> UI : asks to generate team
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+            UI --> ADM : asks for minimum and maximum team size
+        deactivate UI
+
+    ADM -> UI : inputs minimum and maximum team size
+    activate UI
+
+        UI -> CTRL : checkMinAndMaxTeamSize(minSize, maxSize)
+        activate CTRL
+
+                        CTRL -> RepositorySingleton : getInstance()
+                        activate RepositorySingleton
+
+                            RepositorySingleton --> CTRL: repositories
+                        deactivate RepositorySingleton
+
+
+        UI -> CTRL : getSkillRepository()
+
+        CTRL -> PLAT : getSkillRepository()
+                activate PLAT
+
+            PLAT -> CTRL : skillRepository
+            deactivate PLAT
+
+        CTRL -> SR: getSkillList()
+        activate SR
+
+        SR -> CTRL : List<Skill>
+        deactivate SR
+
+        CTRL -> UI : List<Skill>
+        deactivate CTRL
+
+    UI -> ADM : shows skill list and asks to select required ones
+    deactivate UI
+
+    ADM -> UI : selects skills
+    activate UI
+
+    UI -> CTRL : getRequiredSkills()
+
+    CTRL -> SR: getRequiredSkills()
+    activate SR
+
+    SR -> CTRL : List<RequiredSkills>
+    deactivate SR
+
+    CTRL -> UI : List<RequiredSkills>
+    deactivate CTRL
+
+    UI -> ADM : shows team size and selected skills and asks for confirmation
+
+    ADM -> UI : confirms data
+
+          UI -> CTRL : generateTeamProposal(maxSize, minSize, List<RequiredSkills>)
+            activate CTRL
+
+          UI -> CTRL : getCollaboratorRepository()
+
+
+
+            CTRL -> PLAT : getCollaboratorRepository()
+                activate PLAT
+
+            PLAT -> CTRL : collaboratorRepository
+            deactivate PLAT
+
+            CTRL -> CR : getCollaborators()
+            activate CR
+
+            CR -> CTRL : List<Collaborators>
+            deactivate CR
+
+            |||
+            CTRL -> CTRL : getEmployeeFromSession()
+            activate CTRL
+
+                CTRL -> _APP: getInstance()
+                activate _APP
+                    _APP -> CTRL: appSession
+                deactivate _APP
+
+
+                CTRL -> APP: getCurrentSession()
+                activate APP
+
+                    APP --> CTRL: currentSession
+                deactivate APP
+
+                CTRL -> SESSAO: email = getUserEmail()
+                activate SESSAO
+
+                    SESSAO --> CTRL: email
+                deactivate SESSAO
+
+
+                CTRL -> PLAT: getOrganizationRepository(email)
+                activate PLAT
+
+                    PLAT --> CTRL: organizationRepository
+                deactivate PLAT
+
+
+                CTRL -> OrganizationRepository: getOrganizationByEmployeeEmail(email)
+                activate OrganizationRepository
+
+                    loop [for each organization
+                        OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
+                        activate ORG
+
+                             ORG --> OrganizationRepository : true/false
+                        deactivate ORG
+                    end
+                    OrganizationRepository --> CTRL : organization
+                deactivate OrganizationRepository
+
+                CTRL -> ORG: getEmployeeByEmail(email)
+                activate ORG
+
+                    ORG --> CTRL : employee
+                deactivate ORG
+
+                CTRL --> CTRL : employee
+            deactivate CTRL
+
+            |||
+            CTRL -> ORG: generateTeamProposal(maxSize, minSize, List<RequiredSkills>, employee)
+            activate ORG
+
+                ORG -> EQUIPA**: create(generateTeamProposal(maxSize, minSize, List<RequiredSkills>, employee)
+                ORG -> CR: selectCollaborators (List<RequiredSkills>)
+
+                ORG -> CR: List<Members>
+
+                CR -> ORG: addMembers (List<Members>, team)
+
+
+                activate ORG
+                    ORG -> ORG: validateTeam(team)
+
+
+                ORG --> CTRL : team
+
+            deactivate ORG
+
+            CTRL --> UI: team
+            deactivate CTRL
+            UI --> ADM: displays operation success
+    deactivate UI
+
+deactivate ADM
+
+@enduml

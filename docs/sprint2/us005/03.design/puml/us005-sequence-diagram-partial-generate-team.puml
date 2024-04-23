@@ -1,0 +1,41 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+participant ":TeamGeneratorController" as CTRL
+participant "CollaboratorRepository:\ncollaboratorRepository" as CR
+participant "organization\n:Organization" as ORG
+participant "team\n:Team" as EQUIPA
+
+
+
+            -> CTRL: generateTeamProposal(maxSize, minSize, List<RequiredSkills>, employee)
+            activate CTRL
+            CTRL -> ORG: generateTeamProposal(maxSize, minSize, List<RequiredSkills>, employee)
+
+            activate ORG
+
+                ORG -> EQUIPA**: create(generateTeamProposal(maxSize, minSize, List<RequiredSkills>, employee)
+                ORG -> CR: selectCollaborators (List<RequiredSkills>)
+
+                CR -> ORG: List<Members>
+
+                ORG -> ORG: addMembers (List<Members>, team)
+
+
+                activate ORG
+                    ORG -> ORG: validateTeam(team)
+
+
+                ORG --> CTRL : team
+
+            deactivate ORG
+
+            <- CTRL: team
+            deactivate CTRL
+
+@enduml

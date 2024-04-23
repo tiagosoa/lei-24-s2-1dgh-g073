@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+title US013 Domain Model
+
+class GMC {
+
+}
+
+class Organization {
+
+}
+
+class "Algorithm"{
+    Algorithm that returns the routes to be opened and
+    pipes needed to be laid with a minimum accumulated
+    cost, ensuring that all points are adequately supplied.
+}
+
+Organization "1" -- "1..*" GMC : has >
+GMC "1" -- "*" "Algorithm" : use >
+Organization "1" -- "1..*" "Algorithm" : has >
+"Algorithm" "1" --"*" "GMC" : send data >
+@enduml

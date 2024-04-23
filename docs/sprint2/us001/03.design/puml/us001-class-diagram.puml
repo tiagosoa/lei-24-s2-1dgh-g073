@@ -9,6 +9,17 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
 class Skill {
     - name: String
 }
@@ -17,30 +28,92 @@ class SkillManager {
     + createSkill(name: String): boolean
 }
 
+class SkillRepository {
+  + boolean save(Skill skill)
+  + Skill findByName(String name)
+}
+
+class Organization {
+  - String name
+  - String vatNumber
+  - String address
+  - String phone
+  - String email
+  + addSkill(Skill skill)
+  + Skill findSkillByName(String name)
+}
+
+class OrganizationRepository {
+  + findByName(String name)
+  + findByVatNumber(String vatNumber)
+}
+
+class Repositories {
+  + getInstance() : Repositories
+  + getSkillRepository() : SkillRepository
+  + getOrganizationRepository() : OrganizationRepository
+}
+
+class CreateSkillController {
+  + CreateSkillController(organizationRepository, skillRepository)
+  + Skill createSkill(HRManager hrm, String name)
+}
+
+class CreateSkillUI {
+
+}
+
 class HRManager {
+   - String name
+   - int vatNumber
+   - String email
+   - int phonenumber
     + manageSkills(): void
 }
 
 SkillManager --> Skill: Manages
 HRManager --> SkillManager: Uses
 
+note right of CreateSkillController
+  - Skill name is obtained from the HRM's input
+  - Updates the Skill Repository
+end note
+
+note right of HRManager
+  - HRM initiates skill creation
+end note
+
+note left of CreateSkillUI
+  - UI for HRM to input and confirm skill name
+  - Communicates with CreateSkillController
+end note
+
+note left of Organization
+  - Manages skills
+  - Handles organizational details
+end note
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
 CreateSkillUI .> CreateSkillController
 
-CreateSkillController .> Repositories : repositories
+CreateSkillController -down-> Repositories : retrieves instances
+
+Repositories -down-> SkillRepository : accesses
+Repositories -down-> OrganizationRepository : accesses
+
+CreateSkillController ..> OrganizationRepository : organizationRepository
 
 Repositories --> "1" OrganizationRepository
 
-OrganizationRepository --> "*" Organization
+OrganizationRepository --> "*" Organization : persists
 ApplicationSession --> "1" UserSession : userSession
 
 CreateSkillController ..> "1" Organization : organization
 CreateSkillController ..> ApplicationSession
 CreateSkillController ..> UserSession
-Organization "1" --> "*" Skill : attributes
+Organization "1" --> "*" Skill : owns
 Skill --> HRManager : createdBy
 
 Organization --> "*" HRManager : employs
