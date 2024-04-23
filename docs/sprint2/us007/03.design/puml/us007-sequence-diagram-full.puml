@@ -1,3 +1,4 @@
+
 @startuml
 skinparam monochrome true
 skinparam packageStyle rectangle
@@ -10,7 +11,9 @@ actor "Vehicle and Equipment\nFleet Manager" as VEFL
 participant ":MaintenanceRegisterUI" as UI
 participant ":RegisterMaintenanceController" as RMC
 participant ":Repositories" as RepositorySingleton
-participant "VehicleRepository" as VR
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "vehicleRepository\n:VehicleRepository" as VR
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO
@@ -42,34 +45,36 @@ activate VEFL
     VEFL -> UI : confirms data
     activate UI
 
-        UI -> RMC : registerMaintenanceController(plate ID, current KMs \nand date of maintenance)
+        UI -> RMC : registerMaintenanceController(plate ID, brand, model, type, \ncurrent KMs and date of maintenance)
         activate RMC
 
+                RMC -> RMC : getVehicleByDescription(plate ID, brand, model, type)
+                activate RMC
 
+                    RMC -> RepositorySingleton : getInstance()
+                    activate RepositorySingleton
 
-                RMC -> RepositorySingleton : getInstance()
-                activate RepositorySingleton
+                        RepositorySingleton --> RMC: repositories
+                    deactivate RepositorySingleton
 
-                    RepositorySingleton --> RMC: repositories
-                deactivate RepositorySingleton
+                    RMC -> PLAT : getVehicleRepository()
+                    activate PLAT
 
-                RMC -> VR : getVehicleRepository()
-                activate VR
+                        PLAT --> RMC : vehicleRepository
+                    deactivate PLAT
 
-                    VR -> RMC : VehicleRepository
-                deactivate VR
+                    RMC -> VR : getVehicleByDescription(plate ID, brand, model, type)
+                    activate VR
 
-                RMC -> OrganizationRepository : getOrganizationRepository()
-                activate OrganizationRepository
+                        VR --> RMC : vehicle
+                    deactivate VR
 
-                    OrganizationRepository --> RMC : OrganizationRepository
-                deactivate OrganizationRepository
+                    RMC --> RMC : vehicle
 
-
-
+                deactivate RMC
 
             |||
-            RMC -> ORG: createMaintenanceDate(plate ID, current KMs \nand date of maintenance)
+            RMC -> ORG: createMaintenanceDate(Vehicle, current KMs \nand date of maintenance)
             activate ORG
 
                 ORG -> TAREFA**: create(plate ID, current KMs \nand date of maintenance)
@@ -90,7 +95,7 @@ activate VEFL
             deactivate ORG
 
             RMC --> UI: maintenanceDate
-            deactivate RMC
+        deactivate RMC
             UI --> VEFL: displays operation success
     deactivate UI
 
