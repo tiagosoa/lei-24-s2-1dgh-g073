@@ -1,0 +1,34 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+participant ":TeamGeneratorController" as CTRL
+
+participant "repositories\n:Repositories" as PLAT
+
+participant "CollaboratorRepository:\ncollaboratorRepository" as CR
+
+
+
+
+            -> CTRL : getCollaboratorRepository()
+            activate CTRL
+
+
+            CTRL -> PLAT : getCollaboratorRepository()
+                activate PLAT
+
+            PLAT -> CTRL : collaboratorRepository
+            deactivate PLAT
+
+            CTRL -> CR : getCollaborators()
+            activate CR
+
+            CR -> CTRL : List<Collaborators>
+            deactivate CR
+
+@enduml

@@ -1,13 +1,24 @@
 @startuml
-'skinparam monochrome true
-skinparam packageStyle rectangle
-skinparam shadowing false
-skinparam linetype polyline
-'skinparam linetype orto
+ 'skinparam monochrome true
+ skinparam packageStyle rectangle
+ skinparam shadowing false
+ skinparam linetype polyline
+ 'skinparam linetype orto
 
-skinparam classAttributeIconSize 0
+ skinparam classAttributeIconSize 0
 
-'left to right direction
+ 'left to right direction
+
+ class ApplicationSession
+ {
+     + static getInstance()
+     + getCurrentSession()
+ }
+
+ class UserSession
+ {
+     + getUserEmail()
+ }
 
 class Collaborator {
     - name: String
@@ -20,36 +31,98 @@ class Collaborator {
     - ID number: int
 }
 
-class CollaboratorManager {
-    + registerCollaborator(name: String, \nbirthdate: String, \nadmission date: String, \naddress: String, \nmobile Contact: int, \nemail contact: String, \nID doc type: String, \nID number: int): boolean
-}
+ class CollaboratorManager {
+     + registerCollaborator(name: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \nIDdoctype: String, \nIDnumber: int): boolean
+ }
 
-class HRManager {
-    + manageCollaborators(): void
-}
+ class CollaboratorRepository {
+   + boolean save(Collaborator collaborator)
+   + Collaborator findByID(int IDnumber)
+ }
 
-CollaboratorManager --> Collaborator: Manages
-HRManager --> CollaboratorManager: Uses
+ class Organization {
+   - String name
+   - String vatNumber
+   - String address
+   - String phone
+   - String email
+   + addCollaborator(Collaborator collaborator)
+   + Collaborator findCollaboratorByID(int IDnumber)
+ }
 
+ class OrganizationRepository {
+   + findByName(String name)
+   + findByVatNumber(String vatNumber)
+ }
 
-Repositories -> Repositories : instance
-ApplicationSession -> ApplicationSession : instance
+ class Repositories {
+   + getInstance() : Repositories
+   + getCollaboratorRepository() : CollaboratorRepository
+   + getOrganizationRepository() : OrganizationRepository
+ }
 
-RegisterCollaboratorUI .> RegisterCollaboratorController
+ class RegisterCollaboratorController {
+   + RegisterCollaboratorControllerController(organizationRepository, collaboratorRepository)
+   + Collaborator registerCollaborator(HRManager hrm, \nname: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \nIDdoctype: String, \nIDnumber: int)
+ }
 
-RegisterCollaboratorController .> Repositories : repositories
+ class RegisterCollaboratorUI {
 
-Repositories --> "1" OrganizationRepository
+ }
 
-OrganizationRepository --> "*" Organization
-ApplicationSession --> "1" UserSession : userSession
+ class HRManager {
+    - String name
+    - int vatNumber
+    - String email
+    - int phonenumber
+     + manageCollaborators(): void
+ }
 
-RegisterCollaboratorController ..> "1" Organization : organization
-RegisterCollaboratorController ..> ApplicationSession
-RegisterCollaboratorController ..> UserSession
-Collaborator --> HRManager : registered by
+ CollaboratorManager --> Collaborator: Manages
+ HRManager --> CollaboratorManager: Uses
 
-Organization --> "*" HRManager : employs
-Organization --> "*" Collaborator : employs
+ note right of RegisterCollaboratorController
+   - Collaborator data is obtained from the HRM's input
+   - Updates the Collaborator Repository
+ end note
 
-@enduml
+ note right of HRManager
+   - HRM initiates collaborator registration
+ end note
+
+ note left of RegisterCollaboratorUI
+   - UI for HRM to input and confirm collaborator name
+   - Communicates with RegisterCollaboratorController
+ end note
+
+ note left of Organization
+   - Manages collaborators
+   - Handles organizational details
+ end note
+
+ Repositories -> Repositories : instance
+ ApplicationSession -> ApplicationSession : instance
+
+ RegisterCollaboratorUI .> RegisterCollaboratorController
+
+ RegisterCollaboratorController -down-> Repositories : retrieves instances
+
+ Repositories -down-> JobRepository : accesses
+ Repositories -down-> OrganizationRepository : accesses
+
+ RegisterCollaboratorController ..> OrganizationRepository : organizationRepository
+
+ Repositories --> "1" OrganizationRepository
+
+ OrganizationRepository --> "*" Organization : persists
+ ApplicationSession --> "1" UserSession : userSession
+
+ RegisterCollaboratorController ..> "1" Organization : organization
+ RegisterCollaboratorController ..> ApplicationSession
+ RegisterCollaboratorController ..> UserSession
+ Organization "1" --> "*" Collaborator : owns
+ Collaborator --> HRManager : createdBy
+
+ Organization --> "*" HRManager : employs
+
+ @enduml

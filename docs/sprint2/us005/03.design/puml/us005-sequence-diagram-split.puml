@@ -1,0 +1,106 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as ADM
+participant ":TeamGeneratorUI" as UI
+participant ":TeamGeneratorController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "skillRepository:\nSkillRepository" as SR
+participant "CollaboratorRepository:\ncollaboratorRepository" as CR
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
+participant "organization\n:Organization" as ORG
+participant "team\n:Team" as EQUIPA
+
+activate ADM
+
+        ADM -> UI : asks to generate team
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+
+            UI --> ADM : asks for minimum and maximum team size
+        deactivate UI
+
+    ADM -> UI : inputs minimum and maximum team size
+    activate UI
+
+        UI -> CTRL : checkMinAndMaxTeamSize(minSize, maxSize)
+        activate CTRL
+
+                ref over CTRL
+                    Check Team Size and Get Skills
+
+                end ref
+
+        CTRL -> UI : List<Skill>
+        deactivate CTRL
+
+    UI -> ADM : shows skill list and asks to select required ones
+    deactivate UI
+
+    ADM -> UI : selects skills
+    activate UI
+
+    UI -> CTRL : getRequiredSkills()
+
+            ref over CTRL
+                Get Required Skills
+
+            end ref
+
+    CTRL -> UI : List<RequiredSkills>
+    deactivate CTRL
+
+    UI -> ADM : shows team size and selected skills and asks for confirmation
+
+    ADM -> UI : confirms data
+
+          UI -> CTRL : generateTeamProposal(maxSize, minSize, List<RequiredSkills>)
+            activate CTRL
+
+          UI -> CTRL : getCollaboratorRepository()
+
+
+
+                    ref over CTRL
+                        Get Collaborator Repository
+
+                    end ref
+            |||
+                               ref over CTRL
+                                   Get Employee
+
+                               end ref
+
+            |||
+            CTRL -> ORG: generateTeamProposal(maxSize, minSize, List<RequiredSkills>, employee)
+            activate ORG
+
+                    ref over ORG
+                        Generate Team
+
+                    end ref
+                ORG --> CTRL : team
+
+            deactivate ORG
+
+            CTRL --> UI: team
+            deactivate CTRL
+            UI --> ADM: displays operation success
+    deactivate UI
+
+deactivate ADM
+
+@enduml
