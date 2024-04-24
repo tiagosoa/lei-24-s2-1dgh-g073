@@ -48,7 +48,7 @@ activate VEFL
         UI -> RMC : registerMaintenanceController(plate ID, brand, model, type, \ncurrent KMs and date of maintenance)
         activate RMC
 
-                RMC -> RMC : getVehicleByDescription(plate ID, brand, model, type)
+                RMC -> RMC : getVehicleByDescription(plate ID, brand, model, type, \ncurrent KMs and date of maintenance))
                 activate RMC
 
                     RMC -> RepositorySingleton : getInstance()
@@ -72,6 +72,57 @@ activate VEFL
                     RMC --> RMC : vehicle
 
                 deactivate RMC
+
+                RMC -> RMC : getVFMFromSession()
+                            activate RMC
+
+                                RMC -> _APP: getInstance()
+                                activate _APP
+                                    _APP -> RMC: appSession
+                                deactivate _APP
+
+
+                                RMC -> APP: getCurrentSession()
+                                activate APP
+
+                                    APP --> RMC: currentSession
+                                deactivate APP
+
+                                RMC -> SESSAO: email = getUserEmail()
+                                activate SESSAO
+
+                                    SESSAO --> RMC: email
+                                deactivate SESSAO
+
+
+                                RMC -> PLAT: getOrganizationRepository(email)
+                                activate PLAT
+
+                                    PLAT --> RMC: organizationRepository
+                                deactivate PLAT
+
+
+                                RMC -> OrganizationRepository: getOrganizationByVFMEmail(email)
+                                activate OrganizationRepository
+
+                                    loop [for each organization
+                                        OrganizationRepository -> ORG : anyVFMHasEmail(email)
+                                        activate ORG
+
+                                             ORG --> OrganizationRepository : true/false
+                                        deactivate ORG
+                                    end
+                                    OrganizationRepository --> RMC : organization
+                                deactivate OrganizationRepository
+
+                                RMC -> ORG: getVFMByEmail(email)
+                                activate ORG
+
+                                    ORG --> RMC : VFM
+                                deactivate ORG
+
+                                RMC --> RMC : VFM
+                            deactivate RMC
 
             |||
             RMC -> ORG: createMaintenanceDate(Vehicle, current KMs \nand date of maintenance)

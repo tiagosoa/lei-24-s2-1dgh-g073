@@ -49,6 +49,17 @@ activate VEFL
                RMC-->RMC : vehicle
             deactivate RMC
 
+
+             RMC -> RMC : getVFMFromSession()
+                        activate RMC
+            
+                            ref over RMC
+                              Get VFM
+            
+                            end ref
+            
+                            RMC --> RMC : VFM
+                        deactivate RMC
             |||
             RMC -> ORG: createMaintenanceDate(plate ID, current KMs \nand date of maintenance)
             activate ORG
