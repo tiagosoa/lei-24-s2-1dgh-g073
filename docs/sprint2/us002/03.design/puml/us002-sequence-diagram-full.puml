@@ -10,6 +10,7 @@ actor "Human Resources Manager" as ADM
 participant ":CreateJobUI" as UI
 participant ":CreateJobController" as CTRL
 participant ":Repositories" as RepositorySingleton
+participant "jobrepository\n:JobRepository" as JR
 participant "repositories\n:Repositories" as PLAT
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
@@ -27,12 +28,14 @@ activate ADM
 '            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
             UI -> CTRL** : create
+            activate CTRL
 
-                CTRL -> RepositorySingleton : getInstance()
+                CTRL -> RepositorySingleton : getJobRepository()
                 activate RepositorySingleton
 
-                    RepositorySingleton --> CTRL: repositories
+                    RepositorySingleton --> CTRL: jobrepository
                 deactivate RepositorySingleton
+                deactivate CTRL
 
         UI --> ADM : requests name of job
     deactivate UI
@@ -46,9 +49,11 @@ activate ADM
     ADM -> UI : submits name
     activate UI
 
-            CTRL -> CTRL : getEmployeeFromSession()
-            activate CTRL
+    UI -> CTRL : createJob(jobname)
+    activate CTRL
 
+            CTRL -> CTRL : getHRMFromSession()
+            activate CTRL
                 CTRL -> _APP: getInstance()
                 activate _APP
                     _APP -> CTRL: appSession
@@ -75,11 +80,11 @@ activate ADM
                 deactivate PLAT
 
 
-                CTRL -> OrganizationRepository: getOrganizationByEmployeeEmail(email)
+                CTRL -> OrganizationRepository: getOrganizationByHRMEmail(email)
                 activate OrganizationRepository
 
                     loop [for each organization
-                        OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
+                        OrganizationRepository -> ORG : anyHRMHasEmail(email)
                         activate ORG
 
                              ORG --> OrganizationRepository : true/false
@@ -88,35 +93,24 @@ activate ADM
                     OrganizationRepository --> CTRL : organization
                 deactivate OrganizationRepository
 
-                CTRL -> ORG: getEmployeeByEmail(email)
+                CTRL -> ORG: getHRMByEmail(email)
                 activate ORG
 
-                    ORG --> CTRL : employee
+                    ORG --> CTRL : hrm
                 deactivate ORG
 
-                CTRL --> CTRL : employee
+                CTRL --> CTRL : hrm
             deactivate CTRL
 
             |||
-            CTRL -> ORG: creatJob(name, employee)
+            CTRL -> ORG: creatJob(name, hrm)
             activate ORG
 
-                ORG -> TAREFA**: create(name, employee)
-                ORG -> ORG: addJob(job)
-
-
-                activate ORG
-                    ORG -> ORG: validateJob(job)
-                    activate ORG
-                        ORG --> ORG
-                    deactivate ORG
-
-                    ORG --> ORG
-                deactivate ORG
-
-                ORG --> CTRL : job
-
-            deactivate ORG
+                ORG -> TAREFA**: create(jobname, hrm)
+                ORG -> ORG: validateJob(job)
+                ORG -> JR: addJob(job)
+                ORG -> CTRL: job
+deactivate ORG
 
             CTRL --> UI: job
             deactivate CTRL

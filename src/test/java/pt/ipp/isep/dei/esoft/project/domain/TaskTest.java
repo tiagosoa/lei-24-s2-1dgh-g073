@@ -4,123 +4,87 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TaskTest {
+class SkillTest {
 
     @Test
-    void ensureTaskIsCreatedSuccessfully() {
-        Employee employee = new Employee("john.doe@this.company.com");
-        TaskCategory taskCategory = new TaskCategory("Task Category Description");
-        Task task = new Task("reference", "description", "informal description", "technical description", 1, 1d,
-                taskCategory, employee);
+    void ensureSkillIsCreatedSuccessfully() {
+        HRM hrm = new HRM("john.doe@this.company.com");
+        Skill skill = new Skill("name", hrm);
     }
 
     @Test
-    void ensureTaskReferenceIsNotNull() {
+    void ensureSkillNameIsNotNull() {
         //Arrange
-        Employee employee = new Employee("john.doe@this.company.com");
-        TaskCategory taskCategory = new TaskCategory("Task Category Description");
+        HRM hrm = new HRM("john.doe@this.company.com");
+
 
         //Act and Assert
         assertThrows(IllegalArgumentException.class,
-                () -> new Task(null, "description", "informal description", "technical description", 1, 1d,
-                        taskCategory, employee));
+                () -> new Skill(null, hrm));
     }
 
     @Test
     void testEqualsSameObject() {
-        Employee employee = new Employee("john.doe@this.company.com");
-        TaskCategory taskCategory = new TaskCategory("Task Category Description");
-        Task task = new Task("reference", "description", "informal description", "technical description", 1, 1d,
-                taskCategory, employee);
-
-        assertEquals(task, task);
+        HRM hrm = new HRM("john.doe@this.company.com");
+        Skill skill = new Skill("name", hrm);
+        assertEquals(skill, skill);
     }
 
     @Test
     void testEqualsDifferentClass() {
-        Employee employee = new Employee("john.doe@this.company.com");
-        TaskCategory taskCategory = new TaskCategory("Task Category Description");
-        Task task = new Task("reference", "description", "informal description", "technical description", 1, 1d,
-                taskCategory, employee);
+        HRM hrm = new HRM("john.doe@this.company.com");
+        Skill skill = new Skill("name", hrm);
 
-        assertNotEquals(task, new Object());
+        assertNotEquals(skill, new Object());
     }
 
     @Test
     void testEqualsNull() {
-        Employee employee = new Employee("john.doe@this.company.com");
-        TaskCategory taskCategory = new TaskCategory("Task Category Description");
-        Task task = new Task("reference", "description", "informal description", "technical description", 1, 1d,
-                taskCategory, employee);
+        HRM employee = new HRM("john.doe@this.company.com");
+        Skill skill = new Skill("name", hrm);
 
-        assertNotEquals(task, null);
+        assertNotEquals(skill, null);
     }
 
     @Test
     void testEqualsDifferentObject() {
-        Employee employee = new Employee("john.doe@this.company.com");
-        TaskCategory taskCategory = new TaskCategory("Task Category Description");
-        Task task = new Task("reference", "description", "informal description", "technical description", 1, 1d,
-                taskCategory, employee);
-        Task task1 = new Task("reference1", "description1", "informal description1", "technical description1", 2, 2d,
-                taskCategory, employee);
+        HRM hrm = new HRM("john.doe@this.company.com");
+        Skill skill = new Skill("name", hrm);
+        Skill skill1 = new Skill("name1", hrm);
 
-        assertNotEquals(task, task1);
+        assertNotEquals(skill, skill1);
     }
 
     @Test
-    void testEqualsSameObjectDifferentDescription() {
-        Employee employee = new Employee("john.doe@this.company.com");
-        TaskCategory taskCategory = new TaskCategory("Task Category Description");
-        Task task = new Task("reference", "description", "informal description", "technical description", 1, 1d,
-                taskCategory, employee);
-        Task task1 = new Task("reference1", "description", "informal description1", "technical description1", 2, 2d,
-                taskCategory, employee);
+    void testEqualsSameObject() {
+        HRM hrm = new HRM("john.doe@this.company.com");
+        Skill skill = new Skill("name", hrm);
+        Skill skill1 = new Skill("name", hrm);
 
-        assertNotEquals(task, task1);
-    }
-
-    @Test
-    void testEqualsSameObjectSameDescription() {
-        Employee employee = new Employee("john.doe@this.company.com");
-        TaskCategory taskCategory = new TaskCategory("Task Category Description");
-        Task task = new Task("reference", "description", "informal description", "technical description", 1, 1d,
-                taskCategory, employee);
-        Task task1 = new Task("reference", "description", "informal description", "technical description", 1, 1d,
-                taskCategory, employee);
-
-        assertEquals(task, task1);
+        assertNotEquals(skill, skill1);
     }
 
     @Test
     void testHashCodeSameObject() {
-        Employee employee = new Employee("john.doe@this.company.com");
-        TaskCategory taskCategory = new TaskCategory("Task Category Description");
-        Task task = new Task("reference", "description", "informal description", "technical description", 1, 1d,
-                taskCategory, employee);
-
-        assertEquals(task.hashCode(), task.hashCode());
+        HRM hrm = new HRM("john.doe@this.company.com");
+        Skill skill = new Skill("name", hrm);
+        assertEquals(skill.hashCode(), skill.hashCode());
     }
 
     @Test
     void testHashCodeDifferentObject() {
-        Employee employee = new Employee("john.doe@this.company.com");
-        TaskCategory taskCategory = new TaskCategory("Task Category Description");
-        Task task = new Task("reference", "description", "informal description", "technical description", 1, 1d,
-                taskCategory, employee);
-        Task task1 = new Task("reference1", "description1", "informal description1", "technical description1", 2, 2d,
-                taskCategory, employee);
+        HRM hrm = new HRM("john.doe@this.company.com");
+        Skill skill = new Skill("name", hrm);
+        Skill skill1 = new Skill("name1", hrm);
 
-        assertNotEquals(task.hashCode(), task1.hashCode());
+        assertNotEquals(skill.hashCode(), skill1.hashCode());
     }
 
     @Test
     void ensureCloneWorks() {
-        Employee employee = new Employee("john.doe@this.company.org");
-        TaskCategory taskCategory = new TaskCategory("Task Category Description");
-        Task task = new Task("reference", "description", "informal description", "technical description", 1, 1d,
-                taskCategory, employee);
-        Task clone = task.clone();
-        assertEquals(task, clone);
+        HRM hrm = new HRM("john.doe@this.company.org");
+        Skill skill = new Skill("name", hrm);
+        Skill clone = skill.clone();
+        assertEquals(skill, clone);
     }
 }

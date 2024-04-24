@@ -5,24 +5,22 @@ skinparam shadowing false
 
 participant "organization\n:Organization" as ORG
 participant "skill\n:Skill" as TAREFA
+participant "skillrepository\n:SkillRepository" as SR
 
-autonumber 16
--> ORG: createSkill(name)
+-> ORG: createSkill(skillname)
 
-autonumber 16.1
 activate ORG
-    group Create Task
+    group Create Skill
 
         ORG -> TAREFA**: createSkill(skillname)
         ORG -> ORG: validateSkill(skill)
-        ORG -> ORG: addSkill (skill)
+        ORG -> SR: addSkill (skill)
 
 
 
 
     end
 
-    autonumber 17
     <-- ORG : skill
 deactivate ORG
 

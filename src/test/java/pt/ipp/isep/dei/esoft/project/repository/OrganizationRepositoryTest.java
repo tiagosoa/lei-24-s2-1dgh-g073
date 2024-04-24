@@ -1,7 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import org.junit.jupiter.api.Test;
-import pt.ipp.isep.dei.esoft.project.domain.Employee;
+import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
 
 import java.util.Optional;
@@ -24,7 +24,7 @@ class OrganizationRepositoryTest {
     void ensureGetOrganizationByEmployeeWorks() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         organization.addEmployee(employee);
         organizationRepository.add(organization);
 
@@ -37,11 +37,11 @@ class OrganizationRepositoryTest {
     void ensureGetOrganizationByEmployeeFails() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         organization.addEmployee(employee);
         organizationRepository.add(organization);
 
-        Employee employee2 = new Employee("jane.doe@this.company.com");
+        HRM employee2 = new HRM("jane.doe@this.company.com");
         Optional<Organization> result = organizationRepository.getOrganizationByEmployee(employee2);
 
         assertTrue(result.isEmpty());
@@ -51,7 +51,7 @@ class OrganizationRepositoryTest {
     void ensureGetOrganizationByEmailWorks() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         organization.addEmployee(employee);
         organizationRepository.add(organization);
 
@@ -65,7 +65,7 @@ class OrganizationRepositoryTest {
     void ensureAddOrganizationWorks() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         organization.addEmployee(employee);
 
         organizationRepository.add(organization);
@@ -84,7 +84,7 @@ class OrganizationRepositoryTest {
     void ensureAddOrganizationDuplicateFails() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         organization.addEmployee(employee);
         organizationRepository.add(organization);
 

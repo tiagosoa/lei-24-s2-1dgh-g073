@@ -12,7 +12,7 @@ _**Note that SSD - Alternative One is adopted.**_
 | 			  		        | 	... coordinating the US?                      | CreateJobController | Controller                                                                                                    |
 | 			  		        | 	... instantiating a new Job?                  | Organization        | Creator (Rule 1): in the DM Organization has a Job.                                                           |
 | 			  		        | ... knowing the user using the system?         | UserSession         | IE: cf. A&A component documentation.                                                                          |
-| 			  		        | 							                                        | Organization        | IE: knows/has its own Employees                                                                               |
+| 			  		        | 							                                        | Organization        | IE: knows/has its own Employees and HRMs                                                                      |
 | 			  		        | 							                                        | HRM                 | IE: knows its own data (e.g. email)                                                                           |
 | Step 2  		     | 							                                        |                     |                                                                                                               |
 | Step 3  		     | 	...saving the inputted data?                  | Job                 | IE: object created in step 1 has its own data.                                                                |	|                      |                                                                                                               |              
@@ -51,7 +51,7 @@ This diagram shows the full sequence of interactions between the classes involve
 ### Partial Diagrams
 
 [Sequence Diagram - Create Job](svg/us002-sequence-diagram-partial-create-job.svg)
-[Sequence Diagram - Get Employee](svg/us002-sequence-diagram-partial-get-employee.svg)
+[Sequence Diagram - Get HRM](svg/us002-sequence-diagram-partial-get-employee.svg)
 
 ## 3.3. Class Diagram (CD)
 

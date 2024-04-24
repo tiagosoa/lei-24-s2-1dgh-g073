@@ -9,52 +9,61 @@ autonumber
 actor "Human Resources Manager" as ADM
 participant ":CreateSkillUI" as UI
 participant ":CreateSkillController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "skillrepository\n:SkillRepository" as SR
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
 participant "organization\n:Organization" as ORG
+participant "skill\n:Skill" as HABILIDADE
 
 activate ADM
 
-    ADM -> UI : asks to create a new skill
+        ADM -> UI : asks to create a new skill
 
-    activate UI
+        activate UI
 
-        UI -> CTRL** : create
+'            UI --> ADM : requests data (name)
+            'create CTRL
+            UI -> CTRL** : create
 
-        activate CTRL
+         UI -> CTRL : getSkillRepository()
+         activate CTRL
 
-        UI --> ADM : requests name of skill
+                 CTRL -> PLAT : getSkillRepository()
+                         activate PLAT
+
+                     PLAT -> CTRL : skillRepository
+                     deactivate PLAT
+    deactivate CTRL
+    UI --> ADM : requests name
     deactivate UI
 
     ADM -> UI : types requested name
     activate UI
 
-        UI --> ADM : shows typed name
-    deactivate UI
-
-    ADM -> UI : submits name
-    activate UI
-
         UI -> CTRL : createSkill(skillname)
+        activate CTRL
 
+            |||
+                                ref over CTRL
+                                    Get HRM
 
-            CTRL -> CTRL : getEmployeeFromSession()
+                                end ref
 
-
-                ref over CTRL
-                    Get Employee
-
-                end ref
-                CTRL -> CTRL : employee
-
-
-            CTRL -> ORG: createSkill(name, employee)
+            |||
+            CTRL -> ORG: createSkill(skillname)
             activate ORG
 
-                ref over ORG
-                    Create Skill
+                                    ref over ORG
+                                        Create Skill
 
-                end
+                                    end ref
 
                 ORG --> CTRL : skill
+
             deactivate ORG
 
             CTRL --> UI: skill

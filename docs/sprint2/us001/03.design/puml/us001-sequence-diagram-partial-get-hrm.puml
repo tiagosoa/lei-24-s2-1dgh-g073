@@ -16,7 +16,7 @@ participant "organizationRepository:\nOrganizationRepository" as OrganizationRep
 participant "organization\n:Organization" as ORG
 
 autonumber 14
--> CTRL : getEmployeeFromSession()
+-> CTRL : getHRMFromSession()
 autonumber 14.1
 activate CTRL
 
@@ -48,7 +48,7 @@ activate CTRL
         activate OrganizationRepository
 
             loop [for each organization
-                OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
+                OrganizationRepository -> ORG : anyHRMHasEmail(email)
                 activate ORG
 
                      ORG --> OrganizationRepository : true/false
@@ -59,14 +59,14 @@ activate CTRL
 
         deactivate OrganizationRepository
 
-        CTRL -> ORG: getEmployeeByEmail(email)
+        CTRL -> ORG: getHRMByEmail(email)
         activate ORG
 
-            ORG --> CTRL : employee
+            ORG --> CTRL : hrm
         deactivate ORG
     end
     autonumber 15
-    <-- CTRL : employee
+    <-- CTRL : hrm
 deactivate CTRL
 
 @enduml

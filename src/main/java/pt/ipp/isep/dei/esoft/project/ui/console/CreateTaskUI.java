@@ -1,7 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.CreateTaskController;
-import pt.ipp.isep.dei.esoft.project.domain.Task;
+import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.TaskCategory;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class CreateTaskUI implements Runnable {
     }
 
     private void submitData() {
-        Optional<Task> task = getController().createTask(taskReference, taskDescription, taskInformalDescription,
+        Optional<Skill> task = getController().createTask(taskReference, taskDescription, taskInformalDescription,
                 taskTechnicalDescription, taskDuration, taskCost, taskCategoryDescription);
 
         if (task.isPresent()) {

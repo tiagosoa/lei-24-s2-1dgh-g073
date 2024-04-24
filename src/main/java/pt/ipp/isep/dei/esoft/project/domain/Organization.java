@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public class Organization {
     private final String vatNumber;
-    private final List<Employee> employees;
-    private final List<Task> tasks;
+    private final List<HRM> hrms;
+    private final List<Skill> skills;
     private String name;
     private String website;
     private String phone;
@@ -22,99 +22,90 @@ public class Organization {
      */
     public Organization(String vatNumber) {
         this.vatNumber = vatNumber;
-        employees = new ArrayList<>();
-        tasks = new ArrayList<>();
+        hrms = new ArrayList<>();
+        skills = new ArrayList<>();
     }
 
     /**
-     * This method checks if an employee works for the organization.
+     * This method checks if an HRM works for the organization.
      *
-     * @param employee The employee to be checked.
+     * @param hrm The hrm to be checked.
      * @return True if the employee works for the organization.
      */
-    public boolean employs(Employee employee) {
-        return employees.contains(employee);
+    public boolean employs(HRM hrm) {
+        return hrms.contains(hrm);
     }
 
     /**
-     * This method creates a new task.
+     * This method creates a new skill.
      *
-     * @param reference            The reference of the task to be created.
-     * @param description          The description of the task to be created.
-     * @param informalDescription  The informal description of the task to be created.
-     * @param technicalDescription The technical description of the task to be created.
-     * @param duration             The duration of the task to be created.
-     * @param cost                 The cost of the task to be created.
-     * @param taskCategory         The task category of the task to be created.
-     * @param employee             The employee of the task to be created.
+     * @param name            The name of the skill to be created.
+     * @param hrm             The hrm of the skill to be created.
      * @return
      */
-    public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                     String technicalDescription, int duration, double cost,
-                                     TaskCategory taskCategory, Employee employee) {
+    public Optional<Skill> createSkill(String name, HRM hrm) {
 
-        //TODO: we could also check if the employee works for the organization before proceeding
-        //checkIfEmployeeWorksForOrganization(employee);
+        //TODO: we could also check if the hrm works for the organization before proceeding
+        //checkIfEmployeeWorksForOrganization(hrm);
 
         // When a Task is added, it should fail if the Task already exists in the list of Tasks.
         // In order to not return null if the operation fails, we use the Optional class.
-        Optional<Task> optionalValue = Optional.empty();
+        Optional<Skill> optionalValue = Optional.empty();
 
-        Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                taskCategory, employee);
+        Skill skill = new Skill(name, hrm);
 
-        if (addTask(task)) {
-            optionalValue = Optional.of(task);
+        if (addSkill(skill)) {
+            optionalValue = Optional.of(skill);
         }
         return optionalValue;
     }
 
     /**
-     * This method adds a task to the list of tasks.
+     * This method adds a skill to the list of skills.
      *
-     * @param task The task to be added.
-     * @return True if the task was added successfully.
+     * @param skill The skill to be added.
+     * @return True if the skill was added successfully.
      */
-    private boolean addTask(Task task) {
+    private boolean addSkill(Skill skill) {
         boolean success = false;
-        if (validate(task)) {
-            // A clone of the task is added to the list of tasks, to avoid side effects and outside manipulation.
-            success = tasks.add(task.clone());
+        if (validate(skill)) {
+            // A clone of the skill is added to the list of skills, to avoid side effects and outside manipulation.
+            success = skills.add(skill.clone());
         }
         return success;
 
     }
 
     /**
-     * This method validates the task, checking for duplicates.
+     * This method validates the skill, checking for duplicates.
      *
-     * @param task The task to be validated.
-     * @return True if the task is valid.
+     * @param skill The skill to be validated.
+     * @return True if the skill is valid.
      */
-    private boolean validate(Task task) {
-        return tasksDoNotContain(task);
+    private boolean validate(Skill skill) {
+        return tasksDoNotContain(skill);
     }
 
     /**
-     * This method checks if the task is already in the list of tasks.
+     * This method checks if the skill is already in the list of tasks.
      *
-     * @param task The task to be checked.
-     * @return True if the task is not in the list of tasks.
+     * @param skill The skill to be checked.
+     * @return True if the skill is not in the list of skills.
      */
-    private boolean tasksDoNotContain(Task task) {
-        return !tasks.contains(task);
+    private boolean tasksDoNotContain(Skill skill) {
+        return !skills.contains(skill);
     }
 
     /**
-     * This methos checks if the organization has an employee with the given email.
+     * This method checks if the organization has an HRM with the given email.
      *
      * @param email The email to be checked.
      * @return True if the organization has an employee with the given email.
      */
-    public boolean anyEmployeeHasEmail(String email) {
+    public boolean anyHRMHasEmail(String email) {
         boolean result = false;
-        for (Employee employee : employees) {
-            if (employee.hasEmail(email)) {
+        for (HRM hrm : hrms) {
+            if (hrm.hasEmail(email)) {
                 result = true;
             }
         }
@@ -138,21 +129,21 @@ public class Organization {
         return Objects.hash(vatNumber);
     }
 
-    //add employee to organization
-    public boolean addEmployee(Employee employee) {
+    //add hrm to organization
+    public boolean addEmployee(HRM hrm) {
         boolean success = false;
-        if (validateEmployee(employee)) {
-            success = employees.add(employee);
+        if (validateHRM(hrm)) {
+            success = hrms.add(hrm);
         }
         return success;
     }
 
-    private boolean validateEmployee(Employee employee) {
-        return employeesDoNotContain(employee);
+    private boolean validateHRM(HRM hrm) {
+        return hrmsDoNotContain(hrm);
     }
 
-    private boolean employeesDoNotContain(Employee employee) {
-        return !employees.contains(employee);
+    private boolean hrmsDoNotContain(HRM hrm) {
+        return !hrms.contains(hrm);
     }
 
     //Clone organization
@@ -163,13 +154,13 @@ public class Organization {
         clone.phone = (this.phone);
         clone.email = (this.email);
 
-        for (Employee in : this.employees) {
-            clone.employees.add(in.clone());
+        for (HRM in : this.hrms) {
+            clone.hrms.add(in.clone());
         }
 
 
-        for (Task in : this.tasks) {
-            clone.tasks.add(in.clone());
+        for (Skill in : this.skills) {
+            clone.skills.add(in.clone());
         }
 
         return clone;

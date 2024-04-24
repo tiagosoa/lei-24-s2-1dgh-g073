@@ -84,14 +84,14 @@ class OrganizationTest {
     void testThatCreateTaskWorks() {
         Organization organization = new Organization("123456789");
 
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         TaskCategory taskCategory = new TaskCategory("Task Category Description");
 
-        Task expected = new Task("Task Description", "Task Category Description", "informal description",
+        Skill expected = new Skill("Task Description", "Task Category Description", "informal description",
                 "technical description", 1, 1d, taskCategory, employee);
 
-        Optional<Task> task =
-                organization.createTask("Task Description", "Task Category Description", "informal description",
+        Optional<Skill> task =
+                organization.createSkill("Task Description", "Task Category Description", "informal description",
                         "technical description", 1, 1d, taskCategory, employee);
 
         assertNotNull(task);
@@ -103,16 +103,16 @@ class OrganizationTest {
     void ensureAddingDuplicateTaskFails() {
         //Arrange
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         TaskCategory taskCategory = new TaskCategory("Task Category Description");
         //Add the first task
-        Optional<Task> originalTask =
-                organization.createTask("Task Description", "Task Category Description", "informal description",
+        Optional<Skill> originalTask =
+                organization.createSkill("Task Description", "Task Category Description", "informal description",
                         "technical description", 1, 1d, taskCategory, employee);
 
         //Act
-        Optional<Task> duplicateTask =
-                organization.createTask("Task Description", "Task Category Description", "informal description",
+        Optional<Skill> duplicateTask =
+                organization.createSkill("Task Description", "Task Category Description", "informal description",
                         "technical description", 1, 1d, taskCategory, employee);
 
         //Assert
@@ -123,7 +123,7 @@ class OrganizationTest {
     @Test
     void ensureEmploysFails() {
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
 
         assertFalse(organization.employs(employee));
 
@@ -132,7 +132,7 @@ class OrganizationTest {
     @Test
     void ensureEmploysSuccess() {
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         organization.addEmployee(employee);
         assertTrue(organization.employs(employee));
     }
@@ -140,23 +140,23 @@ class OrganizationTest {
     @Test
     void ensureAnyEmployeeHasEmailFails() {
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         organization.addEmployee(employee);
-        assertFalse(organization.anyEmployeeHasEmail("jane.doe@this.company.com"));
+        assertFalse(organization.anyHRMHasEmail("jane.doe@this.company.com"));
     }
 
     @Test
     void ensureAnyEmployeeHasEmailWorks() {
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         organization.addEmployee(employee);
-        assertTrue(organization.anyEmployeeHasEmail("john.doe@this.company.com"));
+        assertTrue(organization.anyHRMHasEmail("john.doe@this.company.com"));
     }
 
     @Test
     void ensureAddDuplicateEmployeeFails() {
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         assertTrue(organization.addEmployee(employee));
         assertFalse(organization.addEmployee(employee));
     }
@@ -164,16 +164,16 @@ class OrganizationTest {
     @Test
     void ensureAddEmployeeWorks() {
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         assertTrue(organization.addEmployee(employee));
     }
 
     @Test
     void ensureCloneWorks() {
         Organization organization = new Organization("123456789");
-        Employee employee = new Employee("john.doe@this.company.com");
+        HRM employee = new HRM("john.doe@this.company.com");
         organization.addEmployee(employee);
-        organization.createTask("Task Description", "Task Category Description", "informal description",
+        organization.createSkill("Task Description", "Task Category Description", "informal description",
                 "technical description", 1, 1d, new TaskCategory("Task Category Description"), employee);
 
         Organization clone = organization.clone();

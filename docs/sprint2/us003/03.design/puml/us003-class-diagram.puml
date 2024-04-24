@@ -31,6 +31,10 @@ class Collaborator {
     - ID number: int
 }
 
+class Collaborator {
+    - name: String
+}
+
  class CollaboratorManager {
      + registerCollaborator(name: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \nIDdoctype: String, \nIDnumber: int): boolean
  }
@@ -39,6 +43,11 @@ class Collaborator {
    + boolean save(Collaborator collaborator)
    + Collaborator findByID(int IDnumber)
  }
+
+  class CollaboratorRepository {
+    - List<Job>: jobs
+    + Job findByname(String name)
+  }
 
  class Organization {
    - String name
@@ -111,8 +120,11 @@ class Collaborator {
  Repositories -down-> OrganizationRepository : accesses
 
  RegisterCollaboratorController ..> OrganizationRepository : organizationRepository
+ RegisterCollaboratorController ..> JobRepository : jobRepository
 
  Repositories --> "1" OrganizationRepository
+ Repositories --> "1" CollaboratorRepository
+ Repositories --> "1" JobRepository
 
  OrganizationRepository --> "*" Organization : persists
  ApplicationSession --> "1" UserSession : userSession

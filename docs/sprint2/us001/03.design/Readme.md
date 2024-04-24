@@ -12,7 +12,7 @@ _**Note that SSD - Alternative One is adopted.**_
 | 			  		        | 	... coordinating the US?                     | CreateSkillController | Controller                                                                                                    |
 | 			  		        | 	... instantiating a new Skill?               | Organization          | Creator (Rule 1): in the DM Organization has a Skill.                                                         |
 | 			  		        | ... knowing the user using the system?        | UserSession           | IE: cf. A&A component documentation.                                                                          |
-| 			  		        | 							                                       | Organization          | IE: knows/has its own Employees                                                                               |
+| 			  		        | 							                                       | Organization          | IE: knows/has its own Employees and HRMs.                                                                     |
 | 			  		        | 							                                       | HRM                   | IE: knows its own data (e.g. email)                                                                           |
 | Step 2  		     | 							                                       |                       |                                                                                                               |
 | Step 3  		     | 	...saving the inputted data?                 | Skill                 | IE: object created in step 1 has its own data.                                                                |	|                      |                                                                                                               |              
@@ -47,7 +47,7 @@ This diagram shows the full sequence of interactions between the classes involve
 ### Split Diagrams
 
 [Sequence Diagram - Create Skill](svg/us001-sequence-diagram-partial-create-skill.svg)
-[Sequence Diagram - Get Employee](svg/us001-sequence-diagram-partial-get-employee.svg)
+[Sequence Diagram - Get HRM](svg/us001-sequence-diagram-partial-get-hrm.svg)
 
 ## 3.3. Class Diagram (CD)
 

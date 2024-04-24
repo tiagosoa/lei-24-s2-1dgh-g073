@@ -1,6 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.Employee;
+import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class OrganizationRepository {
         organizations = new ArrayList<>();
     }
 
-    public Optional<Organization> getOrganizationByEmployee(Employee employee) {
+    public Optional<Organization> getOrganizationByEmployee(HRM employee) {
 
         Optional<Organization> returnOrganization = Optional.empty();
 
@@ -33,7 +33,7 @@ public class OrganizationRepository {
         Optional<Organization> returnOrganization = Optional.empty();
 
         for (Organization organization : organizations) {
-            if (organization.anyEmployeeHasEmail(email)) {
+            if (organization.anyHRMHasEmail(email)) {
                 returnOrganization = Optional.of(organization);
             }
         }

@@ -1,8 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.Employee;
+import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
-import pt.ipp.isep.dei.esoft.project.domain.Task;
+import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.TaskCategory;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.OrganizationRepository;
@@ -65,28 +65,28 @@ public class CreateTaskController {
         return authenticationRepository;
     }
 
-    public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                     String technicalDescription, int duration, double cost,
-                                     String taskCategoryDescription) {
+    public Optional<Skill> createTask(String reference, String description, String informalDescription,
+                                      String technicalDescription, int duration, double cost,
+                                      String taskCategoryDescription) {
 
         TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
 
-        Employee employee = getEmployeeFromSession();
+        HRM employee = getEmployeeFromSession();
         Optional<Organization> organization = getOrganizationRepository().getOrganizationByEmployee(employee);
 
-        Optional<Task> newTask = Optional.empty();
+        Optional<Skill> newTask = Optional.empty();
 
         if (organization.isPresent()) {
             newTask = organization.get()
-                    .createTask(reference, description, informalDescription, technicalDescription, duration, cost,
+                    .createSkill(reference, description, informalDescription, technicalDescription, duration, cost,
                             taskCategory, employee);
         }
         return newTask;
     }
 
-    private Employee getEmployeeFromSession() {
+    private HRM getEmployeeFromSession() {
         Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
-        return new Employee(email.getEmail());
+        return new HRM(email.getEmail());
     }
 
     private TaskCategory getTaskCategoryByDescription(String taskCategoryDescription) {

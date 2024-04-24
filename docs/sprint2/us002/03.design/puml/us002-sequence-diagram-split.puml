@@ -9,17 +9,35 @@ autonumber
 actor "Human Resources Manager" as ADM
 participant ":CreateJobUI" as UI
 participant ":CreateJobController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "jobrepository\n:JobRepository" as JR
+participant "repositories\n:Repositories" as PLAT
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
 participant "organization\n:Organization" as ORG
+participant "job\n:Job" as TAREFA
 
 activate ADM
 
-    ADM -> UI : asks to create a new task
+        ADM -> UI : asks to create a new job
 
-    activate UI
+        activate UI
 
-        UI -> CTRL** : create
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+            activate CTRL
 
-        UI --> ADM : requests name for job
+                CTRL -> RepositorySingleton : getJobRepository()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: jobrepository
+                deactivate RepositorySingleton
+                deactivate CTRL
+
+        UI --> ADM : requests name of job
     deactivate UI
 
     ADM -> UI : types requested name
@@ -31,29 +49,21 @@ activate ADM
     ADM -> UI : submits name
     activate UI
 
-        UI -> CTRL : createJob(name)
-        activate CTRL
+    UI -> CTRL : createJob(jobname)
+    activate CTRL
 
-            CTRL -> CTRL : getEmployeeFromSession()
-            activate CTRL
+      ref over CTRL
+      Get HRM
+      end
 
-                ref over CTRL
-                    Get Employee
-
-                end ref
-                CTRL -> CTRL : employee
-            deactivate CTRL
-
-            CTRL -> ORG: createJob(name, employee)
+            |||
+            CTRL -> ORG: creatJob(name, hrm)
             activate ORG
-
-                ref over ORG
-                    Create Job
-
-                end
-
-                ORG --> CTRL : job
-            deactivate ORG
+            ref over ORG
+            Create Job
+            end
+                ORG -> CTRL: job
+deactivate ORG
 
             CTRL --> UI: job
             deactivate CTRL

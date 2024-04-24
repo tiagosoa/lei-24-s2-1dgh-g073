@@ -2,13 +2,13 @@ package pt.ipp.isep.dei.esoft.project.domain;
 
 import java.util.Objects;
 
-public class Employee {
+public class HRM {
     private final String email;
     private String name;
     private String position;
     private String phone;
 
-    public Employee(String email) {
+    public HRM(String email) {
         this.email = email;
     }
 
@@ -17,11 +17,11 @@ public class Employee {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Employee)) {
+        if (!(o instanceof HRM)) {
             return false;
         }
-        Employee employee = (Employee) o;
-        return email.equals(employee.email);
+        HRM hrm = (HRM) o;
+        return email.equals(hrm.email);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Employee {
      *
      * @return A clone of the current instance.
      */
-    public Employee clone() {
-        return new Employee(this.email);
+    public HRM clone() {
+        return new HRM(this.email);
     }
 }
