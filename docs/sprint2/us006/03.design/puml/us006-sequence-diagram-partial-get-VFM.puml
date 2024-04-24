@@ -14,7 +14,7 @@ participant "currentSession\n:UserSession" as SESSAO
 participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
 participant "organization\n:Organization" as ORG
 autonumber 8
--> RVC : getEmployeeFromSession()
+-> RVC : getVFMFromSession()
 autonumber 8.1
  activate RVC
 
