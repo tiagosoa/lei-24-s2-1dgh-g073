@@ -1,0 +1,36 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "organization\n:Organization" as ORG
+participant "maintenanceDate\n:MaintenanceDate" as DATE
+autonumber 8
+-> ORG: createMaintenanceDate(Vehicle, \ncurrent KMs and date of maintenance)
+
+autonumber 16.1
+activate ORG
+    group Create Task
+
+        ORG -> DATE**: createMaintenanceDate(Vehicle, \ncurrent KMs and date of maintenance)
+        ORG -> ORG: addMaintenanceDate(maintenanceDate)
+
+
+                        activate ORG
+                            ORG -> ORG: validateMaintenanceDate(maintenanceDate)
+                            activate ORG
+                                ORG --> ORG
+                            deactivate ORG
+
+                            ORG --> ORG
+                        deactivate ORG
+
+
+    end
+
+    autonumber 9
+    <-- ORG : maintenanceDate
+deactivate ORG
+
+
+@enduml

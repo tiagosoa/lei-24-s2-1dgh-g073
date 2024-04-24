@@ -39,10 +39,15 @@ activate VEFL
         UI -> RMC : registerMaintenanceController(plate ID, current KMs \nand date of maintenance)
         activate RMC
 
+            RMC -> RMC : getVehicleByDescription(plate ID, brand, model, type)
+            activate RMC
                      ref over RMC
                         Get Vehicle
 
                      end
+
+               RMC-->RMC : vehicle
+            deactivate RMC
 
             |||
             RMC -> ORG: createMaintenanceDate(plate ID, current KMs \nand date of maintenance)

@@ -19,7 +19,7 @@ participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO
 participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
 participant "organization\n:Organization" as ORG
-participant "maintenanceDate\n:MaintenanceDate" as TAREFA
+participant "maintenanceDate\n:MaintenanceDate" as DATE
 
 activate VEFL
 
@@ -77,7 +77,7 @@ activate VEFL
             RMC -> ORG: createMaintenanceDate(Vehicle, current KMs \nand date of maintenance)
             activate ORG
 
-                ORG -> TAREFA**: create(plate ID, current KMs \nand date of maintenance)
+                ORG -> DATE**: create(plate ID, current KMs \nand date of maintenance)
                 ORG -> ORG: addMaintenanceDate(maintenanceDate)
 
 
