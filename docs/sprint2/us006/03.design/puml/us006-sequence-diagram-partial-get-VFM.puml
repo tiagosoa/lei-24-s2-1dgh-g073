@@ -1,0 +1,72 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+'hide footbox
+participant ":RegisterVehicleController" as RVC
+participant "repositories\n:Repositories" as PLAT
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
+participant "organization\n:Organization" as ORG
+autonumber 8
+-> RVC : getEmployeeFromSession()
+autonumber 8.1
+ activate RVC
+
+    group Get VFM
+
+        RVC -> _APP: getInstance()
+        activate _APP
+           _APP -> RVC: appSession
+        deactivate _APP
+
+
+        RVC -> APP: getCurrentSession()
+        activate APP
+
+           APP --> RVC: currentSession
+        deactivate APP
+
+        RVC -> SESSAO: email = getUserEmail()
+         activate SESSAO
+
+            SESSAO --> RVC: email
+         deactivate SESSAO
+
+
+         RVC -> PLAT: getOrganizationRepository(email)
+          activate PLAT
+
+             PLAT --> RVC: organizationRepository
+          deactivate PLAT
+
+
+          RVC -> OrganizationRepository: getOrganizationByVFMEmail(email)
+          activate OrganizationRepository
+
+              loop [for each organization
+                  OrganizationRepository -> ORG : anyVFMHasEmail(email)
+                  activate ORG
+
+                      ORG --> OrganizationRepository : true/false
+                  deactivate ORG
+              end
+          OrganizationRepository --> RVC : organization
+          deactivate OrganizationRepository
+
+          RVC -> ORG: getVFMByEmail(email)
+          activate ORG
+
+             ORG --> RVC : VFM
+          deactivate ORG
+    end
+    autonumber 9
+    <-- RVC : VFM
+ deactivate RVC
+
+@enduml

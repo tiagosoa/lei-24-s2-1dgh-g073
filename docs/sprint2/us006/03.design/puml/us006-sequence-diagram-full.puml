@@ -99,10 +99,10 @@ activate ADM
             deactivate RVC
 
             |||
-            RVC -> ORG: createregisterVehicle(Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency, VFM)
+            RVC -> ORG: createVehicle(Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency, VFM)
             activate ORG
 
-                ORG -> Vehicle**: createregisterVehicle(Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency, VFM)
+                ORG -> Vehicle**: createVehicle(Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency, VFM)
                 ORG -> ORG: addVehicle (vehicle)
 
 

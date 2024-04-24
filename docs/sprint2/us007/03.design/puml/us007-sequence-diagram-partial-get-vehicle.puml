@@ -22,7 +22,6 @@ activate RMC
 
 
 
-        RMC -> RMC : getVehicleByDescription(plate ID, brand, model, type)
         activate RMC
 
            RMC -> RepositorySingleton : getInstance()
@@ -43,7 +42,6 @@ activate RMC
                VR --> RMC : vehicle
            deactivate VR
 
-           RMC --> RMC : vehicle
         deactivate RMC
     end
     autonumber 8
