@@ -6,159 +6,108 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Organization Employee" as ADM
-participant ":CreateTaskUI" as UI
-participant ":CreateTaskController" as CTRL
+actor "Vehicle and Equipment Fleet Maneger" as ADM
+participant ":VehicleResgistrationUI" as UI
+participant ":RegisterVehicleController" as RVC
+participant ":Repositories" as RepositorySingleton
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "taskCategoryRepository:\nTaskCategoryRepository" as TaskCategoryRepository
+participant "vehicleRepository\n:VehicleRepository" as VR
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO
 participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
 participant "organization\n:Organization" as ORG
-participant "task\n:Task" as TAREFA
+participant "vehicle\n:Vehicle" as Vehicle
 
 activate ADM
 
-        ADM -> UI : asks to create a new task
+        ADM -> UI : asks to register a vehicle
 
         activate UI
 
 '            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
-            UI -> CTRL** : create
+            UI -> RVC** : create
 
-            UI -> CTRL : getTaskCategories()
-            activate CTRL
-
-                CTRL -> RepositorySingleton : getInstance()
-                activate RepositorySingleton
-
-                    RepositorySingleton --> CTRL: repositories
-                deactivate RepositorySingleton
-
-                CTRL -> PLAT : getTaskCategoryRepository()
-                activate PLAT
-
-                    PLAT --> CTRL: taskCategoryRepository
-                deactivate PLAT
-
-                CTRL -> TaskCategoryRepository : getTaskCategories()
-                activate TaskCategoryRepository
-
-                    TaskCategoryRepository --> CTRL : taskCategoryList
-                deactivate TaskCategoryRepository
-
-                CTRL --> UI : taskCategoryList
-            deactivate CTRL
-
-            UI --> ADM : shows task category list\n and asks to sleect one
+            UI --> ADM : requests data (Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency)
         deactivate UI
 
-    ADM -> UI : selects a task category
+    ADM -> UI : types requested data
     activate UI
 
-        UI --> ADM : requests data
+        UI --> ADM : shows all data and requests confirmation
     deactivate UI
 
-    ADM -> UI : types requested data (reference, description, \ninformal description, technical description,\nduration, cost)
+    ADM -> UI : confirmation data
     activate UI
 
-        UI --> ADM : shows selected category and requested data
-    deactivate UI
+        UI -> RVC : registerVehicle(Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency)
+        activate RVC
 
-    ADM -> UI : submits data
-    activate UI
-
-        UI -> CTRL : createTask(reference,\ndescription,\ninformalDescription,\ntechnicalDescription,\nduration, cost,\ntaskCategoryDescription)
-        activate CTRL
-
-            CTRL -> CTRL : getTaskCategoryByDescription(taskCategoryDescription)
-            activate CTRL
-
-                CTRL -> RepositorySingleton : getInstance()
-                activate RepositorySingleton
-
-                    RepositorySingleton --> CTRL: repositories
-                deactivate RepositorySingleton
-
-                CTRL -> PLAT : getTaskCategoryRepository()
-                activate PLAT
-
-                    PLAT -> CTRL : taskCategoryRepository
-                deactivate PLAT
-
-                CTRL -> TaskCategoryRepository : getTaskCategoryByDescription(taskCategoryDescription)
-                activate TaskCategoryRepository
-
-                    TaskCategoryRepository --> CTRL : taskCategory
-                deactivate TaskCategoryRepository
-                    CTRL --> CTRL : taskCategory
-            deactivate CTRL
 
             |||
-            CTRL -> CTRL : getEmployeeFromSession()
-            activate CTRL
+            RVC -> RVC : getVFMFromSession()
+            activate RVC
 
-                CTRL -> _APP: getInstance()
+                RVC -> _APP: getInstance()
                 activate _APP
-                    _APP -> CTRL: appSession
+                    _APP -> RVC: appSession
                 deactivate _APP
 
 
-                CTRL -> APP: getCurrentSession()
+                RVC -> APP: getCurrentSession()
                 activate APP
 
-                    APP --> CTRL: currentSession
+                    APP --> RVC: currentSession
                 deactivate APP
 
-                CTRL -> SESSAO: email = getUserEmail()
+                RVC -> SESSAO: email = getUserEmail()
                 activate SESSAO
 
-                    SESSAO --> CTRL: email
+                    SESSAO --> RVC: email
                 deactivate SESSAO
 
 
-                CTRL -> PLAT: getOrganizationRepository(email)
+                RVC -> PLAT: getOrganizationRepository(email)
                 activate PLAT
 
-                    PLAT --> CTRL: organizationRepository
+                    PLAT --> RVC: organizationRepository
                 deactivate PLAT
 
 
-                CTRL -> OrganizationRepository: getOrganizationByEmployeeEmail(email)
+                RVC -> OrganizationRepository: getOrganizationByVFMEmail(email)
                 activate OrganizationRepository
 
                     loop [for each organization
-                        OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
+                        OrganizationRepository -> ORG : anyVFMHasEmail(email)
                         activate ORG
 
                              ORG --> OrganizationRepository : true/false
                         deactivate ORG
                     end
-                    OrganizationRepository --> CTRL : organization
+                    OrganizationRepository --> RVC : organization
                 deactivate OrganizationRepository
 
-                CTRL -> ORG: getEmployeeByEmail(email)
+                RVC -> ORG: getVFMByEmail(email)
                 activate ORG
 
-                    ORG --> CTRL : employee
+                    ORG --> RVC : VFM
                 deactivate ORG
 
-                CTRL --> CTRL : employee
-            deactivate CTRL
+                RVC --> RVC : VFM
+            deactivate RVC
 
             |||
-            CTRL -> ORG: createTask(employee, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, , taskCategory, employee)
+            RVC -> ORG: createregisterVehicle(Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency, VFM)
             activate ORG
 
-                ORG -> TAREFA**: create(employee, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, employee)
-                ORG -> ORG: addTask (task)
+                ORG -> Vehicle**: createregisterVehicle(Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency, VFM)
+                ORG -> ORG: addVehicle (vehicle)
 
 
                 activate ORG
-                    ORG -> ORG: validateTask(task)
+                    ORG -> ORG: validateVehicle (vehicle)
                     activate ORG
                         ORG --> ORG
                     deactivate ORG
@@ -166,12 +115,12 @@ activate ADM
                     ORG --> ORG
                 deactivate ORG
 
-                ORG --> CTRL : task
+                ORG --> RVC : vehicle
 
             deactivate ORG
 
-            CTRL --> UI: task
-            deactivate CTRL
+            RVC --> UI: vehicle
+            deactivate RVC
             UI --> ADM: displays operation success
     deactivate UI
 
