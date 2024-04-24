@@ -8,7 +8,7 @@ participant "maintenanceDate\n:MaintenanceDate" as DATE
 autonumber 8
 -> ORG: createMaintenanceDate(Vehicle, \ncurrent KMs and date of maintenance)
 
-autonumber 16.1
+autonumber 8.1
 activate ORG
     group Create Task
 
