@@ -26,10 +26,6 @@ class Vehicle {
   + Vehicle(brand, model, type, tareWeight, grossWeight, currentKm, registerDate, acquisitionDate, maintenanceFrequency)
 }
 
-class VehicleRepository {
-  + boolean save(Vehicle vehicle)
-  + Vehicle findByModel(String model)
-}
 
 class Organization {
   - String name
@@ -50,13 +46,13 @@ class OrganizationRepository {
 
 class Repositories {
   + getInstance() : Repositories
-  + getVehicleRepository() : VehicleRepository
   + getOrganizationRepository() : OrganizationRepository
 }
 
 class RegisterVehicleController {
   + RegisterVehicleController
-  + Vehicle registerVehicle(VehicleFleetMnager manager, String brand, String model, String type, Double tareWeight, Double grossWeight, Integer currentKm, Date registerDate, Date acquisitionDate, Integer maintenanceFrequency)
+  + Vehicle registerVehicle(VehicleFleetMnager manager, String brand, String model, String type, Double tareWeight,
+  Double grossWeight, Integer currentKm, Date registerDate, Date acquisitionDate, Integer maintenanceFrequency)
 }
 
 class VehicleRegistrationUI {
@@ -86,7 +82,6 @@ end note
 VehicleFleetManager -down-> VehicleRegistrationUI : interacts with
 VehicleRegistrationUI -right-> RegisterVehicleController : sends data to
 RegisterVehicleController -down-> Repositories : retrieves instances
-Repositories -down-> VehicleRepository : accesses
 Repositories -down-> OrganizationRepository : accesses
 Organization -right-> Vehicle : has
 OrganizationRepository .left.> Organization : persists
@@ -94,7 +89,6 @@ OrganizationRepository .left.> Organization : persists
 VehicleFleetManager -down-> Organization : part of
 VehicleFleetManager -down-> Vehicle : registers
 
-VehicleRepository ..> Vehicle : persists
 RegisterVehicleController ..> Vehicle : creates
 RegisterVehicleController ..> Organization : updates fleet
 
