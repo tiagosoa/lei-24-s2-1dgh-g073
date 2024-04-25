@@ -59,7 +59,7 @@ activate VEFL
                             end ref
             
                             RMC --> RMC : VFM
-                        deactivate RMC
+                        deactivate RVC
             |||
             RMC -> ORG: createMaintenanceDate(plate ID, current KMs \nand date of maintenance)
             activate ORG
