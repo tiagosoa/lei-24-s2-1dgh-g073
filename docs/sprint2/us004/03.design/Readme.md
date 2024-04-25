@@ -53,9 +53,11 @@ This diagram shows the full sequence of interactions between the classes involve
 ### Partial Diagrams
 
 [Sequence Diagram - Assign Skill](svg/us004-sequence-diagram-partial-assign-skill.svg)
-[Sequence Diagram - Get Skill](svg/us004-sequence-diagram-partial-get-skill.svg)
+[Sequence Diagram - Get Skill List](svg/us004-sequence-diagram-partial-get-skill-list.svg)
+[Sequence Diagram - Get Selected Skills](svg/us004-sequence-diagram-partial-get-selected-skills.svg)
 [Sequence Diagram - Get Collaborator](svg/us004-sequence-diagram-partial-get-collaborator.svg)
-[Sequence Diagram - Get Employee](svg/us004-sequence-diagram-partial-get-employee.svg)
+[Sequence Diagram - Get Collaborator List](svg/us004-sequence-diagram-partial-get-collaborator-list.svg)
+[Sequence Diagram - Get HRM](svg/us004-sequence-diagram-partial-get-hrm.svg)
 
 ## 3.3. Class Diagram (CD)
 

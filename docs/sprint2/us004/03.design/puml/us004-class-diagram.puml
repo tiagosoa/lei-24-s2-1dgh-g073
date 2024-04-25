@@ -33,6 +33,7 @@ class Collaborator {
 }
 
 class AssignSkillController {
+    - List<Skill> selectedSkills
     + AssignSkillController(organizationRepository, skillRepository, collaboratorRepository)
     + getCollaborator(ID number: int): boolean
     + getSkill(name: String): boolean
@@ -48,9 +49,15 @@ class HRManager {
 }
 
 class CollaboratorRepository {
+   - List<Collaborator> collaborators
    + boolean save(Collaborator collaborator)
    + Collaborator findByID(int IDnumber)
  }
+
+ class SkillRepository {
+    - List<Skill> skills
+    + Skill findByName(String name)
+  }
 
  class Organization {
    - String name
@@ -59,8 +66,8 @@ class CollaboratorRepository {
    - String phone
    - String email
    + assignSkill(Collaborator collaborator, Skill skill)
-   + Collaborator findCollaboratorByID(int IDnumber)
-   + Skill findSkillByName(String name)
+   + Collaborator findByID(int IDnumber)
+   + Skill findByName(String name)
  }
 
  class OrganizationRepository {
@@ -74,6 +81,7 @@ class CollaboratorRepository {
    + getSkillRepository() : SkillRepository
    + getOrganizationRepository() : OrganizationRepository
    + Collaborator findCollaboratorByID(int IDnumber)
+   + Skill findByName(String name)
  }
 
  class AssignSkillUI {
@@ -92,6 +100,7 @@ AssignSkillController .> Repositories : repositories
 
 Repositories --> "1" OrganizationRepository
 Repositories --> "1" CollaboratorRepository
+Repositories --> "1" SkillRepository
 
 OrganizationRepository ...> "*" Organization
 ApplicationSession --> "1" UserSession : userSession

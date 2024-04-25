@@ -4,24 +4,24 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 
 participant "organization\n:Organization" as ORG
+participant ":collaboratorrepository\n:CollaboratorRepository" as CR
+participant "skillrepository\n:SkillRepository" as SR
 
-autonumber 16
--> ORG: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
-
-autonumber 16.1
-activate ORG
     group Assign Skill
+            -> ORG: assignSkill(collaborator, selectedskills)
+            activate ORG
 
-        activate ORG
-            ORG -> ORG: validateSkill(skillname)
-            ORG -> ORG: validateCollaborator(ID number)
-            ORG -> ORG: assignSkill(ID number, skillname)
 
-    end
 
-    autonumber 17
-    <-- ORG : assignedcollaborator
-deactivate ORG
+                    ORG -> SR: validateSkill(selectedskills)
+                    ORG -> CR: validateCollaborator(collaborator)
+                    activate CR
+                ORG -> CR: saveChanges (collaborator, selectedskills)
+deactivate CR
+
+
+                <-- ORG : assignedcollaborator
+
 
 
 @enduml

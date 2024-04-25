@@ -6,15 +6,17 @@ skinparam shadowing false
 participant ":AssignSkillController" as CTRL
 participant ":collaboratorrepository\n:CollaboratorRepository" as CR
 
-         -> CTRL : getCollaborator(ID number)
+        -> CTRL: getCollaboratorList()
         activate CTRL
 
-        CTRL -> CR : getCollaborator(ID number)
+        CTRL -> CR: getCollaboratorList()
         activate CR
 
-        CR -> CTRL : collaborator
+        CR -> CTRL: collaborators
         deactivate CR
 
+        <- CTRL: collaborators
+        deactivate CTRL
 
 
 @enduml

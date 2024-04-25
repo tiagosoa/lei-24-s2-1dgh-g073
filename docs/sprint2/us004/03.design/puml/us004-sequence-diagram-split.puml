@@ -9,86 +9,126 @@ autonumber
 actor "Human Resources Manager" as ADM
 participant ":AssignSkillUI" as UI
 participant ":AssignSkillController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant ":collaboratorrepository\n:CollaboratorRepository" as CR
+participant "skillrepository\n:SkillRepository" as SR
+participant "repositories\n:Repositories" as PLAT
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
 participant "organization\n:Organization" as ORG
 
 activate ADM
 
-    ADM -> UI : asks to assign a skill to a collaborator
+        ADM -> UI : asks to assign a skill to a collaborator.
 
-    activate UI
+        activate UI
 
-        UI -> CTRL** : create
+'            UI --> ADM : requests data (name)
+            'create CTRL
+            UI -> CTRL** : create
 
-        activate CTRL
+                         UI -> CTRL : getCollaboratorRepository()
+                         activate CTRL
 
-        UI --> ADM : shows list of collaborators and asks to select one or more
+                                 CTRL -> PLAT : getCollaboratorRepository()
+                                         activate PLAT
+
+                                     PLAT -> CTRL : collaboratorrepository
+                                     deactivate PLAT
+
+                                 CTRL -> PLAT : getSkillRepository()
+                                         activate PLAT
+
+                                     PLAT -> CTRL : skillrepository
+                                     deactivate PLAT
+
+        UI -> CTRL: getCollaboratorList()
+        ref over CTRL
+        Get Collaborator List
+
+        end
+
+        CTRL -> UI: collaborators
+        deactivate CTRL
+
+    UI --> ADM : shows list of existing collaborators and asks to select one or more
     deactivate UI
 
     ADM -> UI : selects collaborator(s)
     activate UI
 
+
+
         UI -> CTRL : getCollaborator(ID number)
-
-
-        CTRL -> ORG : getCollaborator(ID number)
-
-
-        ref over ORG
-        Get Collaborator(s)
-        end
-
-        ORG -> CTRL : collaborators
-
-
-
-        CTRL -> UI : collaborators
-        deactivate CTRL
-
-        UI --> ADM : shows list of skills and asks to select one or more
-    deactivate UI
-
-    ADM -> UI : selects skill(s)
-    activate UI
-
-        UI -> CTRL : getSkill(skillname)
         activate CTRL
 
-        CTRL -> ORG : getSkill(skillname)
-
-        ref over ORG
-        Get Skill(s)
+        ref over CTRL
+        Get Collaborator
         end
 
-        ORG -> CTRL : skills
+            UI -> CTRL: getSkillList()
+        ref over CTRL
+        Get Skill list
+        end
 
-
-
-        CTRL -> UI : skills
+        CTRL -> UI: skills
         deactivate CTRL
 
 
-            CTRL -> CTRL : getEmployeeFromSession()
+    UI --> ADM : shows list of existing skills and asks to select one or more
+    deactivate UI
+
+
+   ADM -> UI : selects skill(s)
+   activate UI
+
+        UI -> CTRL : getSelectedSkill(name)
+        activate CTRL
+
+        ref over CTRL
+        Get Selected Skills
+        end
+
+        CTRL -> UI : selectedskills
+        deactivate CTRL
+
+
+   UI -> ADM : shows selected data and requests confirmation
+
+   ADM -> UI : confirms data
+
+   UI -> CTRL : assignSkill(collaborator, selectedskills)
+   activate CTRL
+
+
+            |||
+            CTRL -> CTRL : getHRMFromSession()
             activate CTRL
 
                 ref over CTRL
-                    Get Employee
-
-                end ref
-                CTRL -> CTRL : employee
-
-
-            CTRL -> ORG: assignSkill(collaborators, skills)
-            activate ORG
-
-                ref over ORG
-                    Assign Skills
-
+                Get HRM
                 end
 
-                ORG --> CTRL : changedcollaborator
+                CTRL --> CTRL : hrm
+            deactivate CTRL
+
+            |||
+            CTRL -> ORG: assignSkill(collaborator, selectedskills)
+            activate ORG
+
+
+
+            ref over ORG
+            Assign Skill
+            end
+
+                ORG --> CTRL : assignedcollaborator
+
             deactivate ORG
 
-            CTRL --> UI: changedcollaborator
+            CTRL --> UI: assignedcollaborator
             deactivate CTRL
             UI --> ADM: displays operation success
     deactivate UI

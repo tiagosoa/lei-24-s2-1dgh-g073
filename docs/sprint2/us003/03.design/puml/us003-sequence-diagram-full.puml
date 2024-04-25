@@ -131,7 +131,7 @@ deactivate CTRL
             activate ORG
                        
                         ORG -> COLABORADOR**: create(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
-                        activate COLABORADOR
+
 
                         ORG -> ORG: giveJob(collaborator, job)
 

@@ -10,6 +10,8 @@ actor "Human Resources Manager" as ADM
 participant ":AssignSkillUI" as UI
 participant ":AssignSkillController" as CTRL
 participant ":Repositories" as RepositorySingleton
+participant ":collaboratorrepository\n:CollaboratorRepository" as CR
+participant "skillrepository\n:SkillRepository" as SR
 participant "repositories\n:Repositories" as PLAT
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
@@ -26,8 +28,31 @@ activate ADM
 '            UI --> ADM : requests data (name)
             'create CTRL
             UI -> CTRL** : create
-            UI -> CTRL: showColabboratorList()
 
+                         UI -> CTRL : getCollaboratorRepository()
+                         activate CTRL
+
+                                 CTRL -> PLAT : getCollaboratorRepository()
+                                         activate PLAT
+
+                                     PLAT -> CTRL : collaboratorrepository
+                                     deactivate PLAT
+
+                                 CTRL -> PLAT : getSkillRepository()
+                                         activate PLAT
+
+                                     PLAT -> CTRL : skillrepository
+                                     deactivate PLAT
+
+            UI -> CTRL: getCollaboratorList()
+        CTRL -> CR: getCollaboratorList()
+        activate CR
+
+        CR -> CTRL: collaborators
+        deactivate CR
+
+        CTRL -> UI: collaborators
+        deactivate CTRL
 
     UI --> ADM : shows list of existing collaborators and asks to select one or more
     deactivate UI
@@ -40,14 +65,22 @@ activate ADM
         UI -> CTRL : getCollaborator(ID number)
         activate CTRL
 
-        CTRL -> ORG : getCollaborator(ID number)
-        activate ORG
+        CTRL -> CR : getCollaborator(ID number)
+        activate CR
 
-        ORG -> CTRL : collaborator
-        deactivate ORG
+        CR -> CTRL : collaborator
+        deactivate CR
 
-        UI -> CTRL : showSkillList()
+            UI -> CTRL: getSkillList()
+        CTRL -> SR: getSkillList()
+        activate SR
+
+        SR -> CTRL: skills
+        deactivate SR
+
+        CTRL -> UI: skills
         deactivate CTRL
+
     end
     UI --> ADM : shows list of existing skills and asks to select one or more
     deactivate UI
@@ -58,14 +91,17 @@ activate ADM
 
    group Get Skill
 
-        UI -> CTRL : getSkill(skillname)
+        UI -> CTRL : getSelectedSkill(name)
         activate CTRL
 
-        CTRL -> ORG : getSkill(skillname)
-        activate ORG
+        CTRL -> SR : getSelectedSkill(name)
+        activate SR
 
-        ORG -> CTRL : skill
-        deactivate ORG
+        SR -> CTRL : selectedskills
+        deactivate SR
+
+        CTRL -> UI : selectedskills
+        deactivate CTRL
 
    end
 
@@ -73,9 +109,12 @@ activate ADM
 
    ADM -> UI : confirms data
 
+   UI -> CTRL: assignSkill(collaborator, selectedskills)
+   activate CTRL
+
 
             |||
-            CTRL -> CTRL : getEmployeeFromSession()
+            CTRL -> CTRL : getHRMFromSession()
             activate CTRL
 
                 CTRL -> _APP: getInstance()
@@ -104,11 +143,11 @@ activate ADM
                 deactivate PLAT
 
 
-                CTRL -> OrganizationRepository: getOrganizationByEmployeeEmail(email)
+                CTRL -> OrganizationRepository: getOrganizationByHRMEmail(email)
                 activate OrganizationRepository
 
                     loop [for each organization
-                        OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
+                        OrganizationRepository -> ORG : anyHRMHasEmail(email)
                         activate ORG
 
                              ORG --> OrganizationRepository : true/false
@@ -117,25 +156,26 @@ activate ADM
                     OrganizationRepository --> CTRL : organization
                 deactivate OrganizationRepository
 
-                CTRL -> ORG: getEmployeeByEmail(email)
+                CTRL -> ORG: getHRMByEmail(email)
                 activate ORG
 
-                    ORG --> CTRL : employee
+                    ORG --> CTRL : hrm
                 deactivate ORG
 
-                CTRL --> CTRL : employee
+                CTRL --> CTRL : hrm
             deactivate CTRL
 
             |||
-            CTRL -> ORG: assignSkill(ID number, skillname)
+            CTRL -> ORG: assignSkill(collaborator, selectedskills)
             activate ORG
-                ORG -> ORG: saveChanges (ID number, skillname)
 
 
-                activate ORG
-                    ORG -> ORG: validateCollaborator(ID number)
-                    ORG -> ORG: validateSkill(skillname)
-                    activate ORG
+
+                    ORG -> SR: validateSkill(selectedskills)
+                    ORG -> CR: validateCollaborator(collaborator)
+                    activate CR
+                ORG -> CR: saveChanges (collaborator, selectedskills)
+deactivate CR
 
 
                 ORG --> CTRL : assignedcollaborator
