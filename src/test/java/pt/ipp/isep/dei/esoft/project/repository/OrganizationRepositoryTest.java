@@ -21,14 +21,14 @@ class OrganizationRepositoryTest {
     }
 
     @Test
-    void ensureGetOrganizationByEmployeeWorks() {
+    void ensureGetOrganizationByHRMWorks() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
-        HRM employee = new HRM("john.doe@this.company.com");
-        organization.addEmployee(employee);
+        HRM hrm = new HRM("john.doe@this.company.com");
+        organization.addHRM(hrm);
         organizationRepository.add(organization);
 
-        Optional<Organization> result = organizationRepository.getOrganizationByEmployee(employee);
+        Optional<Organization> result = organizationRepository.getOrganizationByHRM(hrm);
 
         assertEquals(organization, result.get());
     }
@@ -37,12 +37,12 @@ class OrganizationRepositoryTest {
     void ensureGetOrganizationByEmployeeFails() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
-        HRM employee = new HRM("john.doe@this.company.com");
-        organization.addEmployee(employee);
+        HRM hrm = new HRM("john.doe@this.company.com");
+        organization.addHRM(hrm);
         organizationRepository.add(organization);
 
-        HRM employee2 = new HRM("jane.doe@this.company.com");
-        Optional<Organization> result = organizationRepository.getOrganizationByEmployee(employee2);
+        HRM hrm2 = new HRM("jane.doe@this.company.com");
+        Optional<Organization> result = organizationRepository.getOrganizationByHRM(hrm2);
 
         assertTrue(result.isEmpty());
     }
@@ -51,12 +51,12 @@ class OrganizationRepositoryTest {
     void ensureGetOrganizationByEmailWorks() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
-        HRM employee = new HRM("john.doe@this.company.com");
-        organization.addEmployee(employee);
+        HRM hrm = new HRM("john.doe@this.company.com");
+        organization.addHRM(hrm);
         organizationRepository.add(organization);
 
         Optional<Organization> result =
-                organizationRepository.getOrganizationByEmployeeEmail("john.doe@this.company.com");
+                organizationRepository.getOrganizationByHRMEmail("john.doe@this.company.com");
 
         assertEquals(organization, result.get());
     }
@@ -65,13 +65,13 @@ class OrganizationRepositoryTest {
     void ensureAddOrganizationWorks() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
-        HRM employee = new HRM("john.doe@this.company.com");
-        organization.addEmployee(employee);
+        HRM hrm = new HRM("john.doe@this.company.com");
+        organization.addHRM(hrm);
 
         organizationRepository.add(organization);
 
         Optional<Organization> returnOrganization =
-                organizationRepository.getOrganizationByEmployeeEmail("john.doe@this" + ".company.com");
+                organizationRepository.getOrganizationByHRMEmail("john.doe@this" + ".company.com");
 
         //Assert
         //Make sure both represents the same object
@@ -84,8 +84,8 @@ class OrganizationRepositoryTest {
     void ensureAddOrganizationDuplicateFails() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
-        HRM employee = new HRM("john.doe@this.company.com");
-        organization.addEmployee(employee);
+        HRM hrm = new HRM("john.doe@this.company.com");
+        organization.addHRM(hrm);
         organizationRepository.add(organization);
 
         Optional<Organization> result = organizationRepository.add(organization);

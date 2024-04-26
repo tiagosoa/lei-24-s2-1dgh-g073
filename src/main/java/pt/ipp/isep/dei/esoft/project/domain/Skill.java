@@ -11,7 +11,7 @@ public class Skill {
 
         validateName(name);
         this.name = name;
-        this.hrm = this.hrm;
+        this.hrm = hrm;
     }
 
     private void validateName(String name) {
@@ -29,8 +29,8 @@ public class Skill {
         if (!(o instanceof Skill)) {
             return false;
         }
-        Skill task = (Skill) o;
-        return name.equals(task.name) && hrm.equals(task.hrm);
+        Skill skill = (Skill) o;
+        return name.equals(skill.name) && hrm.equals(skill.hrm);
     }
 
     @Override
@@ -46,5 +46,9 @@ public class Skill {
      */
     public Skill clone() {
         return new Skill(this.name, this.hrm);
+    }
+
+    public String getName() {
+        return name;
     }
 }

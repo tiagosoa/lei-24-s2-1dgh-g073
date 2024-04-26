@@ -12,8 +12,8 @@ import java.util.List;
  * @author Paulo Maio pam@isep.ipp.pt
  */
 
-public class AdminUI implements Runnable {
-    public AdminUI() {
+public class HRMUI implements Runnable {
+    public HRMUI() {
     }
 
     public void run() {

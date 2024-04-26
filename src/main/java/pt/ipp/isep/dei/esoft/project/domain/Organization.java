@@ -68,7 +68,7 @@ public class Organization {
      */
     private boolean addSkill(Skill skill) {
         boolean success = false;
-        if (validate(skill)) {
+        if (validateSkill(skill)) {
             // A clone of the skill is added to the list of skills, to avoid side effects and outside manipulation.
             success = skills.add(skill.clone());
         }
@@ -82,17 +82,17 @@ public class Organization {
      * @param skill The skill to be validated.
      * @return True if the skill is valid.
      */
-    private boolean validate(Skill skill) {
-        return tasksDoNotContain(skill);
+    private boolean validateSkill(Skill skill) {
+        return skillsDoNotContain(skill);
     }
 
     /**
-     * This method checks if the skill is already in the list of tasks.
+     * This method checks if the skill is already in the list of skills.
      *
      * @param skill The skill to be checked.
      * @return True if the skill is not in the list of skills.
      */
-    private boolean tasksDoNotContain(Skill skill) {
+    private boolean skillsDoNotContain(Skill skill) {
         return !skills.contains(skill);
     }
 
@@ -130,7 +130,7 @@ public class Organization {
     }
 
     //add hrm to organization
-    public boolean addEmployee(HRM hrm) {
+    public boolean addHRM(HRM hrm) {
         boolean success = false;
         if (validateHRM(hrm)) {
             success = hrms.add(hrm);

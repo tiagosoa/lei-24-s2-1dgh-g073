@@ -15,12 +15,12 @@ public class OrganizationRepository {
         organizations = new ArrayList<>();
     }
 
-    public Optional<Organization> getOrganizationByEmployee(HRM employee) {
+    public Optional<Organization> getOrganizationByHRM(HRM hrm) {
 
         Optional<Organization> returnOrganization = Optional.empty();
 
         for (Organization organization : organizations) {
-            if (organization.employs(employee)) {
+            if (organization.employs(hrm)) {
                 returnOrganization = Optional.of(organization);
             }
         }
@@ -28,7 +28,7 @@ public class OrganizationRepository {
         return returnOrganization;
     }
 
-    public Optional<Organization> getOrganizationByEmployeeEmail(String email) {
+    public Optional<Organization> getOrganizationByHRMEmail(String email) {
 
         Optional<Organization> returnOrganization = Optional.empty();
 

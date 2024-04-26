@@ -21,6 +21,6 @@ class RepositoriesTest {
     @Test
     void testGetTaskCategoryRepository() {
         Repositories instance = Repositories.getInstance();
-        assertNotNull(instance.getTaskCategoryRepository());
+        assertNotNull(instance.getSkillRepository());
     }
 }

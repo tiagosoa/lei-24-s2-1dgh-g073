@@ -40,14 +40,14 @@ class SkillTest {
 
     @Test
     void testEqualsNull() {
-        HRM employee = new HRM("john.doe@this.company.com");
+        HRM hrm = new HRM("john.doe@this.company.com");
         Skill skill = new Skill("name", hrm);
 
         assertNotEquals(skill, null);
     }
 
     @Test
-    void testEqualsDifferentObject() {
+    void testEqualsDifferentObjects() {
         HRM hrm = new HRM("john.doe@this.company.com");
         Skill skill = new Skill("name", hrm);
         Skill skill1 = new Skill("name1", hrm);
@@ -56,7 +56,7 @@ class SkillTest {
     }
 
     @Test
-    void testEqualsSameObject() {
+    void testEqualsSameObjects() {
         HRM hrm = new HRM("john.doe@this.company.com");
         Skill skill = new Skill("name", hrm);
         Skill skill1 = new Skill("name", hrm);
