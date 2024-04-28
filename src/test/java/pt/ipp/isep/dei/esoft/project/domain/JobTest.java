@@ -4,78 +4,78 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SkillTest {
+class JobTest {
 
     @Test
-    void ensureSkillIsCreatedSuccessfully() {
+    void ensureJobIsCreatedSuccessfully() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
+        Job job = new Job("name", hrm);
     }
 
     @Test
-    void ensureSkillNameIsNotNull() {
+    void ensureJobNameIsNotNull() {
         //Arrange
         HRM hrm = new HRM("john.doe@this.company.com");
 
 
         //Act and Assert
         assertThrows(IllegalArgumentException.class,
-                () -> new Skill(null, hrm));
+                () -> new Job(null, hrm));
     }
 
     @Test
     void testEqualsSameObject() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
-        assertEquals(skill, skill);
+        Job job = new Job("name", hrm);
+        assertEquals(job, job);
     }
 
     @Test
     void testEqualsDifferentClass() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
+        Job job = new Job("name", hrm);
 
-        assertNotEquals(skill, new Object());
+        assertNotEquals(job, new Object());
     }
 
     @Test
     void testEqualsNull() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
+        Job job = new Job("name", hrm);
 
-        assertNotEquals(skill, null);
+        assertNotEquals(job, null);
     }
 
     @Test
     void testEqualsDifferentObjects() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
-        Skill skill1 = new Skill("name1", hrm);
+        Job job = new Job("name", hrm);
+        Job job1 = new Job("name1", hrm);
 
-        assertNotEquals(skill, skill1);
+        assertNotEquals(job, job1);
     }
 
     @Test
     void testHashCodeSameObject() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
-        assertEquals(skill.hashCode(), skill.hashCode());
+        Job job = new Job("name", hrm);
+        assertEquals(job.hashCode(), job.hashCode());
     }
 
     @Test
     void testHashCodeDifferentObject() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
-        Skill skill1 = new Skill("name1", hrm);
+        Job job = new Job("name", hrm);
+        Job job1 = new Job("name1", hrm);
 
-        assertNotEquals(skill.hashCode(), skill1.hashCode());
+        assertNotEquals(job.hashCode(), job1.hashCode());
     }
 
     @Test
     void ensureCloneWorks() {
         HRM hrm = new HRM("john.doe@this.company.org");
-        Skill skill = new Skill("name", hrm);
-        Skill clone = skill.clone();
-        assertEquals(skill, clone);
+        Job job = new Job("name", hrm);
+        Job clone = job.clone();
+        assertEquals(job, clone);
     }
 }

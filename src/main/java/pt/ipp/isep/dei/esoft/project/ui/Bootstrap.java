@@ -3,17 +3,18 @@ package pt.ipp.isep.dei.esoft.project.ui;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
-import pt.ipp.isep.dei.esoft.project.domain.TaskCategory;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.OrganizationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
+import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
 
 public class Bootstrap implements Runnable {
 
     //Add some task categories to the repository as bootstrap
     public void run() {
         addSkills();
+        addJobs();
         addOrganization();
         addUsers();
     }
@@ -31,8 +32,24 @@ public class Bootstrap implements Runnable {
     private void addSkills() {
         //TODO: add bootstrap Task Categories here
 
-        //get task category repository
+        //get skill repository
         SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();
+
+        //skillRepository.add(new TaskCategory("Analysis"));
+        //skillRepository.add(new TaskCategory("Design"));
+        //skillRepository.add(new TaskCategory("Implementation"));
+        //skillRepository.add(new TaskCategory("Development"));
+        //skillRepository.add(new TaskCategory("Testing"));
+        //skillRepository.add(new TaskCategory("Deployment"));
+        //skillRepository.add(new TaskCategory("Maintenance"));
+    }
+
+    private void addJobs() {
+        //TODO: add bootstrap Task Categories here
+
+        //get job repository
+        JobRepository jobRepository = Repositories.getInstance().getJobRepository();
+
         //skillRepository.add(new TaskCategory("Analysis"));
         //skillRepository.add(new TaskCategory("Design"));
         //skillRepository.add(new TaskCategory("Implementation"));
@@ -48,6 +65,22 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_ADMIN);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM,
                 AuthenticationController.ROLE_HRM);
+
+        authenticationRepository.addUserWithRole("Tiago Soares", "admin@this.app", "1231246",
+                AuthenticationController.ROLE_HRM);
+
+        authenticationRepository.addUserWithRole("Diogo Cabral", "1230603@isep.app", "1230603",
+                AuthenticationController.ROLE_HRM);
+
+        authenticationRepository.addUserWithRole("Diogo Vilela", "1230804@isep.app", "1230804",
+                AuthenticationController.ROLE_HRM);
+
+        authenticationRepository.addUserWithRole("Guilherme Miranda", "1230582@isep.app", "1230582",
+                AuthenticationController.ROLE_HRM);
+
+        authenticationRepository.addUserWithRole("Hugo Ramos", "1231219@isep.app", "1231219",
+                AuthenticationController.ROLE_HRM);
+
 
         authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin",
                 AuthenticationController.ROLE_ADMIN);

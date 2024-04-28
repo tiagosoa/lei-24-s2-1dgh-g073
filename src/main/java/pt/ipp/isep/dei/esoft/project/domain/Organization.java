@@ -9,6 +9,7 @@ public class Organization {
     private final String vatNumber;
     private final List<HRM> hrms;
     private final List<Skill> skills;
+    private final List<Job> jobs;
     private String name;
     private String website;
     private String phone;
@@ -24,6 +25,7 @@ public class Organization {
         this.vatNumber = vatNumber;
         hrms = new ArrayList<>();
         skills = new ArrayList<>();
+        jobs = new ArrayList<>();
     }
 
     /**
@@ -61,6 +63,30 @@ public class Organization {
     }
 
     /**
+     * This method creates a new job.
+     *
+     * @param name            The name of the job to be created.
+     * @param hrm             The hrm that creates the job.
+     * @return
+     */
+    public Optional<Job> createJob(String name, HRM hrm) {
+
+        //TODO: we could also check if the hrm works for the organization before proceeding
+        //checkIfEmployeeWorksForOrganization(hrm);
+
+        // When a Task is added, it should fail if the Task already exists in the list of Tasks.
+        // In order to not return null if the operation fails, we use the Optional class.
+        Optional<Job> optionalValue = Optional.empty();
+
+        Job job = new Job(name, hrm);
+
+        if (addJob(job)) {
+            optionalValue = Optional.of(job);
+        }
+        return optionalValue;
+    }
+
+    /**
      * This method adds a skill to the list of skills.
      *
      * @param skill The skill to be added.
@@ -77,6 +103,22 @@ public class Organization {
     }
 
     /**
+     * This method adds a skill to the list of jobs.
+     *
+     * @param job The job to be added.
+     * @return True if the skill was added successfully.
+     */
+    private boolean addJob(Job job) {
+        boolean success = false;
+        if (validateJob(job)) {
+            // A clone of the job is added to the list of jobs, to avoid side effects and outside manipulation.
+            success = jobs.add(job.clone());
+        }
+        return success;
+
+    }
+
+    /**
      * This method validates the skill, checking for duplicates.
      *
      * @param skill The skill to be validated.
@@ -87,6 +129,14 @@ public class Organization {
     }
 
     /**
+     * This method validates the job, checking for duplicates.
+     *
+     * @param job The job to be validated.
+     * @return True if the job is valid.
+     */
+    private boolean validateJob(Job job) {return jobsDoNotContain(job);}
+
+    /**
      * This method checks if the skill is already in the list of skills.
      *
      * @param skill The skill to be checked.
@@ -94,6 +144,16 @@ public class Organization {
      */
     private boolean skillsDoNotContain(Skill skill) {
         return !skills.contains(skill);
+    }
+
+    /**
+     * This method checks if the job is already in the list of jobs.
+     *
+     * @param job The job to be checked.
+     * @return True if the job is not in the list of jobs.
+     */
+    private boolean jobsDoNotContain(Job job) {
+        return !jobs.contains(job);
     }
 
     /**
@@ -161,6 +221,10 @@ public class Organization {
 
         for (Skill in : this.skills) {
             clone.skills.add(in.clone());
+        }
+
+        for (Job in : this.jobs) {
+            clone.jobs.add(in.clone());
         }
 
         return clone;

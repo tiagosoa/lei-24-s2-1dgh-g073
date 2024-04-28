@@ -2,23 +2,25 @@ package pt.ipp.isep.dei.esoft.project.domain;
 
 import java.util.Objects;
 
-public class Skill {
+public class Job {
     private final String name;
 
     private HRM hrm;
 
-    public Skill(String name, HRM hrm) {
+    public Job(String name, HRM hrm) {
 
-        validateSkill(name);
+        validateJob(name);
         this.name = name;
         this.hrm = hrm;
     }
 
-    private void validateSkill(String name) {
+    private void validateJob(String name) {
+        //TODO: missing from the diagrams
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Skill name cannot be null or empty.");
+            throw new IllegalArgumentException("Job name cannot be null or empty.");
+
         } else if (!name.matches("[a-zA-Z]+")) {
-            throw new IllegalArgumentException("Skill name cannot contain special characters or digits.");
+            throw new IllegalArgumentException("Job name cannot contain special characters or digits.");
         }
     }
 
@@ -27,10 +29,10 @@ public class Skill {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Skill)) {
+        if (!(o instanceof Job)) {
             return false;
         }
-        Skill skill = (Skill) o;
+        Job skill = (Job) o;
         return name.equals(skill.name) && hrm.equals(skill.hrm);
     }
 
@@ -45,8 +47,8 @@ public class Skill {
      *
      * @return A clone of the current instance.
      */
-    public Skill clone() {
-        return new Skill(this.name, this.hrm);
+    public Job clone() {
+        return new Job(this.name, this.hrm);
     }
 
     public String getName() {

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class UserSession {
 
-    private final pt.isep.lei.esoft.auth.UserSession userSession;
+    private pt.isep.lei.esoft.auth.UserSession userSession;
 
     public UserSession(pt.isep.lei.esoft.auth.UserSession userSession) {
         this.userSession = userSession;
