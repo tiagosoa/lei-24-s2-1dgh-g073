@@ -10,6 +10,7 @@ public class Organization {
     private final List<HRM> hrms;
     private final List<Skill> skills;
     private final List<Job> jobs;
+    private final List<Collaborator> collaborators;
     private String name;
     private String website;
     private String phone;
@@ -25,6 +26,7 @@ public class Organization {
         this.vatNumber = vatNumber;
         hrms = new ArrayList<>();
         skills = new ArrayList<>();
+        collaborators = new ArrayList<>();
         jobs = new ArrayList<>();
     }
 
@@ -50,7 +52,7 @@ public class Organization {
         //TODO: we could also check if the hrm works for the organization before proceeding
         //checkIfEmployeeWorksForOrganization(hrm);
 
-        // When a Task is added, it should fail if the Task already exists in the list of Tasks.
+        // When a Skill is added, it should fail if the Skill already exists in the list of Skills.
         // In order to not return null if the operation fails, we use the Optional class.
         Optional<Skill> optionalValue = Optional.empty();
 
@@ -74,7 +76,7 @@ public class Organization {
         //TODO: we could also check if the hrm works for the organization before proceeding
         //checkIfEmployeeWorksForOrganization(hrm);
 
-        // When a Task is added, it should fail if the Task already exists in the list of Tasks.
+        // When a Job is added, it should fail if the Job already exists in the list of Jobs.
         // In order to not return null if the operation fails, we use the Optional class.
         Optional<Job> optionalValue = Optional.empty();
 
@@ -82,6 +84,37 @@ public class Organization {
 
         if (addJob(job)) {
             optionalValue = Optional.of(job);
+        }
+        return optionalValue;
+    }
+
+    /**
+     * This method registers a new collaborator.
+     *
+     * @param name            The name of the collaborator to be registered.
+     * @param birthdate       The date of birth of the collaborator to be registered.
+     * @param admissiondate   The date of admission of the collaborator to be registered.
+     * @param address         The address where the collaborator to be registered resides.
+     * @param mobile          The mobile phone number of the collaborator to be registered.
+     * @param email           The email of the collaborator to be registered.
+     * @param doctype         The type of documentation the collaborator to be registered has.
+     * @param IDnumber        The ID number of the collaborator to be registered.
+     * @param hrm             The hrm that registers the collaborator.
+     * @return
+     */
+    public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, String doctype, int IDnumber, HRM hrm) {
+
+        //TODO: we could also check if the hrm works for the organization before proceeding
+        //checkIfEmployeeWorksForOrganization(hrm);
+
+        // When a Collaborator is added, it should fail if the collaborator's ID number already exists in the list of collaborators.
+        // In order to not return null if the operation fails, we use the Optional class.
+        Optional<Collaborator> optionalValue = Optional.empty();
+
+        Collaborator collaborator = new Collaborator(name, birthdate, admissiondate, address, mobile, email, doctype, IDnumber, hrm);
+
+        if (addCollaborator(collaborator)) {
+            optionalValue = Optional.of(collaborator);
         }
         return optionalValue;
     }
@@ -119,6 +152,22 @@ public class Organization {
     }
 
     /**
+     * This method adds a collaborator to the list of collaborators.
+     *
+     * @param collaborator The collaborator to be added.
+     * @return True if the collaborator was added successfully.
+     */
+    private boolean addCollaborator(Collaborator collaborator) {
+        boolean success = false;
+        if (validateCollaborator(collaborator)) {
+            // A clone of the collaborator is added to the list of collaborators, to avoid side effects and outside manipulation.
+            success = collaborators.add(collaborator.clone());
+        }
+        return success;
+
+    }
+
+    /**
      * This method validates the skill, checking for duplicates.
      *
      * @param skill The skill to be validated.
@@ -135,6 +184,15 @@ public class Organization {
      * @return True if the job is valid.
      */
     private boolean validateJob(Job job) {return jobsDoNotContain(job);}
+
+    /**
+     * This method validates the collaborator, checking for duplicates.
+     *
+     * @param collaborator The collaborator to be validated.
+     * @return True if the collaborator is valid.
+     */
+    private boolean validateCollaborator(Collaborator collaborator) {return collaboratorsDoNotContain(collaborator);}
+
 
     /**
      * This method checks if the skill is already in the list of skills.
@@ -154,6 +212,16 @@ public class Organization {
      */
     private boolean jobsDoNotContain(Job job) {
         return !jobs.contains(job);
+    }
+
+    /**
+     * This method checks if the collaborator is already in the list of collaborators.
+     *
+     * @param collaborator The collaborator to be checked.
+     * @return True if the collaborator is not in the list of collaborators.
+     */
+    private boolean collaboratorsDoNotContain(Collaborator collaborator) {
+        return !collaborators.contains(collaborator);
     }
 
     /**
@@ -225,6 +293,10 @@ public class Organization {
 
         for (Job in : this.jobs) {
             clone.jobs.add(in.clone());
+        }
+
+        for (Collaborator in : this.collaborators) {
+            clone.collaborators.add(in.clone());
         }
 
         return clone;

@@ -3,11 +3,7 @@ package pt.ipp.isep.dei.esoft.project.ui;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
-import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
-import pt.ipp.isep.dei.esoft.project.repository.OrganizationRepository;
-import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
-import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
+import pt.ipp.isep.dei.esoft.project.repository.*;
 
 public class Bootstrap implements Runnable {
 
@@ -15,6 +11,7 @@ public class Bootstrap implements Runnable {
     public void run() {
         addSkills();
         addJobs();
+        addCollaborators();
         addOrganization();
         addUsers();
     }
@@ -25,6 +22,7 @@ public class Bootstrap implements Runnable {
         OrganizationRepository organizationRepository = Repositories.getInstance().getOrganizationRepository();
         Organization organization = new Organization("This Company");
         organization.addHRM(new HRM("admin@this.app"));
+        organization.addHRM(new HRM("1231246@isep.ipp.pt"));
         organization.addHRM(new HRM("hrm@this.app"));
         organizationRepository.add(organization);
     }
@@ -59,6 +57,21 @@ public class Bootstrap implements Runnable {
         //skillRepository.add(new TaskCategory("Maintenance"));
     }
 
+    private void addCollaborators() {
+        //TODO: add bootstrap Task Categories here
+
+        //get job repository
+        CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
+
+        //skillRepository.add(new TaskCategory("Analysis"));
+        //skillRepository.add(new TaskCategory("Design"));
+        //skillRepository.add(new TaskCategory("Implementation"));
+        //skillRepository.add(new TaskCategory("Development"));
+        //skillRepository.add(new TaskCategory("Testing"));
+        //skillRepository.add(new TaskCategory("Deployment"));
+        //skillRepository.add(new TaskCategory("Maintenance"));
+    }
+
     private void addUsers() {
         //TODO: add Authentication users here: should be created for each user in the organization
         AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
@@ -66,7 +79,7 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM,
                 AuthenticationController.ROLE_HRM);
 
-        authenticationRepository.addUserWithRole("Tiago Soares", "admin@this.app", "1231246",
+        authenticationRepository.addUserWithRole("Tiago Soares", "1231246@isep.ipp.pt", "1231246",
                 AuthenticationController.ROLE_HRM);
 
         authenticationRepository.addUserWithRole("Diogo Cabral", "1230603@isep.app", "1230603",

@@ -2,46 +2,46 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
-import pt.ipp.isep.dei.esoft.project.domain.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.OrganizationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
+import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.Optional;
 
-public class CreateSkillController {
+public class RegisterCollaboratorController {
 
     private OrganizationRepository organizationRepository;
-    private SkillRepository skillRepository;
+    private CollaboratorRepository collaboratorRepository;
     private AuthenticationRepository authenticationRepository;
 
 
     //Repository instances are obtained from the Repositories class
-    public CreateSkillController() {
+    public RegisterCollaboratorController() {
         getOrganizationRepository();
-        getSkillRepository();
+        getCollaboratorRepository();
         getAuthenticationRepository();
     }
 
     //Allows receiving the repositories as parameters for testing purposes
-    public CreateSkillController(OrganizationRepository organizationRepository,
-                                 SkillRepository skillRepository,
-                                 AuthenticationRepository authenticationRepository) {
+    public RegisterCollaboratorController(OrganizationRepository organizationRepository,
+                                          CollaboratorRepository collaboratorRepository,
+                                          AuthenticationRepository authenticationRepository) {
         this.organizationRepository = organizationRepository;
-        this.skillRepository = skillRepository;
+        this.collaboratorRepository = collaboratorRepository;
         this.authenticationRepository = authenticationRepository;
     }
 
-    private SkillRepository getSkillRepository() {
-        if (skillRepository == null) {
+    private CollaboratorRepository getCollaboratorRepository() {
+        if (collaboratorRepository == null) {
             Repositories repositories = Repositories.getInstance();
 
-            //Get the SkillRepository
-            skillRepository = repositories.getSkillRepository();
+            //Get the CollaboratorRepository
+            collaboratorRepository = repositories.getCollaboratorRepository();
         }
-        return skillRepository;
+        return collaboratorRepository;
     }
 
     private OrganizationRepository getOrganizationRepository() {
@@ -63,16 +63,16 @@ public class CreateSkillController {
         return authenticationRepository;
     }
 
-    public Optional<Skill> createSkill(String name, HRM hrm) {
+    public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, String doctype, int IDnumber, HRM hrm) {
         Optional<Organization> organization = getOrganizationRepository().getOrganizationByHRM(hrm);
 
-        Optional<Skill> newSkill = Optional.empty();
+        Optional<Collaborator> newCollaborator = Optional.empty();
 
         if (organization.isPresent()) {
-            newSkill = organization.get()
-                    .createSkill(name, hrm);
+            newCollaborator = organization.get()
+                    .registerCollaborator(name, birthdate, admissiondate, address, mobile, email, doctype, IDnumber, hrm);
         }
-        return newSkill;
+        return newCollaborator;
     }
 
     public HRM getHRMFromSession() {

@@ -9,12 +9,12 @@ _**Note that SSD - Alternative One is adopted.**_
 | Interaction ID | Question: Which class is responsible for...   | Answer                         | Justification (with patterns)                                                                                 |
 |:---------------|:----------------------------------------------|:-------------------------------|:--------------------------------------------------------------------------------------------------------------|
 | Step 1  		     | 	... interacting with the actor?              | RegisterCollaboratorUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		        | 	... coordinating the US?                     | RegisterCollaboratorController | Controller                                                                                                    |
+| 			  		        | 	... coordinating the US?                     | pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController | Controller                                                                                                    |
 | 			  		        | 	... registering a new Collaborator?          | Organization                   | Creator (Rule 1): in the DM Organization has a Collaborator.                                                  |
 | 			  		        | ... knowing the user using the system?        | UserSession                    | IE: cf. A&A component documentation.                                                                          |
 | 			  		        | 							                                       | Organization                   | IE: knows/has its own Employees/Collaborators                                                                 |
 | 			  		        | 							                                       | HRM                            | IE: knows its own data (e.g. email)                                                                           |
-| Step 2  		     | 	... assigning the job?						                 | RegisterCollaboratorController | Controller                                                                                                    |
+| Step 2  		     | 	... assigning the job?						                 | pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController | Controller                                                                                                    |
 | Step 3  		     | 	...saving the inputted data?                 | Collaborator                   | IE: object created in step 1 has its own data.                                                                |	|                      |                                                                                                               |              
 | Step 4 		      | 	... validating all data (local validation)?  | Collaborator                   | IE: owns its data.                                                                                            | 
 | 			  		        | 	... validating all data (global validation)? | Organization                   | IE: knows all its collaborators.                                                                              | 
@@ -31,7 +31,7 @@ According to the taken rationale, the conceptual classes promoted to software cl
 Other software classes (i.e. Pure Fabrication) identified: 
 
 * RegisterCollaboratorUI  
-* RegisterCollaboratorController
+* pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController
 
 
 ## 3.2. Sequence Diagram (SD)

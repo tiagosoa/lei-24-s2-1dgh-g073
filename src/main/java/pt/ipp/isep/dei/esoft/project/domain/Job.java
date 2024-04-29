@@ -32,8 +32,8 @@ public class Job {
         if (!(o instanceof Job)) {
             return false;
         }
-        Job skill = (Job) o;
-        return name.equals(skill.name) && hrm.equals(skill.hrm);
+        Job job = (Job) o;
+        return name.equals(job.name) && hrm.equals(job.hrm);
     }
 
     @Override

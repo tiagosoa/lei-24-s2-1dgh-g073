@@ -17,9 +17,9 @@ public class SkillRepository {
     /**
      * This method returns an exsiting Skill by its name.
      *
-     * @param name The name of the skill category to be created.
+     * @param name The name of the skill to be created.
      * @return The skill name
-     * @throws IllegalArgumentException if the task category does not exist, which should never happen.
+     * @throws IllegalArgumentException if the skill does not exist, which should never happen.
      */
     public Skill getSkillByName(String name, HRM hrm) {
         Skill newSkill = new Skill(name, hrm);
@@ -36,19 +36,19 @@ public class SkillRepository {
 
     public Optional<Skill> add(Skill skill) {
 
-        Optional<Skill> newTaskCategory = Optional.empty();
+        Optional<Skill> newSkill = Optional.empty();
         boolean operationSuccess = false;
 
         if (validateSkill(skill)) {
-            newTaskCategory = Optional.of(skill.clone());
-            operationSuccess = skills.add(newTaskCategory.get());
+            newSkill = Optional.of(skill.clone());
+            operationSuccess = skills.add(newSkill.get());
         }
 
         if (!operationSuccess) {
-            newTaskCategory = Optional.empty();
+            newSkill = Optional.empty();
         }
 
-        return newTaskCategory;
+        return newSkill;
     }
 
     private boolean validateSkill(Skill skill) {
@@ -57,9 +57,9 @@ public class SkillRepository {
     }
 
     /**
-     * This method returns a defensive (immutable) copy of the list of task categories.
+     * This method returns a defensive (immutable) copy of the list of skills.
      *
-     * @return The list of task categories.
+     * @return The list of skills.
      */
     public List<Skill> getSkills() {
         //This is a defensive copy, so that the repository cannot be modified from the outside.
