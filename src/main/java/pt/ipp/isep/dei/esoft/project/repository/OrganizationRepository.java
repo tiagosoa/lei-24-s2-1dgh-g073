@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
+import pt.ipp.isep.dei.esoft.project.domain.VFM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,19 @@ public class OrganizationRepository {
 
         for (Organization organization : organizations) {
             if (organization.employs(hrm)) {
+                returnOrganization = Optional.of(organization);
+            }
+        }
+
+        return returnOrganization;
+    }
+
+    public Optional<Organization> getOrganizationByVFM(VFM vfm) {
+
+        Optional<Organization> returnOrganization = Optional.empty();
+
+        for (Organization organization : organizations) {
+            if (organization.employs(vfm)) {
                 returnOrganization = Optional.of(organization);
             }
         }

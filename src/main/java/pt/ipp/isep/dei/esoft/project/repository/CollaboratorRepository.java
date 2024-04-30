@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 
 import java.util.ArrayList;
@@ -20,7 +21,6 @@ public class CollaboratorRepository {
      * @return The collaborator name
      * @throws IllegalArgumentException if the collaborator does not exist, which should never happen.
      */
-
     public Collaborator getCollaboratorByID(int IDnumber) {
         Collaborator collaborator = null;
         for (Collaborator existingCollaborator : collaborators) {

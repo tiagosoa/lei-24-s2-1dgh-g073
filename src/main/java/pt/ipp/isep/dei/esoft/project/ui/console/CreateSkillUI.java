@@ -1,13 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.CreateSkillController;
-import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
-import pt.ipp.isep.dei.esoft.project.application.session.UserSession;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import pt.ipp.isep.dei.esoft.project.domain.HRM;
 
 /**
  * Create Task UI (console). This option is only available for administrators for demonstration purposes.

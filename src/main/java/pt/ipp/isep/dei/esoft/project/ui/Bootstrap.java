@@ -1,9 +1,10 @@
 package pt.ipp.isep.dei.esoft.project.ui;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
+import pt.ipp.isep.dei.esoft.project.domain.VFM;
 import pt.ipp.isep.dei.esoft.project.repository.*;
+import pt.ipp.isep.dei.esoft.project.domain.HRM;
 
 public class Bootstrap implements Runnable {
 
@@ -24,7 +25,7 @@ public class Bootstrap implements Runnable {
         organization.addHRM(new HRM("admin@this.app"));
         organization.addHRM(new HRM("1231246@isep.ipp.pt"));
         organization.addHRM(new HRM("hrm@this.app"));
-        organization.addHRM(new HRM("vfm@this.app"));
+        organization.addVFM(new VFM("vfm@this.app"));
         organizationRepository.add(organization);
     }
 

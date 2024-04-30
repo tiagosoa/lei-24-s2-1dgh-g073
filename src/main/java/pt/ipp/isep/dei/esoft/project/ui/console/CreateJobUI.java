@@ -1,8 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.CreateJobController;
-import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
+import pt.ipp.isep.dei.esoft.project.domain.HRM;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -18,7 +18,9 @@ public class CreateJobUI implements Runnable {
     private String employeeEmail;
 
     public CreateJobUI() {
+
         controller = new CreateJobController();
+
     }
 
     private CreateJobController getController() {

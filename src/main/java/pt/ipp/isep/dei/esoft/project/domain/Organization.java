@@ -8,9 +8,11 @@ import java.util.Optional;
 public class Organization {
     private final String vatNumber;
     private final List<HRM> hrms;
+    private final List<VFM> vfms;
     private final List<Skill> skills;
     private final List<Job> jobs;
     private final List<Collaborator> collaborators;
+    private final List<Vehicle> vehicles;
     private String name;
     private String website;
     private String phone;
@@ -25,9 +27,11 @@ public class Organization {
     public Organization(String vatNumber) {
         this.vatNumber = vatNumber;
         hrms = new ArrayList<>();
+        vfms = new ArrayList<>();
         skills = new ArrayList<>();
         collaborators = new ArrayList<>();
         jobs = new ArrayList<>();
+        vehicles = new ArrayList<>();
     }
 
     /**
@@ -38,6 +42,10 @@ public class Organization {
      */
     public boolean employs(HRM hrm) {
         return hrms.contains(hrm);
+    }
+
+    public boolean employs(VFM vfm) {
+        return vfms.contains(vfm);
     }
 
     /**
@@ -60,6 +68,23 @@ public class Organization {
 
         if (addSkill(skill)) {
             optionalValue = Optional.of(skill);
+        }
+        return optionalValue;
+    }
+
+    public Optional<Vehicle> createVehicle(String model,String brand, String type, VFM vfm) {
+
+        //TODO: we could also check if the hrm works for the organization before proceeding
+        //checkIfEmployeeWorksForOrganization(hrm);
+
+        // When a Skill is added, it should fail if the Skill already exists in the list of Skills.
+        // In order to not return null if the operation fails, we use the Optional class.
+        Optional<Vehicle> optionalValue = Optional.empty();
+
+        Vehicle vehicle = new Vehicle(model,brand, type, vfm);
+
+        if (addVehicle(vehicle)) {
+            optionalValue = Optional.of(vehicle);
         }
         return optionalValue;
     }
@@ -166,6 +191,15 @@ public class Organization {
         return success;
 
     }
+    private boolean addVehicle(Vehicle vehicle) {
+        boolean success = false;
+        if (validateVehicle(vehicle)) {
+            // A clone of the collaborator is added to the list of collaborators, to avoid side effects and outside manipulation.
+            success = vehicles.add(vehicle.clone());
+        }
+        return success;
+
+    }
 
     /**
      * This method validates the skill, checking for duplicates.
@@ -175,6 +209,10 @@ public class Organization {
      */
     private boolean validateSkill(Skill skill) {
         return skillsDoNotContain(skill);
+    }
+
+    private boolean validateVehicle(Vehicle vehicle) {
+        return vehiclesDoNotContain(vehicle);
     }
 
     /**
@@ -202,6 +240,10 @@ public class Organization {
      */
     private boolean skillsDoNotContain(Skill skill) {
         return !skills.contains(skill);
+    }
+
+    private boolean vehiclesDoNotContain(Vehicle vehicle) {
+        return !vehicles.contains(vehicle);
     }
 
     /**
@@ -265,13 +307,27 @@ public class Organization {
         }
         return success;
     }
+    public boolean addVFM(VFM vfm) {
+        boolean success = false;
+        if (validateVFM(vfm)) {
+            success = vfms.add(vfm);
+        }
+        return success;
+    }
 
     private boolean validateHRM(HRM hrm) {
         return hrmsDoNotContain(hrm);
     }
 
+    private boolean validateVFM(VFM vfm) {
+        return vfmsDoNotContain(vfm);
+    }
     private boolean hrmsDoNotContain(HRM hrm) {
         return !hrms.contains(hrm);
+    }
+
+    private boolean vfmsDoNotContain(VFM vfm) {
+        return !vfms.contains(vfm);
     }
 
     //Clone organization
