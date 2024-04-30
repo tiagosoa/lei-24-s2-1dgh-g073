@@ -50,7 +50,7 @@ class SkillTest {
     void testEqualsDifferentObjects() {
         HRM hrm = new HRM("john.doe@this.company.com");
         Skill skill = new Skill("name", hrm);
-        Skill skill1 = new Skill("name1", hrm);
+        Skill skill1 = new Skill("namelei", hrm);
 
         assertNotEquals(skill, skill1);
     }
@@ -66,7 +66,7 @@ class SkillTest {
     void testHashCodeDifferentObject() {
         HRM hrm = new HRM("john.doe@this.company.com");
         Skill skill = new Skill("name", hrm);
-        Skill skill1 = new Skill("name1", hrm);
+        Skill skill1 = new Skill("namelei", hrm);
 
         assertNotEquals(skill.hashCode(), skill1.hashCode());
     }

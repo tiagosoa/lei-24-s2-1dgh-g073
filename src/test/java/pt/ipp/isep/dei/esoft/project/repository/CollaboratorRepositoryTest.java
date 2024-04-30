@@ -11,66 +11,64 @@ import static org.junit.jupiter.api.Assertions.*;
 class CollaboratorRepositoryTest {
 
     @Test
-    void getCollaboratorByNameEmptyList() {
+    void getCollaboratorByIDEmptyList() {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
-        String collaboratorName = "Collaborator Name";
-        HRM hrm = new HRM("john.doe@this.company.com");
+        int collaboratorID = 123456789;
         assertThrows(IllegalArgumentException.class,
-                () -> collaboratorRepository.getCollaboratorByName(collaboratorName, hrm));
+                () -> collaboratorRepository.getCollaboratorByID(collaboratorID));
     }
 
     @Test
-    void getCollaboratorByNameNullList() {
+    void getCollaboratorByIDNullList() {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
-        String collaboratorName = "Task Category Description";
-        HRM hrm = new HRM("john.doe@this.company.com");
+        int collaboratorID = 123456789;
         assertThrows(IllegalArgumentException.class,
-                () -> collaboratorRepository.getCollaboratorByName(collaboratorName, hrm));
+                () -> collaboratorRepository.getCollaboratorByID(collaboratorID));
     }
 
     @Test
     void ensureNewCollaboratorSuccessfullyAdded() {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
-        String collaboratorName = "Collaborator Name";
+        int collaboratorID = 123456789;
         HRM hrm = new HRM("john.doe@this.company.com");
-        Collaborator collaborator = new Collaborator(collaboratorName, hrm);
+        Collaborator collaborator = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", "CC", collaboratorID, hrm);
         collaboratorRepository.add(collaborator);
     }
 
     @Test
     void ensureGetCollaboratorForExistingCollaborator() {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
-        String collaboratorName = "Collaborator Name";
+        int collaboratorID = 123456789;
         HRM hrm = new HRM("john.doe@this.company.com");
-        Collaborator collaborator = new Collaborator(collaboratorName, hrm);
+        Collaborator collaborator = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", "CC", collaboratorID, hrm);
         collaboratorRepository.add(collaborator);
-        Collaborator collaborator1 = collaboratorRepository.getCollaboratorByName(collaboratorName, hrm);
+        Collaborator collaborator1 = collaboratorRepository.getCollaboratorByID(collaboratorID);
         assertEquals(collaborator, collaborator1);
     }
 
     @Test
     void ensureGetCollaboratorFailsForNonExistingCollaborator() {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
-        String collaboratorName = "Collaborator Name";
+        int collaboratorID = 123456789;
         HRM hrm = new HRM("john.doe@this.company.com");
-        Collaborator collaborator = new Collaborator(collaboratorName, hrm);
+        Collaborator collaborator = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", "CC", collaboratorID, hrm);
         collaboratorRepository.add(collaborator);
-        String collaboratorName1 = "Collaborator Name 1";
+        int collaboratorID1 = 123456780;
         assertThrows(IllegalArgumentException.class,
-                () -> collaboratorRepository.getCollaboratorByName(collaboratorName1, hrm));
+                () -> collaboratorRepository.getCollaboratorByID(collaboratorID1));
 
     }
 
     @Test
     void ensureGetCollaboratorReturnsAnImmutableList() {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
-        String collaboratorName = "Collaborator Name";
+        int collaboratorID = 123456789;
         HRM hrm = new HRM("john.doe@this.company.com");
-        Collaborator collaborator = new Collaborator(collaboratorName, hrm);
+        Collaborator collaborator = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", "CC", collaboratorID, hrm);
         collaboratorRepository.add(collaborator);
 
         assertThrows(UnsupportedOperationException.class,
-                () -> collaboratorRepository.getCollaborators().add(new Collaborator("Collaborator Name 1", hrm)));
+                () -> collaboratorRepository.getCollaborators().add(new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", "CC", collaboratorID, hrm)));
 
     }
 
@@ -79,8 +77,8 @@ class CollaboratorRepositoryTest {
         //Arrange
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         HRM hrm = new HRM("john.doe@this.company.com");
-        String collaboratorName = "Collaborator Name";
-        Collaborator collaborator = new Collaborator(collaboratorName, hrm);
+        int collaboratorID = 123456789;
+        Collaborator collaborator = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", "CC", collaboratorID, hrm);
         collaboratorRepository.add(collaborator);
         int expectedSize = 1;
 
@@ -97,7 +95,8 @@ class CollaboratorRepositoryTest {
         //Arrange
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         HRM hrm = new HRM("john.doe@this.company.com");
-        Collaborator collaborator = new Collaborator("Collaborator Name", hrm);
+        int collaboratorID = 123456789;
+        Collaborator collaborator = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", "CC", collaboratorID, hrm);
         //Add the first collaborator
         collaboratorRepository.add(collaborator);
 
@@ -113,8 +112,10 @@ class CollaboratorRepositoryTest {
         //Arrange
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         HRM hrm = new HRM("john.doe@this.company.com");
-        Collaborator collaboratorOne = new Collaborator("Collaborator Name One", hrm);
-        Collaborator collaboratorTwo = new Collaborator("Collaborator Name Two", hrm);
+        int collaboratorID = 123456789;
+        int collaboratorID1 = 123456780;
+        Collaborator collaboratorOne = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", "CC", collaboratorID, hrm);
+        Collaborator collaboratorTwo = new Collaborator("nemlei", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", "CC", collaboratorID1, hrm);
         //Add the first task
         collaboratorRepository.add(collaboratorOne);
 

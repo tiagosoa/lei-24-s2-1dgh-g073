@@ -11,7 +11,7 @@ public class Collaborator {
     private final int mobile;
     private final String email;
     private final String doctype;
-    private final int IDnumber;
+    public final int IDnumber;
 
     private HRM hrm;
 

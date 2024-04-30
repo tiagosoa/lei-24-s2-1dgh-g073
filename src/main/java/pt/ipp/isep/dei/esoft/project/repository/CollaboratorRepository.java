@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 
 import java.util.ArrayList;
@@ -17,22 +16,18 @@ public class CollaboratorRepository {
     /**
      * This method returns an exsiting Collaborator by its ID number.
      *
-     * @param name            The name of the collaborator to be registered.
-     * @param birthdate       The date of birth of the collaborator to be registered.
-     * @param admissiondate   The date of admission of the collaborator to be registered.
-     * @param address         The address where the collaborator to be registered resides.
-     * @param mobile          The mobile phone number of the collaborator to be registered.
-     * @param email           The email of the collaborator to be registered.
-     * @param doctype         The type of documentation the collaborator to be registered has.
      * @param IDnumber        The ID number of the collaborator to be registered.
      * @return The collaborator name
      * @throws IllegalArgumentException if the collaborator does not exist, which should never happen.
      */
-    public Collaborator getCollaboratorByID(String name, String birthdate, String admissiondate, String address, int mobile, String email, String doctype, int IDnumber, HRM hrm) {
-        Collaborator newCollaborator = new Collaborator(name, birthdate, admissiondate, address, mobile, email, doctype, IDnumber, hrm);
+
+    public Collaborator getCollaboratorByID(int IDnumber) {
         Collaborator collaborator = null;
-        if (collaborators.contains(newCollaborator)) {
-            collaborator = collaborators.get(collaborators.indexOf(newCollaborator));
+        for (Collaborator existingCollaborator : collaborators) {
+            if (existingCollaborator.getIDNumber() == IDnumber){
+                collaborator = existingCollaborator;
+                break;
+            }
         }
         if (collaborator == null) {
             throw new IllegalArgumentException(

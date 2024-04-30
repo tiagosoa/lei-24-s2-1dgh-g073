@@ -50,7 +50,7 @@ class JobTest {
     void testEqualsDifferentObjects() {
         HRM hrm = new HRM("john.doe@this.company.com");
         Job job = new Job("name", hrm);
-        Job job1 = new Job("name1", hrm);
+        Job job1 = new Job("namelei", hrm);
 
         assertNotEquals(job, job1);
     }
@@ -66,7 +66,7 @@ class JobTest {
     void testHashCodeDifferentObject() {
         HRM hrm = new HRM("john.doe@this.company.com");
         Job job = new Job("name", hrm);
-        Job job1 = new Job("name1", hrm);
+        Job job1 = new Job("namelei", hrm);
 
         assertNotEquals(job.hashCode(), job1.hashCode());
     }
