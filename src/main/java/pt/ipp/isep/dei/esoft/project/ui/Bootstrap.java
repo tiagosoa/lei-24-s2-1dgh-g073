@@ -24,6 +24,7 @@ public class Bootstrap implements Runnable {
         organization.addHRM(new HRM("admin@this.app"));
         organization.addHRM(new HRM("1231246@isep.ipp.pt"));
         organization.addHRM(new HRM("hrm@this.app"));
+        organization.addHRM(new HRM("vfm@this.app"));
         organizationRepository.add(organization);
     }
 
@@ -76,8 +77,8 @@ public class Bootstrap implements Runnable {
         //TODO: add Authentication users here: should be created for each user in the organization
         AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
         authenticationRepository.addUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_ADMIN);
-        authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM,
-                AuthenticationController.ROLE_HRM);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM, AuthenticationController.ROLE_HRM);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_VFM, AuthenticationController.ROLE_VFM);
 
         authenticationRepository.addUserWithRole("Tiago Soares", "1231246@isep.ipp.pt", "1231246",
                 AuthenticationController.ROLE_HRM);
@@ -100,5 +101,8 @@ public class Bootstrap implements Runnable {
 
         authenticationRepository.addUserWithRole("HRM", "hrm@this.app", "pwd",
                 AuthenticationController.ROLE_HRM);
+
+        authenticationRepository.addUserWithRole("VFM", "vfm@this.app", "pwd",
+                AuthenticationController.ROLE_VFM);
     }
 }
