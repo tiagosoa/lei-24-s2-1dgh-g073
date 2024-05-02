@@ -9,15 +9,16 @@ public class Skill {
 
     public Skill(String name, HRM hrm) {
 
-        validateName(name);
+        validateSkill(name);
         this.name = name;
         this.hrm = hrm;
     }
 
-    private void validateName(String name) {
-        //TODO: missing from the diagrams
+    private void validateSkill(String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Skill name cannot be null or empty.");
+        } else if (!name.matches("[a-zA-Z]+")) {
+            throw new IllegalArgumentException("Skill name cannot contain special characters or digits.");
         }
     }
 

@@ -116,7 +116,7 @@ class CollaboratorRepositoryTest {
         int collaboratorID1 = 123456780;
         Collaborator collaboratorOne = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", "CC", collaboratorID, hrm);
         Collaborator collaboratorTwo = new Collaborator("nemlei", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", "CC", collaboratorID1, hrm);
-        //Add the first task
+        //Add the first collaborator
         collaboratorRepository.add(collaboratorOne);
 
         //Act

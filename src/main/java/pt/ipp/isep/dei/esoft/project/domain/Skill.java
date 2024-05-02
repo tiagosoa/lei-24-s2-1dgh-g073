@@ -52,4 +52,7 @@ public class Skill {
     public String getName() {
         return name;
     }
+    public void addCollaborator(Collaborator collaborator) {
+            collaborator.addSkill(this);
+        }
 }

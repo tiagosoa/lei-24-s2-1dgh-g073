@@ -11,7 +11,7 @@ public class Organization {
     private final List<VFM> vfms;
     private final List<Skill> skills;
     private final List<Job> jobs;
-    private final List<Collaborator> collaborators;
+    private static List<Collaborator> collaborators;
     private final List<Vehicle> vehicles;
     private String name;
     private String website;
@@ -32,6 +32,10 @@ public class Organization {
         collaborators = new ArrayList<>();
         jobs = new ArrayList<>();
         vehicles = new ArrayList<>();
+    }
+
+    public static List<Collaborator> getCollaboratorList() {
+        return collaborators;
     }
 
     /**

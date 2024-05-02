@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.Organization;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +10,13 @@ import java.util.Optional;
 
 public class CollaboratorRepository {
 
-    private final List<Collaborator> collaborators;
+    private List<Collaborator> collaborators;
     public CollaboratorRepository() {
-        collaborators = new ArrayList<>();
+        this.collaborators = Organization.getCollaboratorList();
+        if (this.collaborators == null) {
+            // Initialize the collaborators list if it's null
+            this.collaborators = new ArrayList<>();
+        }
     }
 
     /**
@@ -54,15 +59,25 @@ public class CollaboratorRepository {
     }
 
     private boolean validateCollaborator(Collaborator collaborator) {
-        boolean isValid = !collaborators.contains(collaborator);
-        return isValid;
+        return !collaborators.contains(collaborator);
     }
 
-    /**
-     * This method returns a defensive (immutable) copy of the list of collaborators.
-     *
-     * @return The list of collaborators.
-     */
+    public void updateCollaborator(Collaborator collaboratorToUpdate) {
+        for (int i = 0; i < collaborators.size(); i++) {
+            Collaborator collaborator = collaborators.get(i);
+            if (collaborator.getEmail().equals(collaboratorToUpdate.getEmail())) {
+                collaborators.set(i, collaboratorToUpdate);
+                return; // Found and updated collaborator, exit the loop
+            }
+        }
+        throw new IllegalArgumentException("Collaborator not found.");
+    }
+
+        /**
+         * This method returns a defensive (immutable) copy of the list of collaborators.
+         *
+         * @return The list of collaborators.
+         */
     public List<Collaborator> getCollaborators() {
         //This is a defensive copy, so that the repository cannot be modified from the outside.
         return List.copyOf(collaborators);

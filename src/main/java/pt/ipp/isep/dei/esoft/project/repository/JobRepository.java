@@ -1,11 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import pt.ipp.isep.dei.esoft.project.domain.HRM;
 
 public class JobRepository {
 

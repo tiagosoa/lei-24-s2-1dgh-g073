@@ -5,6 +5,8 @@ import java.util.Objects;
 public class Job {
     private final String name;
 
+    private Collaborator collaborator;
+
     private HRM hrm;
 
     public Job(String name, HRM hrm) {
@@ -53,5 +55,13 @@ public class Job {
 
     public String getName() {
         return name;
+    }
+
+    public Collaborator getCollaborator() {
+        return collaborator;
+    }
+
+    public void setCollaborator(Collaborator collaborator) {
+        this.collaborator = collaborator;
     }
 }

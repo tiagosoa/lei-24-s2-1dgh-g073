@@ -1,10 +1,14 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Collaborator {
+
+    private List<Job> collaboratorjobs;
+    private List<Skill> collaboratorskills;
     private final String name;
-    
     private final String birthdate;
     private final String admissiondate;
     private final String address;
@@ -27,6 +31,8 @@ public class Collaborator {
         this.doctype = doctype;
         this.IDnumber = IDnumber;
         this.hrm = hrm;
+        this.collaboratorjobs = new ArrayList<>();
+        this.collaboratorskills = new ArrayList<>();
     }
 
     private void validateCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, String doctype, int IDnumber) {
@@ -59,6 +65,13 @@ public class Collaborator {
             throw new IllegalArgumentException("Collaborator ID number must be a positive number");
         }
     }
+    public void addSkill(Skill skill) {
+        if (!collaboratorskills.contains(skill)) {
+            collaboratorskills.add(skill);
+            skill.addCollaborator(this);
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -118,4 +131,13 @@ public class Collaborator {
     public int getIDNumber() {
         return IDnumber;
     }
+
+    public void setJobs(List<Job> collaboratorjobs) {
+        this.collaboratorjobs = collaboratorjobs;
+    }
+    public List<Job> getJobs() {
+        return collaboratorjobs;
+    }
+
+    public List<Skill> getSkills() {return collaboratorskills;}
 }

@@ -26,10 +26,10 @@ public class CreateSkillController {
 
     //Allows receiving the repositories as parameters for testing purposes
     public CreateSkillController(OrganizationRepository organizationRepository,
-                                 SkillRepository taskCategoryRepository,
+                                 SkillRepository skillRepository,
                                  AuthenticationRepository authenticationRepository) {
         this.organizationRepository = organizationRepository;
-        this.skillRepository = taskCategoryRepository;
+        this.skillRepository = skillRepository;
         this.authenticationRepository = authenticationRepository;
     }
 
@@ -37,7 +37,7 @@ public class CreateSkillController {
         if (skillRepository == null) {
             Repositories repositories = Repositories.getInstance();
 
-            //Get the TaskCategoryRepository
+            //Get the SkillRepository
             skillRepository = repositories.getSkillRepository();
         }
         return skillRepository;
