@@ -22,8 +22,6 @@ public class AssignSkillUI implements Runnable {
 
     private SkillRepository skillRepository;
     private Scanner scanner;
-    private String skillName;
-    private String employeeEmail;
 
 
     /**
@@ -93,7 +91,7 @@ public class AssignSkillUI implements Runnable {
         List<String> selectedSkillNames = new ArrayList<>();
         for (String index : skillIndices) {
             int skillIndex = Integer.parseInt(index.trim()) - 1;
-            selectedSkillNames.add(skills.get(skillIndex).getName());
+            selectedSkillNames.add(skills.get(skillIndex).getName().trim());
         }
         HRM hrm = getController().getHRMFromSession();
 

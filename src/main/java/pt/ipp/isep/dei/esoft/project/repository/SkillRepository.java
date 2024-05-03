@@ -27,18 +27,12 @@ public class SkillRepository {
      * @throws IllegalArgumentException if the skill does not exist, which should never happen.
      */
     public Skill getSkillByName(String name) {
-        Skill skill = null;
         for (Skill existingSkill : skills) {
             if (existingSkill.getName().equals(name)) {
-                skill = existingSkill;
-                break;
+                return existingSkill;
             }
         }
-        if (skill == null) {
-            throw new IllegalArgumentException(
-                    "Skill name requested for [" + name + "] does not exist.");
-        }
-        return skill;
+        return null;
     }
 
     public Optional<Skill> add(Skill skill) {

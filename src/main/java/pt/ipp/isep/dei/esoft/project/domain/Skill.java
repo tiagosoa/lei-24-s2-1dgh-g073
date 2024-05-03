@@ -28,7 +28,7 @@ public class Skill {
             return false;
         }
         Skill skill = (Skill) o;
-        return name.equals(skill.name);
+        return Objects.equals(name, skill.name);
     }
 
     @Override
