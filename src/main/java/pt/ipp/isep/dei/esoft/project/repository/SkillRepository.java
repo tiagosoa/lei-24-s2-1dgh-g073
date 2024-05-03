@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.Organization;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 
@@ -9,9 +10,13 @@ import java.util.Optional;
 
 public class SkillRepository {
 
-    private final List<Skill> skills;
+    private List<Skill> skills;
     public SkillRepository() {
-        skills = new ArrayList<>();
+            this.skills = Organization.getSkillList();
+            if (this.skills == null) {
+                // Initialize the collaborators list if it's null
+                this.skills = new ArrayList<>();
+            }
     }
 
     /**
@@ -21,11 +26,13 @@ public class SkillRepository {
      * @return The skill name
      * @throws IllegalArgumentException if the skill does not exist, which should never happen.
      */
-    public Skill getSkillByName(String name, HRM hrm) {
-        Skill newSkill = new Skill(name, hrm);
+    public Skill getSkillByName(String name) {
         Skill skill = null;
-        if (skills.contains(newSkill)) {
-            skill = skills.get(skills.indexOf(newSkill));
+        for (Skill existingSkill : skills) {
+            if (existingSkill.getName().equals(name)) {
+                skill = existingSkill;
+                break;
+            }
         }
         if (skill == null) {
             throw new IllegalArgumentException(

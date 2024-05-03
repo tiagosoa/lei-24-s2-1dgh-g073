@@ -22,8 +22,6 @@ public class RegisterCollaboratorUI implements Runnable {
     private String email;
     private String doctype;
     private int IDnumber;
-    private String taskCategoryDescription;
-    private String employeeEmail;
 
     public RegisterCollaboratorUI() {
         controller = new RegisterCollaboratorController();

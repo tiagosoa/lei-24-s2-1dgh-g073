@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import org.junit.jupiter.api.Test;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.HRM;
 
 import java.util.Optional;
 
@@ -15,7 +16,7 @@ class SkillRepositoryTest {
         String skillName = "Skill Name";
         HRM hrm = new HRM("john.doe@this.company.com");
         assertThrows(IllegalArgumentException.class,
-                () -> skillRepository.getSkillByName(skillName, hrm));
+                () -> skillRepository.getSkillByName(skillName));
     }
 
     @Test
@@ -24,7 +25,7 @@ class SkillRepositoryTest {
         String skillName = "Task Category Description";
         HRM hrm = new HRM("john.doe@this.company.com");
         assertThrows(IllegalArgumentException.class,
-                () -> skillRepository.getSkillByName(skillName, hrm));
+                () -> skillRepository.getSkillByName(skillName));
     }
 
     @Test
@@ -32,7 +33,7 @@ class SkillRepositoryTest {
         SkillRepository skillRepository = new SkillRepository();
         String skillName = "Skill Name";
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill(skillName, hrm);
+        Skill skill = new Skill(skillName);
         skillRepository.add(skill);
     }
 
@@ -41,9 +42,9 @@ class SkillRepositoryTest {
         SkillRepository skillRepository = new SkillRepository();
         String skillName = "Skill Name";
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill(skillName, hrm);
+        Skill skill = new Skill(skillName);
         skillRepository.add(skill);
-        Skill skill1 = skillRepository.getSkillByName(skillName, hrm);
+        Skill skill1 = skillRepository.getSkillByName(skillName);
         assertEquals(skill, skill1);
     }
 
@@ -52,11 +53,11 @@ class SkillRepositoryTest {
         SkillRepository skillRepository = new SkillRepository();
         String skillName = "Skill Name";
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill(skillName, hrm);
+        Skill skill = new Skill(skillName);
         skillRepository.add(skill);
         String skillName1 = "Skill Name 1";
         assertThrows(IllegalArgumentException.class,
-                () -> skillRepository.getSkillByName(skillName1, hrm));
+                () -> skillRepository.getSkillByName(skillName1));
 
     }
 
@@ -65,11 +66,11 @@ class SkillRepositoryTest {
         SkillRepository skillRepository = new SkillRepository();
         String skillName = "Skill Name";
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill(skillName, hrm);
+        Skill skill = new Skill(skillName);
         skillRepository.add(skill);
 
         assertThrows(UnsupportedOperationException.class,
-                () -> skillRepository.getSkills().add(new Skill("Skill Name 1", hrm)));
+                () -> skillRepository.getSkills().add(new Skill("Skill Name 1")));
 
     }
 
@@ -79,7 +80,7 @@ class SkillRepositoryTest {
         SkillRepository skillRepository = new SkillRepository();
         HRM hrm = new HRM("john.doe@this.company.com");
         String skillName = "Skill Name";
-        Skill skill = new Skill(skillName, hrm);
+        Skill skill = new Skill(skillName);
         skillRepository.add(skill);
         int expectedSize = 1;
 
@@ -96,7 +97,7 @@ class SkillRepositoryTest {
         //Arrange
         SkillRepository skillRepository = new SkillRepository();
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("Skill Name", hrm);
+        Skill skill = new Skill("Skill Name");
         //Add the first skill
         skillRepository.add(skill);
 
@@ -112,8 +113,8 @@ class SkillRepositoryTest {
         //Arrange
         SkillRepository skillRepository = new SkillRepository();
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skillOne = new Skill("Skill Name One", hrm);
-        Skill skillTwo = new Skill("Skill Name Two", hrm);
+        Skill skillOne = new Skill("Skill Name One");
+        Skill skillTwo = new Skill("Skill Name Two");
         //Add the first task
         skillRepository.add(skillOne);
 

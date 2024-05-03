@@ -6,6 +6,7 @@ import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import java.util.Optional;
 import java.util.Scanner;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
+import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 
 /**
  * Create Task UI (console). This option is only available for administrators for demonstration purposes.
@@ -14,11 +15,14 @@ public class CreateSkillUI implements Runnable {
 
     private final CreateSkillController controller;
     private String skillName;
+
+    private SkillRepository skillRepository;
     private String taskCategoryDescription;
     private String empployeeEmail;
 
     public CreateSkillUI() {
         controller = new CreateSkillController();
+        this.skillRepository = new SkillRepository();
     }
 
     private CreateSkillController getController() {
@@ -39,6 +43,7 @@ public class CreateSkillUI implements Runnable {
         Optional<Skill> skill = getController().createSkill(skillName, hrm);
 
         if (skill.isPresent()) {
+            skillRepository.add(skill.get());
             System.out.println("\nSkill successfully created!");
         } else {
             System.out.println("\nSkill not created!");

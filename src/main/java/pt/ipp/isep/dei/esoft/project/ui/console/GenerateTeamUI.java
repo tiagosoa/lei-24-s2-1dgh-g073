@@ -29,7 +29,7 @@ public class GenerateTeamUI implements Runnable{
     }
 
     public void run() {
-        System.out.println("=== Team Generation ===");
+        System.out.println("\n\n--- Generate Team ------------------------");
 
         // Get team size criteria
         System.out.print("Enter minimum team size: ");
@@ -59,7 +59,7 @@ public class GenerateTeamUI implements Runnable{
             System.out.println("Enter a required skill (or 'done' to finish): ");
             String skillName = scanner.nextLine().trim();
             if (!skillName.equalsIgnoreCase("done")) {
-                Skill skill = new Skill(skillName, hrm);
+                Skill skill = new Skill(skillName);
                 requiredSkills.add(skill);
             } else {
                 continueInput = false;

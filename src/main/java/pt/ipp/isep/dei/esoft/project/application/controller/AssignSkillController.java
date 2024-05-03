@@ -79,7 +79,7 @@ public class AssignSkillController {
 
     public void assignSkillToCollaborator(int collaboratorID, String skillName, HRM hrm) {
         Collaborator collaborator = collaboratorRepository.getCollaboratorByID(collaboratorID);
-        Skill skill = skillRepository.getSkillByName(skillName, hrm);
+        Skill skill = skillRepository.getSkillByName(skillName);
 
         if (collaborator == null || skill == null) {
             throw new IllegalArgumentException("Collaborator or Skill not found.");
@@ -97,7 +97,7 @@ public class AssignSkillController {
         }
 
         for (String skillname : collaboratorskills) {
-            Skill skill = skillRepository.getSkillByName(skillname, hrm);
+            Skill skill = skillRepository.getSkillByName(skillname);
             if (skill != null) {
                 collaborator.addSkill(skill);
             }

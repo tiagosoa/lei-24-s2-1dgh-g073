@@ -9,8 +9,8 @@ public class Organization {
     private final String vatNumber;
     private final List<HRM> hrms;
     private final List<VFM> vfms;
-    private final List<Skill> skills;
-    private final List<Job> jobs;
+    private static List<Skill> skills;
+    private static List<Job> jobs;
     private static List<Collaborator> collaborators;
     private final List<Vehicle> vehicles;
     private String name;
@@ -36,6 +36,10 @@ public class Organization {
 
     public static List<Collaborator> getCollaboratorList() {
         return collaborators;
+    }
+
+    public static List<Skill> getSkillList() {
+        return skills;
     }
 
     /**
@@ -68,7 +72,7 @@ public class Organization {
         // In order to not return null if the operation fails, we use the Optional class.
         Optional<Skill> optionalValue = Optional.empty();
 
-        Skill skill = new Skill(name, hrm);
+        Skill skill = new Skill(name);
 
         if (addSkill(skill)) {
             optionalValue = Optional.of(skill);

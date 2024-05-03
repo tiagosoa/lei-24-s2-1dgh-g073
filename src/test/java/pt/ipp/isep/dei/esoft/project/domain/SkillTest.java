@@ -9,7 +9,7 @@ class SkillTest {
     @Test
     void ensureSkillIsCreatedSuccessfully() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
+        Skill skill = new Skill("name");
     }
 
     @Test
@@ -20,20 +20,20 @@ class SkillTest {
 
         //Act and Assert
         assertThrows(IllegalArgumentException.class,
-                () -> new Skill(null, hrm));
+                () -> new Skill(null));
     }
 
     @Test
     void testEqualsSameObject() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
+        Skill skill = new Skill("name");
         assertEquals(skill, skill);
     }
 
     @Test
     void testEqualsDifferentClass() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
+        Skill skill = new Skill("name");
 
         assertNotEquals(skill, new Object());
     }
@@ -41,7 +41,7 @@ class SkillTest {
     @Test
     void testEqualsNull() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
+        Skill skill = new Skill("name");
 
         assertNotEquals(skill, null);
     }
@@ -49,8 +49,8 @@ class SkillTest {
     @Test
     void testEqualsDifferentObjects() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
-        Skill skill1 = new Skill("namelei", hrm);
+        Skill skill = new Skill("name");
+        Skill skill1 = new Skill("namelei");
 
         assertNotEquals(skill, skill1);
     }
@@ -58,15 +58,15 @@ class SkillTest {
     @Test
     void testHashCodeSameObject() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
+        Skill skill = new Skill("name");
         assertEquals(skill.hashCode(), skill.hashCode());
     }
 
     @Test
     void testHashCodeDifferentObject() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Skill skill = new Skill("name", hrm);
-        Skill skill1 = new Skill("namelei", hrm);
+        Skill skill = new Skill("name");
+        Skill skill1 = new Skill("namelei");
 
         assertNotEquals(skill.hashCode(), skill1.hashCode());
     }
@@ -74,7 +74,7 @@ class SkillTest {
     @Test
     void ensureCloneWorks() {
         HRM hrm = new HRM("john.doe@this.company.org");
-        Skill skill = new Skill("name", hrm);
+        Skill skill = new Skill("name");
         Skill clone = skill.clone();
         assertEquals(skill, clone);
     }

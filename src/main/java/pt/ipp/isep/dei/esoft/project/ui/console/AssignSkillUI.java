@@ -10,11 +10,10 @@ import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 /**
- * Create Task UI (console). This option is only available for administrators for demonstration purposes.
+ * Assign Skill UI (console). This UI is only available for administrators for demonstration purposes.
  */
 public class AssignSkillUI implements Runnable {
 
@@ -27,7 +26,9 @@ public class AssignSkillUI implements Runnable {
     private String employeeEmail;
 
 
-
+    /**
+     * Constructs a new AssignSkillUI.
+     */
     public AssignSkillUI() {
         controller = new AssignSkillController();
         this.collaboratorRepository = new CollaboratorRepository();
@@ -35,6 +36,11 @@ public class AssignSkillUI implements Runnable {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Retrieves the CollaboratorRepository instance.
+     *
+     * @return CollaboratorRepository
+     */
     private CollaboratorRepository getCollaboratorRepository() {
         if (collaboratorRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -44,6 +50,13 @@ public class AssignSkillUI implements Runnable {
         }
         return collaboratorRepository;
     }
+
+
+    /**
+     * Retrieves the AssignSkillController instance.
+     *
+     * @return AssignSkillController
+     */
 
     private AssignSkillController getController() {
         return controller;
@@ -57,11 +70,11 @@ public class AssignSkillUI implements Runnable {
             System.out.println("No collaborators registered.");
             return;
         }
-        System.out.println("Select a collaborator:");
+        System.out.println("Collaborator List:");
         for (int i = 0; i < collaborators.size(); i++) {
             System.out.println((i + 1) + ". " + collaborators.get(i).getName());
         }
-        int collaboratorIndex = readIntegerInput(1, collaborators.size()) - 1;
+        int collaboratorIndex = readInput(1, collaborators.size()) - 1;
         Collaborator selectedCollaborator = collaborators.get(collaboratorIndex);
 
         // Show list of skills
@@ -89,10 +102,18 @@ public class AssignSkillUI implements Runnable {
         System.out.println("Skills assigned successfully to " + selectedCollaborator.getName());
     }
 
-    private int readIntegerInput(int min, int max) {
+    /**
+     * Reads the input from the user within the specified range of collaborators.
+     *
+     * @param min minimum number of collaborators.
+     * @param max maximum number of collaborators.
+     * @return the input from the user.
+     */
+
+    private int readInput(int min, int max) {
         int input;
         do {
-            System.out.print("Enter a number between " + min + " and " + max + ": ");
+            System.out.print("Select the collaborator by entering a number between " + min + " and " + max + ": ");
             while (!scanner.hasNextInt()) {
                 System.out.println("Invalid input. Please enter a number.");
                 scanner.next();

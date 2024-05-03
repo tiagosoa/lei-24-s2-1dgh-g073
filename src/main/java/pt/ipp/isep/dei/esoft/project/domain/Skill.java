@@ -5,13 +5,10 @@ import java.util.Objects;
 public class Skill {
     private final String name;
 
-    private HRM hrm;
-
-    public Skill(String name, HRM hrm) {
+    public Skill(String name) {
 
         validateSkill(name);
         this.name = name;
-        this.hrm = hrm;
     }
 
     private void validateSkill(String name) {
@@ -31,12 +28,12 @@ public class Skill {
             return false;
         }
         Skill skill = (Skill) o;
-        return name.equals(skill.name) && hrm.equals(skill.hrm);
+        return name.equals(skill.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, hrm);
+        return Objects.hash(name);
     }
 
 
@@ -46,7 +43,7 @@ public class Skill {
      * @return A clone of the current instance.
      */
     public Skill clone() {
-        return new Skill(this.name, this.hrm);
+        return new Skill(this.name);
     }
 
     public String getName() {
