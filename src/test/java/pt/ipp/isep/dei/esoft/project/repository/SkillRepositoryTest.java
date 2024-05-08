@@ -70,7 +70,7 @@ class SkillRepositoryTest {
         skillRepository.add(skill);
 
         assertThrows(UnsupportedOperationException.class,
-                () -> skillRepository.getSkills().add(new Skill("Skill Name 1")));
+                () -> skillRepository.getSkillList().add(new Skill("Skill Name 1")));
 
     }
 
@@ -85,11 +85,11 @@ class SkillRepositoryTest {
         int expectedSize = 1;
 
         //Act
-        int size = skillRepository.getSkills().size();
+        int size = skillRepository.getSkillList().size();
 
         //Assert
         assertEquals(expectedSize, size);
-        assertEquals(skill, skillRepository.getSkills().get(size - 1));
+        assertEquals(skill, skillRepository.getSkillList().get(size - 1));
     }
 
     @Test

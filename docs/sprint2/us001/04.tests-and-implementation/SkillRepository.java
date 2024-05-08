@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.HRM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public class SkillRepository {
      *
      * @return The list of skills.
      */
-    public List<Skill> getSkillList() {
+    public List<Skill> getSkills() {
         //This is a defensive copy, so that the repository cannot be modified from the outside.
         return List.copyOf(skills);
     }

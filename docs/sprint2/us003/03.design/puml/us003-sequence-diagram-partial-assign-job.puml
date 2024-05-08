@@ -4,30 +4,53 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 
 participant ":RegisterCollaboratorController" as CTRL
+participant ":collaboratorrepository\n:CollaboratorRepository" as CR
+participant "jobrepository\n:JobRepository" as JR
 participant "organization\n:Organization" as ORG
+participant "collaborator\n:Collaborator" as COLABORADOR
+
 
 autonumber 16
--> CTRL: assignjob(collaborator, jobname)
 
 autonumber 16.1
-activate ORG
+activate CTRL
 
     group Assign Job
-    activate CTRL
 
-           CTRL -> ORG: getJob(jobname)
-             activate ORG
+                        -> CTRL: assignJobToCollaborator(collaborator)
+
+                        CTRL -> CR: getCollaboratorByID(collaboratorID)
+                        activate CR
+
+                        CR --> CTRL: collaborator
+                        deactivate CR
+
+                        CTRL -> JR: getJobByName(jobName)
+                        activate JR
+
+                        JR --> CTRL: job
+                        deactivate JR
+
+                        CTRL -> COLABORADOR: addJob(job)
+
+                       ORG -> CR : addCollaborator (collaborator)
 
 
-                CTRL -> ORG: giveJob(collaborator, job)
 
 
-                        ORG --> CTRL : collaborator
+                       ORG --> CTRL: collaborator
 
-                    deactivate ORG
+                       deactivate ORG
 
-                    <-- CTRL
-                    deactivate CTRL
+
+
+
+
+
+
+            deactivate ORG
+
+            <-- CTRL: collaborator
 
 deactivate ORG
 

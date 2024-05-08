@@ -9,7 +9,7 @@ class JobTest {
     @Test
     void ensureJobIsCreatedSuccessfully() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job("name", hrm);
+        Job job = new Job("name");
     }
 
     @Test
@@ -20,20 +20,20 @@ class JobTest {
 
         //Act and Assert
         assertThrows(IllegalArgumentException.class,
-                () -> new Job(null, hrm));
+                () -> new Job(null));
     }
 
     @Test
     void testEqualsSameObject() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job("name", hrm);
+        Job job = new Job("name");
         assertEquals(job, job);
     }
 
     @Test
     void testEqualsDifferentClass() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job("name", hrm);
+        Job job = new Job("name");
 
         assertNotEquals(job, new Object());
     }
@@ -41,7 +41,7 @@ class JobTest {
     @Test
     void testEqualsNull() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job("name", hrm);
+        Job job = new Job("name");
 
         assertNotEquals(job, null);
     }
@@ -49,8 +49,8 @@ class JobTest {
     @Test
     void testEqualsDifferentObjects() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job("name", hrm);
-        Job job1 = new Job("namelei", hrm);
+        Job job = new Job("name");
+        Job job1 = new Job("namelei");
 
         assertNotEquals(job, job1);
     }
@@ -58,15 +58,15 @@ class JobTest {
     @Test
     void testHashCodeSameObject() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job("name", hrm);
+        Job job = new Job("name");
         assertEquals(job.hashCode(), job.hashCode());
     }
 
     @Test
     void testHashCodeDifferentObject() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job("name", hrm);
-        Job job1 = new Job("namelei", hrm);
+        Job job = new Job("name");
+        Job job1 = new Job("namelei");
 
         assertNotEquals(job.hashCode(), job1.hashCode());
     }
@@ -74,7 +74,7 @@ class JobTest {
     @Test
     void ensureCloneWorks() {
         HRM hrm = new HRM("john.doe@this.company.org");
-        Job job = new Job("name", hrm);
+        Job job = new Job("name");
         Job clone = job.clone();
         assertEquals(job, clone);
     }

@@ -4,7 +4,6 @@ import pt.ipp.isep.dei.esoft.project.application.controller.AssignSkillControlle
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 
@@ -34,20 +33,6 @@ public class AssignSkillUI implements Runnable {
         this.scanner = new Scanner(System.in);
     }
 
-    /**
-     * Retrieves the CollaboratorRepository instance.
-     *
-     * @return CollaboratorRepository
-     */
-    private CollaboratorRepository getCollaboratorRepository() {
-        if (collaboratorRepository == null) {
-            Repositories repositories = Repositories.getInstance();
-
-            //Get the CollaboratorRepository
-            collaboratorRepository = repositories.getCollaboratorRepository();
-        }
-        return collaboratorRepository;
-    }
 
 
     /**
@@ -62,8 +47,8 @@ public class AssignSkillUI implements Runnable {
 
     public void run() {
         System.out.println("\n\n--- Assign Skill ------------------------");
+        List<Collaborator> collaborators = getController().getCollaboratorList();
         // Show list of registered collaborators
-        List<Collaborator> collaborators = collaboratorRepository.getCollaborators();
         if (collaborators.isEmpty()) {
             System.out.println("No collaborators registered.");
             return;
@@ -76,7 +61,7 @@ public class AssignSkillUI implements Runnable {
         Collaborator selectedCollaborator = collaborators.get(collaboratorIndex);
 
         // Show list of skills
-        List<Skill> skills = skillRepository.getSkills();
+        List<Skill> skills = skillRepository.getSkillList();
         if (skills.isEmpty()) {
             System.out.println("No skills registered.");
             return;
@@ -86,8 +71,8 @@ public class AssignSkillUI implements Runnable {
             System.out.println((i + 1) + ". " + skills.get(i).getName());
         }
         System.out.println("Enter skill number(s) separated by commas (e.g., 1,2,3):");
-        String skillIndicesInput = scanner.nextLine();
-        String[] skillIndices = skillIndicesInput.split(",");
+        String skillIndexInput = scanner.nextLine();
+        String[] skillIndices = skillIndexInput.split(",");
         List<String> selectedSkillNames = new ArrayList<>();
         for (String index : skillIndices) {
             int skillIndex = Integer.parseInt(index.trim()) - 1;
@@ -96,7 +81,7 @@ public class AssignSkillUI implements Runnable {
         HRM hrm = getController().getHRMFromSession();
 
         // Assign selected skills to collaborator
-        getController().assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames, hrm);
+        getController().assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames);
         System.out.println("Skills assigned successfully to " + selectedCollaborator.getName());
     }
 

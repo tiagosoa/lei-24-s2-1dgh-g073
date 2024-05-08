@@ -6,9 +6,7 @@ import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class GenerateTeamController {
 
@@ -67,48 +65,59 @@ public class GenerateTeamController {
         if (skillRepository == null) {
             Repositories repositories = Repositories.getInstance();
 
-            //Get the JobRepository
+            //Get the SkillRepository
             skillRepository = repositories.getSkillRepository();
         }
         return skillRepository;
     }
 
     public List<Collaborator> generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills) {
+        // Validate input parameters
+        if (minTeamSize <= 0 || maxTeamSize < minTeamSize || requiredSkills.isEmpty()) {
+            throw new IllegalArgumentException("Invalid input parameters.");
+        }
+
         // Get all collaborators from the repository
-        List<Collaborator> allCollaborators = collaboratorRepository.getCollaborators();
+        List<Collaborator> allCollaborators = collaboratorRepository.getCollaboratorList();
 
         // Filter collaborators based on required skills
-        List<Collaborator> eligibleCollaborators = filterCollaboratorsBySkills(allCollaborators, requiredSkills);
+        List<Collaborator> qualifiedCollaborators = filterCollaboratorsBySkills(allCollaborators, requiredSkills);
 
-        // Randomly select collaborators for the team
-        List<Collaborator> team = new ArrayList<>();
-        int teamSize = getRandomTeamSize(maxTeamSize, minTeamSize);
-        if (teamSize > eligibleCollaborators.size()) {
-            throw new IllegalArgumentException("Not enough eligible collaborators for the required team size.");
+        // Check if there are enough qualified collaborators
+        if (qualifiedCollaborators.size() < minTeamSize) {
+            throw new IllegalArgumentException("Not enough qualified collaborators available.");
         }
-        for (int i = 0; i < teamSize; i++) {
-            int randomIndex = new Random().nextInt(eligibleCollaborators.size());
-            team.add(eligibleCollaborators.remove(randomIndex));
+
+        // Generate team from qualified collaborators
+        List<Collaborator> team = new ArrayList<>();
+        for (int i = 0; i < maxTeamSize && i < qualifiedCollaborators.size(); i++) {
+            team.add(qualifiedCollaborators.get(i));
         }
 
         return team;
     }
 
+
+
     private List<Collaborator> filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills) {
-        List<Collaborator> filteredCollaborators = new ArrayList<>();
+        List<Collaborator> qualifiedCollaborators = new ArrayList<>();
         for (Collaborator collaborator : collaborators) {
             List<Skill> collaboratorSkills = collaborator.getSkills();
-            if (collaboratorSkills.containsAll(requiredSkills)) {
-                filteredCollaborators.add(collaborator);
+            boolean hasAllRequiredSkills = true;
+            for (Skill requiredSkill : requiredSkills) {
+                if (!collaboratorSkills.contains(skillRepository.getSkillByName(requiredSkill.getName()))) {
+                    hasAllRequiredSkills = false;
+                    break;
+                }
+            }
+            if (hasAllRequiredSkills) {
+                qualifiedCollaborators.add(collaborator);
             }
         }
-        return filteredCollaborators;
+        return qualifiedCollaborators;
     }
 
-    private int getRandomTeamSize(int maxTeamSize, int minTeamSize) {
-        return new Random().nextInt(maxTeamSize - minTeamSize + 1) + minTeamSize;
-    }
-    public HRM getHRMFromSession() {
+public HRM getHRMFromSession() {
         Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
         return new HRM(email.getEmail());
     }

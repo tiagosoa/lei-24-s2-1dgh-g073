@@ -27,27 +27,20 @@ class Collaborator {
     - address: String
     - mobile Contact: int
     - email contact: String
+    - taxpayer number: int
     - ID doc type: String
     - ID number: int
+    + addSkill(skill)
 }
-
-class Collaborator {
-    - name: String
-}
-
- class CollaboratorManager {
-     + registerCollaborator(name: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \nIDdoctype: String, \nIDnumber: int): boolean
- }
 
  class CollaboratorRepository {
-   + boolean save(Collaborator collaborator)
+   - List<Job>: jobs
+   + Optional<Collaborator> add(Collaborator collaborator)
    + Collaborator getCollaboratorByID(int IDnumber)
+   + List<Collaborator> getCollaborators()
+   + boolean validateCollaborator(Collaborator collaborator)
+   + void updateCollaborator(Collaborator collaboratorToUpdate)
  }
-
-  class CollaboratorRepository {
-    - List<Job>: jobs
-    + Collaborator getCollaboratorByID(int IDnumber)
-  }
 
  class Organization {
    - String name
@@ -56,7 +49,10 @@ class Collaborator {
    - String phone
    - String email
    + addCollaborator(Collaborator collaborator)
+   + validateCollaborator(Collaborator collaborator)
    + Collaborator getCollaboratorByID(int IDnumber)
+   + List<Collaborator> getCollaboratorList()
+   + Optional<Collaborator> registerCollaborator(HRManager hrm, \nname: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \ntaxpayer: int, \nIDdoctype: String, \nIDnumber: int)
  }
 
  class OrganizationRepository {
@@ -71,20 +67,34 @@ class Collaborator {
  }
 
  class RegisterCollaboratorController {
-   + RegisterCollaboratorControllerController(organizationRepository, collaboratorRepository)
-   + Collaborator registerCollaborator(HRManager hrm, \nname: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \nIDdoctype: String, \nIDnumber: int)
+   + CollaboratorRepository getCollaboratorRepository()
+   + OrganizationRepository getOrganizationRepository()
+   + AuthenticationRepository getAuthenticationRepository()
+   + JobRepository getJobRepository()
+   + HRM getHRMFromSession()
+   + Optional<Collaborator> registerCollaborator(HRManager hrm, \nname: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \ntaxpayer number: int, \nIDdoctype: String, \nIDnumber: int)
+   + void assignJobToCollaborator(collaboratorID, jobName)
  }
 
  class RegisterCollaboratorUI {
-
+    + String requestCollaboratorName()
+    + String requestCollaboratorBirthDate()
+    + String requestCollaboratorAdmissionDate()
+    + String requestCollaboratorAddress()
+    + int requestCollaboratorMobile()
+    + String requestCollaboratorEmail()
+    + int requestCollaboratorTaxpayerNumber()
+    + String requestCollaboratorDocType()
+    + int requestCollaboratorIDNumber()
+    + void assignJobToCollaborator(Collaborator collaborator)
+    + Job selectJob()
  }
 
  class HRManager {
     - String name
     - int vatNumber
     - String email
-    - int phonenumber
-     + manageCollaborators(): void
+    - int number
  }
 
  CollaboratorManager --> Collaborator: Manages
@@ -116,8 +126,6 @@ class Collaborator {
 
  RegisterCollaboratorController -down-> Repositories : retrieves instances
 
- Repositories -down-> JobRepository : accesses
- Repositories -down-> OrganizationRepository : accesses
 
  RegisterCollaboratorController ..> OrganizationRepository : organizationRepository
  RegisterCollaboratorController ..> JobRepository : jobRepository

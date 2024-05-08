@@ -44,10 +44,9 @@ activate ADM
                                      PLAT -> CTRL : skillrepository
                                      deactivate PLAT
 
-        UI -> CTRL: getCollaboratorList()
+            UI -> CTRL: getCollaboratorList()
         ref over CTRL
         Get Collaborator List
-
         end
 
         CTRL -> UI: collaborators
@@ -59,18 +58,14 @@ activate ADM
     ADM -> UI : selects collaborator(s)
     activate UI
 
-
-
-        UI -> CTRL : getCollaborator(ID number)
-        activate CTRL
-
-        ref over CTRL
-        Get Collaborator
+        ref over UI
+        Get Selected Collaborator(s)
         end
+
 
             UI -> CTRL: getSkillList()
         ref over CTRL
-        Get Skill list
+        Get Skill List
         end
 
         CTRL -> UI: skills
@@ -84,22 +79,17 @@ activate ADM
    ADM -> UI : selects skill(s)
    activate UI
 
-        UI -> CTRL : getSelectedSkill(name)
-        activate CTRL
-
-        ref over CTRL
+        ref over UI
         Get Selected Skills
         end
 
-        CTRL -> UI : selectedskills
-        deactivate CTRL
 
 
    UI -> ADM : shows selected data and requests confirmation
 
    ADM -> UI : confirms data
 
-   UI -> CTRL : assignSkill(collaborator, selectedskills)
+   UI -> CTRL: assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames)
    activate CTRL
 
 
@@ -107,22 +97,22 @@ activate ADM
             CTRL -> CTRL : getHRMFromSession()
             activate CTRL
 
-                ref over CTRL
-                Get HRM
-                end
+            ref over CTRL
+            Get HRM
+            end
 
                 CTRL --> CTRL : hrm
             deactivate CTRL
 
             |||
-            CTRL -> ORG: assignSkill(collaborator, selectedskills)
+            CTRL -> ORG: assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames)
             activate ORG
 
 
 
-            ref over ORG
-            Assign Skill
-            end
+                    ref over ORG
+                    Assign Skill(s)
+                    end
 
                 ORG --> CTRL : assignedcollaborator
 

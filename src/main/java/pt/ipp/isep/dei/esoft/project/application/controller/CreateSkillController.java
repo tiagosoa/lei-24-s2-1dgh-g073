@@ -70,7 +70,7 @@ public class CreateSkillController {
 
         if (organization.isPresent()) {
             newSkill = organization.get()
-                    .createSkill(name, hrm);
+                    .createSkill(name);
         }
         return newSkill;
     }

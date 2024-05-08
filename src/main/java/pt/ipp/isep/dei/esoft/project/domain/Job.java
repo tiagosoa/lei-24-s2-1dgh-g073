@@ -9,11 +9,10 @@ public class Job {
 
     private HRM hrm;
 
-    public Job(String name, HRM hrm) {
+    public Job(String name) {
 
         validateJob(name);
         this.name = name;
-        this.hrm = hrm;
     }
 
     private void validateJob(String name) {
@@ -35,7 +34,7 @@ public class Job {
             return false;
         }
         Job job = (Job) o;
-        return name.equals(job.name) && hrm.equals(job.hrm);
+        return name.equals(job.name);
     }
 
     @Override
@@ -50,7 +49,7 @@ public class Job {
      * @return A clone of the current instance.
      */
     public Job clone() {
-        return new Job(this.name, this.hrm);
+        return new Job(this.name);
     }
 
     public String getName() {

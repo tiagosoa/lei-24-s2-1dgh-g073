@@ -13,7 +13,6 @@ public class GenerateTeamUI implements Runnable{
 
     private final GenerateTeamController controller;
     private CollaboratorRepository collaboratorRepository;
-
     private SkillRepository skillRepository;
     private final Scanner scanner;
 
@@ -29,42 +28,43 @@ public class GenerateTeamUI implements Runnable{
     }
 
     public void run() {
-        System.out.println("\n\n--- Generate Team ------------------------");
+        Scanner scanner = new Scanner(System.in);
 
-        // Get team size criteria
-        System.out.print("Enter minimum team size: ");
+        System.out.println("Enter the minimum team size:");
         int minTeamSize = scanner.nextInt();
-        System.out.print("Enter maximum team size: ");
+
+        System.out.println("Enter the maximum team size:");
         int maxTeamSize = scanner.nextInt();
-        scanner.nextLine(); // Consume newline character
 
-        // Get required skills
-        List<Skill> requiredSkills = getRequiredSkills();
+        scanner.nextLine(); // Consume newline
+        if (minTeamSize >= maxTeamSize || minTeamSize <= 0 || maxTeamSize <= 0) {
+            throw new IllegalArgumentException("Invalid team size inputs.");
+        }
+        System.out.println("Enter the required skills separated by semicolons:");
+        String inputSkills = scanner.nextLine();
+        List<Skill> requiredSkills = parseSkills(inputSkills);
 
-        // Generate team
-        List<Collaborator> team = controller.generateTeam(maxTeamSize, minTeamSize, requiredSkills);
-
-        // Display team
-        System.out.println("\nGenerated Team:");
-        for (Collaborator collaborator : team) {
-            System.out.println(collaborator.getName());
+        try {
+            List<Collaborator> team = getController().generateTeam(maxTeamSize, minTeamSize, requiredSkills);
+            displayTeam(team);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
-    private List<Skill> getRequiredSkills() {
-        List<Skill> requiredSkills = new ArrayList<>();
-        HRM hrm = getController().getHRMFromSession();
-        boolean continueInput = true;
-        while (continueInput) {
-            System.out.println("Enter a required skill (or 'done' to finish): ");
-            String skillName = scanner.nextLine().trim();
-            if (!skillName.equalsIgnoreCase("done")) {
-                Skill skill = new Skill(skillName);
-                requiredSkills.add(skill);
-            } else {
-                continueInput = false;
-            }
+    private List<Skill> parseSkills(String inputSkills) {
+        String[] skillsArray = inputSkills.split(";");
+        List<Skill> skillsList = new ArrayList<>();
+        for (String skillName : skillsArray) {
+            skillsList.add(new Skill(skillName.trim()));
         }
-        return requiredSkills;
+        return skillsList;
+    }
+
+    private void displayTeam(List<Collaborator> team) {
+        System.out.println("Generated Team:");
+        for (Collaborator collaborator : team) {
+            System.out.println("- " + collaborator.getName());
+        }
     }
 }

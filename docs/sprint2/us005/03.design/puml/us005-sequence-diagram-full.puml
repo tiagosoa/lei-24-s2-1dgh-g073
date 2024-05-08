@@ -31,19 +31,18 @@ activate ADM
             UI -> CTRL** : create
 
                 CTRL -> RepositorySingleton : getInstance()
+                activate CTRL
                 activate RepositorySingleton
 
                     RepositorySingleton --> CTRL: repositories
                 deactivate RepositorySingleton
+                deactivate CTRL
 
             UI --> ADM : asks for minimum and maximum team size
         deactivate UI
 
     ADM -> UI : inputs minimum and maximum team size
     activate UI
-
-        UI -> CTRL : checkMinAndMaxTeamSize(minSize, maxSize)
-        activate CTRL
 
                         CTRL -> RepositorySingleton : getInstance()
                         activate RepositorySingleton
@@ -59,42 +58,24 @@ activate ADM
 
             PLAT -> CTRL : skillRepository
             deactivate PLAT
-
-        CTRL -> SR: getSkillList()
-        activate SR
-
-        SR -> CTRL : List<Skill>
-        deactivate SR
-
-        CTRL -> UI : List<Skill>
-        deactivate CTRL
-
-    UI -> ADM : shows skill list and asks to select required ones
+    UI -> ADM : asks to type suggested skills
     deactivate UI
 
-    ADM -> UI : selects skills
+    ADM -> UI : types skills
     activate UI
 
-    UI -> CTRL : getRequiredSkills()
-
-    CTRL -> SR: getRequiredSkills()
-    activate SR
-
-    SR -> CTRL : List<RequiredSkills>
-    deactivate SR
-
-    CTRL -> UI : List<RequiredSkills>
-    deactivate CTRL
+    UI -> UI : parseSkills(String inputSkills)
+    UI --> UI : requiredskills
 
     UI -> ADM : shows team size and selected skills and asks for confirmation
 
     ADM -> UI : confirms data
 
-          UI -> CTRL : generateTeamProposal(maxSize, minSize, List<RequiredSkills>)
-            activate CTRL
+
+
 
           UI -> CTRL : getCollaboratorRepository()
-
+          activate CTRL
 
 
             CTRL -> PLAT : getCollaboratorRepository()
@@ -102,15 +83,12 @@ activate ADM
 
             PLAT -> CTRL : collaboratorRepository
             deactivate PLAT
+            deactivate CTRL
 
-            CTRL -> CR : getCollaborators()
-            activate CR
 
-            CR -> CTRL : List<Collaborators>
-            deactivate CR
 
             |||
-            CTRL -> CTRL : getEmployeeFromSession()
+            CTRL -> CTRL : getHRMFromSession()
             activate CTRL
 
                 CTRL -> _APP: getInstance()
@@ -139,11 +117,11 @@ activate ADM
                 deactivate PLAT
 
 
-                CTRL -> OrganizationRepository: getOrganizationByEmployeeEmail(email)
+                CTRL -> OrganizationRepository: getOrganizationByHRMEmail(email)
                 activate OrganizationRepository
 
                     loop [for each organization
-                        OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
+                        OrganizationRepository -> ORG : anyHRMHasEmail(email)
                         activate ORG
 
                              ORG --> OrganizationRepository : true/false
@@ -152,39 +130,34 @@ activate ADM
                     OrganizationRepository --> CTRL : organization
                 deactivate OrganizationRepository
 
-                CTRL -> ORG: getEmployeeByEmail(email)
+                CTRL -> ORG: getHRMByEmail(email)
                 activate ORG
 
-                    ORG --> CTRL : employee
+                    ORG --> CTRL : hrm
                 deactivate ORG
 
-                CTRL --> CTRL : employee
+                CTRL --> CTRL : hrm
             deactivate CTRL
 
             |||
-            CTRL -> ORG: generateTeamProposal(maxSize, minSize, List<RequiredSkills>, employee)
-            activate ORG
+            UI -> CTRL: generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
+            CTRL -> CTRL: generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
+            activate CTRL
 
-                ORG -> EQUIPA**: create(generateTeamProposal(maxSize, minSize, List<RequiredSkills>, employee)
-                ORG -> CR: selectCollaborators (List<RequiredSkills>)
+                CTRL -> EQUIPA**: create(generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills))
+                CTRL -> CTRL: filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills)
 
-                ORG -> CR: List<Members>
+                CTRL --> CTRL: qualifiedcollaborators
 
-                CR -> ORG: addMembers (List<Members>, team)
-
-
-                activate ORG
-                    ORG -> ORG: validateTeam(team)
-
-
-                ORG --> CTRL : team
-
-            deactivate ORG
-
-            CTRL --> UI: team
+            CTRL --> CTRL: team
             deactivate CTRL
-            UI --> ADM: displays operation success
-    deactivate UI
+
+                        CTRL --> UI: team
+                        deactivate CTRL
+
+            UI -> ADM: displays the team
+            ADM -> UI: either accepts or refuses the team
+            UI -> ADM: displays operation success
 
 deactivate ADM
 

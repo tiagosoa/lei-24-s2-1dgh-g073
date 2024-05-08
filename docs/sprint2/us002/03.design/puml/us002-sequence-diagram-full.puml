@@ -10,8 +10,8 @@ actor "Human Resources Manager" as ADM
 participant ":CreateJobUI" as UI
 participant ":CreateJobController" as CTRL
 participant ":Repositories" as RepositorySingleton
-participant "jobrepository\n:JobRepository" as JR
 participant "repositories\n:Repositories" as PLAT
+participant "jobrepository\n:JobRepository" as SR
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO
@@ -25,35 +25,31 @@ activate ADM
 
         activate UI
 
-'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+'            UI --> ADM : requests data (name)
             'create CTRL
             UI -> CTRL** : create
+
             activate CTRL
 
-                CTRL -> RepositorySingleton : getJobRepository()
-                activate RepositorySingleton
+                 CTRL -> PLAT : getJobRepository()
+                         activate PLAT
 
-                    RepositorySingleton --> CTRL: jobrepository
-                deactivate RepositorySingleton
-                deactivate CTRL
-
-        UI --> ADM : requests name of job
+                     PLAT -> CTRL : jobRepository
+                     deactivate PLAT
+    deactivate CTRL
+    UI --> ADM : requests name
     deactivate UI
 
     ADM -> UI : types requested name
     activate UI
 
-        UI --> ADM : shows typed name
-    deactivate UI
+        UI -> CTRL : createJob(jobname)
+        activate CTRL
 
-    ADM -> UI : submits name
-    activate UI
-
-    UI -> CTRL : createJob(jobname)
-    activate CTRL
-
+            |||
             CTRL -> CTRL : getHRMFromSession()
             activate CTRL
+
                 CTRL -> _APP: getInstance()
                 activate _APP
                     _APP -> CTRL: appSession
@@ -103,14 +99,19 @@ activate ADM
             deactivate CTRL
 
             |||
-            CTRL -> ORG: creatJob(name, hrm)
+            CTRL -> ORG: createJob(jobname)
             activate ORG
 
-                ORG -> TAREFA**: create(jobname, hrm)
+                ORG -> TAREFA**: createJob(jobname)
+
                 ORG -> ORG: validateJob(job)
-                ORG -> JR: addJob(job)
-                ORG -> CTRL: job
-deactivate ORG
+
+                ORG -> SR: addJob(job)
+
+
+                ORG --> CTRL : job
+
+            deactivate ORG
 
             CTRL --> UI: job
             deactivate CTRL

@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
 
@@ -27,18 +26,12 @@ public class CollaboratorRepository {
      * @throws IllegalArgumentException if the collaborator does not exist, which should never happen.
      */
     public Collaborator getCollaboratorByID(int IDnumber) {
-        Collaborator collaborator = null;
         for (Collaborator existingCollaborator : collaborators) {
-            if (existingCollaborator.getIDNumber() == IDnumber){
-                collaborator = existingCollaborator;
-                break;
+            if (existingCollaborator.getIDNumber() == IDnumber) {
+                return existingCollaborator;
             }
         }
-        if (collaborator == null) {
-            throw new IllegalArgumentException(
-                    "Collaborator ID number requested for [" + IDnumber + "] does not exist.");
-        }
-        return collaborator;
+        return null;
     }
 
     public Optional<Collaborator> add(Collaborator collaborator) {
@@ -78,7 +71,7 @@ public class CollaboratorRepository {
          *
          * @return The list of collaborators.
          */
-    public List<Collaborator> getCollaborators() {
+    public List<Collaborator> getCollaboratorList() {
         //This is a defensive copy, so that the repository cannot be modified from the outside.
         return List.copyOf(collaborators);
     }

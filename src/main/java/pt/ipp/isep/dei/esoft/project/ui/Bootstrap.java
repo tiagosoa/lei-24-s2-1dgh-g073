@@ -21,10 +21,19 @@ public class Bootstrap implements Runnable {
         //TODO: add organizations bootstrap here
         //get organization repository
         OrganizationRepository organizationRepository = Repositories.getInstance().getOrganizationRepository();
-        Organization organization = new Organization("This Company");
+        Organization organization = new Organization("MusgoSublime");
         organization.addHRM(new HRM("admin@this.app"));
         organization.addHRM(new HRM("1231246@isep.ipp.pt"));
+        organization.addHRM(new HRM("1230804@isep.ipp.pt"));
+        organization.addHRM(new HRM("1230603@isep.ipp.pt"));
+        organization.addHRM(new HRM("1230582@isep.ipp.pt"));
+        organization.addHRM(new HRM("1231219@isep.ipp.pt"));
         organization.addHRM(new HRM("hrm@this.app"));
+        organization.addVFM(new VFM("1231246@isep.ipp.pt"));
+        organization.addVFM(new VFM("1230804@isep.ipp.pt"));
+        organization.addVFM(new VFM("1230603@isep.ipp.pt"));
+        organization.addVFM(new VFM("1230582@isep.ipp.pt"));
+        organization.addVFM(new VFM("1231219@isep.ipp.pt"));
         organization.addVFM(new VFM("vfm@this.app"));
         organizationRepository.add(organization);
     }

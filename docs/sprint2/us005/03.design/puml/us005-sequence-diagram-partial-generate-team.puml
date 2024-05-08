@@ -7,35 +7,22 @@ autonumber
 
 'hide footbox
 participant ":TeamGeneratorController" as CTRL
-participant "CollaboratorRepository:\ncollaboratorRepository" as CR
-participant "organization\n:Organization" as ORG
 participant "team\n:Team" as EQUIPA
 
 
 
-            -> CTRL: generateTeamProposal(maxSize, minSize, List<RequiredSkills>, employee)
-            activate CTRL
-            CTRL -> ORG: generateTeamProposal(maxSize, minSize, List<RequiredSkills>, employee)
+            -> CTRL: generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
+                        CTRL -> CTRL: generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
+                        activate CTRL
 
-            activate ORG
+                            CTRL -> EQUIPA**: create(generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills))
+                            CTRL -> CTRL: filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills)
 
-                ORG -> EQUIPA**: create(generateTeamProposal(maxSize, minSize, List<RequiredSkills>, employee)
-                ORG -> CR: selectCollaborators (List<RequiredSkills>)
+                            CTRL --> CTRL: qualifiedcollaborators
 
-                CR -> ORG: List<Members>
+                        CTRL --> CTRL: team
+                        deactivate CTRL
 
-                ORG -> ORG: addMembers (List<Members>, team)
-
-
-                activate ORG
-                    ORG -> ORG: validateTeam(team)
-
-
-                ORG --> CTRL : team
-
-            deactivate ORG
-
-            <- CTRL: team
-            deactivate CTRL
-
+                                    <-- CTRL: team
+                                    deactivate CTRL
 @enduml

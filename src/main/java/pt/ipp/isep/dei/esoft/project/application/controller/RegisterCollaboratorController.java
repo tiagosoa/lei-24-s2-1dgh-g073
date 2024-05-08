@@ -66,18 +66,16 @@ public class RegisterCollaboratorController {
         return authenticationRepository;
     }
 
-    private JobRepository getJobRepository() {
+    public JobRepository getJobRepository() {
         if (jobRepository == null) {
             Repositories repositories = Repositories.getInstance();
-
-            //Get the JobRepository
             jobRepository = repositories.getJobRepository();
         }
         return jobRepository;
     }
 
     public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissiondate,
-                                                       String address, int mobile, String email, String doctype,
+                                                       String address, int mobile, String email, int taxpayer, String doctype,
                                                        int IDnumber, HRM hrm) {
         Optional<Organization> organization = getOrganizationRepository().getOrganizationByHRM(hrm);
 
@@ -85,7 +83,7 @@ public class RegisterCollaboratorController {
 
         if (organization.isPresent()) {
             newCollaborator = organization.get()
-                    .registerCollaborator(name, birthdate, admissiondate, address, mobile, email, doctype, IDnumber, hrm);
+                    .registerCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
             if (newCollaborator.isPresent()) {
                 // Initialize job list for the collaborator
                 newCollaborator.get().setJobs(new ArrayList<>());
@@ -100,9 +98,9 @@ public class RegisterCollaboratorController {
 
         return Optional.empty(); // Return empty if organization is not present
     }
-    public void assignJobToCollaborator(int collaboratorID, String jobName, HRM hrm) {
+    public void assignJobToCollaborator(int collaboratorID, String jobName) {
         Optional<Collaborator> optCollaborator = Optional.of(collaboratorRepository.getCollaboratorByID(collaboratorID));
-        Optional<Job> optJob = Optional.of(jobRepository.getJobByName(jobName, hrm));
+        Optional<Job> optJob = Optional.of(jobRepository.getJobByName(jobName));
 
         if (optCollaborator.isPresent() && optJob.isPresent()) {
             Collaborator collaborator = optCollaborator.get();

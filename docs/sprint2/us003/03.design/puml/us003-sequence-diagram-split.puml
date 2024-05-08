@@ -36,27 +36,34 @@ activate ADM
         UI -> CTRL : registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
         activate CTRL
 
-            CTRL -> CTRL : getEmployeeFromSession()
+            CTRL -> CTRL : getHRMFromSession()
             activate CTRL
 
                 ref over CTRL
-                    Get Employee
+                    Get HRM
 
                 end ref
-                CTRL -> CTRL : employee
+                CTRL -> CTRL : hrm
             deactivate CTRL
 
-            CTRL -> CTRL: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+  
+
+
+            CTRL -> ORG: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
             activate ORG
 
-                ref over CTRL
-                    Register Collaborator
-                end
+
 
                                 ref over ORG
                                     Register Collaborator
 
                 end
+                 UI -> CTRL: assignJobToCollaborator(collaborator)
+
+                                                ref over CTRL
+                                                    Assign Job
+
+                                end
 
                 ORG --> CTRL : collaborator
             deactivate ORG

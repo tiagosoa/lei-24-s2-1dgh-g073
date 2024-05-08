@@ -70,7 +70,7 @@ public class CreateJobController {
 
         if (organization.isPresent()) {
             newJob = organization.get()
-                    .createJob(name, hrm);
+                    .createJob(name);
         }
         return newJob;
     }

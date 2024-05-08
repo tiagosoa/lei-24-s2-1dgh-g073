@@ -3,6 +3,8 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 import pt.ipp.isep.dei.esoft.project.application.controller.CreateJobController;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
+import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
+import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -14,12 +16,15 @@ public class CreateJobUI implements Runnable {
 
     private final CreateJobController controller;
     private String jobName;
+
+    private JobRepository jobRepository;
     private String taskCategoryDescription;
     private String employeeEmail;
 
     public CreateJobUI() {
 
         controller = new CreateJobController();
+        this.jobRepository = new JobRepository();
 
     }
 
@@ -41,6 +46,7 @@ public class CreateJobUI implements Runnable {
         Optional<Job> job = getController().createJob(jobName, hrm);
 
         if (job.isPresent()) {
+            jobRepository.add(job.get());
             System.out.println("\nJob successfully created!");
         } else {
             System.out.println("\nJob not created!");

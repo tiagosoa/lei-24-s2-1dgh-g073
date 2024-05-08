@@ -42,6 +42,10 @@ public class Organization {
         return skills;
     }
 
+    public static List<Job> getJobList() {
+        return jobs;
+    }
+
     /**
      * This method checks if an HRM works for the organization.
      *
@@ -60,10 +64,9 @@ public class Organization {
      * This method creates a new skill.
      *
      * @param name            The name of the skill to be created.
-     * @param hrm             The hrm of the skill to be created.
      * @return
      */
-    public Optional<Skill> createSkill(String name, HRM hrm) {
+    public Optional<Skill> createSkill(String name) {
 
         //TODO: we could also check if the hrm works for the organization before proceeding
         //checkIfEmployeeWorksForOrganization(hrm);
@@ -101,10 +104,9 @@ public class Organization {
      * This method creates a new job.
      *
      * @param name            The name of the job to be created.
-     * @param hrm             The hrm that creates the job.
      * @return
      */
-    public Optional<Job> createJob(String name, HRM hrm) {
+    public Optional<Job> createJob(String name) {
 
         //TODO: we could also check if the hrm works for the organization before proceeding
         //checkIfEmployeeWorksForOrganization(hrm);
@@ -113,7 +115,7 @@ public class Organization {
         // In order to not return null if the operation fails, we use the Optional class.
         Optional<Job> optionalValue = Optional.empty();
 
-        Job job = new Job(name, hrm);
+        Job job = new Job(name);
 
         if (addJob(job)) {
             optionalValue = Optional.of(job);
@@ -130,12 +132,13 @@ public class Organization {
      * @param address         The address where the collaborator to be registered resides.
      * @param mobile          The mobile phone number of the collaborator to be registered.
      * @param email           The email of the collaborator to be registered.
+     * @param taxpayer        The taxpayer number of the collaborator to be registered.
      * @param doctype         The type of documentation the collaborator to be registered has.
      * @param IDnumber        The ID number of the collaborator to be registered.
      * @param hrm             The hrm that registers the collaborator.
      * @return
      */
-    public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, String doctype, int IDnumber, HRM hrm) {
+    public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber, HRM hrm) {
 
         //TODO: we could also check if the hrm works for the organization before proceeding
         //checkIfEmployeeWorksForOrganization(hrm);
@@ -144,7 +147,7 @@ public class Organization {
         // In order to not return null if the operation fails, we use the Optional class.
         Optional<Collaborator> optionalValue = Optional.empty();
 
-        Collaborator collaborator = new Collaborator(name, birthdate, admissiondate, address, mobile, email, doctype, IDnumber, hrm);
+        Collaborator collaborator = new Collaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
 
         if (addCollaborator(collaborator)) {
             optionalValue = Optional.of(collaborator);
@@ -179,6 +182,7 @@ public class Organization {
         if (validateJob(job)) {
             // A clone of the job is added to the list of jobs, to avoid side effects and outside manipulation.
             success = jobs.add(job.clone());
+
         }
         return success;
 

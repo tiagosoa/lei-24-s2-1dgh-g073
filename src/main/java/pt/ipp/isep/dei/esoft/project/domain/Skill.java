@@ -6,15 +6,15 @@ public class Skill {
     private final String name;
 
     public Skill(String name) {
-
-        validateSkill(name);
         this.name = name;
+        validateSkill(name);
+
     }
 
     private void validateSkill(String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Skill name cannot be null or empty.");
-        } else if (!name.matches("[a-zA-Z]+")) {
+        } else if (!name.matches("[A-Za-z ]+")) {
             throw new IllegalArgumentException("Skill name cannot contain special characters or digits.");
         }
     }

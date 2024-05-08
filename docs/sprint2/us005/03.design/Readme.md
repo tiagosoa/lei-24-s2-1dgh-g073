@@ -57,17 +57,15 @@ It uses Interaction Occurrence (a.k.a. Interaction Use).
 
 ![Sequence Diagram - Split](svg/us005-sequence-diagram-split.svg)
 
-**Check Team Size and Get Skills**
-
-![Sequence Diagram - Partial - Check Team Size and Get Skills](svg/us005-sequence-diagram-partial-check-team-size-and-get-skills.svg)
+### Partial Diagrams
 
 **Get Required Skills**
 
 ![Sequence Diagram - Partial - Get Required Skills](svg/us005-sequence-diagram-partial-get-required-skills.svg)
 
-**Get Employee**
+**Get HRM**
 
-![Sequence Diagram - Partial - Get Employee](svg/us005-sequence-diagram-partial-get-employee.svg)
+![Sequence Diagram - Partial - Get HRM](svg/us005-sequence-diagram-partial-get-hrm.svg)
 
 **Get Collaborators**
 

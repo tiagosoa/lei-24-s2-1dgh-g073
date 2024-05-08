@@ -5,22 +5,26 @@ skinparam shadowing false
 
 participant "organization\n:Organization" as ORG
 participant ":collaboratorrepository\n:CollaboratorRepository" as CR
-participant "skillrepository\n:SkillRepository" as SR
+participant "Collaborator" as COLABORADOR
 
     group Assign Skill
-            -> ORG: assignSkill(collaborator, selectedskills)
+            -> ORG: assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames)
             activate ORG
 
 
 
-                    ORG -> SR: validateSkill(selectedskills)
-                    ORG -> CR: validateCollaborator(collaborator)
-                    activate CR
-                ORG -> CR: saveChanges (collaborator, selectedskills)
-deactivate CR
+                    ORG -> ORG: validateSkill(selectedSkillNames)
+                    ORG -> ORG: validateCollaborator(collaboratorID)
+                ORG -> COLABORADOR: addskill(selectedSkillNames)
+                ORG -> CR: updateCollaborator(collaborator)
 
 
-                <-- ORG : assignedcollaborator
+               <-- ORG : assignedcollaborator
+
+            deactivate ORG
+
+
+                        deactivate ORG
 
 
 

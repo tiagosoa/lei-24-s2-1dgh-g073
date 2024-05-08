@@ -25,10 +25,4 @@ participant "CollaboratorRepository:\ncollaboratorRepository" as CR
             PLAT -> CTRL : collaboratorRepository
             deactivate PLAT
 
-            CTRL -> CR : getCollaborators()
-            activate CR
-
-            CR -> CTRL : List<Collaborators>
-            deactivate CR
-
 @enduml

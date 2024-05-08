@@ -29,15 +29,17 @@ class Collaborator {
     - email contact: String
     - ID doc type: String
     - ID number: int
-    - List<Skill> skills
+    + addSkill(skill)
 }
 
 class AssignSkillController {
     - List<Skill> selectedSkills
-    + AssignSkillController(organizationRepository, skillRepository, collaboratorRepository)
-    + getCollaborator(ID number: int): boolean
-    + getSkill(name: String): boolean
-    + assignSkill(): void
+    + SkillRepository getSkillRepository()
+    + CollaboratorRepository getCollaboratorRepository()
+    + OrganizationRepository getOrganizationRepository()
+    + AuthenticationRepository getAuthenticationRepository()
+    + void assignSkillsToCollaborator(int collaboratorID, List<String> collaboratorskills)
+    + HRM getHRMFromSession()
 }
 
 class Skill {
@@ -45,19 +47,29 @@ class Skill {
 }
 
 class HRManager {
-    + manageCollaborators(): void
+  - String name
+  - String vatNumber
+  - String address
+  - String phone
+  - String email
 }
 
-class CollaboratorRepository {
-   - List<Collaborator> collaborators
-   + boolean save(Collaborator collaborator)
-   + Collaborator findByID(int IDnumber)
+ class CollaboratorRepository {
+   - List<Job>: jobs
+   + Optional<Collaborator> add(Collaborator collaborator)
+   + Collaborator getCollaboratorByID(int IDnumber)
+   + List<Collaborator> getCollaborators()
+   + boolean validateCollaborator(Collaborator collaborator)
+   + void updateCollaborator(Collaborator collaboratorToUpdate)
  }
 
- class SkillRepository {
-    - List<Skill> skills
-    + Skill findByName(String name)
-  }
+class SkillRepository {
+  - List<Skill> skills
+  + Optional<Skill> add(Skill skill)
+  + boolean validateSkill(Skill skill)
+  + List<Skill> getSkills()
+  + Skill getSkillByName(String name)
+}
 
  class Organization {
    - String name
@@ -65,9 +77,8 @@ class CollaboratorRepository {
    - String address
    - String phone
    - String email
-   + assignSkill(Collaborator collaborator, Skill skill)
-   + Collaborator findByID(int IDnumber)
-   + Skill findByName(String name)
+   + List<Collaborator> getCollaboratorList()
+   + List<Skill> getSkillList()
  }
 
  class OrganizationRepository {
@@ -80,11 +91,10 @@ class CollaboratorRepository {
    + getCollaboratorRepository() : CollaboratorRepository
    + getSkillRepository() : SkillRepository
    + getOrganizationRepository() : OrganizationRepository
-   + Collaborator findCollaboratorByID(int IDnumber)
-   + Skill findByName(String name)
  }
 
  class AssignSkillUI {
+   + int readInput(int min, int max)
  }
 
 AssignSkillController -- Skill: assigns

@@ -14,20 +14,22 @@ public class Collaborator {
     private final String address;
     private final int mobile;
     private final String email;
+    private final int taxpayer;
     private final String doctype;
     public final int IDnumber;
 
     private HRM hrm;
 
-    public Collaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, String doctype, int IDnumber, HRM hrm) {
+    public Collaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber, HRM hrm) {
 
-        validateCollaborator(name, birthdate, admissiondate, address, mobile, email, doctype, IDnumber);
+        validateCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber);
         this.name = name;
         this.birthdate = birthdate;
         this.admissiondate = admissiondate;
         this.address = address;
         this.mobile = mobile;
         this.email = email;
+        this.taxpayer = taxpayer;
         this.doctype = doctype;
         this.IDnumber = IDnumber;
         this.hrm = hrm;
@@ -35,7 +37,7 @@ public class Collaborator {
         this.collaboratorskills = new ArrayList<>();
     }
 
-    private void validateCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, String doctype, int IDnumber) {
+    private void validateCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber) {
         //TODO: missing from the diagrams
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Collaborator name cannot be null or empty.");
@@ -57,6 +59,9 @@ public class Collaborator {
         }
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("Collaborator email cannot be empty");
+        }
+        if (taxpayer <= 0) {
+            throw new IllegalArgumentException("Collaborator taxpayer number must be a positive number");
         }
         if (doctype == null || doctype.isEmpty()) {
             throw new IllegalArgumentException("Collaborator documentation type cannot be empty");
@@ -97,7 +102,7 @@ public class Collaborator {
      * @return A clone of the current instance.
      */
     public Collaborator clone() {
-        return new Collaborator(this.name, this.birthdate, this.admissiondate, this.address, this.mobile, this.email, this.doctype, this.IDnumber, this.hrm);
+        return new Collaborator(this.name, this.birthdate, this.admissiondate, this.address, this.mobile, this.email, this.taxpayer, this.doctype, this.IDnumber, this.hrm);
     }
 
     public String getName() {
@@ -124,6 +129,10 @@ public class Collaborator {
         return email;
     }
 
+    public int getTaxpayer() {
+        return taxpayer;
+    }
+
     public String getDocType() {
         return doctype;
     }
@@ -140,4 +149,6 @@ public class Collaborator {
     }
 
     public List<Skill> getSkills() {return collaboratorskills;}
+
+    public void setSkills(List<Skill> collaboratorskills) {this.collaboratorskills = collaboratorskills;}
 }

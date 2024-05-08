@@ -24,13 +24,12 @@ class Job {
     - name: String
 }
 
-class JobManager {
-    + createJob(name: String): boolean
-}
-
 class JobRepository {
-  + boolean save(Job job)
-  + Job findByName(String name)
+  - List<Job> jobs
+  + Optional<Job> add(Job job)
+  + boolean validateJob(Job job)
+  + List<Job> getJobs()
+  + Job getJobByName(String name)
 }
 
 class Organization {
@@ -39,8 +38,11 @@ class Organization {
   - String address
   - String phone
   - String email
-  + addJob(Job job)
-  + Job findJobByName(String name)
+  + Optional<Job> createJob(String name)
+  + boolean addJob(Job job)
+  + boolean validateJob(Job job)
+  + boolean jobsDoNotContain(Job job)
+  + boolean equals(Object o)
 }
 
 class OrganizationRepository {
@@ -55,12 +57,14 @@ class Repositories {
 }
 
 class CreateJobController {
-  + CreateJobController(organizationRepository, jobRepository)
-  + Job createJob(HRManager hrm, String name)
+  + CreateJobController(OrganizationRepository organizationRepository,
+                                   JobRepository jobRepository,
+                                   AuthenticationRepository authenticationRepository)
+  + Optional<Job> createJob(String name, HRM hrm)
 }
 
 class CreateJobUI {
-
+  + requestJobName()
 }
 
 class HRManager {
@@ -89,7 +93,7 @@ note left of CreateJobUI
 end note
 
 note left of Organization
-  - Manages skills
+  - Manages jobs
   - Handles organizational details
 end note
 

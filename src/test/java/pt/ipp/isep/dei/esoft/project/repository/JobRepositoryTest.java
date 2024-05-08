@@ -16,7 +16,7 @@ class JobRepositoryTest {
         String jobName = "Job Name";
         HRM hrm = new HRM("john.doe@this.company.com");
         assertThrows(IllegalArgumentException.class,
-                () -> jobRepository.getJobByName(jobName, hrm));
+                () -> jobRepository.getJobByName(jobName));
     }
 
     @Test
@@ -25,7 +25,7 @@ class JobRepositoryTest {
         String jobName = "Task Category Description";
         HRM hrm = new HRM("john.doe@this.company.com");
         assertThrows(IllegalArgumentException.class,
-                () -> jobRepository.getJobByName(jobName, hrm));
+                () -> jobRepository.getJobByName(jobName));
     }
 
     @Test
@@ -33,7 +33,7 @@ class JobRepositoryTest {
         JobRepository jobRepository = new JobRepository();
         String jobName = "Job Name";
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job(jobName, hrm);
+        Job job = new Job(jobName);
         jobRepository.add(job);
     }
 
@@ -42,9 +42,9 @@ class JobRepositoryTest {
         JobRepository jobRepository = new JobRepository();
         String jobName = "Job Name";
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job(jobName, hrm);
+        Job job = new Job(jobName);
         jobRepository.add(job);
-        Job job1 = jobRepository.getJobByName(jobName, hrm);
+        Job job1 = jobRepository.getJobByName(jobName);
         assertEquals(job, job1);
     }
 
@@ -53,11 +53,11 @@ class JobRepositoryTest {
         JobRepository jobRepository = new JobRepository();
         String jobName = "Job Name";
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job(jobName, hrm);
+        Job job = new Job(jobName);
         jobRepository.add(job);
         String jobName1 = "Job Name 1";
         assertThrows(IllegalArgumentException.class,
-                () -> jobRepository.getJobByName(jobName1, hrm));
+                () -> jobRepository.getJobByName(jobName1));
 
     }
 
@@ -66,11 +66,11 @@ class JobRepositoryTest {
         JobRepository jobRepository = new JobRepository();
         String jobName = "Job Name";
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job(jobName, hrm);
+        Job job = new Job(jobName);
         jobRepository.add(job);
 
         assertThrows(UnsupportedOperationException.class,
-                () -> jobRepository.getJobs().add(new Job("Job Name 1", hrm)));
+                () -> jobRepository.getJobs().add(new Job("Job Name 1")));
 
     }
 
@@ -80,7 +80,7 @@ class JobRepositoryTest {
         JobRepository jobRepository = new JobRepository();
         HRM hrm = new HRM("john.doe@this.company.com");
         String jobName = "Job Name";
-        Job job = new Job(jobName, hrm);
+        Job job = new Job(jobName);
         jobRepository.add(job);
         int expectedSize = 1;
 
@@ -97,7 +97,7 @@ class JobRepositoryTest {
         //Arrange
         JobRepository jobRepository = new JobRepository();
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job("Job Name", hrm);
+        Job job = new Job("Job Name");
         //Add the first job
         jobRepository.add(job);
 
@@ -113,8 +113,8 @@ class JobRepositoryTest {
         //Arrange
         JobRepository jobRepository = new JobRepository();
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job jobOne = new Job("Job Name One", hrm);
-        Job jobTwo = new Job("Job Name Two", hrm);
+        Job jobOne = new Job("Job Name One");
+        Job jobTwo = new Job("Job Name Two");
         //Add the first task
         jobRepository.add(jobOne);
 

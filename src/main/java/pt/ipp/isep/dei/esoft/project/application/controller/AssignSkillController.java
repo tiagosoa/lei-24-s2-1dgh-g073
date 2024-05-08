@@ -42,7 +42,7 @@ public class AssignSkillController {
         if (skillRepository == null) {
             Repositories repositories = Repositories.getInstance();
 
-            //Get the JobRepository
+            //Get the SkillRepository
             skillRepository = repositories.getSkillRepository();
         }
         return skillRepository;
@@ -77,19 +77,7 @@ public class AssignSkillController {
         return authenticationRepository;
     }
 
-    public void assignSkillToCollaborator(int collaboratorID, String skillName, HRM hrm) {
-        Collaborator collaborator = collaboratorRepository.getCollaboratorByID(collaboratorID);
-        Skill skill = skillRepository.getSkillByName(skillName);
-
-        if (collaborator == null || skill == null) {
-            throw new IllegalArgumentException("Collaborator or Skill not found.");
-        }
-
-        collaborator.addSkill(skill);
-        collaboratorRepository.updateCollaborator(collaborator);
-    }
-
-    public void assignSkillsToCollaborator(int collaboratorID, List<String> collaboratorskills, HRM hrm) {
+    public void assignSkillsToCollaborator(int collaboratorID, List<String> collaboratorskills) {
         Collaborator collaborator = collaboratorRepository.getCollaboratorByID(collaboratorID);
 
         if (collaborator == null) {
@@ -111,4 +99,11 @@ public class AssignSkillController {
         return new HRM(email.getEmail());
     }
 
+    public List<Collaborator> getCollaboratorList() {
+        return collaboratorRepository.getCollaboratorList();
+    }
+
+    public List<Skill> getSkillList() {
+        return skillRepository.getSkillList();
+    }
 }

@@ -29,8 +29,7 @@ activate ADM
             'create CTRL
             UI -> CTRL** : create
 
-         UI -> CTRL : getSkillRepository()
-         activate CTRL
+            activate CTRL
 
                  CTRL -> PLAT : getSkillRepository()
                          activate PLAT

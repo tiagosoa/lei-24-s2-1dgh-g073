@@ -3,17 +3,11 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant ":AssignSkillController" as CTRL
-participant ":collaboratorrepository\n:CollaboratorRepository" as CR
+participant ":AssignSkillUI" as UI
+          activate UI
+          UI -> UI: get(collaboratorindex)
 
-         -> CTRL : getCollaborator(ID number)
-        activate CTRL
-
-        CTRL -> CR : getCollaborator(ID number)
-        activate CR
-
-        CR -> CTRL : collaborator
-        deactivate CR
+                 UI --> UI: selectedcollaborators
 
 
 

@@ -24,13 +24,12 @@ class Skill {
     - name: String
 }
 
-class SkillManager {
-    + createSkill(name: String): boolean
-}
-
 class SkillRepository {
-  + boolean save(Skill skill)
-  + Skill findByName(String name)
+  - List<Skill> skills
+  + Optional<Skill> add(Skill skill)
+  + boolean validateSkill(Skill skill)
+  + List<Skill> getSkills()
+  + Skill getSkillByName(String name)
 }
 
 class Organization {
@@ -39,8 +38,11 @@ class Organization {
   - String address
   - String phone
   - String email
-  + addSkill(Skill skill)
-  + Skill findSkillByName(String name)
+  + Optional<Skill> createSkill(String name)
+  + boolean addSkill(Skill skill)
+  + boolean validateSkill(Skill skill)
+  + boolean skillsDoNotContain(Skill skill)
+  + boolean equals(Object o)
 }
 
 class OrganizationRepository {
@@ -55,12 +57,14 @@ class Repositories {
 }
 
 class CreateSkillController {
-  + CreateSkillController(organizationRepository, skillRepository)
-  + Skill createSkill(HRManager hrm, String name)
+  + CreateJobController(OrganizationRepository organizationRepository,
+                                   JobRepository jobRepository,
+                                   AuthenticationRepository authenticationRepository)
+  + Optional<Skill> createSkill(String name, HRM hrm)
 }
 
 class CreateSkillUI {
-
+  + requestSkillName()
 }
 
 class HRManager {

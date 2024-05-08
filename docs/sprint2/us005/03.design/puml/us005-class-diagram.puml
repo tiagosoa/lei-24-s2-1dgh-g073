@@ -16,11 +16,12 @@ class UserSession
     + getUserEmail()
 }
 
-class HumanResourcesManager {
+class HRManager {
   - String name
-  - String email
+  - String vatNumber
+  - String address
   - String phone
-  + generateTeamProposal(maxSize, minSize, skills[])
+  - String email
 }
 
 class Skill {
@@ -32,35 +33,25 @@ class Job {
 }
 
 class Collaborator {
-  - name: String
-  - birthdate: String
-  - admission date: String
-  - address: String
-  - mobile Contact: int
-  - email contact: String
-  - ID doc type: String
-  - ID number: int
-  - List<Skill> skills
-  + hasSkill(skill: Skill) : boolean
+    - name: String
+    - birthdate: String
+    - admission date: String
+    - address: String
+    - mobile Contact: int
+    - email contact: String
+    - ID doc type: String
+    - ID number: int
+    + addSkill(skill)
 }
 
-class Team {
-  - List<Collaborator> members
-  + addMember(collaborator: Collaborator) : boolean
-  + isFull() : boolean
-  + meetsSkillRequirements(requiredSkills: List<Skill>) : boolean
-}
-
-class TeamGeneratorController {
-  - int maxSize
-  - int minSize
-  - List<Skill> requiredSkills
-  - List<Collaborator> collaborators
-  + checkMinAndMaxSize() : boolean
-  + getSkillList(): List<Skill>
-  + getRequiredSkills(): List<RequiredSkills>
-  + TeamGeneratorController(repositories: Repositories, maxSize: int, minSize: int, requiredskills: List<RequiredSkills>)
-  + generateTeamProposal(maxSize, minSize, List<RequiredSkills>) : Team
+class GenerateTeamController {
+  + CollaboratorRepository getCollaboratorRepository()
+  + OrganizationRepository getOrganizationRepository()
+  + AuthenticationRepository getAuthenticationRepository()
+  + SkillRepository getSkillRepository()
+  + List<Collaborator> generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
+  + List<Collaborator> filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills)
+  + HRM getHRMFromSession()
 }
 
 class Repositories {
@@ -81,52 +72,49 @@ class Organization {
   - List<Collaborator> collaborators
   - List<Skill> skills
   + findCollaboratorByID(String id) : Collaborator
-  + generateTeamProposal(maxSize, minSize, List<RequiredSkills>)
-  + selectCollaborators(List<(List<RequiredSkills>) : List<Members>
 }
 
-class TeamGeneratorUI {
+class GenerateTeamUI {
+   + List<Skill> parseSkills(String inputSkills)
+   + void displayTeam(List<Collaborator> team)
 }
 
 
 
-note right of HumanResourcesManager
+note right of HRManager
   - HRM inputs team size and skill criteria
 end note
 
-note left of TeamGeneratorController
+note left of GenerateTeamController
   - Ensures team meets size and skill requirements
   - Team Size and required Skills are obtained from the HRM's input
   - Updates the Team Repository
 end note
 
-note bottom of Team
-  - Maintains a list of team members
+note left of GenerateTeamUI
+  - UI for HRM to input min. and max. team size and skills
+  - Communicates with GenerateTeamController
+  - Creates list of required skills
   - Checks if team meets size and skill requirements
-end note
-
-note left of TeamGeneratorUI
-  - UI for HRM to input min. and max. team size and select skills
-  - Communicates with TeamGeneratorController
 end note
 
 note bottom of Organization
   - Manages collaborators, skills, and jobs
 end note
 
-HumanResourcesManager -down-> TeamGeneratorController : uses
-TeamGeneratorController -down-> Team : generates
+HRManager -down-> GenerateTeamController : uses
+GenerateTeamController -down-> Collaborator : generates team of
 Collaborator -left-> Skill : possesses
 Collaborator -right-> Job : possesses
 Organization -right-> Collaborator : manages
-Organization -up-> HumanResourcesManager : belongs to
+Organization -up-> HRManager : belongs to
 Repositories -right-> CollaboratorRepository : contains
 Repositories -right-> SkillRepository : contains
-TeamGeneratorController -right-> Repositories : accesses
+GenerateTeamController -right-> Repositories : accesses
 ApplicationSession -> ApplicationSession : instance
 ApplicationSession --> "1" UserSession : userSession
-TeamGeneratorController ..> ApplicationSession
-TeamGeneratorController ..> UserSession
-TeamGeneratorUI .> TeamGeneratorController
+GenerateTeamController ..> ApplicationSession
+GenerateTeamController ..> UserSession
+GenerateTeamUI .> GenerateTeamController
 
 @enduml

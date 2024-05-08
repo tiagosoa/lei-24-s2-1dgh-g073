@@ -60,16 +60,10 @@ activate ADM
     ADM -> UI : selects collaborator(s)
     activate UI
 
-    group Get Collaborator
+        UI -> UI: get(collaboratorindex)
 
-        UI -> CTRL : getCollaborator(ID number)
-        activate CTRL
+        UI --> UI: selectedcollaborators
 
-        CTRL -> CR : getCollaborator(ID number)
-        activate CR
-
-        CR -> CTRL : collaborator
-        deactivate CR
 
             UI -> CTRL: getSkillList()
         CTRL -> SR: getSkillList()
@@ -81,7 +75,7 @@ activate ADM
         CTRL -> UI: skills
         deactivate CTRL
 
-    end
+
     UI --> ADM : shows list of existing skills and asks to select one or more
     deactivate UI
 
@@ -89,27 +83,17 @@ activate ADM
    ADM -> UI : selects skill(s)
    activate UI
 
-   group Get Skill
+        UI -> UI: add(skills.get(skillIndex).getName().trim())
 
-        UI -> CTRL : getSelectedSkill(name)
-        activate CTRL
+        UI --> UI: selectedSkillNames
 
-        CTRL -> SR : getSelectedSkill(name)
-        activate SR
 
-        SR -> CTRL : selectedskills
-        deactivate SR
-
-        CTRL -> UI : selectedskills
-        deactivate CTRL
-
-   end
 
    UI -> ADM : shows selected data and requests confirmation
 
    ADM -> UI : confirms data
 
-   UI -> CTRL: assignSkill(collaborator, selectedskills)
+   UI -> CTRL: assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames)
    activate CTRL
 
 
@@ -166,16 +150,15 @@ activate ADM
             deactivate CTRL
 
             |||
-            CTRL -> ORG: assignSkill(collaborator, selectedskills)
+            CTRL -> ORG: assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames)
             activate ORG
 
 
 
-                    ORG -> SR: validateSkill(selectedskills)
-                    ORG -> CR: validateCollaborator(collaborator)
-                    activate CR
-                ORG -> CR: saveChanges (collaborator, selectedskills)
-deactivate CR
+                    ORG -> ORG: validateSkill(selectedSkillNames)
+                    ORG -> ORG: validateCollaborator(collaboratorID)
+                ORG -> COLABORADOR: addskill(selectedSkillNames)
+                ORG -> CR: updateCollaborator(collaborator)
 
 
                 ORG --> CTRL : assignedcollaborator

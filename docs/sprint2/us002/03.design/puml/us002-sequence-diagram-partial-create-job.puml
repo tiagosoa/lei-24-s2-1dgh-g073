@@ -5,25 +5,24 @@ skinparam shadowing false
 
 participant "organization\n:Organization" as ORG
 participant "job\n:Job" as TAREFA
-participant "jobrepository\n:JobRepository" as JR
+participant "jobrepository\n:JobRepository" as SR
 
-autonumber 16
 -> ORG: createJob(jobname)
 
-autonumber 16.1
 activate ORG
     group Create Job
 
+        ORG -> TAREFA**: createJob(jobname)
+        ORG -> ORG: validateJob(job)
+        ORG -> SR: addJob (job)
 
-        activate ORG
 
-                        ORG -> TAREFA**: create(jobname, hrm)
-                        ORG -> ORG: validateJob(job)
-                        ORG -> JR: addJob(job)
 
-        deactivate ORG
 
- <-ORG: job
+    end
+
+    <-- ORG : job
+deactivate ORG
 
 
 @enduml

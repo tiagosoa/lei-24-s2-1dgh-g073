@@ -3,20 +3,12 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "AssignSkillController" as CTRL
-participant "skillrepository\n:SkillRepository" as SR
+participant ":AssignSkillUI" as UI
+          activate UI
+ UI -> UI: add(skills.get(skillIndex).getName().trim())
 
-        -> CTRL : getSelectedSkill(name)
-        activate CTRL
+        UI --> UI: selectedSkillNames
 
-        CTRL -> SR : getSelectedSkill(name)
-        activate SR
-
-        SR -> CTRL : selectedskills
-        deactivate SR
-
-        <- CTRL : selectedskills
-        deactivate SR
 
 
 @enduml

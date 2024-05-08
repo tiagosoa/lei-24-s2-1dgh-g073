@@ -1,6 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.HRM;
+import pt.ipp.isep.dei.esoft.project.domain.Organization;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 
 import java.util.ArrayList;
@@ -9,29 +9,29 @@ import java.util.Optional;
 
 public class JobRepository {
 
-    private final List<Job> jobs;
+    private List<Job> jobs;
     public JobRepository() {
-        jobs = new ArrayList<>();
+        this.jobs = Organization.getJobList();
+        if (this.jobs == null) {
+            // Initialize the collaborators list if it's null
+            this.jobs = new ArrayList<>();
+        }
     }
 
     /**
      * This method returns an exsiting Job by its name.
      *
-     * @param name The name of the job category to be created.
+     * @param name The name of the job to be created.
      * @return The job name
      * @throws IllegalArgumentException if the job does not exist, which should never happen.
      */
-    public Job getJobByName(String name, HRM hrm) {
-        Job newJob = new Job(name, hrm);
-        Job job = null;
-        if (jobs.contains(newJob)) {
-            job = jobs.get(jobs.indexOf(newJob));
+    public Job getJobByName(String name) {
+        for (Job existingJob : jobs) {
+            if (existingJob.getName().equals(name)) {
+                return existingJob;
+            }
         }
-        if (job == null) {
-            throw new IllegalArgumentException(
-                    "Job name requested for [" + name + "] does not exist.");
-        }
-        return job;
+        return null;
     }
 
     public Optional<Job> add(Job job) {
@@ -39,7 +39,7 @@ public class JobRepository {
         Optional<Job> newJob = Optional.empty();
         boolean operationSuccess = false;
 
-        if (validateSkill(job)) {
+        if (validateJob(job)) {
             newJob = Optional.of(job.clone());
             operationSuccess = jobs.add(newJob.get());
         }
@@ -51,7 +51,7 @@ public class JobRepository {
         return newJob;
     }
 
-    private boolean validateSkill(Job job) {
+    private boolean validateJob(Job job) {
         boolean isValid = !jobs.contains(job);
         return isValid;
     }

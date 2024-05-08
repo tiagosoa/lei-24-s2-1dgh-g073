@@ -30,76 +30,91 @@ activate ADM
             'create CTRL
             UI -> CTRL** : create
 
+                CTRL -> RepositorySingleton : getInstance()
+                activate CTRL
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+                deactivate CTRL
+
             UI --> ADM : asks for minimum and maximum team size
         deactivate UI
 
     ADM -> UI : inputs minimum and maximum team size
     activate UI
 
-        UI -> CTRL : checkMinAndMaxTeamSize(minSize, maxSize)
-        activate CTRL
+                        CTRL -> RepositorySingleton : getInstance()
+                        activate RepositorySingleton
 
-                ref over CTRL
-                    Check Team Size and Get Skills
+                            RepositorySingleton --> CTRL: repositories
+                        deactivate RepositorySingleton
 
-                end ref
 
-        CTRL -> UI : List<Skill>
-        deactivate CTRL
+        UI -> CTRL : getSkillRepository()
 
-    UI -> ADM : shows skill list and asks to select required ones
+        CTRL -> PLAT : getSkillRepository()
+                activate PLAT
+
+            PLAT -> CTRL : skillRepository
+            deactivate PLAT
+    UI -> ADM : asks to type suggested skills
     deactivate UI
 
-    ADM -> UI : selects skills
+    ADM -> UI : types skills
     activate UI
 
-    UI -> CTRL : getRequiredSkills()
-
-            ref over CTRL
-                Get Required Skills
-
-            end ref
-
-    CTRL -> UI : List<RequiredSkills>
-    deactivate CTRL
+ref over UI
+Get Required Skills
+end
 
     UI -> ADM : shows team size and selected skills and asks for confirmation
 
     ADM -> UI : confirms data
 
-          UI -> CTRL : generateTeamProposal(maxSize, minSize, List<RequiredSkills>)
-            activate CTRL
+
+
 
           UI -> CTRL : getCollaboratorRepository()
+          activate CTRL
 
 
+            CTRL -> PLAT : getCollaboratorRepository()
+                activate PLAT
 
-                    ref over CTRL
-                        Get Collaborator Repository
-
-                    end ref
-            |||
-                               ref over CTRL
-                                   Get Employee
-
-                               end ref
-
-            |||
-            CTRL -> ORG: generateTeamProposal(maxSize, minSize, List<RequiredSkills>, employee)
-            activate ORG
-
-                    ref over ORG
-                        Generate Team
-
-                    end ref
-                ORG --> CTRL : team
-
-            deactivate ORG
-
-            CTRL --> UI: team
+            PLAT -> CTRL : collaboratorRepository
+            deactivate PLAT
             deactivate CTRL
-            UI --> ADM: displays operation success
-    deactivate UI
+
+
+
+            |||
+            CTRL -> CTRL : getHRMFromSession()
+            activate CTRL
+
+                ref over CTRL
+                Get HRM
+                end
+
+                CTRL --> CTRL : hrm
+            deactivate CTRL
+
+            |||
+            UI -> CTRL: generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
+
+
+                ref over CTRL
+                Generate Team
+                end
+            CTRL --> CTRL: team
+            deactivate CTRL
+
+                        CTRL --> UI: team
+                        deactivate CTRL
+
+            UI -> ADM: displays the team
+            ADM -> UI: either accepts or refuses the team
+            UI -> ADM: displays operation success
 
 deactivate ADM
 

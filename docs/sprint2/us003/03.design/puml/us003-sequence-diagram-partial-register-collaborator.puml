@@ -7,13 +7,13 @@ participant "organization\n:Organization" as ORG
 participant "collaborator\n:Collaborator" as COLABORADOR
 
 autonumber 16
--> ORG: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+-> ORG: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, taxpayer number, ID doc type, ID number)
 
 autonumber 16.1
 activate ORG
     group Register Collaborator
 
-        ORG -> COLABORADOR**: create(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+        ORG -> COLABORADOR**: create(name, birthdate, admission date, address, \nmobile contact, email contact, taxpayer number, ID doc type, ID number)
         ORG -> ORG : collaborator
         activate ORG
         ORG -> ORG: addCollaborator (collaborator)

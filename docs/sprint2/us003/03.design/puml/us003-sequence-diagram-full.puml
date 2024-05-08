@@ -35,17 +35,19 @@ activate ADM
                      CTRL -> PLAT : getCollaboratorRepository()
                              activate PLAT
 
-                         PLAT -> CTRL : collaboratorrepository
+                         PLAT --> CTRL : collaboratorrepository
                          deactivate PLAT
+
+                     UI -> CTRL: getJobRepository()
 
                      CTRL -> PLAT : getJobRepository()
                              activate PLAT
 
-                         PLAT -> CTRL : jobrepository
+                         PLAT --> CTRL : jobrepository
                          deactivate PLAT
                    deactivate CTRL
 
-    UI -> ADM : requests data (name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+    UI -> ADM : requests data (name, birthdate, admission date, address, \nmobile contact, email contact, taxpayer number, ID doc type, ID number)
 
 
     ADM -> UI : types requested data
@@ -56,19 +58,15 @@ activate ADM
                          CTRL -> JR: getJobs()
                               activate JR
 
-                         JR -> CTRL: List<Jobs>
+                         JR --> CTRL: List<Jobs>
                               deactivate JR
 
-                         CTRL -> UI: List<Jobs>
+                         CTRL --> UI: List<Jobs>
             deactivate CTRL
 
     UI -> ADM : shows job list and asks to select one
 
-    ADM -> UI : select job
-
-    UI -> ADM : displays data and requests confirmation
-
-    ADM -> UI : confirms data
+    ADM -> UI : selects job
 
 
         UI -> CTRL : registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number, job)
@@ -127,23 +125,35 @@ activate ADM
 deactivate CTRL
 
             |||
-            CTRL -> ORG: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number, job)
+            CTRL -> ORG: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, taxpayer number, ID doc type, ID number)
             activate ORG
                        
-                        ORG -> COLABORADOR**: create(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number)
+                        ORG -> COLABORADOR**: create(name, birthdate, admission date, address, \nmobile contact, email contact, taxpayer number ID doc type, ID number)
 
-
-                        ORG -> ORG: giveJob(collaborator, job)
-
-                        
                         ORG -> ORG : validateCollaborator(collaborator)
+
+                        UI -> CTRL: assignJobToCollaborator(collaborator)
+
+                        CTRL -> CR: getCollaboratorByID(collaboratorID)
+                        activate CR
+
+                        CR --> CTRL: collaborator
+                        deactivate CR
+
+                        CTRL -> JR: getJobByName(jobName)
+                        activate JR
+
+                        JR --> CTRL: job
+                        deactivate JR
+
+                        CTRL -> COLABORADOR: addJob(job)
 
                        ORG -> CR : addCollaborator (collaborator)
 
 
                    
 
-                       ORG -> CTRL: collaborator
+                       ORG --> CTRL: collaborator
 
                        deactivate ORG
 
@@ -155,7 +165,7 @@ deactivate CTRL
 
             deactivate ORG
 
-            CTRL -> UI: collaborator
+            CTRL --> UI: collaborator
             deactivate CTRL
             UI -> ADM: displays operation success
     deactivate UI
