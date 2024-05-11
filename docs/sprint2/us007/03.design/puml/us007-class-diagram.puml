@@ -10,7 +10,6 @@ class VehicleFleetManager {
   - String name
   - String email
   - String phone
-  + registerMaintenance(maintenanceDetails)
 }
 
 class Vehicle {
@@ -20,21 +19,11 @@ class Vehicle {
   - Double tareWeight
   - Double grossWeight
   - Int currentKm
-  - Int registerDate
-  - Int acquisitionDate
+  - LocalDate registerDate
+  - LocalDate acquisitionDate
   - Int maintenanceFrequency
-}
-
-class VehicleMaintenance {
-  - Date maintenanceDate
-  - String details
-  - Double cost
-  + VehicleMaintenance(maintenanceDate, details, cost)
-}
-
-class MaintenanceRepository {
-  + boolean save(VehicleMaintenance maintenanceRecord)
-  + List<VehicleMaintenance> findByVehicle(Vehicle vehicle)
+  - String plateName
+  - LocalDate lastMaintenanceDate
 }
 
 class Organization {
@@ -43,11 +32,11 @@ class Organization {
   - String address
   - String phone
   - String email
-  - List<Vehicle> fleet
-  - Map<Vehicle, List<VehicleMaintenance>> maintenanceRecords
+  - List<Vehicle> vehicles
+  - Map<Vehicle, List<Maintenance>> maintenanceRecords
   + addVehicle(Vehicle vehicle)
-  + addMaintenance(Vehicle vehicle, VehicleMaintenance maintenance)
-  + List<VehicleMaintenance> getVehicleMaintenanceRecords(Vehicle vehicle)
+  + addMaintenance(Vehicle vehicle, Maintenance maintenance)
+  + List<Maintenance> getVehicleMaintenanceRecords(Vehicle vehicle)
 }
 
 class OrganizationRepository {
@@ -98,9 +87,9 @@ MaintenanceRegistrationUI -right-> RegisterMaintenanceController : sends data to
 RegisterMaintenanceController -down-> Repositories : uses
 Repositories -down-> MaintenanceRepository : accesses
 Organization -right-> Vehicle : owns
-Organization -down-> VehicleMaintenance : tracks
-MaintenanceRepository ..> VehicleMaintenance : persists
-RegisterMaintenanceController ..> VehicleMaintenance : creates
+Organization -down-> Maintenance : tracks
+MaintenanceRepository ..> Maintenance : persists
+RegisterMaintenanceController ..> Maintenance : creates
 RegisterMaintenanceController ..> Organization : updates records
 
 @enduml

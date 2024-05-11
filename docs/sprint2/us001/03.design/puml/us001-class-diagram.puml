@@ -46,8 +46,11 @@ class Organization {
 }
 
 class OrganizationRepository {
-  + findByName(String name)
-  + findByVatNumber(String vatNumber)
+  + Optional<Organization> getOrganizationByHRM(HRM hrm)
+  + Optional<Organization> getOrganizationByVFM(VFM vfm)
+  + Optional<Organization> getOrganizationByHRMEmail(String email)
+  + Optional<Organization> add(Organization organization)
+  + boolean validateOrganization(Organization organization)
 }
 
 class Repositories {
@@ -67,23 +70,22 @@ class CreateSkillUI {
   + requestSkillName()
 }
 
-class HRManager {
+class HRM {
    - String name
    - int vatNumber
    - String email
    - int phonenumber
-    + manageSkills(): void
 }
 
 SkillManager --> Skill: Manages
-HRManager --> SkillManager: Uses
+HRM --> SkillManager: Uses
 
 note right of CreateSkillController
   - Skill name is obtained from the HRM's input
   - Updates the Skill Repository
 end note
 
-note right of HRManager
+note right of HRM
   - HRM initiates skill creation
 end note
 
@@ -109,8 +111,6 @@ Repositories -down-> OrganizationRepository : accesses
 
 CreateSkillController ..> OrganizationRepository : organizationRepository
 
-Repositories --> "1" OrganizationRepository
-
 OrganizationRepository --> "*" Organization : persists
 ApplicationSession --> "1" UserSession : userSession
 
@@ -118,8 +118,8 @@ CreateSkillController ..> "1" Organization : organization
 CreateSkillController ..> ApplicationSession
 CreateSkillController ..> UserSession
 Organization "1" --> "*" Skill : owns
-Skill --> HRManager : createdBy
+Skill --> HRM : createdBy
 
-Organization --> "*" HRManager : employs
+Organization --> "*" HRM : employs
 
 @enduml

@@ -1,9 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
 
-import pt.ipp.isep.dei.esoft.project.ui.console.CreateSkillUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.RegisterMaintenanceUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.ShowTextUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.utils.AddVehicleUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.AddVehicleUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class VFMUI implements Runnable {
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
         options.add(new MenuItem("Add Vehicle", new AddVehicleUI()));
-        options.add(new MenuItem("Option 2", new ShowTextUI("You have chosen Option 2.")));
+        options.add(new MenuItem("Register Maintenance", new RegisterMaintenanceUI()));
         options.add(new MenuItem("Option 3", new ShowTextUI("You have chosen Option 3.")));
         options.add(new MenuItem("Option 4", new ShowTextUI("You have chosen Option 4.")));
 

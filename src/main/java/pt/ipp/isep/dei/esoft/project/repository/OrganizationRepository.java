@@ -55,6 +55,19 @@ public class OrganizationRepository {
         return returnOrganization;
     }
 
+    public Optional<Organization> getOrganizationByVFMEmail(String email) {
+
+        Optional<Organization> returnOrganization = Optional.empty();
+
+        for (Organization organization : organizations) {
+            if (organization.anyVFMHasEmail(email)) {
+                returnOrganization = Optional.of(organization);
+            }
+        }
+
+        return returnOrganization;
+    }
+
     public Optional<Organization> add(Organization organization) {
 
         Optional<Organization> newOrganization = Optional.empty();

@@ -4,8 +4,11 @@ import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaborator
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
+import pt.ipp.isep.dei.esoft.project.domain.Job;
+import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -28,11 +31,13 @@ public class RegisterCollaboratorUI implements Runnable {
     private int taxpayer;
     private String doctype;
     private int IDnumber;
+    private CollaboratorRepository collaboratorRepository;
     private JobRepository jobRepository;
 
     public RegisterCollaboratorUI() {
 
         controller = new RegisterCollaboratorController();
+        this.collaboratorRepository = new CollaboratorRepository();
         this.jobRepository = new JobRepository();
     }
 
@@ -54,8 +59,8 @@ public class RegisterCollaboratorUI implements Runnable {
         Optional<Collaborator> collaborator = getController().registerCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
 
         if (collaborator.isPresent()) {
-            System.out.println("\nCollaborator successfully registered!");
             assignJobToCollaborator(collaborator.get());
+            System.out.println("\nCollaborator successfully registered!");
         } else {
             System.out.println("\nCollaborator not registered!");
         }
@@ -131,42 +136,21 @@ public class RegisterCollaboratorUI implements Runnable {
     }
 
     private void assignJobToCollaborator(Collaborator collaborator) {
-        Job job = selectJob();
-        if (job != null) {
-            getController().assignJobToCollaborator(collaborator.getIDNumber(), job.getName());
-            System.out.println("Job assigned successfully!");
-        } else {
-            System.out.println("No job selected.");
-        }
-    }
-
-    private Job selectJob() {
+        Scanner input = new Scanner(System.in);
         List<Job> jobs = jobRepository.getJobs();
         if (jobs.isEmpty()) {
-            System.out.println("No jobs available.");
-            return null;
+            System.out.println("No jobs registered.");
+            return;
         }
-
-        System.out.println("Available Jobs:");
+        System.out.println("Select job(s) to assign to " + collaborator.getName() + ":");
         for (int i = 0; i < jobs.size(); i++) {
             System.out.println((i + 1) + ". " + jobs.get(i).getName());
         }
+        System.out.println("Enter job number:");
+        String jobname = input.nextLine();
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Select a job: ");
-        int choice;
-        try {
-            choice = Integer.parseInt(scanner.nextLine()); // Read entire line and parse as integer
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Please enter a valid number.");
-            return null;
-        }
-
-        if (choice >= 1 && choice <= jobs.size()) {
-            return jobs.get(choice - 1);
-        } else {
-            System.out.println("Invalid choice.");
-            return null;
-        }
+        // Assign selected jobs to collaborator
+        getController().assignJobToCollaborator(collaborator.getIDNumber(), jobname);
+        System.out.println("Jobs assigned successfully to " + collaborator.getName());
     }
 }

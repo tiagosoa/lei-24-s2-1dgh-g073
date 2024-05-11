@@ -60,6 +60,10 @@ public class Job {
         return collaborator;
     }
 
+    public void addCollaborator(Collaborator collaborator) {
+        collaborator.addJob(this);
+    }
+
     public void setCollaborator(Collaborator collaborator) {
         this.collaborator = collaborator;
     }

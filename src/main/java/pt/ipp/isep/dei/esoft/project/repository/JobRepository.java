@@ -65,4 +65,6 @@ public class JobRepository {
         //This is a defensive copy, so that the repository cannot be modified from the outside.
         return List.copyOf(jobs);
     }
+
+
 }

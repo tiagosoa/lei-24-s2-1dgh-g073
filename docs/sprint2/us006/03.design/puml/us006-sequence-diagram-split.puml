@@ -7,9 +7,18 @@ autonumber
 
 'hide footbox
 actor "Vehicle and Equipment Fleet Maneger" as ADM
-participant ":VehicleResgistrationUI" as UI
-participant ":RegisterVehicleController" as RVC
+participant ":AddVehicleUI" as UI
+participant ":AddVehicleController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "vehicleRepository\n:VehicleRepository" as VR
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
 participant "organization\n:Organization" as ORG
+participant "vehicle\n:Vehicle" as VEICULO
 
 activate ADM
 
@@ -19,7 +28,7 @@ activate ADM
 
 '            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
-            UI -> RVC** : create
+            UI -> CTRL** : create
 
             UI --> ADM : requests data (Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency)
         deactivate UI
@@ -30,40 +39,38 @@ activate ADM
         UI --> ADM : shows all data and requests confirmation
     deactivate UI
 
-    ADM -> UI : confirmation data
+    ADM -> UI : confirms data
     activate UI
 
-        UI -> RVC : registerVehicle(Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency)
-        activate RVC
+        UI -> CTRL : addVehicle(vehicleModel,vehicleBrand,vehicleType, vfm)
+        activate CTRL
 
 
             |||
-            RVC -> RVC : getVFMFromSession()
-            activate RVC
+            CTRL -> CTRL : getVFMFromSession()
+            activate CTRL
 
-                ref over RVC
-                  Get VFM
+                ref over CTRL
+                Get VFM
+                end
 
-                end ref
-
-                RVC --> RVC : VFM
-            deactivate RVC
+                CTRL --> CTRL : vfm
+            deactivate CTRL
 
             |||
-            RVC -> ORG: createVehicle(Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency, VFM)
+            CTRL -> ORG: addVehicle(vehicleModel,vehicleBrand,vehicleType, vfm)
             activate ORG
 
                 ref over ORG
-                    Create Vehicle
+                Create Vehicle
+                end
 
-                end ref
-
-                ORG --> RVC : vehicle
+                ORG --> CTRL : vehicle
 
             deactivate ORG
 
-            RVC --> UI: vehicle
-            deactivate RVC
+            CTRL --> UI: vehicle
+            deactivate CTRL
             UI --> ADM: displays operation success
     deactivate UI
 

@@ -7,7 +7,7 @@ title SSD US013 -
 
 autonumber
 
-actor " " as Employee
+actor "Green Space Manager" as Employee
 participant ":System" as System
 
 activate Employee

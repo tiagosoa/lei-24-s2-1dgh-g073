@@ -6,27 +6,20 @@ skinparam shadowing false
 participant "organization\n:Organization" as ORG
 participant "vehicle\n:Vehicle" as Vehicle
 
-autonumber 10
--> ORG: createVehicle(Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency, VFM)
+-> ORG: addVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate, vfm)
 
-autonumber 10.1
 activate ORG
-    group Create Task
+    group Create Vehicle
 
-        ORG -> Vehicle**: createVehicle(Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency, VFM)
+        ORG -> Vehicle**: createVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate, vfm)
         ORG -> ORG: addVehicle(vehicle)
 
         activate ORG
             ORG -> ORG: validateVehicle(vehicle)
-            activate ORG
-                ORG --> ORG
             deactivate ORG
 
-            ORG --> ORG
-        deactivate ORG
     end
 
-    autonumber 11
     <-- ORG : vehicle
 deactivate ORG
 

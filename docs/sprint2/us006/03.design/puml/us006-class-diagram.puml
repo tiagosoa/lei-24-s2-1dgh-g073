@@ -9,8 +9,8 @@ skinparam classAttributeIconSize 0
 class VehicleFleetManager {
   - String name
   - String email
-  - String phone
-  + registerVehicle()
+  - String position
+  - int phone
 }
 
 class Vehicle {
@@ -19,11 +19,17 @@ class Vehicle {
   - String type
   - Double tareWeight
   - Double grossWeight
-  - Int currentKm
-  - Int registerDate
-  - Int acquisitionDate
-  - Int maintenanceFrequency
-  + Vehicle(brand, model, type, tareWeight, grossWeight, currentKm, registerDate, acquisitionDate, maintenanceFrequency)
+  - int currentKm
+  - LocalDate registerDate
+  - LocalDate acquisitionDate
+  - int maintenanceFrequency
+  - String plateNumber
+  - LocalDate lastMaintenanceDate
+  + validateVehicle(String trait)
+  + validateVehicle(LocalDate trait)
+  + validateVehicle(int trait)
+  + validateVehicle(Double trait)
+  + String getVehiclebyPlateNumber()
 }
 
 
@@ -33,40 +39,66 @@ class Organization {
   - String address
   - String phone
   - String email
-  - List<Vehicle> fleet
-  + addVehicle(Vehicle vehicle)
-  + Vehicle findVehicleByModel(String model)
-  + List<Vehicle> getFleet()
+  - List<Vehicle> vehicles
+  + Optional<Vehicle> createVehicle(String model,String brand, String type, VFM vfm)
+  + boolean addVehicle(Vehicle vehicle)
+  + boolean validateVehicle(Vehicle vehicle)
+  + boolean vehiclesDoNotContain(Vehicle vehicle)
 }
 
 class OrganizationRepository {
-  + findByName(String name)
-  + findByVatNumber(String vatNumber)
+  + Optional<Organization> getOrganizationByHRM(HRM hrm)
+  + Optional<Organization> getOrganizationByVFM(VFM vfm)
+  + Optional<Organization> getOrganizationByHRMEmail(String email)
+  + Optional<Organization> add(Organization organization)
+  + boolean validateOrganization(Organization organization)
 }
 
 class Repositories {
-  + getInstance() : Repositories
-  + getOrganizationRepository() : OrganizationRepository
+  + Repositories getInstance()
+  + OrganizationRepository getOrganizationRepository()
+  + VehicleRepository getVehicleRepository()
 }
 
-class RegisterVehicleController {
-  + RegisterVehicleController
-  + Vehicle registerVehicle(VehicleFleetMnager manager, String brand, String model, String type, Double tareWeight,
-  Double grossWeight, Integer currentKm, Date registerDate, Date acquisitionDate, Integer maintenanceFrequency)
+class AddVehicleController {
+  + VehicleRepository getVehicleRepository()
+  + OrganizationRepository getOrganizationRepository()
+  + AuthenticationRepository getAuthenticationRepository()
+  + Optional<Vehicle> addVehicle(String model,String brand,String type, VFM vfm)
+  + VFM getVFMFromSession()
 }
 
-class VehicleRegistrationUI {
-
+class AddVehicleUI {
+  + AddVehicleController getController()
+  + String requestVehicleModel()
+  + String requestVehicleBrand()
+  + String requestVehicleType()
+  + double requestVehicleTareWeight()
+  + double requestVehicleGrossWeight()
+  + double requestVehicleCurrentKm()
+  + LocalDate requestVehicleRegisterDate()
+  + LocalDate requestVehicleAcquisitionDate()
+  + int requestVehicleMaintenanceFrequencyKM()
+  + String requestVehiclePlateNumber()
+  + LocalDate requestVehicleLastMaintenanceDate()
 }
 
-note right of RegisterVehicleController
+class VehicleRepository {
+  - List<Vehicle> vehicles
+  + Vehicle getVehiclebyPlateNumber(String plateNumber)
+  + Optional<Vehicle> add(Vehicle vehicle)
+  + boolean validateVehicle(Vehicle vehicle)
+  + List<Vehicle> getVehicles()
+}
+
+note right of AddVehicleController
   - Vehicle details are obtained from the VFM's input
   - Updates the Organization's fleet
 end note
 
-note left of VehicleRegistrationUI
+note left of AddVehicleUI
   - UI for VFM to input vehicle details
-  - Communicates with RegisterVehicleController
+  - Communicates with AddVehicleController
 end note
 
 note left of Organization
@@ -79,17 +111,18 @@ note left of VehicleFleetManager
   - Interfaces with the UI and controllers
 end note
 
-VehicleFleetManager -down-> VehicleRegistrationUI : interacts with
-VehicleRegistrationUI -right-> RegisterVehicleController : sends data to
-RegisterVehicleController -down-> Repositories : retrieves instances
+VehicleFleetManager -down-> AddVehicleUI : interacts with
+AddVehicleUI -right-> AddVehicleController : sends data to
+AddVehicleController -down-> Repositories : retrieves instances
 Repositories -down-> OrganizationRepository : accesses
 Organization -right-> Vehicle : has
 OrganizationRepository .left.> Organization : persists
+Repositories -down-> VehicleRepository : accesses
 
 VehicleFleetManager -down-> Organization : part of
 VehicleFleetManager -down-> Vehicle : registers
 
-RegisterVehicleController ..> Vehicle : creates
-RegisterVehicleController ..> Organization : updates fleet
+AddVehicleController ..> Vehicle : creates
+AddVehicleController ..> Organization : updates vehicles
 
 @enduml

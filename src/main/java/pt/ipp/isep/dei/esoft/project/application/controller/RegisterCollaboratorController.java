@@ -1,9 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.Organization;
-import pt.ipp.isep.dei.esoft.project.domain.HRM;
-import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.Job;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
@@ -98,23 +95,21 @@ public class RegisterCollaboratorController {
 
         return Optional.empty(); // Return empty if organization is not present
     }
-    public void assignJobToCollaborator(int collaboratorID, String jobName) {
-        Optional<Collaborator> optCollaborator = Optional.of(collaboratorRepository.getCollaboratorByID(collaboratorID));
-        Optional<Job> optJob = Optional.of(jobRepository.getJobByName(jobName));
+    public void assignJobToCollaborator(int collaboratorID, String jobname) {
+        Collaborator collaborator = collaboratorRepository.getCollaboratorByID(collaboratorID);
 
-        if (optCollaborator.isPresent() && optJob.isPresent()) {
-            Collaborator collaborator = optCollaborator.get();
-            Job job = optJob.get();
-
-            // Add job to the collaborator's job list
-            collaborator.getJobs().add(job);
-
-            // Set collaborator for the job
-            job.setCollaborator(collaborator);
-        } else {
-            throw new IllegalArgumentException("Collaborator or Job not found.");
+        if (collaborator == null) {
+            throw new IllegalArgumentException("Collaborator not found.");
         }
-    }
+        Job job = jobRepository.getJobByName(jobname);
+            if (job != null) {
+                collaborator.addJob(job);
+            }
+        collaboratorRepository.updateCollaborator(collaborator);
+        }
+
+
+
 
     public HRM getHRMFromSession() {
         Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();

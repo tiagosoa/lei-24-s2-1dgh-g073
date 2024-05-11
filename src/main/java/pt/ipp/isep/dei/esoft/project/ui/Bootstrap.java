@@ -114,5 +114,8 @@ public class Bootstrap implements Runnable {
 
         authenticationRepository.addUserWithRole("VFM", "vfm@this.app", "pwd",
                 AuthenticationController.ROLE_VFM);
+
+        authenticationRepository.addUserWithRole("Tiago Soares", "1231246@isep.ipp.pt", "isep",
+                AuthenticationController.ROLE_VFM);
     }
 }

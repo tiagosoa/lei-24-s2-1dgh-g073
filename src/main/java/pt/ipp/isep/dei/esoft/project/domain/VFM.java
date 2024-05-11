@@ -6,7 +6,7 @@ public class VFM {
     private final String email;
     private String name;
     private String position;
-    private String phone;
+    private int phone;
 
     public VFM(String email) {
         this.email = email;

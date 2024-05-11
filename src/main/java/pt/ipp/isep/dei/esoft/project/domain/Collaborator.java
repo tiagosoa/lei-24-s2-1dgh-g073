@@ -77,6 +77,13 @@ public class Collaborator {
         }
     }
 
+    public void addJob(Job job) {
+        if (!collaboratorjobs.contains(job)) {
+            collaboratorjobs.add(job);
+            job.addCollaborator(this);
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {

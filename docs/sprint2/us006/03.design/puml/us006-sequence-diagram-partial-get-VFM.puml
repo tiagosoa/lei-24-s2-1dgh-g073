@@ -6,7 +6,7 @@ skinparam shadowing false
 
 
 'hide footbox
-participant ":RegisterVehicleController" as RVC
+participant ":AddVehicleController" as CTRL
 participant "repositories\n:Repositories" as PLAT
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
@@ -14,39 +14,39 @@ participant "currentSession\n:UserSession" as SESSAO
 participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
 participant "organization\n:Organization" as ORG
 autonumber 8
--> RVC : getVFMFromSession()
+-> CTRL : getVFMFromSession()
 autonumber 8.1
- activate RVC
+ activate CTRL
 
-    group Get VFM
+    group Get vfm
 
-        RVC -> _APP: getInstance()
+        CTRL -> _APP: getInstance()
         activate _APP
-           _APP -> RVC: appSession
+           _APP -> CTRL: appSession
         deactivate _APP
 
 
-        RVC -> APP: getCurrentSession()
+        CTRL -> APP: getCurrentSession()
         activate APP
 
-           APP --> RVC: currentSession
+           APP --> CTRL: currentSession
         deactivate APP
 
-        RVC -> SESSAO: email = getUserEmail()
+        CTRL -> SESSAO: email = getUserEmail()
          activate SESSAO
 
-            SESSAO --> RVC: email
+            SESSAO --> CTRL: email
          deactivate SESSAO
 
 
-         RVC -> PLAT: getOrganizationRepository(email)
+         CTRL -> PLAT: getOrganizationRepository(email)
           activate PLAT
 
-             PLAT --> RVC: organizationRepository
+             PLAT --> CTRL: organizationRepository
           deactivate PLAT
 
 
-          RVC -> OrganizationRepository: getOrganizationByVFMEmail(email)
+          CTRL -> OrganizationRepository: getOrganizationByVFMEmail(email)
           activate OrganizationRepository
 
               loop [for each organization
@@ -56,17 +56,17 @@ autonumber 8.1
                       ORG --> OrganizationRepository : true/false
                   deactivate ORG
               end
-          OrganizationRepository --> RVC : organization
+          OrganizationRepository --> CTRL : organization
           deactivate OrganizationRepository
 
-          RVC -> ORG: getVFMByEmail(email)
+          CTRL -> ORG: getVFMByEmail(email)
           activate ORG
 
-             ORG --> RVC : VFM
+             ORG --> CTRL : vfm
           deactivate ORG
     end
     autonumber 9
-    <-- RVC : VFM
- deactivate RVC
+    <-- CTRL : vfm
+ deactivate CTRL
 
 @enduml

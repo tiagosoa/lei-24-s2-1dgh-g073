@@ -1,5 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import pt.ipp.isep.dei.esoft.project.ui.Main;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +15,7 @@ public class Organization {
     private static List<Skill> skills;
     private static List<Job> jobs;
     private static List<Collaborator> collaborators;
-    private final List<Vehicle> vehicles;
+    private static List<Vehicle> vehicles;
     private String name;
     private String website;
     private String phone;
@@ -44,6 +47,10 @@ public class Organization {
 
     public static List<Job> getJobList() {
         return jobs;
+    }
+
+    public static List<Vehicle> getVehicles() {
+        return vehicles;
     }
 
     /**
@@ -83,16 +90,35 @@ public class Organization {
         return optionalValue;
     }
 
-    public Optional<Vehicle> createVehicle(String model,String brand, String type, VFM vfm) {
+    /**
+     * This method creates a new vehicle.
+     *
+     * @param model                  The model of the vehicle.
+     * @param brand                  The brand of the vehicle.
+     * @param type                   The type of the vehicle.
+     * @param tareWeight             The tare weight of the vehicle.
+     * @param grossWeight            The gross weight of the vehicle.
+     * @param currentKm              The current kilometers of the vehicle.
+     * @param registerDate           The date when the vehicle was registered.
+     * @param acquisitionDate        The date when the vehicle was acquired.
+     * @param maintenanceFrequencyKm The maintenance frequency in kilometers for the vehicle.
+     * @param plateNumber            The plate number (ID) of the vehicle.
+     * @param lastMaintenanceDate    The date when the vehicle last went through maintenance.
+     * @return An optional containing the created vehicle if the operation is successful, or an empty optional otherwise.
+     */
+
+
+    public Optional<Vehicle> createVehicle(String model, String brand, String type, double tareWeight, double grossWeight,
+                                           double currentKm, LocalDate registerDate, LocalDate acquisitionDate, int maintenanceFrequencyKm, String plateNumber, LocalDate lastMaintenanceDate) {
 
         //TODO: we could also check if the hrm works for the organization before proceeding
         //checkIfEmployeeWorksForOrganization(hrm);
 
-        // When a Skill is added, it should fail if the Skill already exists in the list of Skills.
+        // When a Vehicle is added, it should fail if the Vehicle already exists in the list of Vehicles.
         // In order to not return null if the operation fails, we use the Optional class.
         Optional<Vehicle> optionalValue = Optional.empty();
 
-        Vehicle vehicle = new Vehicle(model,brand, type, vfm);
+        Vehicle vehicle = new Vehicle(model,brand,type,tareWeight,grossWeight,currentKm,registerDate,acquisitionDate,maintenanceFrequencyKm, plateNumber, lastMaintenanceDate);
 
         if (addVehicle(vehicle)) {
             optionalValue = Optional.of(vehicle);
@@ -294,6 +320,16 @@ public class Organization {
         return result;
     }
 
+    public boolean anyVFMHasEmail(String email) {
+        boolean result = false;
+        for (VFM vfm : vfms) {
+            if (vfm.hasEmail(email)) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -354,6 +390,10 @@ public class Organization {
             clone.hrms.add(in.clone());
         }
 
+        for (VFM in : this.vfms) {
+            clone.vfms.add(in.clone());
+        }
+
 
         for (Skill in : this.skills) {
             clone.skills.add(in.clone());
@@ -365,6 +405,10 @@ public class Organization {
 
         for (Collaborator in : this.collaborators) {
             clone.collaborators.add(in.clone());
+        }
+
+        for (Vehicle in : this.vehicles) {
+            clone.vehicles.add(in.clone());
         }
 
         return clone;

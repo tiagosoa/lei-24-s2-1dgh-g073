@@ -6,7 +6,7 @@ import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 import pt.isep.lei.esoft.auth.domain.model.Email;
-
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class AddVehicleController {
@@ -34,7 +34,7 @@ public class AddVehicleController {
         if (vehicleRepository == null) {
             Repositories repositories = Repositories.getInstance();
 
-            //Get the JobRepository
+            //Get the VehicleRepository
             vehicleRepository = repositories.getVehicleRepository();
         }
         return vehicleRepository;
@@ -59,13 +59,16 @@ public class AddVehicleController {
         return authenticationRepository;
     }
 
-    public Optional<Vehicle> addVehicle(String model,String brand,String type, VFM vfm) {
+    public Optional<Vehicle> addVehicle(String model, String brand, String type, double tareWeight,
+                                         double grossWeight, double currentKm, LocalDate registerDate,
+                                         LocalDate acquisitionDate, int maintenanceFrequencyKm, String plateNumber, LocalDate lastMaintenanceDate, VFM vfm) {
         Optional<Organization> organization = getOrganizationRepository().getOrganizationByVFM(vfm);
 
         Optional<Vehicle> newVehicle = Optional.empty();
 
         if (organization.isPresent()) {
-            newVehicle = organization.get().createVehicle(model,brand,type,vfm);
+            newVehicle = organization.get().createVehicle(model, brand, type, tareWeight, grossWeight,
+                    currentKm, registerDate, acquisitionDate, maintenanceFrequencyKm, plateNumber, lastMaintenanceDate);
         }
         return newVehicle;
     }

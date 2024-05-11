@@ -46,8 +46,11 @@ class Organization {
 }
 
 class OrganizationRepository {
-  + findByName(String name)
-  + findByVatNumber(String vatNumber)
+  + Optional<Organization> getOrganizationByHRM(HRM hrm)
+  + Optional<Organization> getOrganizationByVFM(VFM vfm)
+  + Optional<Organization> getOrganizationByHRMEmail(String email)
+  + Optional<Organization> add(Organization organization)
+  + boolean validateOrganization(Organization organization)
 }
 
 class Repositories {

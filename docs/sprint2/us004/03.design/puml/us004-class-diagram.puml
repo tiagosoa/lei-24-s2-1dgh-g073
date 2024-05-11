@@ -81,10 +81,13 @@ class SkillRepository {
    + List<Skill> getSkillList()
  }
 
- class OrganizationRepository {
-   + findByName(String name)
-   + findByVatNumber(String vatNumber)
- }
+class OrganizationRepository {
+  + Optional<Organization> getOrganizationByHRM(HRM hrm)
+  + Optional<Organization> getOrganizationByVFM(VFM vfm)
+  + Optional<Organization> getOrganizationByHRMEmail(String email)
+  + Optional<Organization> add(Organization organization)
+  + boolean validateOrganization(Organization organization)
+}
 
  class Repositories {
    + getInstance() : Repositories
