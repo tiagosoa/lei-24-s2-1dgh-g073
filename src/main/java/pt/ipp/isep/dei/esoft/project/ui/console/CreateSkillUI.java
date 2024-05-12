@@ -15,10 +15,7 @@ public class CreateSkillUI implements Runnable {
 
     private final CreateSkillController controller;
     private String skillName;
-
     private SkillRepository skillRepository;
-    private String taskCategoryDescription;
-    private String empployeeEmail;
 
     public CreateSkillUI() {
         controller = new CreateSkillController();
@@ -51,7 +48,6 @@ public class CreateSkillUI implements Runnable {
     }
 
     private void requestData() {
-
         //Request the Skill name from the console
         skillName = requestSkillName();
     }

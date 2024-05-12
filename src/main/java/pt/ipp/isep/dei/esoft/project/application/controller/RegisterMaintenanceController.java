@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.VFM;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.*;
@@ -34,7 +33,7 @@ public class RegisterMaintenanceController {
         this.authenticationRepository = authenticationRepository;
     }
 
-    private OrganizationRepository getOrganizationRepository() {
+    public OrganizationRepository getOrganizationRepository() {
         if (organizationRepository == null) {
             Repositories repositories = Repositories.getInstance();
             organizationRepository = repositories.getOrganizationRepository();
@@ -43,7 +42,7 @@ public class RegisterMaintenanceController {
 
     }
 
-    private VehicleRepository getVehicleRepository() {
+    public VehicleRepository getVehicleRepository() {
         if (vehicleRepository == null) {
             Repositories repositories = Repositories.getInstance();
 
@@ -53,7 +52,7 @@ public class RegisterMaintenanceController {
         return vehicleRepository;
     }
 
-    private AuthenticationRepository getAuthenticationRepository() {
+    public AuthenticationRepository getAuthenticationRepository() {
         if (authenticationRepository == null) {
             Repositories repositories = Repositories.getInstance();
 
@@ -65,7 +64,7 @@ public class RegisterMaintenanceController {
 
     public Optional<Boolean> registerMaintenance(String plateNumber, int currentKm, LocalDate maintenanceDate) {
         try {
-            Vehicle vehicle = vehicleRepository.getVehiclebyPlateNumber(plateNumber);
+            Vehicle vehicle = vehicleRepository.getVehicleByPlateNumber(plateNumber);
 
             // Check if the maintenance date is valid (not in the future)
             if (maintenanceDate.isAfter(LocalDate.now())) {

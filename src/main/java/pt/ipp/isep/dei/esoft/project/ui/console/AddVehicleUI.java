@@ -3,6 +3,9 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 import pt.ipp.isep.dei.esoft.project.application.controller.AddVehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.domain.VFM;
+import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
+import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
+import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +13,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 /**
- * Create Job UI (console). This option is only available for administrators for demonstration purposes.
+ * Add Vehicle UI (console). This option is only available for administrators for demonstration purposes.
  */
 public class AddVehicleUI implements Runnable {
 
@@ -29,8 +32,11 @@ public class AddVehicleUI implements Runnable {
     private String vehiclePlateNumber;
     private LocalDate vehicleLastMaintenanceDate;
 
+    private VehicleRepository vehicleRepository;
+
     public AddVehicleUI() {
         controller = new AddVehicleController();
+        this.vehicleRepository = new VehicleRepository();
     }
 
     private AddVehicleController getController() {
@@ -51,6 +57,7 @@ public class AddVehicleUI implements Runnable {
         Optional<Vehicle> vehicle = getController().addVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate, vfm);
 
         if (vehicle.isPresent()) {
+            vehicleRepository.add(vehicle.get());
             System.out.println("\nVehicle successfully created!");
         } else {
             System.out.println("\nVehicle not created!");

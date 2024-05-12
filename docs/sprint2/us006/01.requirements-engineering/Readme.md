@@ -11,7 +11,7 @@ As a VFM, I wish to register a vehicle including Brand, Model, Type, Tare, Gross
 
 **From the specifications document:**
 
->	Each registered vehicle contains their Brand, Model, Type, Tare, Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance/Check-up Frequency (in Kms).
+>	Each registered vehicle contains their Brand, Model, Type, Tare, Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance/Check-up Frequency (in Kms), plate number, last Maintenance Date.
 
 **From the client clarifications:**
 
@@ -40,6 +40,8 @@ As a VFM, I wish to register a vehicle including Brand, Model, Type, Tare, Gross
     * the current Km 
     * the register and acquisition Dates
     * the maintenance/check-up frequency
+    * a plate number
+    * the date on which the vehicle last went through maintenance
 
 **Output Data:**
 

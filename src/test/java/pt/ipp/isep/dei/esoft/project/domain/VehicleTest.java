@@ -1,9 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 import org.junit.jupiter.api.Test;
+import pt.ipp.isep.dei.esoft.project.application.controller.RegisterMaintenanceController;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -112,5 +114,66 @@ class VehicleTest {
         Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
         Vehicle clone = vehicle.clone();
         assertEquals(vehicle, clone);
+    }
+    @Test
+    void ensureMaintenanceIsRegisteredSuccessfully() {
+        // Arrange
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate acquisitionDate = LocalDate.parse("01-01-2024", formatter);
+        LocalDate lastMaintenanceDate = LocalDate.parse("01-04-2024", formatter);
+        Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000,
+                LocalDate.now(), acquisitionDate, 5000,
+                "00-AA-00", lastMaintenanceDate);
+
+        RegisterMaintenanceController controller = new RegisterMaintenanceController();
+        LocalDate maintenanceDate = LocalDate.now();
+        Optional<Boolean> result = controller.registerMaintenance(vehicle.getPlateNumber(), 35000, maintenanceDate);
+
+        // Assert
+        assertTrue(result.isPresent());
+        assertTrue(result.get());
+        assertEquals(maintenanceDate, vehicle.getLastMaintenanceDate());
+        assertEquals(35000, vehicle.getCurrentKm());
+    }
+
+    @Test
+    void ensureMaintenanceIsNotRegisteredForFutureDate() {
+        // Arrange
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate acquisitionDate = LocalDate.parse("01-01-2024", formatter);
+        LocalDate lastMaintenanceDate = LocalDate.parse("01-04-2024", formatter);
+        Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000,
+                LocalDate.now(), acquisitionDate, 5000,
+                "00-AA-00", lastMaintenanceDate);
+
+        RegisterMaintenanceController controller = new RegisterMaintenanceController();
+        LocalDate futureDate = LocalDate.now().plusDays(1);
+        Optional<Boolean> result = controller.registerMaintenance(vehicle.getPlateNumber(), 35000, futureDate);
+
+        // Assert
+        assertFalse(result.isPresent());
+        assertNotEquals(futureDate, vehicle.getLastMaintenanceDate());
+        assertNotEquals(35000, vehicle.getCurrentKm());
+    }
+
+    @Test
+    void ensureMaintenanceIsNotRegisteredForInvalidPlateNumber() {
+        // Arrange
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate acquisitionDate = LocalDate.parse("01-01-2024", formatter);
+        LocalDate lastMaintenanceDate = LocalDate.parse("01-04-2024", formatter);
+        Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000,
+                LocalDate.now(), acquisitionDate, 5000,
+                "00-AA-00", lastMaintenanceDate);
+
+        // Act: Register maintenance with invalid plate number
+        RegisterMaintenanceController controller = new RegisterMaintenanceController();
+        String invalidPlateNumber = "INVALID";
+        Optional<Boolean> result = controller.registerMaintenance(invalidPlateNumber, 35000, LocalDate.now());
+
+        // Assert
+        assertFalse(result.isPresent());
+        assertNotEquals(LocalDate.now(), vehicle.getLastMaintenanceDate());
+        assertNotEquals(35000, vehicle.getCurrentKm());
     }
 }

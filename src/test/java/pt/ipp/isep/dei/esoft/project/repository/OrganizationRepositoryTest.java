@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import org.junit.jupiter.api.Test;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
+import pt.ipp.isep.dei.esoft.project.domain.VFM;
 
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ class OrganizationRepositoryTest {
     }
 
     @Test
-    void ensureGetOrganizationByEmployeeFails() {
+    void ensureGetOrganizationByHRMFails() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
         HRM hrm = new HRM("john.doe@this.company.com");
@@ -48,7 +49,7 @@ class OrganizationRepositoryTest {
     }
 
     @Test
-    void ensureGetOrganizationByEmailWorks() {
+    void ensureGetOrganizationByHRMEmailWorks() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
         HRM hrm = new HRM("john.doe@this.company.com");
@@ -60,9 +61,22 @@ class OrganizationRepositoryTest {
 
         assertEquals(organization, result.get());
     }
+    @Test
+    void ensureGetOrganizationByVFMEmailWorks() {
+        OrganizationRepository organizationRepository = new OrganizationRepository();
+        Organization organization = new Organization("123456789");
+        VFM vfm = new VFM("john.doe@this.company.com");
+        organization.addVFM(vfm);
+        organizationRepository.add(organization);
+
+        Optional<Organization> result =
+                organizationRepository.getOrganizationByVFMEmail("john.doe@this.company.com");
+
+        assertEquals(organization, result.get());
+    }
 
     @Test
-    void ensureAddOrganizationWorks() {
+    void ensureAddOrganizationByHRMWorks() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
         HRM hrm = new HRM("john.doe@this.company.com");
@@ -81,11 +95,43 @@ class OrganizationRepositoryTest {
     }
 
     @Test
-    void ensureAddOrganizationDuplicateFails() {
+    void ensureAddOrganizationByVFMWorks() {
+        OrganizationRepository organizationRepository = new OrganizationRepository();
+        Organization organization = new Organization("123456789");
+        VFM vfm = new VFM("john.doe@this.company.com");
+        organization.addVFM(vfm);
+
+        organizationRepository.add(organization);
+
+        Optional<Organization> returnOrganization =
+                organizationRepository.getOrganizationByVFMEmail("john.doe@this" + ".company.com");
+
+        //Assert
+        //Make sure both represents the same object
+        assertEquals(organization, returnOrganization.get());
+        //Make sure it is a clone (different memory addresses)
+        assertNotSame(organization, returnOrganization.get());
+    }
+
+    @Test
+    void ensureAddOrganizationDuplicateByHRMFails() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         Organization organization = new Organization("123456789");
         HRM hrm = new HRM("john.doe@this.company.com");
         organization.addHRM(hrm);
+        organizationRepository.add(organization);
+
+        Optional<Organization> result = organizationRepository.add(organization);
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void ensureAddOrganizationDuplicateByVFMFails() {
+        OrganizationRepository organizationRepository = new OrganizationRepository();
+        Organization organization = new Organization("123456789");
+        VFM vfm = new VFM("john.doe@this.company.com");
+        organization.addVFM(vfm);
         organizationRepository.add(organization);
 
         Optional<Organization> result = organizationRepository.add(organization);

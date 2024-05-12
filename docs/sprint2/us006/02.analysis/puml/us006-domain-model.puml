@@ -33,6 +33,8 @@ class Vehicle {
     register date
     acquisition date
     maintenance/check-up frequency
+    plate number
+    last maintenance date
 }
 
 VFM "1" - "1" Vehicle : registers >

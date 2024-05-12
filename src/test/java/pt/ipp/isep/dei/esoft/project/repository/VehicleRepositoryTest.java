@@ -18,7 +18,7 @@ class VehicleRepositoryTest {
         String vehiclePlateNumber = "00-AA-00";
         VFM vfm = new VFM("john.doe@this.company.com");
         assertThrows(IllegalArgumentException.class,
-                () -> vehicleRepository.getVehiclebyPlateNumber(vehiclePlateNumber));
+                () -> vehicleRepository.getVehicleByPlateNumber(vehiclePlateNumber));
     }
 
     @Test
@@ -27,7 +27,7 @@ class VehicleRepositoryTest {
         String vehiclePlateNumber = "00-AA-00";
         VFM vfm = new VFM("john.doe@this.company.com");
         assertThrows(IllegalArgumentException.class,
-                () -> vehicleRepository.getVehiclebyPlateNumber(vehiclePlateNumber));
+                () -> vehicleRepository.getVehicleByPlateNumber(vehiclePlateNumber));
     }
 
     @Test
@@ -53,7 +53,7 @@ class VehicleRepositoryTest {
         LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
         Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
         vehicleRepository.add(vehicle);
-        Vehicle vehicle1 = vehicleRepository.getVehiclebyPlateNumber(vehiclePlateNumber);
+        Vehicle vehicle1 = vehicleRepository.getVehicleByPlateNumber(vehiclePlateNumber);
         assertEquals(vehicle, vehicle1);
     }
 
@@ -70,7 +70,7 @@ class VehicleRepositoryTest {
         vehicleRepository.add(vehicle);
         String vehiclePlateNumber1 = "01-AB-01";
         assertThrows(IllegalArgumentException.class,
-                () -> vehicleRepository.getVehiclebyPlateNumber(vehiclePlateNumber1));
+                () -> vehicleRepository.getVehicleByPlateNumber(vehiclePlateNumber1));
 
     }
 

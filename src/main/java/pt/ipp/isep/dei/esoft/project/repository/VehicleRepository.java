@@ -25,7 +25,7 @@ public class VehicleRepository {
      * @return The vehicle.
      * @throws IllegalArgumentException if the vehicle does not exist, which should never happen.
      */
-    public Vehicle getVehiclebyPlateNumber(String plateNumber) {
+    public Vehicle getVehicleByPlateNumber(String plateNumber) {
         for (Vehicle existingVehicle : vehicles) {
             if (existingVehicle.getPlateNumber().equals(plateNumber)) {
                 return existingVehicle;

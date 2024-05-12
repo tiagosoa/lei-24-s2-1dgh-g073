@@ -19,7 +19,7 @@ public class JobRepository {
     }
 
     /**
-     * This method returns an exsiting Job by its name.
+     * This method returns an existing Job by its name.
      *
      * @param name The name of the job to be created.
      * @return The job name

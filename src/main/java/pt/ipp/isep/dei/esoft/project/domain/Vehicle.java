@@ -79,14 +79,13 @@ public class Vehicle {
             return false;
         }
         Vehicle vehicle = (Vehicle) o;
-        return brand.equals(vehicle.brand) && model.equals(vehicle.model) && type.equals(this.type) && tareWeight == this.tareWeight && grossWeight == this.grossWeight && currentKm == this.currentKm && registerDate.equals(this.registerDate) && acquisitionDate.equals(this.acquisitionDate) && maintenanceFrequencyKm == this.maintenanceFrequencyKm && plateNumber.equals(vehicle.plateNumber) && lastMaintenanceDate.equals(this.lastMaintenanceDate);
+        return Objects.equals(plateNumber, vehicle.plateNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(model,brand,type,tareWeight,grossWeight,currentKm,registerDate,acquisitionDate,maintenanceFrequencyKm,plateNumber,lastMaintenanceDate);
+        return Objects.hash(plateNumber);
     }
-
 
     /**
      * Clone method.

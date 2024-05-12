@@ -24,13 +24,15 @@ public class AddVehicleController {
     }
 
     //Allows receiving the repositories as parameters for testing purposes
-    public AddVehicleController(OrganizationRepository organizationRepository, VehicleRepository vehicleRepository, AuthenticationRepository authenticationRepository) {
+    public AddVehicleController(OrganizationRepository organizationRepository,
+                                VehicleRepository vehicleRepository,
+                                AuthenticationRepository authenticationRepository) {
         this.organizationRepository = organizationRepository;
         this.vehicleRepository = vehicleRepository;
         this.authenticationRepository = authenticationRepository;
     }
 
-    private VehicleRepository getVehicleRepository() {
+    public VehicleRepository getVehicleRepository() {
         if (vehicleRepository == null) {
             Repositories repositories = Repositories.getInstance();
 
@@ -40,7 +42,7 @@ public class AddVehicleController {
         return vehicleRepository;
     }
 
-    private OrganizationRepository getOrganizationRepository() {
+    public OrganizationRepository getOrganizationRepository() {
         if (organizationRepository == null) {
             Repositories repositories = Repositories.getInstance();
             organizationRepository = repositories.getOrganizationRepository();
@@ -49,7 +51,7 @@ public class AddVehicleController {
 
     }
 
-    private AuthenticationRepository getAuthenticationRepository() {
+    public AuthenticationRepository getAuthenticationRepository() {
         if (authenticationRepository == null) {
             Repositories repositories = Repositories.getInstance();
 

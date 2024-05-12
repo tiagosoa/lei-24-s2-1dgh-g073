@@ -13,13 +13,13 @@ public class SkillRepository {
     public SkillRepository() {
             this.skills = Organization.getSkillList();
             if (this.skills == null) {
-                // Initialize the collaborators list if it's null
+                // Initialize the skills list if it's null
                 this.skills = new ArrayList<>();
             }
     }
 
     /**
-     * This method returns an exsiting Skill by its name.
+     * This method returns an existing Skill by its name.
      *
      * @param name The name of the skill to be created.
      * @return The skill name
