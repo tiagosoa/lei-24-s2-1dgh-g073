@@ -19,9 +19,9 @@ public class RegisterMaintenanceController {
 
     // Repository instances are obtained from the Repositories class
     public RegisterMaintenanceController() {
-        getOrganizationRepository();
-        getVehicleRepository();
-        getAuthenticationRepository();
+        this.organizationRepository = getOrganizationRepository();
+        this.vehicleRepository = getVehicleRepository();
+        this.authenticationRepository = getAuthenticationRepository();
     }
 
     // Allows receiving the repositories as parameters for testing purposes
@@ -33,7 +33,7 @@ public class RegisterMaintenanceController {
         this.authenticationRepository = authenticationRepository;
     }
 
-    public OrganizationRepository getOrganizationRepository() {
+    private OrganizationRepository getOrganizationRepository() {
         if (organizationRepository == null) {
             Repositories repositories = Repositories.getInstance();
             organizationRepository = repositories.getOrganizationRepository();
@@ -42,7 +42,7 @@ public class RegisterMaintenanceController {
 
     }
 
-    public VehicleRepository getVehicleRepository() {
+    private VehicleRepository getVehicleRepository() {
         if (vehicleRepository == null) {
             Repositories repositories = Repositories.getInstance();
 
@@ -52,7 +52,7 @@ public class RegisterMaintenanceController {
         return vehicleRepository;
     }
 
-    public AuthenticationRepository getAuthenticationRepository() {
+    private AuthenticationRepository getAuthenticationRepository() {
         if (authenticationRepository == null) {
             Repositories repositories = Repositories.getInstance();
 

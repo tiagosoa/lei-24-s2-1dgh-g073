@@ -21,10 +21,10 @@ public class AssignSkillController {
 
     //Repository instances are obtained from the Repositories class
     public AssignSkillController() {
-        getOrganizationRepository();
-        getSkillRepository();
-        getCollaboratorRepository();
-        getAuthenticationRepository();
+        this.organizationRepository = getOrganizationRepository();
+        this.skillRepository = getSkillRepository();
+        this.collaboratorRepository = getCollaboratorRepository();
+        this.authenticationRepository = getAuthenticationRepository();
     }
 
     //Allows receiving the repositories as parameters for testing purposes

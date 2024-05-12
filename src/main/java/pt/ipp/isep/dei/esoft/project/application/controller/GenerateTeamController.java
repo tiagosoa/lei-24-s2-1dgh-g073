@@ -16,16 +16,16 @@ public class GenerateTeamController {
     private SkillRepository skillRepository;
 
     public GenerateTeamController() {
-        getOrganizationRepository();
-        getCollaboratorRepository();
-        getAuthenticationRepository();
-        getSkillRepository();
+        this.organizationRepository = getOrganizationRepository();
+        this.collaboratorRepository = getCollaboratorRepository();
+        this.authenticationRepository = getAuthenticationRepository();
+        this.skillRepository = getSkillRepository();
     }
 
     public GenerateTeamController(OrganizationRepository organizationRepository,
-                                          CollaboratorRepository collaboratorRepository,
-                                          AuthenticationRepository authenticationRepository,
-                                          SkillRepository skillRepository) {
+                                  CollaboratorRepository collaboratorRepository,
+                                  AuthenticationRepository authenticationRepository,
+                                  SkillRepository skillRepository) {
         this.organizationRepository = organizationRepository;
         this.collaboratorRepository = collaboratorRepository;
         this.authenticationRepository = authenticationRepository;
@@ -97,8 +97,6 @@ public class GenerateTeamController {
         return team;
     }
 
-
-
     private List<Collaborator> filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills) {
         List<Collaborator> qualifiedCollaborators = new ArrayList<>();
         for (Collaborator collaborator : collaborators) {
@@ -117,7 +115,7 @@ public class GenerateTeamController {
         return qualifiedCollaborators;
     }
 
-public HRM getHRMFromSession() {
+    public HRM getHRMFromSession() {
         Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
         return new HRM(email.getEmail());
     }

@@ -20,9 +20,8 @@ public class RegisterMaintenanceUI implements Runnable {
     private VehicleRepository vehicleRepository;
 
     public RegisterMaintenanceUI() {
-
-        controller = new RegisterMaintenanceController();
-        vehicleRepository = new VehicleRepository();
+        this.controller = new RegisterMaintenanceController();
+        this.vehicleRepository = new VehicleRepository();
     }
 
     private RegisterMaintenanceController getController() {
@@ -54,18 +53,19 @@ public class RegisterMaintenanceUI implements Runnable {
     }
 
     private String requestVehiclePlateNumber() {
-
         List<Vehicle> vehicles = getController().getVehicles();
         // Show list of registered vehicles
         if (vehicles.isEmpty()) {
             System.out.println("No vehicles registered.");
+        } else {
+            System.out.println("Vehicle List:");
+            for (int i = 0; i < vehicles.size(); i++) {
+                System.out.println((i + 1) + ". " + vehicles.get(i).getPlateNumber());
+            }
+            int vehicleIndex = readInput(1, vehicles.size()) - 1;
+            return vehicles.get(vehicleIndex).getPlateNumber();
         }
-        System.out.println("Vehicle List:");
-        for (int i = 0; i < vehicles.size(); i++) {
-            System.out.println((i + 1) + ". " + vehicles.get(i).getPlateNumber());
-        }
-        int vehicleIndex = readInput(1, vehicles.size()) - 1;
-        return vehicles.get(vehicleIndex).getPlateNumber();
+        return null;
     }
 
     private int readInput(int min, int max) {

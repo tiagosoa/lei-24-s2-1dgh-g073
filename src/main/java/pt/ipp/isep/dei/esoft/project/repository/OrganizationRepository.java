@@ -16,6 +16,13 @@ public class OrganizationRepository {
         organizations = new ArrayList<>();
     }
 
+    /**
+     * Retrieves an organization by its associated HRM.
+     *
+     * @param hrm The HRM associated with the organization.
+     * @return An optional containing the organization if found, or an empty optional otherwise.
+     */
+
     public Optional<Organization> getOrganizationByHRM(HRM hrm) {
 
         Optional<Organization> returnOrganization = Optional.empty();
@@ -29,6 +36,12 @@ public class OrganizationRepository {
         return returnOrganization;
     }
 
+    /**
+     * Retrieves an organization by its associated VFM.
+     *
+     * @param vfm The VFM associated with the organization.
+     * @return An optional containing the organization if found, or an empty optional otherwise.
+     */
     public Optional<Organization> getOrganizationByVFM(VFM vfm) {
 
         Optional<Organization> returnOrganization = Optional.empty();
@@ -41,6 +54,13 @@ public class OrganizationRepository {
 
         return returnOrganization;
     }
+
+    /**
+     * Retrieves an organization by the email of one of its HRMs.
+     *
+     * @param email The email of the HRM associated with the organization.
+     * @return An optional containing the organization if found, or an empty optional otherwise.
+     */
 
     public Optional<Organization> getOrganizationByHRMEmail(String email) {
 
@@ -55,6 +75,13 @@ public class OrganizationRepository {
         return returnOrganization;
     }
 
+    /**
+     * Retrieves an organization by the email of one of its VFMs.
+     *
+     * @param email The email of the VFM associated with the organization.
+     * @return An optional containing the organization if found, or an empty optional otherwise.
+     */
+
     public Optional<Organization> getOrganizationByVFMEmail(String email) {
 
         Optional<Organization> returnOrganization = Optional.empty();
@@ -67,6 +94,13 @@ public class OrganizationRepository {
 
         return returnOrganization;
     }
+
+    /**
+     * Adds a new organization to the repository.
+     *
+     * @param organization The organization to be added.
+     * @return An optional containing the newly added organization if the operation is successful, or an empty optional otherwise.
+     */
 
     public Optional<Organization> add(Organization organization) {
 
@@ -85,6 +119,13 @@ public class OrganizationRepository {
         return newOrganization;
 
     }
+
+    /**
+     * Validates an organization before adding it to the repository.
+     *
+     * @param organization The organization to be validated.
+     * @return True if the organization is valid and can be added to the repository, false otherwise.
+     */
 
     private boolean validateOrganization(Organization organization) {
         boolean isValid = !organizations.contains(organization);

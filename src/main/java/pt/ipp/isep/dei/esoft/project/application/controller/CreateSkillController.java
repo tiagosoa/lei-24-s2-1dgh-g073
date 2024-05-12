@@ -20,9 +20,9 @@ public class CreateSkillController {
 
     //Repository instances are obtained from the Repositories class
     public CreateSkillController() {
-        getOrganizationRepository();
-        getSkillRepository();
-        getAuthenticationRepository();
+        this.organizationRepository = getOrganizationRepository();
+        this.skillRepository = getSkillRepository();
+        this.authenticationRepository = getAuthenticationRepository();
     }
 
     //Allows receiving the repositories as parameters for testing purposes

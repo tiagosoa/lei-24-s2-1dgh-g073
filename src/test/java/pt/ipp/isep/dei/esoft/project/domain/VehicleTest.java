@@ -125,6 +125,8 @@ class VehicleTest {
                 LocalDate.now(), acquisitionDate, 5000,
                 "00-AA-00", lastMaintenanceDate);
 
+
+
         RegisterMaintenanceController controller = new RegisterMaintenanceController();
         LocalDate maintenanceDate = LocalDate.now();
         Optional<Boolean> result = controller.registerMaintenance(vehicle.getPlateNumber(), 35000, maintenanceDate);

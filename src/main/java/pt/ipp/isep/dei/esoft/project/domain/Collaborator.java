@@ -16,7 +16,7 @@ public class Collaborator {
     private final String email;
     private final int taxpayer;
     private final String doctype;
-    public final int IDnumber;
+    private final int IDnumber;
 
     private HRM hrm;
 
@@ -38,10 +38,8 @@ public class Collaborator {
     }
 
     private void validateCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber) {
-        //TODO: missing from the diagrams
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Collaborator name cannot be null or empty.");
-
         } else if (!name.matches("[a-zA-Z]+")) {
             throw new IllegalArgumentException("Collaborator name cannot contain special characters or digits.");
         }
@@ -70,6 +68,7 @@ public class Collaborator {
             throw new IllegalArgumentException("Collaborator ID number must be a positive number");
         }
     }
+
     public boolean addSkill(Skill skill) {
         if (!collaboratorskills.contains(skill)) {
             collaboratorskills.add(skill);
@@ -86,7 +85,6 @@ public class Collaborator {
         }
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -96,7 +94,7 @@ public class Collaborator {
             return false;
         }
         Collaborator collaborator = (Collaborator) o;
-        return name.equals(collaborator.name) && birthdate.equals(collaborator.birthdate) && admissiondate.equals(collaborator.admissiondate) && address.equals(collaborator.address) && mobile == collaborator.mobile && email.equals(collaborator.email) && doctype.equals(collaborator.doctype) && IDnumber == collaborator.IDnumber && hrm.equals(collaborator.hrm);
+        return name.equals(collaborator.name) && birthdate.equals(collaborator.birthdate) && admissiondate.equals(collaborator.admissiondate) && address.equals(collaborator.address) && mobile == collaborator.mobile && email.equals(collaborator.email) && doctype.equals(collaborator.doctype) && IDnumber == collaborator.IDnumber && Objects.equals(hrm, collaborator.hrm);
     }
 
     @Override
@@ -104,12 +102,6 @@ public class Collaborator {
         return Objects.hash(name, birthdate, admissiondate, address, mobile, email, doctype, IDnumber, hrm);
     }
 
-
-    /**
-     * Clone method.
-     *
-     * @return A clone of the current instance.
-     */
     public Collaborator clone() {
         return new Collaborator(this.name, this.birthdate, this.admissiondate, this.address, this.mobile, this.email, this.taxpayer, this.doctype, this.IDnumber, this.hrm);
     }
@@ -153,11 +145,16 @@ public class Collaborator {
     public void setJobs(List<Job> collaboratorjobs) {
         this.collaboratorjobs = collaboratorjobs;
     }
+
     public List<Job> getJobs() {
         return collaboratorjobs;
     }
 
-    public List<Skill> getSkills() {return collaboratorskills;}
+    public List<Skill> getSkills() {
+        return collaboratorskills;
+    }
 
-    public void setSkills(List<Skill> collaboratorskills) {this.collaboratorskills = collaboratorskills;}
+    public void setSkills(List<Skill> collaboratorskills) {
+        this.collaboratorskills = collaboratorskills;
+    }
 }

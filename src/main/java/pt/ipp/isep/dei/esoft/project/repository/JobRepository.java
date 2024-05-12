@@ -10,6 +10,10 @@ import java.util.Optional;
 public class JobRepository {
 
     private List<Job> jobs;
+
+    /**
+     * This method is the constructor of the repository.
+     */
     public JobRepository() {
         this.jobs = Organization.getJobList();
         if (this.jobs == null) {
@@ -33,7 +37,12 @@ public class JobRepository {
         }
         throw new IllegalArgumentException("Job does not exist.");
     }
-
+    /**
+     * This method adds a new job to the list.
+     *
+     * @param job The job to be added.
+     * @return An optional signaling if the operation is successful, or an empty optional otherwise.
+     */
     public Optional<Job> add(Job job) {
 
         Optional<Job> newJob = Optional.empty();
@@ -50,6 +59,13 @@ public class JobRepository {
 
         return newJob;
     }
+
+    /**
+     * This method validates the job, checking for duplicates.
+     *
+     * @param job The job to be validated.
+     * @return True if the job is valid.
+     */
 
     private boolean validateJob(Job job) {
         boolean isValid = !jobs.contains(job);

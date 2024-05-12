@@ -20,9 +20,9 @@ public class CreateJobController {
 
     //Repository instances are obtained from the Repositories class
     public CreateJobController() {
-        getOrganizationRepository();
-        getJobRepository();
-        getAuthenticationRepository();
+        this.organizationRepository = getOrganizationRepository();
+        this.jobRepository = getJobRepository();
+        this.authenticationRepository = getAuthenticationRepository();
     }
 
     //Allows receiving the repositories as parameters for testing purposes

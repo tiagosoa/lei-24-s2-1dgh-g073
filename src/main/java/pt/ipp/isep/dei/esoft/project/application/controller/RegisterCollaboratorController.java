@@ -14,16 +14,13 @@ public class RegisterCollaboratorController {
     private AuthenticationRepository authenticationRepository;
     private JobRepository jobRepository;
 
-
-    //Repository instances are obtained from the Repositories class
     public RegisterCollaboratorController() {
-        getOrganizationRepository();
-        getCollaboratorRepository();
-        getAuthenticationRepository();
-        getJobRepository();
+        this.organizationRepository = getOrganizationRepository();
+        this.collaboratorRepository = getCollaboratorRepository();
+        this.authenticationRepository = getAuthenticationRepository();
+        this.jobRepository = getJobRepository();
     }
 
-    //Allows receiving the repositories as parameters for testing purposes
     public RegisterCollaboratorController(OrganizationRepository organizationRepository,
                                           CollaboratorRepository collaboratorRepository,
                                           AuthenticationRepository authenticationRepository,
@@ -37,8 +34,6 @@ public class RegisterCollaboratorController {
     private CollaboratorRepository getCollaboratorRepository() {
         if (collaboratorRepository == null) {
             Repositories repositories = Repositories.getInstance();
-
-            //Get the CollaboratorRepository
             collaboratorRepository = repositories.getCollaboratorRepository();
         }
         return collaboratorRepository;
@@ -50,14 +45,11 @@ public class RegisterCollaboratorController {
             organizationRepository = repositories.getOrganizationRepository();
         }
         return organizationRepository;
-
     }
 
     private AuthenticationRepository getAuthenticationRepository() {
         if (authenticationRepository == null) {
             Repositories repositories = Repositories.getInstance();
-
-            //Get the AuthenticationRepository
             authenticationRepository = repositories.getAuthenticationRepository();
         }
         return authenticationRepository;
@@ -82,38 +74,35 @@ public class RegisterCollaboratorController {
             newCollaborator = organization.get()
                     .registerCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
             if (newCollaborator.isPresent()) {
-                // Initialize job list for the collaborator
                 newCollaborator.get().setJobs(new ArrayList<>());
             }
         }
+
         if (organization.isPresent()) {
-
-            newCollaborator.ifPresent(collaboratorRepository::add); // Add collaborator to repository
-
+            newCollaborator.ifPresent(collaboratorRepository::add);
             return newCollaborator;
         }
 
-        return Optional.empty(); // Return empty if organization is not present
+        return Optional.empty();
     }
+
     public void assignJobToCollaborator(int collaboratorID, String jobname) {
         Collaborator collaborator = collaboratorRepository.getCollaboratorByID(collaboratorID);
 
         if (collaborator == null) {
             throw new IllegalArgumentException("Collaborator not found.");
         }
+
         Job job = jobRepository.getJobByName(jobname);
-            if (job != null) {
-                collaborator.addJob(job);
-            }
-        collaboratorRepository.updateCollaborator(collaborator);
+        if (job != null) {
+            collaborator.addJob(job);
         }
 
-
-
+        collaboratorRepository.updateCollaborator(collaborator);
+    }
 
     public HRM getHRMFromSession() {
         Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
         return new HRM(email.getEmail());
     }
-
 }

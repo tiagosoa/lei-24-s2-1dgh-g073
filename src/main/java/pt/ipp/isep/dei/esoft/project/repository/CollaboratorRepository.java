@@ -10,6 +10,10 @@ import java.util.Optional;
 public class CollaboratorRepository {
 
     private List<Collaborator> collaborators;
+
+    /**
+     * This method is the constructor of the repository.
+     */
     public CollaboratorRepository() {
         this.collaborators = Organization.getCollaboratorList();
         if (this.collaborators == null) {
@@ -19,7 +23,7 @@ public class CollaboratorRepository {
     }
 
     /**
-     * This method returns an exsiting Collaborator by its ID number.
+     * This method returns an existing Collaborator by its ID number.
      *
      * @param IDnumber        The ID number of the collaborator to be registered.
      * @return The collaborator name
@@ -33,6 +37,13 @@ public class CollaboratorRepository {
         }
         throw new IllegalArgumentException("Collaborator does not exist.");
     }
+
+    /**
+     * This method adds a new collaborator to the list.
+     *
+     * @param collaborator The collaborator to be added.
+     * @return An optional signaling if the operation is successful, or an empty optional otherwise.
+     */
 
     public Optional<Collaborator> add(Collaborator collaborator) {
 
@@ -51,9 +62,22 @@ public class CollaboratorRepository {
         return newCollaborator;
     }
 
+    /**
+     * This method validates the collaborator, checking for duplicates.
+     *
+     * @param collaborator The collaborator to be validated.
+     * @return True if the collaborator is valid.
+     */
+
     private boolean validateCollaborator(Collaborator collaborator) {
         return !collaborators.contains(collaborator);
     }
+
+    /**
+     * This method updates the collaborator, when assigned with a job or skill.
+     *
+     * @param collaboratorToUpdate The collaborator to be updated.
+     */
 
     public void updateCollaborator(Collaborator collaboratorToUpdate) {
         for (int i = 0; i < collaborators.size(); i++) {

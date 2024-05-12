@@ -4,22 +4,16 @@ import java.util.Objects;
 
 public class Job {
     private final String name;
-
     private Collaborator collaborator;
 
-    private HRM hrm;
-
     public Job(String name) {
-
         validateJob(name);
         this.name = name;
     }
 
     private void validateJob(String name) {
-        //TODO: missing from the diagrams
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Job name cannot be null or empty.");
-
         } else if (!name.matches("[a-zA-Z ]+")) {
             throw new IllegalArgumentException("Job name cannot contain special characters or digits.");
         }
@@ -39,15 +33,9 @@ public class Job {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, hrm);
+        return Objects.hash(name);
     }
 
-
-    /**
-     * Clone method.
-     *
-     * @return A clone of the current instance.
-     */
     public Job clone() {
         return new Job(this.name);
     }
