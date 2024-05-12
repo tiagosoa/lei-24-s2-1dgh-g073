@@ -33,10 +33,7 @@ class Organization {
   - String phone
   - String email
   - List<Vehicle> vehicles
-  - Map<Vehicle, List<Maintenance>> maintenanceRecords
   + addVehicle(Vehicle vehicle)
-  + addMaintenance(Vehicle vehicle, Maintenance maintenance)
-  + List<Maintenance> getVehicleMaintenanceRecords(Vehicle vehicle)
 }
 
 class OrganizationRepository {
@@ -49,15 +46,14 @@ class Repositories {
   + getInstance() : Repositories
   + getVehicleRepository() : VehicleRepository
   + getOrganizationRepository() : OrganizationRepository
-  + getMaintenanceRepository() : MaintenanceRepository
 }
 
 class RegisterMaintenanceController {
   + RegisterMaintenanceController(repositories: Repositories)
-  + boolean registerMaintenance(VehicleFleetManager vfm, Vehicle vehicle, Date maintenanceDate, String details, Double cost)
+  + Optional<Boolean> registerMaintenance(String plateNumber, int currentKm, LocalDate maintenanceDate)
 }
 
-class MaintenanceRegistrationUI {
+class RegisterMaintenanceUI {
   - RegisterMaintenanceController controller
   + displayMaintenanceForm()
   + submitMaintenanceForm(Vehicle vehicle, Date maintenanceDate,Double cost)
@@ -68,7 +64,7 @@ note right of RegisterMaintenanceController
   - Updates the Vehicle's maintenance records in the Organization
 end note
 
-note left of MaintenanceRegistrationUI
+note left of RegisterMaintenanceUI
   - UI for VFM to input vehicle maintenance details
   - Communicates with RegisterMaintenanceController
 end note
@@ -82,13 +78,10 @@ note left of VehicleFleetManager
   - Interfaces with the UI and controllers
 end note
 
-VehicleFleetManager -down-> MaintenanceRegistrationUI : interacts with
-MaintenanceRegistrationUI -right-> RegisterMaintenanceController : sends data to
+VehicleFleetManager -down-> RegisterMaintenanceUI : interacts with
+RegisterMaintenanceUI -right-> RegisterMaintenanceController : sends data to
 RegisterMaintenanceController -down-> Repositories : uses
-Repositories -down-> MaintenanceRepository : accesses
 Organization -right-> Vehicle : owns
-Organization -down-> Maintenance : tracks
-MaintenanceRepository ..> Maintenance : persists
 RegisterMaintenanceController ..> Maintenance : creates
 RegisterMaintenanceController ..> Organization : updates records
 

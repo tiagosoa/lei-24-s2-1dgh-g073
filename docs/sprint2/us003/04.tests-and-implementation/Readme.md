@@ -1,77 +1,106 @@
-# US003 - Create a Job
+# US003 - Register a Collaborator
 
 ## 4. Tests
 
-# Test 1: Job Creation
+# Test 1: Collaborator Creation
 
-Ensure that it is possible to create a new Job with a valid name.
+Ensure that it is possible to create a new Collaborator with a valid name.
 
     @Test
-    void ensureJobIsCreatedSuccessfully() {
+    void ensureCollaboratorIsCreatedSuccessfully() {
         HRM hrm = new HRM("john.doe@this.company.com");
-        Job job = new Job("name");
+        Collaborator collaborator = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, hrm);
     }
 
-# Test 2: Job Name Validation
 
-Check that an IllegalArgumentException is thrown when attempting to create a Job with a null or empty name.
 
-    @Test
-    void ensureJobNameIsNotNull() {
+# Test 2: Collaborator Name Validation
+
+Check that an IllegalArgumentException is thrown when attempting to create a Collaborator with a null or empty name.
+
+        @Test
+    void ensureCollaboratorNameIsNotNull() {
         //Arrange
         HRM hrm = new HRM("john.doe@this.company.com");
 
 
         //Act and Assert
         assertThrows(IllegalArgumentException.class,
-                () -> new Job(null));
+                () -> new Collaborator(null, "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, hrm));
     }
 
 ## 5. Construction (Implementation)
-* Class CreateJobController
+* Class RegisterCollaboratorController
 
 
-    public class CreateJobController {
+    public class RegisterCollaboratorController {
 
     private OrganizationRepository organizationRepository;
-    private JobRepository jobRepository;
+    private CollaboratorRepository collaboratorRepository;
     private AuthenticationRepository authenticationRepository;
+    private JobRepository jobRepository;
 
     // Constructors and methods omitted for brevity...
 
-    public Optional<Job> createJob(String name, HRM hrm) {
-        Optional<Organization> organization = getOrganizationRepository().getOrganizationByHRM(hrm);
-        Optional<Job> newJob = Optional.empty();
+    public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissiondate,
+                                                       String address, int mobile, String email, int taxpayer, String doctype,
+                                                       int IDnumber, HRM hrm) {
+        Optional<Organization> organization = organizationRepository.getOrganizationByHRM(hrm);
+
+        Optional<Collaborator> newCollaborator = Optional.empty();
 
         if (organization.isPresent()) {
-            newJob = organization.get().createJob(name);
+            newCollaborator = organization.get()
+                    .registerCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
+            if (newCollaborator.isPresent()) {
+                newCollaborator.get().setJobs(new ArrayList<>());
+            }
         }
-        return newJob;
+
+        if (organization.isPresent()) {
+            newCollaborator.ifPresent(collaboratorRepository::add);
+            return newCollaborator;
+        }
+
+        return Optional.empty();
     }
 
     // Other methods omitted for brevity
     }
 
-* Class CreateJobUI
+* Class RegisterCollaboratorUI
 
 
-    public class CreateJobUI implements Runnable {
+    public class RegisterCollaboratorUI implements Runnable {
 
-    private final CreateJobController controller;
-    private String jobName;
+    private final RegisterCollaboratorController controller;
+    private String name;
+
+    private String birthdate;
+    private String admissiondate;
+    private String address;
+
+    private int mobile;
+    private String email;
+
+    private int taxpayer;
+    private String doctype;
+    private int IDnumber;
+    private CollaboratorRepository collaboratorRepository;
     private JobRepository jobRepository;
 
     // Constructors and methods omitted for brevity...
 
     private void submitData() {
-        HRM hrm = controller.getHRMFromSession();
-        Optional<Job> job = controller.createJob(jobName, hrm);
 
-        if (job.isPresent()) {
-            jobRepository.add(job.get());
-            System.out.println("\nJob successfully created!");
+        HRM hrm = getController().getHRMFromSession();
+        Optional<Collaborator> collaborator = getController().registerCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
+
+        if (collaborator.isPresent()) {
+            assignJobToCollaborator(collaborator.get());
+            System.out.println("\nCollaborator successfully registered!");
         } else {
-            System.out.println("\nJob not created!");
+            System.out.println("\nCollaborator not registered!");
         }
     }
 
@@ -86,76 +115,107 @@ Check that an IllegalArgumentException is thrown when attempting to create a Job
 
     // Constructors, getters, and other methods omitted for brevity...
 
-    public Optional<Job> createJob(String name) {
-        Job job = new Job(name);
-        if (addJob(job)) {
-            return Optional.of(job);
+    public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber, HRM hrm) {
+        Collaborator collaborator = new Collaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
+        if (addCollaborator(collaborator)) {
+            return Optional.of(collaborator);
         }
         return Optional.empty();
     }
 
-    private boolean addJob(Job job) {
-        if (validateJob(job)) {
-            return jobs.add(job.clone());
+    private boolean addCollaborator(Collaborator collaborator) {
+        if (validateCollaborator(collaborator)) {
+            return collaborators.add(collaborator.clone());
         }
         return false;
     }
 
-    private boolean validateJob(Job job) {
-        return !jobs.contains(job);
+    private boolean validateCollaborator(Collaborator collaborator) {
+        return !collaborators.contains(collaborator);
     }
 
     // Other methods omitted for brevity...
     }
 
-* Class Job
+* Class Collaborator
 
 
-    public class Job {
+    public class Collaborator {
 
     // Constructors, getters, and other methods omitted for brevity...
 
-    public Job(String name) {
-        validateJob(name);
+    public Collaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber, HRM hrm) {
+        validateCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber);
         this.name = name;
+        this.birthdate = birthdate;
+        this.admissiondate = admissiondate;
+        this.address = address;
+        this.mobile = mobile;
+        this.email = email;
+        this.taxpayer = taxpayer;
+        this.doctype = doctype;
+        this.IDnumber = IDnumber;
+        this.hrm = hrm;
     }
 
-    private void validateJob(String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Job name cannot be null or empty.");
-        } else if (!name.matches("[A-Za-z ]+")) {
-            throw new IllegalArgumentException("Job name cannot contain special characters or digits.");
+    private void validateCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber) {
+        if (name == null || name.isEmpty() || !name.matches("[a-zA-Z]+")) {
+            throw new IllegalArgumentException("Collaborator name cannot be null, empty, or contain special characters or digits.");
+        }
+        if (birthdate == null || birthdate.isEmpty()) {
+            throw new IllegalArgumentException("Collaborator birth date cannot be null or empty.");
+        }
+        if (admissiondate == null || admissiondate.isEmpty()) {
+            throw new IllegalArgumentException("Collaborator admission date cannot be null or empty.");
+        }
+        if (address == null || address.isEmpty()) {
+            throw new IllegalArgumentException("Collaborator address cannot be null or empty.");
+        }
+        if (mobile <= 0) {
+            throw new IllegalArgumentException("Collaborator mobile number must be a positive number.");
+        }
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("Collaborator email cannot be empty.");
+        }
+        if (taxpayer <= 0) {
+            throw new IllegalArgumentException("Collaborator taxpayer number must be a positive number.");
+        }
+        if (doctype == null || doctype.isEmpty()) {
+            throw new IllegalArgumentException("Collaborator documentation type cannot be empty.");
+        }
+        if (IDnumber <= 0) {
+            throw new IllegalArgumentException("Collaborator ID number must be a positive number.");
         }
     }
 
     // Other methods omitted for brevity...
     }
 
-* Class JobRepository
+* Class CollaboratorRepository
 
 
-    public class JobRepository {
+    public class CollaboratorRepository {
 
     // Constructors and other methods omitted for brevity...
 
-    public Optional<Job> add(Job job) {
-        Optional<Job> newJob = Optional.empty();
+    public Optional<Collaborator> add(Collaborator collaborator) {
+        Optional<Collaborator> newCollaborator = Optional.empty();
         boolean operationSuccess = false;
 
-        if (validateJob(job)) {
-            newJob = Optional.of(job.clone());
-            operationSuccess = jobs.add(newJob.get());
+        if (validateCollaborator(collaborator)) {
+            newCollaborator = Optional.of(collaborator.clone());
+            operationSuccess = collaborators.add(newCollaborator.get());
         }
 
         if (!operationSuccess) {
-            newJob = Optional.empty();
+            newCollaborator = Optional.empty();
         }
 
-        return newJob;
+        return newCollaborator;
     }
 
-    private boolean validateJob(Job job) {
-        return !jobs.contains(job);
+    private boolean validateCollaborator(Collaborator collaborator) {
+        return !collaborators.contains(collaborator);
     }
 
     // Other methods omitted for brevity...
@@ -163,8 +223,8 @@ Check that an IllegalArgumentException is thrown when attempting to create a Job
 
 ## 6. Integration and Demo
 
-* The Job creation functionality has been integrated into the application.
-* Demo purposes: Job creation can be accessed via the UI to create new jobs.
+* The Collaborator registration functionality has been integrated into the application.
+* Demo purposes: Collaborator registration can be accessed via the UI to register new collaborators.
 
 ## 7. Observations
 

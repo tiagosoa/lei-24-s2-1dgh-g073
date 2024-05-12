@@ -3,13 +3,27 @@
 skinparam packageStyle rectangle
 skinparam shadowing false
 skinparam linetype polyline
-'skinparam classAttributeIconSize 0
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
 
 class VehicleFleetManager {
   - String name
   - String email
   - String phone
-  + requestMaintenanceReport() : List<Vehicle>
 }
 
 class Vehicle {
@@ -19,57 +33,92 @@ class Vehicle {
   - Double tareWeight
   - Double grossWeight
   - Int currentKm
-  - Int registerDate
-  - Int acquisitionDate
+  - LocalDate registerDate
+  - LocalDate acquisitionDate
   - Int maintenanceFrequency
-  + isMaintenanceDue() : boolean
+  - String plateName
+  - LocalDate lastMaintenanceDate
 }
 
-class VehicleMaintenance {
-  - Date maintenanceDate
-  - String details
-  - Double cost
+class Organization {
+  - String name
+  - String vatNumber
+  - String address
+  - String phone
+  - String email
+  - List<Vehicle> vehicles
+  - Map<Vehicle, List<Maintenance>> maintenanceRecords
+  + addVehicle(Vehicle vehicle)
+  + addMaintenance(Vehicle vehicle, Maintenance maintenance)
+  + List<Maintenance> getVehicleMaintenanceRecords(Vehicle vehicle)
 }
 
 class VehicleRepository {
-  + List<Vehicle> findAll()
-  + List<Vehicle> findVehiclesDueForMaintenance()
+  - List<Vehicle> vehicles
+  + Vehicle getVehiclebyPlateNumber(String plateNumber)
+  + Optional<Vehicle> add(Vehicle vehicle)
+  + boolean validateVehicle(Vehicle vehicle)
+  + List<Vehicle> getVehicles()
 }
 
-class MaintenanceRepository {
-  + boolean save(VehicleMaintenance maintenanceRecord)
-  + List<VehicleMaintenance> findByVehicle(Vehicle vehicle)
-}
-
-class MaintenanceReportGenerator {
-  + MaintenanceReportGenerator(vehicleRepository: VehicleRepository)
-  + List<Vehicle> generateMaintenanceReport()
+class OrganizationRepository {
+  + boolean save(Organization organization)
+  + Organization findByName(String name)
+  + Organization findByVatNumber(String vatNumber)
 }
 
 class Repositories {
-  - static instance : Repositories
   + getInstance() : Repositories
   + getVehicleRepository() : VehicleRepository
-  + getMaintenanceRepository() : MaintenanceRepository
+  + getOrganizationRepository() : OrganizationRepository
 }
 
-note right of VehicleFleetManager
-  - VFM initiates maintenance report generation
+class ProduceMaintenanceListController {
+    + VehicleRepository getVehicleRepository()
+    + List<Vehicle> getVehicles()
+}
+
+note right of CreateTaskController
+    - userEmail is obtained
+    from the user session
+    - categoryDescription
+    is retrieved from selected data
 end note
 
-note right of MaintenanceReportGenerator
-  - Queries the VehicleRepository to identify vehicles due for maintenance
-  - Generates a report based on criteria (e.g., maintenance frequency, last service)
+note bottom of TaskCategoryRepository
+    - used for displaying
+    the category list
 end note
 
-note right of Vehicle
-  - Determines if maintenance is due based on currentKm and maintenanceFrequency
-end note
+class CreateTaskUI {
+}
 
-VehicleFleetManager -down-> MaintenanceReportGenerator : requests report
-MaintenanceReportGenerator -down-> VehicleRepository : uses
-VehicleRepository -left-> Vehicle : finds
-MaintenanceReportGenerator -left-> MaintenanceRepository : uses
-MaintenanceRepository -up-> VehicleMaintenance : retrieves
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+CreateTaskUI .> CreateTaskController
+
+CreateTaskController .> Repositories : repositories
+
+Repositories -> "1" TaskCategoryRepository
+
+CreateTaskController ..> TaskCategory
+CreateTaskController ..> OrganizationRepository : organizationRepository
+CreateTaskController ..> TaskCategoryRepository : TaskCategoryRepository
+
+Repositories --> "1" OrganizationRepository
+
+OrganizationRepository --> "*" Organization
+ApplicationSession --> "1" UserSession : userSession
+
+CreateTaskController ..> "1" Organization : organization
+CreateTaskController ..> ApplicationSession
+CreateTaskController ..> UserSession
+Task "*" --> "1" TaskCategory : taskCategory
+TaskCategoryRepository "1" --> "*" TaskCategory : taskCategory
+Organization "1" --> "*" Task : tasks
+Task --> VFM : createdBy
+
+Organization --> "*" VFM : employs
 
 @enduml

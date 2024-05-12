@@ -1,70 +1,163 @@
-# US006 - Create a Task 
+# US004 - Assign a Skill
 
-## 4. Tests 
+## 4. Tests
 
-**Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
+# Test 1: Skill Assignment
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Task instance = new Task(null, null, null, null, null, null, null);
-	}
-	
+Ensure that it is possible to assign an existing skill to an existing Collaborator.
 
-**Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
+    @Test
+    void ensureSkillCanBeAssignedToCollaborator() {
+        Skill skill = new Skill("Java");
+        Collaborator collaborator = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, new HRM("john.doe@this.company.com"));
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureReferenceMeetsAC2() {
-		Category cat = new Category(10, "Category 10");
-		
-		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
-	}
-
-_It is also recommended to organize this content by subsections._ 
+        assertTrue(collaborator.addSkill(skill));
+    }
 
 
 ## 5. Construction (Implementation)
-
-### Class CreateTaskController 
-
-```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
-
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
-
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
-
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
-}
-```
-
-### Class Organization
-
-```java
-public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                 String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
-    
-    Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
-
-    addTask(task);
-        
-    return task;
-}
-```
+* Class AssignSkillController
 
 
-## 6. Integration and Demo 
+    public class AssignSkillController {
 
-* A new option on the Employee menu options was added.
+    private OrganizationRepository organizationRepository;
+    private SkillRepository skillRepository;
+    private CollaboratorRepository collaboratorRepository;
+    private AuthenticationRepository authenticationRepository;
 
-* For demo purposes some tasks are bootstrapped while system starts.
+    // Constructors and methods omitted for brevity...
 
+    public void assignSkillsToCollaborator(int collaboratorID, List<String> collaboratorskills) {
+        Collaborator collaborator = collaboratorRepository.getCollaboratorByID(collaboratorID);
+
+        if (collaborator == null) {
+            throw new IllegalArgumentException("Collaborator not found.");
+        }
+
+        for (String skillname : collaboratorskills) {
+            Skill skill = skillRepository.getSkillByName(skillname);
+            if (skill != null) {
+                collaborator.addSkill(skill);
+            }
+        }
+
+        collaboratorRepository.updateCollaborator(collaborator);
+    }
+
+    // Other methods omitted for brevity
+    }
+
+* Class AssignSkillUI
+
+
+    public class AssignSkillUI implements Runnable {
+
+    private AssignSkillController controller;
+    private CollaboratorRepository collaboratorRepository;
+
+    private SkillRepository skillRepository;
+    private Scanner scanner;
+
+    // Constructors and methods omitted for brevity...
+
+    public void run() {
+        System.out.println("\n\n--- Assign Skill ------------------------");
+        List<Collaborator> collaborators = getController().getCollaboratorList();
+        // Show list of registered collaborators
+        if (collaborators.isEmpty()) {
+            System.out.println("No collaborators registered.");
+            return;
+        }
+        System.out.println("Collaborator List:");
+        for (int i = 0; i < collaborators.size(); i++) {
+            System.out.println((i + 1) + ". " + collaborators.get(i).getName());
+        }
+        int collaboratorIndex = readInput(1, collaborators.size()) - 1;
+        Collaborator selectedCollaborator = collaborators.get(collaboratorIndex);
+
+        // Show list of skills
+        List<Skill> skills = skillRepository.getSkillList();
+        if (skills.isEmpty()) {
+            System.out.println("No skills registered.");
+            return;
+        }
+        System.out.println("Select skill(s) to assign to " + selectedCollaborator.getName() + ":");
+        for (int i = 0; i < skills.size(); i++) {
+            System.out.println((i + 1) + ". " + skills.get(i).getName());
+        }
+        System.out.println("Enter skill number(s) separated by commas (e.g., 1,2,3):");
+        String skillIndexInput = scanner.nextLine();
+        String[] skillIndices = skillIndexInput.split(",");
+        List<String> selectedSkillNames = new ArrayList<>();
+        for (String index : skillIndices) {
+            int skillIndex = Integer.parseInt(index.trim()) - 1;
+            selectedSkillNames.add(skills.get(skillIndex).getName().trim());
+        }
+        HRM hrm = getController().getHRMFromSession();
+
+        // Assign selected skills to collaborator
+        getController().assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames);
+        System.out.println("Skills assigned successfully to " + selectedCollaborator.getName());
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+* Class Collaborator
+
+
+    public class Collaborator {
+
+    // Constructors, getters, and other methods omitted for brevity...
+
+    public Collaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber, HRM hrm) {
+        validateCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber);
+        this.name = name;
+        this.birthdate = birthdate;
+        this.admissiondate = admissiondate;
+        this.address = address;
+        this.mobile = mobile;
+        this.email = email;
+        this.taxpayer = taxpayer;
+        this.doctype = doctype;
+        this.IDnumber = IDnumber;
+        this.hrm = hrm;
+    }
+
+    public boolean addSkill(Skill skill) {
+        if (!skills.contains(skill)) {
+            skills.add(skill);
+            skill.addCollaborator(this);
+            return true;
+        }
+        return false;
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+* Class Skill
+
+
+    public Skill(String name) {
+        validateSkill(name);
+        this.name = name;
+    }
+
+    // Constructors and other methods omitted for brevity...
+
+    public void addCollaborator(Collaborator collaborator) {
+        collaborator.addSkill(this);
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+## 6. Integration and Demo
+
+* The Skill assignment functionality has been integrated into the application.
+* Demo purposes: Skill assignment can be accessed via the UI to assign skills to collaborators.
 
 ## 7. Observations
 

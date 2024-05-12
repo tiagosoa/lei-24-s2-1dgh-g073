@@ -45,7 +45,7 @@ activate VEFL
     VEFL -> UI : confirms data
     activate UI
 
-        UI -> RMC : registerMaintenanceController(plate ID, brand, model, type, \ncurrent KMs and date of maintenance)
+        UI -> RMC : RegisterMaintenanceController(plate ID, brand, model, type, \ncurrent KMs and date of maintenance)
         activate RMC
 
                 RMC -> RMC : getVehicleByDescription(plate ID, brand, model, type, \ncurrent KMs and date of maintenance))

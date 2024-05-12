@@ -1,71 +1,83 @@
-# US006 - Create a Task 
+# US005 - Generate a Team
 
-## 4. Tests 
+## 4. Construction (Implementation)
 
-**Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
-
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Task instance = new Task(null, null, null, null, null, null, null);
-	}
-	
-
-**Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
-
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureReferenceMeetsAC2() {
-		Category cat = new Category(10, "Category 10");
-		
-		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
-	}
-
-_It is also recommended to organize this content by subsections._ 
+* Class GenerateTeamController
 
 
-## 5. Construction (Implementation)
+    public class GenerateTeamController {
 
-### Class CreateTaskController 
+    private OrganizationRepository organizationRepository;
+    private CollaboratorRepository collaboratorRepository;
+    private AuthenticationRepository authenticationRepository;
+    private SkillRepository skillRepository;
 
-```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
+    public List<Collaborator> generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills) {
+    if (minTeamSize <= 0 || maxTeamSize < minTeamSize || requiredSkills.isEmpty()) {
+    throw new IllegalArgumentException("Invalid input parameters.");
+    }  
 
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
+        List<Collaborator> allCollaborators = collaboratorRepository.getCollaboratorList();
+        List<Collaborator> qualifiedCollaborators = filterCollaboratorsBySkills(allCollaborators, requiredSkills);
 
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
+        if (qualifiedCollaborators.size() < minTeamSize) {
+            throw new IllegalArgumentException("Not enough qualified collaborators available.");
+        }
 
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
-}
-```
+        List<Collaborator> team = new ArrayList<>();
+        for (int i = 0; i < maxTeamSize && i < qualifiedCollaborators.size(); i++) {
+            team.add(qualifiedCollaborators.get(i));
+        }
 
-### Class Organization
+        return team;
+    }
 
-```java
-public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                 String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
-    
-    Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
-
-    addTask(task);
-        
-    return task;
-}
-```
+* Class GenerateTeamUI
 
 
-## 6. Integration and Demo 
+    public class GenerateTeamUI implements Runnable {
 
-* A new option on the Employee menu options was added.
+    private final GenerateTeamController controller;
+    private CollaboratorRepository collaboratorRepository;
+    private SkillRepository skillRepository;
+    private final Scanner scanner;
 
-* For demo purposes some tasks are bootstrapped while system starts.
+    // Constructors and methods omitted for brevity...
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the minimum team size:");
+        int minTeamSize = scanner.nextInt();
+
+        System.out.println("Enter the maximum team size:");
+        int maxTeamSize = scanner.nextInt();
+
+        scanner.nextLine(); // Consume newline
+        if (minTeamSize >= maxTeamSize || minTeamSize <= 0 || maxTeamSize <= 0) {
+            throw new IllegalArgumentException("Invalid team size inputs.");
+        }
+        System.out.println("Enter the required skills separated by semicolons:");
+        String inputSkills = scanner.nextLine();
+        List<Skill> requiredSkills = parseSkills(inputSkills);
+
+        try {
+            List<Collaborator> team = getController().generateTeam(maxTeamSize, minTeamSize, requiredSkills);
+            displayTeam(team);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    // Other methods omitted for brevity...
+    }
 
 
-## 7. Observations
+## 5. Integration and Demo
+
+* The Team Generation functionality has been integrated into the application.
+* Demo purposes: Team Generation can be accessed via the UI to generate teams.
+
+## 6. Observations
 
 n/a

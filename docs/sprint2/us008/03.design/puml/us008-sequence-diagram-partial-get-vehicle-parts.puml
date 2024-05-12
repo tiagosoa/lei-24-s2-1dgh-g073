@@ -1,0 +1,69 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "vehicleRepository:\nVehicleRepository" as VR
+participant ":ProduceMaintenanceListUI" as UI
+
+            loop [for each vehicle
+             UI -> VR: getPlateNumber()
+             activate VR
+
+             VR -> UI: plateNumber
+             deactivate VR
+
+             UI -> VR: getBrand()
+                         activate VR
+
+                         VR -> UI: brand
+                         deactivate VR
+
+             UI -> VR: getModel
+                         activate VR
+
+                         VR -> UI: model
+                         deactivate VR
+
+
+             UI -> VR: getCurrentKm()
+                         activate VR
+
+                         VR -> UI: currentKm()
+                         deactivate VR
+
+             UI -> VR: getLastMaintenanceDate()
+                         activate VR
+
+                         VR -> UI: lastMaintenanceDate
+                         deactivate VR
+
+             UI -> VR: getMaintenanceFrequencyKm()
+                         activate VR
+
+                         VR -> UI: maintenanceFrequencyKm
+                         deactivate VR
+
+             UI -> VR: plusDays(maintenanceFrequencyKm)
+                         activate VR
+
+                         VR -> UI: nextMaintenanceDate
+                         deactivate VR
+
+             UI -> VR: getPlateNumber()
+                         activate VR
+
+                         VR -> UI: plateNumber()
+                         deactivate VR
+
+
+             UI -> VR: plusDays(maintenanceFrequencyKm).until(LocalDate.now(), java.time.temporal.ChronoUnit.DAYS);
+                         activate VR
+
+                         VR -> UI: nextMaintenanceKms
+                         deactivate VR
+
+             end
+
+
+@enduml

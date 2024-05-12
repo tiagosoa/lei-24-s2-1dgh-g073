@@ -1,70 +1,144 @@
-# US006 - Create a Task 
+# US007 - Assign a Skill
 
-## 4. Tests 
+## 4. Tests
 
-**Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
+# Test 1: Maintenance Registration
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Task instance = new Task(null, null, null, null, null, null, null);
-	}
-	
+Ensure that it is possible to register a maintenance date to an existing Vehicle.
 
-**Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
+    @Test
+    void ensureMaintenanceIsRegisteredSuccessfully() {
+        // Arrange
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate acquisitionDate = LocalDate.parse("01-01-2024", formatter);
+        LocalDate lastMaintenanceDate = LocalDate.parse("01-04-2024", formatter);
+        Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000,
+                LocalDate.now(), acquisitionDate, 5000,
+                "00-AA-00", lastMaintenanceDate);
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureReferenceMeetsAC2() {
-		Category cat = new Category(10, "Category 10");
-		
-		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
-	}
 
-_It is also recommended to organize this content by subsections._ 
+
+        RegisterMaintenanceController controller = new RegisterMaintenanceController();
+        LocalDate maintenanceDate = LocalDate.now();
+        Optional<Boolean> result = controller.registerMaintenance(vehicle.getPlateNumber(), 35000, maintenanceDate);
+
+        // Assert
+        assertTrue(result.isPresent());
+        assertTrue(result.get());
+        assertEquals(maintenanceDate, vehicle.getLastMaintenanceDate());
+        assertEquals(35000, vehicle.getCurrentKm());
+    }
 
 
 ## 5. Construction (Implementation)
-
-### Class CreateTaskController 
-
-```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
-
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
-
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
-
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
-}
-```
-
-### Class Organization
-
-```java
-public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                 String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
-    
-    Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
-
-    addTask(task);
-        
-    return task;
-}
-```
+* Class RegisterMaintenanceController
 
 
-## 6. Integration and Demo 
+    public class RegisterMaintenanceController {
 
-* A new option on the Employee menu options was added.
+    private OrganizationRepository organizationRepository;
+    private VehicleRepository vehicleRepository;
+    private AuthenticationRepository authenticationRepository;
 
-* For demo purposes some tasks are bootstrapped while system starts.
+    // Constructors and methods omitted for brevity...
 
+    public Optional<Boolean> registerMaintenance(String plateNumber, int currentKm, LocalDate maintenanceDate) {
+        try {
+            Vehicle vehicle = vehicleRepository.getVehicleByPlateNumber(plateNumber);
+
+            if (maintenanceDate.isAfter(LocalDate.now())) {
+                System.out.println("Maintenance date cannot be in the future.");
+                return Optional.empty();
+            } else {
+                vehicle.setCurrentKilometers(currentKm);
+                vehicle.setMaintenanceDate(maintenanceDate);
+                return Optional.of(true);
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return Optional.empty();
+        }
+    }
+
+    // Other methods omitted for brevity
+    }
+
+* Class RegisterMaintenanceUI
+
+
+    public class RegisterMaintenanceUI implements Runnable {
+
+    private final RegisterMaintenanceController controller;
+    private String vehiclePlateNumber;
+    private int currentKM;
+    private LocalDate maintenanceDate;
+
+    // Constructors and methods omitted for brevity...
+
+    private void submitData() {
+        Optional<Boolean> result = getController().registerMaintenance(vehiclePlateNumber, currentKM, maintenanceDate);
+        System.out.println(result.orElse(false) ? "\nMaintenance successfully registered!" : "\nFailed to register maintenance!");
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+* Class Collaborator
+
+
+    public class Vehicle {
+    private final String model;
+    private final String brand;
+    private final String type;
+    private final double tareWeight;
+    private final double grossWeight;
+    private double currentKm;
+    private final LocalDate registerDate;
+    private final LocalDate acquisitionDate;
+    private final int maintenanceFrequencyKm;
+    private final String plateNumber;
+    private LocalDate lastMaintenanceDate;
+
+    // Constructors, getters, and other methods omitted for brevity...
+
+    public Vehicle(String model, String brand, String type, double tareWeight, double grossWeight,
+                   double currentKm, LocalDate registerDate, LocalDate acquisitionDate, int maintenanceFrequencyKm, String plateNumber, LocalDate lastMaintenanceDate) {
+        validateTrait(model);
+        validateTrait(brand);
+        validateTrait(type);
+        validateTrait(tareWeight);
+        validateTrait(grossWeight);
+        validateTrait(currentKm);
+        validateTrait(registerDate);
+        validateTrait(acquisitionDate);
+        validateTrait(maintenanceFrequencyKm);
+        validateTrait(plateNumber);
+        validateTrait(lastMaintenanceDate);
+
+        this.model = model;
+        this.brand = brand;
+        this.type = type;
+        this.tareWeight = tareWeight;
+        this.grossWeight = grossWeight;
+        this.currentKm = currentKm;
+        this.registerDate = registerDate;
+        this.acquisitionDate = acquisitionDate;
+        this.maintenanceFrequencyKm = maintenanceFrequencyKm;
+        this.plateNumber = plateNumber;
+        this.lastMaintenanceDate = lastMaintenanceDate;
+    }
+
+        public void setMaintenanceDate(LocalDate lastMaintenanceDate) {
+        this.lastMaintenanceDate = lastMaintenanceDate;
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+## 6. Integration and Demo
+
+* The Maintenance Registration functionality has been integrated into the application.
+* Demo purposes: Maintenance Registration can be accessed via the UI to register maintenances to vehicles.
 
 ## 7. Observations
 
