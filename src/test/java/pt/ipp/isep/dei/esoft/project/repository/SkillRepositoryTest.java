@@ -70,7 +70,7 @@ class SkillRepositoryTest {
         skillRepository.add(skill);
 
         assertThrows(UnsupportedOperationException.class,
-                () -> skillRepository.getSkillList().add(new Skill("Skill Name 1")));
+                () -> skillRepository.getSkillList().add(new Skill("Skill Name One")));
 
     }
 

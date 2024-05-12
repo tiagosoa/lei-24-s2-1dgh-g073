@@ -1,6 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.authorization;
 
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.application.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.ui.console.menu.AdminUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.menu.HRMUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.menu.MenuItem;

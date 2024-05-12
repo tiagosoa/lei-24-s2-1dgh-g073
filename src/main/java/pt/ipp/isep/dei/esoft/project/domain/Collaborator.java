@@ -70,11 +70,13 @@ public class Collaborator {
             throw new IllegalArgumentException("Collaborator ID number must be a positive number");
         }
     }
-    public void addSkill(Skill skill) {
+    public boolean addSkill(Skill skill) {
         if (!collaboratorskills.contains(skill)) {
             collaboratorskills.add(skill);
             skill.addCollaborator(this);
+            return true;
         }
+        return false;
     }
 
     public void addJob(Job job) {

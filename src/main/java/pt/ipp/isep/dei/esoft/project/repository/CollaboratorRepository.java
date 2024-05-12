@@ -31,7 +31,7 @@ public class CollaboratorRepository {
                 return existingCollaborator;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Collaborator does not exist.");
     }
 
     public Optional<Collaborator> add(Collaborator collaborator) {

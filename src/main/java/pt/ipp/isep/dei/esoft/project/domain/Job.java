@@ -20,7 +20,7 @@ public class Job {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Job name cannot be null or empty.");
 
-        } else if (!name.matches("[a-zA-Z]+")) {
+        } else if (!name.matches("[a-zA-Z ]+")) {
             throw new IllegalArgumentException("Job name cannot contain special characters or digits.");
         }
     }

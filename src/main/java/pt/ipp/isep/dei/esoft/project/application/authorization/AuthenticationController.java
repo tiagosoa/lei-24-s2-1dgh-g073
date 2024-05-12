@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.application.controller.authorization;
+package pt.ipp.isep.dei.esoft.project.application.authorization;
 
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;

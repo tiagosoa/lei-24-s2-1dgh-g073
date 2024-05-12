@@ -14,7 +14,7 @@ class CollaboratorRepositoryTest {
     void getCollaboratorByIDNullList() {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         int collaboratorID = 123456789;
-        assertNull(collaboratorRepository.getCollaboratorByID(collaboratorID));
+        assertThrows(IllegalArgumentException.class, () -> collaboratorRepository.getCollaboratorByID(collaboratorID));
     }
 
     @Test
@@ -45,7 +45,7 @@ class CollaboratorRepositoryTest {
         Collaborator collaborator = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", collaboratorID, hrm);
         collaboratorRepository.add(collaborator);
         int collaboratorID1 = 123456780;
-        assertNull(collaboratorRepository.getCollaboratorByID(collaboratorID1));
+        assertThrows(IllegalArgumentException.class, () -> collaboratorRepository.getCollaboratorByID(collaboratorID1));
 
     }
 

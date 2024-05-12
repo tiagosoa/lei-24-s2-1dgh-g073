@@ -31,8 +31,9 @@ public class VehicleRepository {
                 return existingVehicle;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Vehicle does not exist.");
     }
+
     public Optional<Vehicle> add(Vehicle vehicle) {
 
         Optional<Vehicle> newVehicle = Optional.empty();

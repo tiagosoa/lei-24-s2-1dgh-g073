@@ -78,4 +78,12 @@ class SkillTest {
         Skill clone = skill.clone();
         assertEquals(skill, clone);
     }
+
+    @Test
+    void ensureSkillCanBeAssignedToCollaborator() {
+        Skill skill = new Skill("Java");
+        Collaborator collaborator = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, new HRM("john.doe@this.company.com"));
+
+        assertTrue(collaborator.addSkill(skill));
+    }
 }

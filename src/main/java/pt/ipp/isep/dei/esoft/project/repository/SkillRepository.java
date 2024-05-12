@@ -31,7 +31,7 @@ public class SkillRepository {
                 return existingSkill;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Skill does not exist.");
     }
 
     public Optional<Skill> add(Skill skill) {

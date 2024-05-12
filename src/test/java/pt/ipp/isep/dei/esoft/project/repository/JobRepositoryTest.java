@@ -22,7 +22,7 @@ class JobRepositoryTest {
     @Test
     void getJobByNameNullList() {
         JobRepository jobRepository = new JobRepository();
-        String jobName = "Task Category Description";
+        String jobName = "Job Name";
         HRM hrm = new HRM("john.doe@this.company.com");
         assertThrows(IllegalArgumentException.class,
                 () -> jobRepository.getJobByName(jobName));
@@ -70,7 +70,7 @@ class JobRepositoryTest {
         jobRepository.add(job);
 
         assertThrows(UnsupportedOperationException.class,
-                () -> jobRepository.getJobs().add(new Job("Job Name 1")));
+                () -> jobRepository.getJobs().add(new Job("Job Name One")));
 
     }
 

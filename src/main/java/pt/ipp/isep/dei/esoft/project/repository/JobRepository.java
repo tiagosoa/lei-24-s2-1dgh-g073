@@ -31,7 +31,7 @@ public class JobRepository {
                 return existingJob;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Job does not exist.");
     }
 
     public Optional<Job> add(Job job) {
