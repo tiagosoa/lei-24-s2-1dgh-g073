@@ -1,70 +1,170 @@
-# US006 - Create a Task 
+# US002 - Create a Job
 
-## 4. Tests 
+## 4. Tests
 
-**Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
+# Test 1: Job Creation
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Task instance = new Task(null, null, null, null, null, null, null);
-	}
-	
+Ensure that it is possible to create a new Job with a valid name.
 
-**Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
+    @Test
+    void ensureJobIsCreatedSuccessfully() {
+        HRM hrm = new HRM("john.doe@this.company.com");
+        Job job = new Job("name");
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureReferenceMeetsAC2() {
-		Category cat = new Category(10, "Category 10");
-		
-		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
-	}
+# Test 2: Job Name Validation
 
-_It is also recommended to organize this content by subsections._ 
+Check that an IllegalArgumentException is thrown when attempting to create a Job with a null or empty name.
 
+    @Test
+    void ensureJobNameIsNotNull() {
+        //Arrange
+        HRM hrm = new HRM("john.doe@this.company.com");
+
+
+        //Act and Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> new Job(null));
+    }
 
 ## 5. Construction (Implementation)
-
-### Class CreateTaskController 
-
-```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
-
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
-
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
-
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
-}
-```
-
-### Class Organization
-
-```java
-public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                 String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
-    
-    Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
-
-    addTask(task);
-        
-    return task;
-}
-```
+* Class CreateJobController
 
 
-## 6. Integration and Demo 
+    public class CreateJobController {
 
-* A new option on the Employee menu options was added.
+    private OrganizationRepository organizationRepository;
+    private JobRepository jobRepository;
+    private AuthenticationRepository authenticationRepository;
 
-* For demo purposes some tasks are bootstrapped while system starts.
+    // Constructors and methods omitted for brevity...
 
+    public Optional<Job> createJob(String name, HRM hrm) {
+        Optional<Organization> organization = getOrganizationRepository().getOrganizationByHRM(hrm);
+        Optional<Job> newJob = Optional.empty();
+
+        if (organization.isPresent()) {
+            newJob = organization.get().createJob(name);
+        }
+        return newJob;
+    }
+
+    // Other methods omitted for brevity
+    }
+
+* Class CreateJobUI
+
+
+    public class CreateJobUI implements Runnable {
+
+    private final CreateJobController controller;
+    private String jobName;
+    private JobRepository jobRepository;
+
+    // Constructors and methods omitted for brevity...
+
+    private void submitData() {
+        HRM hrm = controller.getHRMFromSession();
+        Optional<Job> job = controller.createJob(jobName, hrm);
+
+        if (job.isPresent()) {
+            jobRepository.add(job.get());
+            System.out.println("\nJob successfully created!");
+        } else {
+            System.out.println("\nJob not created!");
+        }
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+* Class Organization
+
+
+
+    public class Organization {
+
+    // Constructors, getters, and other methods omitted for brevity...
+
+    public Optional<Job> createJob(String name) {
+        Job job = new Job(name);
+        if (addJob(job)) {
+            return Optional.of(job);
+        }
+        return Optional.empty();
+    }
+
+    private boolean addJob(Job job) {
+        if (validateJob(job)) {
+            return jobs.add(job.clone());
+        }
+        return false;
+    }
+
+    private boolean validateJob(Job job) {
+        return !jobs.contains(job);
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+* Class Job
+
+
+    public class Job {
+
+    // Constructors, getters, and other methods omitted for brevity...
+
+    public Job(String name) {
+        validateJob(name);
+        this.name = name;
+    }
+
+    private void validateJob(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Job name cannot be null or empty.");
+        } else if (!name.matches("[A-Za-z ]+")) {
+            throw new IllegalArgumentException("Job name cannot contain special characters or digits.");
+        }
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+* Class JobRepository
+
+
+    public class JobRepository {
+
+    // Constructors and other methods omitted for brevity...
+
+    public Optional<Job> add(Job job) {
+        Optional<Job> newJob = Optional.empty();
+        boolean operationSuccess = false;
+
+        if (validateJob(job)) {
+            newJob = Optional.of(job.clone());
+            operationSuccess = jobs.add(newJob.get());
+        }
+
+        if (!operationSuccess) {
+            newJob = Optional.empty();
+        }
+
+        return newJob;
+    }
+
+    private boolean validateJob(Job job) {
+        return !jobs.contains(job);
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+## 6. Integration and Demo
+
+* The Job creation functionality has been integrated into the application.
+* Demo purposes: Job creation can be accessed via the UI to create new jobs.
 
 ## 7. Observations
 

@@ -1,70 +1,171 @@
 # US001 - Create a Skill 
 
-## 4. Tests 
+## 4. Tests
 
-**Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
+# Test 1: Skill Creation
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Task instance = new Task(null, null, null, null, null, null, null);
-	}
-	
+Ensure that it is possible to create a new Skill with a valid name.
 
-**Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
+    @Test
+    void ensureSkillIsCreatedSuccessfully() {
+        HRM hrm = new HRM("john.doe@this.company.com");
+        Skill skill = new Skill("name");
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureReferenceMeetsAC2() {
-		Category cat = new Category(10, "Category 10");
-		
-		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
-	}
+# Test 2: Skill Name Validation
 
-_It is also recommended to organize this content by subsections._ 
+Check that an IllegalArgumentException is thrown when attempting to create a Skill with a null or empty name.
 
+
+    @Test
+    void ensureSkillNameIsNotNull() {
+        //Arrange
+        HRM hrm = new HRM("john.doe@this.company.com");
+
+        //Act and Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> new Skill(null));
+    }
 
 ## 5. Construction (Implementation)
-
-### Class CreateTaskController 
-
-```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
-
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
-
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
-
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
-}
-```
-
-### Class Organization
-
-```java
-public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                 String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
-    
-    Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
-
-    addTask(task);
-        
-    return task;
-}
-```
+* Class CreateSkillController
 
 
-## 6. Integration and Demo 
+    public class CreateSkillController {
 
-* A new option on the Employee menu options was added.
+    private OrganizationRepository organizationRepository;
+    private SkillRepository skillRepository;
+    private AuthenticationRepository authenticationRepository;
 
-* For demo purposes some tasks are bootstrapped while system starts.
+    // Constructors and methods omitted for brevity...
 
+    public Optional<Skill> createSkill(String name, HRM hrm) {
+        Optional<Organization> organization = organizationRepository.getOrganizationByHRM(hrm);
+
+        Optional<Skill> newSkill = Optional.empty();
+
+        if (organization.isPresent()) {
+            newSkill = organization.get().createSkill(name);
+        }
+        return newSkill;
+    }
+
+    // Other methods omitted for brevity
+    }
+
+ * Class CreateSkillUI
+
+
+    public class CreateSkillUI implements Runnable {
+
+    private final CreateSkillController controller;
+    private String skillName;
+    private SkillRepository skillRepository;
+
+    // Constructors and methods omitted for brevity...
+
+    private void submitData() {
+        HRM hrm = controller.getHRMFromSession();
+        Optional<Skill> skill = controller.createSkill(skillName, hrm);
+
+        if (skill.isPresent()) {
+            skillRepository.add(skill.get());
+            System.out.println("\nSkill successfully created!");
+        } else {
+            System.out.println("\nSkill not created!");
+        }
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+* Class Organization
+
+
+
+    public class Organization {
+
+    // Constructors, getters, and other methods omitted for brevity...
+
+    public Optional<Skill> createSkill(String name) {
+        Skill skill = new Skill(name);
+        if (addSkill(skill)) {
+            return Optional.of(skill);
+        }
+        return Optional.empty();
+    }
+
+    private boolean addSkill(Skill skill) {
+        if (validateSkill(skill)) {
+            return skills.add(skill.clone());
+        }
+        return false;
+    }
+
+    private boolean validateSkill(Skill skill) {
+        return !skills.contains(skill);
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+* Class Skill
+
+
+    public class Skill {
+
+    // Constructors, getters, and other methods omitted for brevity...
+
+    public Skill(String name) {
+        validateSkill(name);
+        this.name = name;
+    }
+
+    private void validateSkill(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Skill name cannot be null or empty.");
+        } else if (!name.matches("[A-Za-z ]+")) {
+            throw new IllegalArgumentException("Skill name cannot contain special characters or digits.");
+        }
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+* Class SkillRepository
+
+
+    public class SkillRepository {
+
+    // Constructors and other methods omitted for brevity...
+
+    public Optional<Skill> add(Skill skill) {
+        Optional<Skill> newSkill = Optional.empty();
+        boolean operationSuccess = false;
+
+        if (validateSkill(skill)) {
+            newSkill = Optional.of(skill.clone());
+            operationSuccess = skills.add(newSkill.get());
+        }
+
+        if (!operationSuccess) {
+            newSkill = Optional.empty();
+        }
+
+        return newSkill;
+    }
+
+    private boolean validateSkill(Skill skill) {
+        return !skills.contains(skill);
+    }
+
+    // Other methods omitted for brevity...
+    }
+
+## 6. Integration and Demo
+
+* The Skill creation functionality has been integrated into the application.
+* Demo purposes: Skill creation can be accessed via the UI to create new skills.
 
 ## 7. Observations
 

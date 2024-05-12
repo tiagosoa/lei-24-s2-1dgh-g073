@@ -8,10 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repository class for managing organizations.
+ */
 public class OrganizationRepository {
 
     private final List<Organization> organizations;
 
+    /**
+     * Constructor for OrganizationRepository.
+     */
     public OrganizationRepository() {
         organizations = new ArrayList<>();
     }
@@ -22,7 +28,6 @@ public class OrganizationRepository {
      * @param hrm The HRM associated with the organization.
      * @return An optional containing the organization if found, or an empty optional otherwise.
      */
-
     public Optional<Organization> getOrganizationByHRM(HRM hrm) {
 
         Optional<Organization> returnOrganization = Optional.empty();
@@ -61,7 +66,6 @@ public class OrganizationRepository {
      * @param email The email of the HRM associated with the organization.
      * @return An optional containing the organization if found, or an empty optional otherwise.
      */
-
     public Optional<Organization> getOrganizationByHRMEmail(String email) {
 
         Optional<Organization> returnOrganization = Optional.empty();
@@ -81,7 +85,6 @@ public class OrganizationRepository {
      * @param email The email of the VFM associated with the organization.
      * @return An optional containing the organization if found, or an empty optional otherwise.
      */
-
     public Optional<Organization> getOrganizationByVFMEmail(String email) {
 
         Optional<Organization> returnOrganization = Optional.empty();
@@ -101,7 +104,6 @@ public class OrganizationRepository {
      * @param organization The organization to be added.
      * @return An optional containing the newly added organization if the operation is successful, or an empty optional otherwise.
      */
-
     public Optional<Organization> add(Organization organization) {
 
         Optional<Organization> newOrganization = Optional.empty();
@@ -117,7 +119,6 @@ public class OrganizationRepository {
         }
 
         return newOrganization;
-
     }
 
     /**
@@ -126,7 +127,6 @@ public class OrganizationRepository {
      * @param organization The organization to be validated.
      * @return True if the organization is valid and can be added to the repository, false otherwise.
      */
-
     private boolean validateOrganization(Organization organization) {
         boolean isValid = !organizations.contains(organization);
 

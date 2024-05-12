@@ -9,7 +9,7 @@ import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 
 /**
- * Create Task UI (console). This option is only available for administrators for demonstration purposes.
+ * Create Skill UI (console). This class provides a console interface for creating a new skill.
  */
 public class CreateSkillUI implements Runnable {
 
@@ -17,15 +17,26 @@ public class CreateSkillUI implements Runnable {
     private String skillName;
     private SkillRepository skillRepository;
 
+    /**
+     * Constructor for CreateSkillUI.
+     */
     public CreateSkillUI() {
         controller = new CreateSkillController();
         this.skillRepository = new SkillRepository();
     }
 
+    /**
+     * Get the CreateSkillController associated with this UI.
+     *
+     * @return the CreateSkillController
+     */
     private CreateSkillController getController() {
         return controller;
     }
 
+    /**
+     * Run the Create Skill UI.
+     */
     public void run() {
         System.out.println("\n\n--- Create Skill ------------------------");
 
@@ -34,6 +45,9 @@ public class CreateSkillUI implements Runnable {
         submitData();
     }
 
+    /**
+     * Submit the data entered by the user to create a new skill.
+     */
     private void submitData() {
 
         HRM hrm = getController().getHRMFromSession();
@@ -47,15 +61,22 @@ public class CreateSkillUI implements Runnable {
         }
     }
 
+    /**
+     * Request data from the user to create a new skill.
+     */
     private void requestData() {
         //Request the Skill name from the console
         skillName = requestSkillName();
     }
 
-
+    /**
+     * Request the Skill name from the user via console input.
+     *
+     * @return the Skill name entered by the user
+     */
     private String requestSkillName() {
         Scanner input = new Scanner(System.in);
         System.out.print("Skill name: ");
         return input.nextLine();
     }
-    }
+}

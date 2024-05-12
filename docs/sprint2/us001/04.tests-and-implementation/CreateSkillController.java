@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
@@ -10,21 +11,31 @@ import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.Optional;
 
+/**
+ * Controller class responsible for creating a new Skill.
+ */
 public class CreateSkillController {
 
     private OrganizationRepository organizationRepository;
     private SkillRepository skillRepository;
     private AuthenticationRepository authenticationRepository;
 
-
-    //Repository instances are obtained from the Repositories class
+    /**
+     * Default constructor that initializes the repositories by obtaining them from the Repositories class.
+     */
     public CreateSkillController() {
-        getOrganizationRepository();
-        getSkillRepository();
-        getAuthenticationRepository();
+        this.organizationRepository = getOrganizationRepository();
+        this.skillRepository = getSkillRepository();
+        this.authenticationRepository = getAuthenticationRepository();
     }
 
-    //Allows receiving the repositories as parameters for testing purposes
+    /**
+     * Constructor that allows receiving repositories as parameters for testing purposes.
+     *
+     * @param organizationRepository     the OrganizationRepository to use
+     * @param skillRepository            the SkillRepository to use
+     * @param authenticationRepository   the AuthenticationRepository to use
+     */
     public CreateSkillController(OrganizationRepository organizationRepository,
                                  SkillRepository skillRepository,
                                  AuthenticationRepository authenticationRepository) {
@@ -33,47 +44,68 @@ public class CreateSkillController {
         this.authenticationRepository = authenticationRepository;
     }
 
+    /**
+     * Retrieves the SkillRepository instance, initializing it if necessary.
+     *
+     * @return the SkillRepository instance
+     */
     private SkillRepository getSkillRepository() {
         if (skillRepository == null) {
             Repositories repositories = Repositories.getInstance();
-
-            //Get the SkillRepository
             skillRepository = repositories.getSkillRepository();
         }
         return skillRepository;
     }
 
+    /**
+     * Retrieves the OrganizationRepository instance, initializing it if necessary.
+     *
+     * @return the OrganizationRepository instance
+     */
     private OrganizationRepository getOrganizationRepository() {
         if (organizationRepository == null) {
             Repositories repositories = Repositories.getInstance();
             organizationRepository = repositories.getOrganizationRepository();
         }
         return organizationRepository;
-
     }
 
+    /**
+     * Retrieves the AuthenticationRepository instance, initializing it if necessary.
+     *
+     * @return the AuthenticationRepository instance
+     */
     private AuthenticationRepository getAuthenticationRepository() {
         if (authenticationRepository == null) {
             Repositories repositories = Repositories.getInstance();
-
-            //Get the AuthenticationRepository
             authenticationRepository = repositories.getAuthenticationRepository();
         }
         return authenticationRepository;
     }
 
+    /**
+     * Creates a new Skill for a given name and HRM.
+     *
+     * @param name the name of the Skill
+     * @param hrm  the HRM associated with the Skill
+     * @return an Optional containing the newly created Skill, or empty if the Organization is not found
+     */
     public Optional<Skill> createSkill(String name, HRM hrm) {
         Optional<Organization> organization = getOrganizationRepository().getOrganizationByHRM(hrm);
 
         Optional<Skill> newSkill = Optional.empty();
 
         if (organization.isPresent()) {
-            newSkill = organization.get()
-                    .createSkill(name, hrm);
+            newSkill = organization.get().createSkill(name);
         }
         return newSkill;
     }
 
+    /**
+     * Retrieves the HRM associated with the current user session.
+     *
+     * @return the HRM associated with the current user session
+     */
     public HRM getHRMFromSession() {
         Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
         return new HRM(email.getEmail());

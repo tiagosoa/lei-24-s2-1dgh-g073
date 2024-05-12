@@ -2,13 +2,20 @@ package pt.ipp.isep.dei.esoft.project.domain;
 
 import java.util.Objects;
 
+/**
+ * Represents a skill that a collaborator possesses.
+ */
 public class Skill {
     private final String name;
 
+    /**
+     * Creates a new Skill with the given name.
+     *
+     * @param name the name of the skill
+     */
     public Skill(String name) {
-        this.name = name;
         validateSkill(name);
-
+        this.name = name;
     }
 
     private void validateSkill(String name) {
@@ -36,9 +43,8 @@ public class Skill {
         return Objects.hash(name);
     }
 
-
     /**
-     * Clone method.
+     * Creates a clone of the current Skill instance.
      *
      * @return A clone of the current instance.
      */
@@ -46,10 +52,21 @@ public class Skill {
         return new Skill(this.name);
     }
 
+    /**
+     * Gets the name of the skill.
+     *
+     * @return the name of the skill
+     */
     public String getName() {
         return name;
     }
+
+    /**
+     * Adds the skill to a collaborator.
+     *
+     * @param collaborator the collaborator to add the skill to
+     */
     public void addCollaborator(Collaborator collaborator) {
-            collaborator.addSkill(this);
-        }
+        collaborator.addSkill(this);
+    }
 }
