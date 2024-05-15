@@ -7,14 +7,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Represents an organization with various entities such as HRMs, VFMs, GSMs, skills, jobs, collaborators, and vehicles.
+ * Represents an organization with various entities such as HRMs, VFMs, skills, jobs, collaborators, and vehicles.
  */
 public class Organization {
     private final String vatNumber;
     private final List<HRM> hrms = new ArrayList<>();
     private final List<VFM> vfms = new ArrayList<>();
-
-    private final List<GSM> gsms = new ArrayList<>();
     private static final List<Skill> skills = new ArrayList<>();
     private static final List<Job> jobs = new ArrayList<>();
     private static final List<Collaborator> collaborators = new ArrayList<>();
@@ -91,16 +89,6 @@ public class Organization {
      */
     public boolean employs(VFM vfm) {
         return vfms.contains(vfm);
-    }
-
-    /**
-     * Checks if the organization employs a specific GSM.
-     *
-     * @param gsm the GSM to check
-     * @return true if the organization employs the GSM, false otherwise
-     */
-    public boolean employs(GSM gsm) {
-        return gsms.contains(gsm);
     }
 
     /**
@@ -294,29 +282,12 @@ public class Organization {
         return false;
     }
 
-    /**
-     * Adds a GSM to the organization.
-     *
-     * @param gsm the GSM to add
-     * @return true if the GSM is added, false otherwise
-     */
-    public boolean addGSM(GSM gsm) {
-        if (validateGSM(gsm)) {
-            return gsms.add(gsm);
-        }
-        return false;
-    }
-
     private boolean validateHRM(HRM hrm) {
         return !hrms.contains(hrm);
     }
 
     private boolean validateVFM(VFM vfm) {
         return !vfms.contains(vfm);
-    }
-
-    private boolean validateGSM(GSM gsm) {
-        return !gsms.contains(gsm);
     }
 
     /**
@@ -337,10 +308,6 @@ public class Organization {
 
         for (VFM vfm : this.vfms) {
             clone.vfms.add(vfm.clone());
-        }
-
-        for (GSM gsm : this.gsms) {
-            clone.gsms.add(gsm.clone());
         }
 
         for (Skill skill : skills) {

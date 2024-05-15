@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui;
 
 import pt.ipp.isep.dei.esoft.project.application.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.domain.GSM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
 import pt.ipp.isep.dei.esoft.project.domain.VFM;
 import pt.ipp.isep.dei.esoft.project.repository.*;
@@ -29,19 +30,25 @@ public class Bootstrap implements Runnable {
         organization.addHRM(new HRM("1230582@isep.ipp.pt"));
         organization.addHRM(new HRM("1231219@isep.ipp.pt"));
         organization.addHRM(new HRM("hrm@this.app"));
+
         organization.addVFM(new VFM("1231246@isep.ipp.pt"));
         organization.addVFM(new VFM("1230804@isep.ipp.pt"));
         organization.addVFM(new VFM("1230603@isep.ipp.pt"));
         organization.addVFM(new VFM("1230582@isep.ipp.pt"));
         organization.addVFM(new VFM("1231219@isep.ipp.pt"));
         organization.addVFM(new VFM("vfm@this.app"));
+
+        organization.addGSM(new GSM("1231246@isep.ipp.pt"));
+        organization.addGSM(new GSM("1230804@isep.ipp.pt"));
+        organization.addGSM(new GSM("1230603@isep.ipp.pt"));
+        organization.addGSM(new GSM("1230582@isep.ipp.pt"));
+        organization.addGSM(new GSM("1231219@isep.ipp.pt"));
+        organization.addGSM(new GSM("gsm@this.app"));
+
         organizationRepository.add(organization);
     }
 
     private void addSkills() {
-        //TODO: add bootstrap Task Categories here
-
-        //get skill repository
         SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();
 
         //skillRepository.add(new TaskCategory("Analysis"));
@@ -91,19 +98,22 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserRole(AuthenticationController.ROLE_VFM, AuthenticationController.ROLE_VFM);
 
         authenticationRepository.addUserWithRole("Tiago Soares", "1231246@isep.ipp.pt", "1231246",
-                AuthenticationController.ROLE_HRM);
+                AuthenticationController.ROLE_ADMIN);
 
         authenticationRepository.addUserWithRole("Diogo Cabral", "1230603@isep.app", "1230603",
-                AuthenticationController.ROLE_HRM);
+                AuthenticationController.ROLE_ADMIN);
 
         authenticationRepository.addUserWithRole("Diogo Vilela", "1230804@isep.app", "1230804",
-                AuthenticationController.ROLE_HRM);
+                AuthenticationController.ROLE_ADMIN);
 
         authenticationRepository.addUserWithRole("Guilherme Miranda", "1230582@isep.app", "1230582",
-                AuthenticationController.ROLE_HRM);
+                AuthenticationController.ROLE_ADMIN);
 
         authenticationRepository.addUserWithRole("Hugo Ramos", "1231219@isep.app", "1231219",
-                AuthenticationController.ROLE_HRM);
+                AuthenticationController.ROLE_ADMIN);
+
+        authenticationRepository.addUserWithRole("Tiago Soares", "1231246@isep.ipp.pt", "isep",
+                AuthenticationController.ROLE_VFM);
 
 
         authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin",
@@ -115,7 +125,9 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserWithRole("VFM", "vfm@this.app", "pwd",
                 AuthenticationController.ROLE_VFM);
 
-        authenticationRepository.addUserWithRole("Tiago Soares", "1231246@isep.ipp.pt", "isep",
-                AuthenticationController.ROLE_VFM);
+        authenticationRepository.addUserWithRole("GSM", "gsm@this.app", "pwd",
+                AuthenticationController.ROLE_GSM);
+
+
     }
 }
