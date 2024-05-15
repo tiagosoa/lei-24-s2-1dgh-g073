@@ -7,18 +7,18 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Represents an organization with various entities such as HRMs, VFMs, GSMs, skills, jobs, collaborators, and vehicles.
+ * Represents an organization with various entities such as HRMs, VFMs, GSMs, skills, jobs, collaborators, vehicles, and green spaces.
  */
 public class Organization {
     private final String vatNumber;
     private final List<HRM> hrms = new ArrayList<>();
     private final List<VFM> vfms = new ArrayList<>();
-
     private final List<GSM> gsms = new ArrayList<>();
     private static final List<Skill> skills = new ArrayList<>();
     private static final List<Job> jobs = new ArrayList<>();
     private static final List<Collaborator> collaborators = new ArrayList<>();
     private static final List<Vehicle> vehicles = new ArrayList<>();
+    private static final List<GreenSpace> greenSpaces = new ArrayList<>();
     private String name;
     private String website;
     private String phone;
@@ -69,6 +69,15 @@ public class Organization {
      */
     public static List<Vehicle> getVehicleList() {
         return new ArrayList<>(vehicles);
+    }
+
+    /**
+     * Returns a copy of the list of green spaces.
+     *
+     * @return a list of green spaces
+     */
+    public static List<GreenSpace> getGreenSpaceList() {
+        return new ArrayList<>(greenSpaces);
     }
 
     // Methods for entity management
@@ -179,9 +188,24 @@ public class Organization {
         return Optional.empty();
     }
 
+    /**
+     * Registers a new green space and adds it to the organization.
+     *
+     * @param type the type of the green space
+     * @return an optional containing the registered green space, or empty if registration fails
+     */
+    public Optional<GreenSpace> registerGreenSpace(String type, double area) {
+        GreenSpace greenSpace = new GreenSpace(type, area);
+        if (addGreenSpace(greenSpace)) {
+            return Optional.of(greenSpace);
+        }
+        return Optional.empty();
+    }
+
     // Private helper methods for adding entities
 
     private boolean addSkill(Skill skill) {
+
         if (validateSkill(skill)) {
             return skills.add(skill.clone());
         }
@@ -209,6 +233,13 @@ public class Organization {
         return false;
     }
 
+    private boolean addGreenSpace(GreenSpace greenSpace) {
+        if (validateGreenSpace(greenSpace)) {
+            return greenSpaces.add(greenSpace.clone());
+        }
+        return false;
+    }
+
     // Private helper methods for entity validation
 
     private boolean validateSkill(Skill skill) {
@@ -227,7 +258,11 @@ public class Organization {
         return !collaborators.contains(collaborator);
     }
 
-    // Check if any HRM or VFM has a specific email
+    private boolean validateGreenSpace(GreenSpace greenSpace) {
+        return !greenSpaces.contains(greenSpace);
+    }
+
+    // Check if any HRM, VFM or GSM has a specific email
 
     /**
      * Checks if any HRM has a specific email.
@@ -247,6 +282,16 @@ public class Organization {
      */
     public boolean anyVFMHasEmail(String email) {
         return vfms.stream().anyMatch(vfm -> vfm.hasEmail(email));
+    }
+
+    /**
+     * Checks if any GSM has a specific email.
+     *
+     * @param email the email to check
+     * @return true if any GSM has the email, false otherwise
+     */
+    public boolean anyGSMHasEmail(String email) {
+        return gsms.stream().anyMatch(gsm -> gsm.hasEmail(email));
     }
 
     // Equals, hashCode, and cloning

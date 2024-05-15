@@ -10,6 +10,7 @@ public class Repositories {
     private final SkillRepository skillRepository;
     private final JobRepository jobRepository;
     private final CollaboratorRepository collaboratorRepository;
+    private final GreenSpaceRepository greenSpaceRepository;
     private final AuthenticationRepository authenticationRepository;
     private final VehicleRepository vehicleRepository;
 
@@ -24,6 +25,7 @@ public class Repositories {
         collaboratorRepository = new CollaboratorRepository();
         authenticationRepository = new AuthenticationRepository();
         vehicleRepository = new VehicleRepository();
+        greenSpaceRepository = new GreenSpaceRepository();
     }
 
     /**
@@ -92,5 +94,14 @@ public class Repositories {
      */
     public VehicleRepository getVehicleRepository() {
         return vehicleRepository;
+    }
+
+    /**
+     * Returns the green space repository.
+     *
+     * @return The green space repository.
+     */
+    public GreenSpaceRepository getGreenSpaceRepository() {
+        return greenSpaceRepository;
     }
 }
