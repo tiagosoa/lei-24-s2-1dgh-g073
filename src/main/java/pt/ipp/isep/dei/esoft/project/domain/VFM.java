@@ -3,7 +3,7 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import java.util.Objects;
 
 /**
- * Represents a Virtual Financial Manager (VFM) in the system.
+ * Represents a Vehicle and Equipment Fleet Manager (VFM) in the system.
  */
 public class VFM {
     private final String email; // unique identifier for the VFM
