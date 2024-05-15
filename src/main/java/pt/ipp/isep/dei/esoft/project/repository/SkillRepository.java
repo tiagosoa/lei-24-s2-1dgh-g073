@@ -54,7 +54,7 @@ public class SkillRepository {
 
         if (validateSkill(skill)) {
             newSkill = Optional.of(skill.clone());
-            operationSuccess = skills.add(newSkill.get());
+            operationSuccess = skills.add(newSkill.get());//
         }
 
         if (!operationSuccess) {

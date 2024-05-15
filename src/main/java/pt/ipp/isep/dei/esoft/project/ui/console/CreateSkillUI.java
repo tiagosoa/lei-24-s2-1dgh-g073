@@ -6,6 +6,7 @@ import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import java.util.Optional;
 import java.util.Scanner;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 
 /**
@@ -22,7 +23,7 @@ public class CreateSkillUI implements Runnable {
      */
     public CreateSkillUI() {
         controller = new CreateSkillController();
-        this.skillRepository = new SkillRepository();
+        this.skillRepository = Repositories.getInstance().getSkillRepository();
     }
 
     /**
@@ -55,6 +56,9 @@ public class CreateSkillUI implements Runnable {
 
         if (skill.isPresent()) {
             skillRepository.add(skill.get());
+
+            System.out.println(skillRepository.getSkillList());
+
             System.out.println("\nSkill successfully created!");
         } else {
             System.out.println("\nSkill not created!");

@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.AssignSkillControlle
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 
@@ -29,7 +30,7 @@ public class AssignSkillUI implements Runnable {
     public AssignSkillUI() {
         controller = new AssignSkillController();
         this.collaboratorRepository = new CollaboratorRepository();
-        this.skillRepository = new SkillRepository();
+        this.skillRepository = Repositories.getInstance().getSkillRepository();
         this.scanner = new Scanner(System.in);
     }
 

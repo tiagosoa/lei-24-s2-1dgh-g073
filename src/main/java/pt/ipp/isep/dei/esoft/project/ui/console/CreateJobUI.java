@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.CreateJobController;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -26,7 +27,7 @@ public class CreateJobUI implements Runnable {
      */
     public CreateJobUI() {
         controller = new CreateJobController();
-        this.jobRepository = new JobRepository();
+        this.jobRepository = Repositories.getInstance().getJobRepository();
     }
 
     /**

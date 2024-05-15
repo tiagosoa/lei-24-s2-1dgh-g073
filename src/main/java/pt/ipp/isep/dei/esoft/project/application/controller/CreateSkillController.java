@@ -24,9 +24,10 @@ public class CreateSkillController {
      * Default constructor that initializes the repositories by obtaining them from the Repositories class.
      */
     public CreateSkillController() {
-        this.organizationRepository = getOrganizationRepository();
-        this.skillRepository = getSkillRepository();
-        this.authenticationRepository = getAuthenticationRepository();
+        Repositories repositories = Repositories.getInstance();
+        this.organizationRepository = repositories.getOrganizationRepository();
+        this.skillRepository = repositories.getSkillRepository();
+        this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
     /**
@@ -56,6 +57,7 @@ public class CreateSkillController {
         }
         return skillRepository;
     }
+
 
     /**
      * Retrieves the OrganizationRepository instance, initializing it if necessary.

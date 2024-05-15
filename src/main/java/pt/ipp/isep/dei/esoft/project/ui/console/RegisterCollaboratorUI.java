@@ -6,6 +6,7 @@ import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,7 @@ public class RegisterCollaboratorUI implements Runnable {
 
         controller = new RegisterCollaboratorController();
         this.collaboratorRepository = new CollaboratorRepository();
-        this.jobRepository = new JobRepository();
+        this.jobRepository = Repositories.getInstance().getJobRepository();
     }
 
     private RegisterCollaboratorController getController() {

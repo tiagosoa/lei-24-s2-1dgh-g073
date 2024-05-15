@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 import pt.ipp.isep.dei.esoft.project.application.controller.AddVehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.domain.VFM;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 
 import java.time.LocalDate;
@@ -27,7 +28,7 @@ public class AddVehicleUI implements Runnable {
      */
     public AddVehicleUI() {
         controller = new AddVehicleController();
-        this.vehicleRepository = new VehicleRepository();
+        this.vehicleRepository = Repositories.getInstance().getVehicleRepository();
     }
 
     private AddVehicleController getController() {
