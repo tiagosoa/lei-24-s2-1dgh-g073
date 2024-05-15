@@ -83,39 +83,6 @@ class OrganizationTest {
     }
 
     @Test
-    void testThatRegisterCollaboratorWorks() {
-        Organization organization = new Organization("123456789");
-
-        HRM hrm = new HRM("john.doe@this.company.com");
-
-        Collaborator expected = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, hrm);
-
-        Optional<Collaborator> collaborator =
-                organization.registerCollaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, hrm);
-
-        assertNotNull(collaborator);
-        assertTrue(collaborator.isPresent());
-        assertEquals(expected, collaborator.get());
-    }
-
-    @Test
-    void ensureAddingDuplicateCollaboratorFails() {
-        //Arrange
-        Organization organization = new Organization("123456789");
-        HRM hrm = new HRM("john.doe@this.company.com");
-        //Add the first collaborator
-        Optional<Collaborator> originalCollaborator =
-                organization.registerCollaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, hrm);
-
-        //Act
-        Optional<Collaborator> duplicateCollaborator =
-                organization.registerCollaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, hrm);
-
-        //Assert
-        assertTrue(duplicateCollaborator.isEmpty());
-    }
-
-    @Test
     void testThatCreateVehicleWorks() {
         Organization organization = new Organization("123456789");
 

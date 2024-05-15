@@ -26,18 +26,17 @@ public class Collaborator {
     /**
      * Constructor for Collaborator class.
      *
-     * @param name         the name of the collaborator
-     * @param birthdate    the birth date of the collaborator
+     * @param name          the name of the collaborator
+     * @param birthdate     the birth date of the collaborator
      * @param admissiondate the admission date of the collaborator
-     * @param address      the address of the collaborator
-     * @param mobile       the mobile number of the collaborator
-     * @param email        the email of the collaborator
-     * @param taxpayer     the taxpayer number of the collaborator
-     * @param doctype      the documentation type of the collaborator
-     * @param IDnumber     the ID number of the collaborator
-     * @param hrm          the HRM system associated with the collaborator
+     * @param address       the address of the collaborator
+     * @param mobile        the mobile number of the collaborator
+     * @param email         the email of the collaborator
+     * @param taxpayer      the taxpayer number of the collaborator
+     * @param doctype       the documentation type of the collaborator
+     * @param IDnumber      the ID number of the collaborator
      */
-    public Collaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber, HRM hrm) {
+    public Collaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber) {
         validateCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber);
         this.name = name;
         this.birthdate = birthdate;
@@ -135,7 +134,7 @@ public class Collaborator {
     }
 
     public Collaborator clone() {
-        return new Collaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
+        return new Collaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber);
     }
 
     public String getName() {

@@ -63,27 +63,11 @@ public class JobRepository {
      * @return An optional containing the added job if successful, empty optional otherwise.
      */
 
-    private boolean addJob(Job job) {
+    public boolean addJob(Job job) {
         if (validateJob(job)) {
             return jobs.add(job.clone());
         }
         return false;
-    }
-    public Optional<Job> add(Job job) {
-
-        Optional<Job> newJob = Optional.empty();
-        boolean operationSuccess = false;
-
-        if (validateJob(job)) {
-            newJob = Optional.of(job.clone());
-            operationSuccess = jobs.add(newJob.get());
-        }
-
-        if (!operationSuccess) {
-            newJob = Optional.empty();
-        }
-
-        return newJob;
     }
 
     /**

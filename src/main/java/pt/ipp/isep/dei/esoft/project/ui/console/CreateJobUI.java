@@ -55,7 +55,7 @@ public class CreateJobUI implements Runnable {
         Optional<Job> job = getController().createJob(jobName);
 
         if (job.isPresent()) {
-            jobRepository.add(job.get());
+            jobRepository.addJob(job.get());
             System.out.println("\nJob successfully created!");
         } else {
             System.out.println("\nJob not created!");

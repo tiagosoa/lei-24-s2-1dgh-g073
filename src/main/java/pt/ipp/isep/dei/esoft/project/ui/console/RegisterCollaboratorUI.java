@@ -2,15 +2,16 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
-import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+
+import static java.awt.SystemColor.menu;
+import static java.lang.System.exit;
 
 /**
  * Register Collaborator UI (console). This option is only available for administrators for demonstration purposes.
@@ -36,8 +37,8 @@ public class RegisterCollaboratorUI implements Runnable {
     public RegisterCollaboratorUI() {
 
         controller = new RegisterCollaboratorController();
-        this.collaboratorRepository = new CollaboratorRepository();
-        this.jobRepository = Repositories.getInstance().getJobRepository();
+        this.collaboratorRepository = getController().getCollaboratorRepository();
+        this.jobRepository = getController().getJobRepository();
     }
 
     private RegisterCollaboratorController getController() {
@@ -53,12 +54,20 @@ public class RegisterCollaboratorUI implements Runnable {
     }
 
     private void submitData() {
-
-        HRM hrm = getController().getHRMFromSession();
-        Optional<Collaborator> collaborator = getController().registerCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
+        Scanner input = new Scanner(System.in);
+        Optional<Collaborator> collaborator = getController().registerCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber);
 
         if (collaborator.isPresent()) {
-            assignJobToCollaborator(collaborator.get());
+            String jobname = assignJobToCollaborator(collaborator.get());
+            System.out.println("'" + name + "'" + "'" + birthdate + "'" + "'" + admissiondate + "'" + "'" + address + "'" + "'" + mobile + "'" + "'" + email + "'" + "'" + taxpayer + "'" + "'" + doctype + "'" + "'" + IDnumber + "'" + "'" + jobname + "'" + "- is this data correct? (type 'yes' or 'no')");
+            String yesno;
+            do {
+                yesno = input.nextLine();
+                if (yesno.equals("no")) {
+                    requestData();
+                }
+            } while (!(yesno.equals("no") || yesno.equals("yes")));
+            collaboratorRepository.addCollaborator(collaborator.get());
             System.out.println("\nCollaborator successfully registered!");
         } else {
             System.out.println("\nCollaborator not registered!");
@@ -144,22 +153,23 @@ public class RegisterCollaboratorUI implements Runnable {
     }
 
     // Assign job(s) to a collaborator
-    private void assignJobToCollaborator(Collaborator collaborator) {
+    private String assignJobToCollaborator(Collaborator collaborator) {
         Scanner input = new Scanner(System.in);
         List<Job> jobs = jobRepository.getJobs();
         if (jobs.isEmpty()) {
             System.out.println("No jobs registered.");
-            return;
+            exit(1);
         }
         System.out.println("Select job(s) to assign to " + collaborator.getName() + ":");
         for (int i = 0; i < jobs.size(); i++) {
             System.out.println((i + 1) + ". " + jobs.get(i).getName());
         }
-        System.out.println("Enter job number:");
+        System.out.println("Enter job name:");
         String jobname = input.nextLine();
 
         // Assign selected jobs to collaborator
         getController().assignJobToCollaborator(collaborator.getIDNumber(), jobname);
         System.out.println("Jobs assigned successfully to " + collaborator.getName());
+        return jobname;
     }
 }

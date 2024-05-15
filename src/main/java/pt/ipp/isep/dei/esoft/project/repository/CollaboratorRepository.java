@@ -1,7 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.Organization;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +18,7 @@ public class CollaboratorRepository {
      * Initializes the list of collaborators.
      */
     public CollaboratorRepository() {
-        this.collaborators = Organization.getCollaboratorList();
-        if (this.collaborators == null) {
-            // Initialize the collaborators list if it's null
-            this.collaborators = new ArrayList<>();
-        }
+        this.collaborators = new ArrayList<>();
     }
 
     /**
@@ -40,6 +35,35 @@ public class CollaboratorRepository {
             }
         }
         throw new IllegalArgumentException("Collaborator does not exist.");
+    }
+
+    /**
+     * Registers a new collaborator with the organization.
+     *
+     * @param name          the name of the collaborator
+     * @param birthdate     the birthdate of the collaborator
+     * @param admissiondate the admission date of the collaborator
+     * @param address       the address of the collaborator
+     * @param mobile        the mobile number of the collaborator
+     * @param email         the email of the collaborator
+     * @param taxpayer      the taxpayer number of the collaborator
+     * @param doctype       the document type of the collaborator
+     * @param IDnumber      the ID number of the collaborator
+     * @return an optional containing the registered collaborator, or empty if registration fails
+     */
+    public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber) {
+        Collaborator collaborator = new Collaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber);
+        if (addCollaborator(collaborator)) {
+            return Optional.of(collaborator);
+        }
+        return Optional.empty();
+    }
+
+    public boolean addCollaborator(Collaborator collaborator) {
+        if (validateCollaborator(collaborator)) {
+            return collaborators.add(collaborator.clone());
+        }
+        return false;
     }
 
     /**

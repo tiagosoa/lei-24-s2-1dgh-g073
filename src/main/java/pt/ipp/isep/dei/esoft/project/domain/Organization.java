@@ -138,29 +138,6 @@ public class Organization {
     }
 
     /**
-     * Registers a new collaborator with the organization.
-     *
-     * @param name         the name of the collaborator
-     * @param birthdate    the birthdate of the collaborator
-     * @param admissiondate the admission date of the collaborator
-     * @param address      the address of the collaborator
-     * @param mobile       the mobile number of the collaborator
-     * @param email        the email of the collaborator
-     * @param taxpayer     the taxpayer number of the collaborator
-     * @param doctype      the document type of the collaborator
-     * @param IDnumber     the ID number of the collaborator
-     * @param hrm          the HRM associated with the collaborator
-     * @return an optional containing the registered collaborator, or empty if registration fails
-     */
-    public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber, HRM hrm) {
-        Collaborator collaborator = new Collaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
-        if (addCollaborator(collaborator)) {
-            return Optional.of(collaborator);
-        }
-        return Optional.empty();
-    }
-
-    /**
      * Registers a new green space and adds it to the organization.
      *
      * @param type the type of the green space
@@ -176,12 +153,7 @@ public class Organization {
 
     // Private helper methods for adding entities
 
-    private boolean addCollaborator(Collaborator collaborator) {
-        if (validateCollaborator(collaborator)) {
-            return collaborators.add(collaborator.clone());
-        }
-        return false;
-    }
+
 
     private boolean addVehicle(Vehicle vehicle) {
         if (validateVehicle(vehicle)) {

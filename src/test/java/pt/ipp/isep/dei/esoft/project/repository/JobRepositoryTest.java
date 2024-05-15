@@ -34,7 +34,7 @@ class JobRepositoryTest {
         String jobName = "Job Name";
          
         Job job = new Job(jobName);
-        jobRepository.add(job);
+        jobRepository.addJob(job);
     }
 
     @Test
@@ -58,7 +58,7 @@ class JobRepositoryTest {
         String jobName = "Job Name";
          
         Job job = new Job(jobName);
-        jobRepository.add(job);
+        jobRepository.addJob(job);
         Job job1 = jobRepository.getJobByName(jobName);
         assertEquals(job, job1);
     }
@@ -69,7 +69,7 @@ class JobRepositoryTest {
         String jobName = "Job Name";
          
         Job job = new Job(jobName);
-        jobRepository.add(job);
+        jobRepository.addJob(job);
         String jobName1 = "Job Name 1";
         assertThrows(IllegalArgumentException.class,
                 () -> jobRepository.getJobByName(jobName1));
@@ -82,7 +82,7 @@ class JobRepositoryTest {
         String jobName = "Job Name";
          
         Job job = new Job(jobName);
-        jobRepository.add(job);
+        jobRepository.addJob(job);
 
         assertThrows(UnsupportedOperationException.class,
                 () -> jobRepository.getJobs().add(new Job("Job Name One")));
@@ -96,7 +96,7 @@ class JobRepositoryTest {
          
         String jobName = "Job Name";
         Job job = new Job(jobName);
-        jobRepository.add(job);
+        jobRepository.addJob(job);
         int expectedSize = 1;
 
         //Act
@@ -114,13 +114,13 @@ class JobRepositoryTest {
          
         Job job = new Job("Job Name");
         //Add the first job
-        jobRepository.add(job);
+        jobRepository.addJob(job);
 
         //Act
-        Optional<Job> duplicateJob = jobRepository.add(job);
+        boolean duplicateJob = jobRepository.addJob(job);
 
         //Assert
-        assertTrue(duplicateJob.isEmpty());
+        assertFalse(duplicateJob);
     }
 
     @Test
@@ -131,12 +131,12 @@ class JobRepositoryTest {
         Job jobOne = new Job("Job Name One");
         Job jobTwo = new Job("Job Name Two");
         //Add the first task
-        jobRepository.add(jobOne);
+        jobRepository.addJob(jobOne);
 
         //Act
-        Optional<Job> result = jobRepository.add(jobTwo);
+        boolean expected = jobRepository.addJob(jobTwo);
 
         //Assert
-        assertEquals(jobTwo, result.get());
+        assertTrue(expected);
     }
 }
