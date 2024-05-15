@@ -11,7 +11,7 @@ Can be created by an HRM and is then assigned to one or more Collaborators.
 Attributes include only the name.
 
 ### Skill Repository:
-Stores created skills.
+Saves created skills.
 
 ### 2.1. Relevant Domain Model Excerpt 
 

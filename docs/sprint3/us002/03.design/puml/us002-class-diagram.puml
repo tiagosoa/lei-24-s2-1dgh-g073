@@ -26,10 +26,13 @@ class Job {
 
 class JobRepository {
   - List<Job> jobs
-  + Optional<Job> add(Job job)
   + boolean validateJob(Job job)
+  + boolean jobsDoNotContain(Job job)
+  + Optional<Job> add(Job job)
+  + Optional<Job> createJob(String name)
   + List<Job> getJobs()
   + Job getJobByName(String name)
+  + boolean addJob(Job job)
 }
 
 class Organization {
@@ -38,10 +41,6 @@ class Organization {
   - String address
   - String phone
   - String email
-  + Optional<Job> createJob(String name)
-  + boolean addJob(Job job)
-  + boolean validateJob(Job job)
-  + boolean jobsDoNotContain(Job job)
   + boolean equals(Object o)
 }
 
@@ -63,30 +62,26 @@ class CreateJobController {
   + CreateJobController(OrganizationRepository organizationRepository,
                                    JobRepository jobRepository,
                                    AuthenticationRepository authenticationRepository)
-  + Optional<Job> createJob(String name, HRM hrm)
+  + Optional<Job> createJob(String name)
 }
 
 class CreateJobUI {
   + requestJobName()
 }
 
-class HRManager {
+class HRM {
    - String name
    - int vatNumber
    - String email
    - int phonenumber
-    + manageJobs(): void
 }
-
-JobManager --> Job: Manages
-HRManager --> JobManager: Uses
 
 note right of CreateJobController
   - Job name is obtained from the HRM's input
   - Updates the Job Repository
 end note
 
-note right of HRManager
+note right of HRM
   - HRM initiates job creation
 end note
 
@@ -112,8 +107,6 @@ Repositories -down-> OrganizationRepository : accesses
 
 CreateJobController ..> OrganizationRepository : organizationRepository
 
-Repositories --> "1" OrganizationRepository
-
 OrganizationRepository --> "*" Organization : persists
 ApplicationSession --> "1" UserSession : userSession
 
@@ -121,8 +114,8 @@ CreateJobController ..> "1" Organization : organization
 CreateJobController ..> ApplicationSession
 CreateJobController ..> UserSession
 Organization "1" --> "*" Job : owns
-Job --> HRManager : createdBy
+Job --> HRM : createdBy
 
-Organization --> "*" HRManager : employs
+Organization --> "*" HRM : employs
 
 @enduml

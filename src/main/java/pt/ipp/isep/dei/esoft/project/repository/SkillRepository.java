@@ -20,11 +20,8 @@ public class SkillRepository {
      * If the skills list is null, it creates a new empty list.
      */
     public SkillRepository() {
-        this.skills = Organization.getSkillList();
-        if (this.skills == null) {
-            this.skills = new ArrayList<>();
+        this.skills = new ArrayList<>();
         }
-    }
 
     /**
      * Retrieves an existing Skill by its name.
@@ -43,28 +40,6 @@ public class SkillRepository {
     }
 
     /**
-     * Adds a new Skill to the repository.
-     *
-     * @param skill The Skill to add.
-     * @return An Optional containing the added Skill if successful, empty otherwise.
-     */
-    public Optional<Skill> add(Skill skill) {
-        Optional<Skill> newSkill = Optional.empty();
-        boolean operationSuccess = false;
-
-        if (validateSkill(skill)) {
-            newSkill = Optional.of(skill.clone());
-            operationSuccess = skills.add(newSkill.get());//
-        }
-
-        if (!operationSuccess) {
-            newSkill = Optional.empty();
-        }
-
-        return newSkill;
-    }
-
-    /**
      * Creates a new skill and adds it to the organization.
      *
      * @param name the name of the skill
@@ -78,7 +53,13 @@ public class SkillRepository {
         return Optional.empty();
     }
 
-    private boolean addSkill(Skill skill) {
+    /**
+     * Adds a new Skill to the repository.
+     *
+     * @param skill The Skill to add.
+     * @return An Optional containing the added Skill if successful, empty otherwise.
+     */
+    public boolean addSkill(Skill skill) {
         if (validateSkill(skill)) {
             return skills.add(skill.clone());
         }

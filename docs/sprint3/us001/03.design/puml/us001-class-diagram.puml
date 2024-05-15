@@ -62,7 +62,7 @@ class CreateSkillController {
   + CreateSkillController(OrganizationRepository organizationRepository,
                                    SkillRepository skillRepository,
                                    AuthenticationRepository authenticationRepository)
-  + Optional<Skill> createSkill(String name, HRM hrm)
+  + Optional<Skill> createSkill(String name)
 }
 
 class CreateSkillUI {

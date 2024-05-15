@@ -10,14 +10,9 @@ actor "Human Resources Manager" as ADM
 participant ":CreateJobUI" as UI
 participant ":CreateJobController" as CTRL
 participant ":Repositories" as RepositorySingleton
-participant "jobrepository\n:JobRepository" as JR
 participant "repositories\n:Repositories" as PLAT
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
-participant "job\n:Job" as TAREFA
+participant "jobrepository\n:JobRepository" as JR
+participant "job\n:Job" as TRABALHO
 
 activate ADM
 
@@ -25,45 +20,64 @@ activate ADM
 
         activate UI
 
-'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+'            UI --> ADM : requests data (name)
             'create CTRL
             UI -> CTRL** : create
+
+            UI -> CTRL : getJobRepository()
+
             activate CTRL
 
-                CTRL -> RepositorySingleton : getJobRepository()
-                activate RepositorySingleton
+            CTRL -> RepositorySingleton : getInstance()
+                            activate RepositorySingleton
 
-                    RepositorySingleton --> CTRL: jobrepository
-                deactivate RepositorySingleton
-                deactivate CTRL
+                                RepositorySingleton --> CTRL: repositories
+                            deactivate RepositorySingleton
 
-        UI --> ADM : requests name of job
+                 CTRL -> PLAT : getJobRepository()
+                         activate PLAT
+
+                     PLAT -> CTRL : jobRepository
+                     deactivate PLAT
+    deactivate CTRL
+    UI --> ADM : requests name
     deactivate UI
 
     ADM -> UI : types requested name
     activate UI
 
-        UI --> ADM : shows typed name
-    deactivate UI
+            UI --> ADM : shows typed name and asks for confirmation
+        deactivate UI
 
-    ADM -> UI : submits name
-    activate UI
+        ADM -> UI : confirms data
+        activate UI
 
-    UI -> CTRL : createJob(jobname)
-    activate CTRL
-
-      ref over CTRL
-      Get HRM
-      end
+        UI -> CTRL : createJob(jobname)
+        activate CTRL
 
             |||
-            CTRL -> ORG: creatJob(name, hrm)
-            activate ORG
-            ref over ORG
-            Create Job
-            end
-                ORG -> CTRL: job
-deactivate ORG
+            CTRL -> CTRL : getHRMFromSession()
+            activate CTRL
+
+                ref over CTRL
+                Get HRM
+                end
+
+                CTRL --> CTRL : hrm
+            deactivate CTRL
+
+            |||
+            CTRL -> JR: createJob(jobname)
+            activate JR
+
+                ref over JR
+                Create Job
+                end
+
+
+                JR --> CTRL : job
+
+            deactivate JR
 
             CTRL --> UI: job
             deactivate CTRL

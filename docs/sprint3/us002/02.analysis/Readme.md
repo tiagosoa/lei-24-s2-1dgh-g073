@@ -10,6 +10,9 @@ Attributes include name, vatNumber, phoneNumber, and email.
 Can be created by an HRM and assigned to one or more Collaborators.
 Attributes include only the name.
 
+### Job Repository:
+Saves created jobs.
+
 ### 2.1. Relevant Domain Model Excerpt 
 
 ![Domain Model](svg/us002-domain-model.svg)

@@ -18,8 +18,6 @@ public class CreateJobUI implements Runnable {
     private String jobName;
 
     private JobRepository jobRepository;
-    private String taskCategoryDescription;
-    private String employeeEmail;
 
     /**
      * Constructor for CreateJobUI class.
@@ -27,7 +25,7 @@ public class CreateJobUI implements Runnable {
      */
     public CreateJobUI() {
         controller = new CreateJobController();
-        this.jobRepository = Repositories.getInstance().getJobRepository();
+        this.jobRepository = getController().getJobRepository();
     }
 
     /**
@@ -54,8 +52,7 @@ public class CreateJobUI implements Runnable {
      * Submits the data input by the user to create a new job.
      */
     private void submitData() {
-        HRM hrm = getController().getHRMFromSession();
-        Optional<Job> job = getController().createJob(jobName, hrm);
+        Optional<Job> job = getController().createJob(jobName);
 
         if (job.isPresent()) {
             jobRepository.add(job.get());
@@ -69,7 +66,16 @@ public class CreateJobUI implements Runnable {
      * Requests necessary data from the user.
      */
     private void requestData() {
+        Scanner input = new Scanner(System.in);
         jobName = requestJobName();
+        System.out.println("'" + jobName + "' - is this job name correct? (type 'yes' or 'no')");
+        String yesno;
+        do {
+            yesno = input.nextLine();
+            if (yesno.equals("no")) {
+                requestData();
+            }
+        } while (!(yesno.equals("no") || yesno.equals("yes")));
     }
 
     /**

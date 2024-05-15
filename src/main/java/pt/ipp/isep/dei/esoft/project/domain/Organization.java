@@ -138,20 +138,6 @@ public class Organization {
     }
 
     /**
-     * Creates a new job and adds it to the organization.
-     *
-     * @param name the name of the job
-     * @return an optional containing the created job, or empty if creation fails
-     */
-    public Optional<Job> createJob(String name) {
-        Job job = new Job(name);
-        if (addJob(job)) {
-            return Optional.of(job);
-        }
-        return Optional.empty();
-    }
-
-    /**
      * Registers a new collaborator with the organization.
      *
      * @param name         the name of the collaborator
@@ -189,13 +175,6 @@ public class Organization {
     }
 
     // Private helper methods for adding entities
-
-    private boolean addJob(Job job) {
-        if (validateJob(job)) {
-            return jobs.add(job.clone());
-        }
-        return false;
-    }
 
     private boolean addCollaborator(Collaborator collaborator) {
         if (validateCollaborator(collaborator)) {

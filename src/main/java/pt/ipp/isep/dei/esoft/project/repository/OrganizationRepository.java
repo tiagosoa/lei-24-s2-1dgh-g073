@@ -105,7 +105,7 @@ public class OrganizationRepository {
      * @param email The email of the GSM associated with the organization.
      * @return An optional containing the organization if found, or an empty optional otherwise.
      */
-    public Optional<Organization> getOrganizationByGSMEmail(String email) {
+    public Optional<Organization> getOrganizationByVFMEmail(String email) {
 
         Optional<Organization> returnOrganization = Optional.empty();
 

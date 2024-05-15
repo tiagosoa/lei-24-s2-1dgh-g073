@@ -81,38 +81,6 @@ class OrganizationTest {
         Organization organization = new Organization("123456789");
         assertEquals(organization, organization);
     }
-    @Test
-    void testThatCreateJobWorks() {
-        Organization organization = new Organization("123456789");
-
-        HRM hrm = new HRM("john.doe@this.company.com");
-
-        Job expected = new Job("Job Name");
-
-        Optional<Job> job =
-                organization.createJob("Job Name");
-
-        assertNotNull(job);
-        assertTrue(job.isPresent());
-        assertEquals(expected, job.get());
-    }
-
-    @Test
-    void ensureAddingDuplicateJobFails() {
-        //Arrange
-        Organization organization = new Organization("123456789");
-        HRM hrm = new HRM("john.doe@this.company.com");
-        //Add the first job
-        Optional<Job> originalJob =
-                organization.createJob("Job Name");
-
-        //Act
-        Optional<Job> duplicateJob =
-                organization.createJob("Job Name");
-
-        //Assert
-        assertTrue(duplicateJob.isEmpty());
-    }
 
     @Test
     void testThatRegisterCollaboratorWorks() {

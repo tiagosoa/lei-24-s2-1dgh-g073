@@ -19,12 +19,8 @@ public class JobRepository {
      * Initializes the list of jobs.
      */
     public JobRepository() {
-        this.jobs = Organization.getJobList();
-        if (this.jobs == null) {
-            // Initialize the jobs list if it's null
             this.jobs = new ArrayList<>();
         }
-    }
 
     /**
      * Retrieves an existing Job by its name.
@@ -37,9 +33,27 @@ public class JobRepository {
         for (Job existingJob : jobs) {
             if (existingJob.getName().equals(name)) {
                 return existingJob;
+            } else {
+                throw new IllegalArgumentException("Job does not exist.");
             }
+
         }
-        throw new IllegalArgumentException("Job does not exist.");
+        return null;
+    }
+
+
+    /**
+     * Creates a new job and adds it to the organization.
+     *
+     * @param name the name of the job
+     * @return an optional containing the created job, or empty if creation fails
+     */
+    public Optional<Job> createJob(String name) {
+        Job job = new Job(name);
+        if (addJob(job)) {
+            return Optional.of(job);
+        }
+        return Optional.empty();
     }
 
     /**
@@ -48,6 +62,13 @@ public class JobRepository {
      * @param job The job to add.
      * @return An optional containing the added job if successful, empty optional otherwise.
      */
+
+    private boolean addJob(Job job) {
+        if (validateJob(job)) {
+            return jobs.add(job.clone());
+        }
+        return false;
+    }
     public Optional<Job> add(Job job) {
 
         Optional<Job> newJob = Optional.empty();

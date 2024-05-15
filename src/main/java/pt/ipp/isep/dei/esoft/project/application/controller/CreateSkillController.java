@@ -94,7 +94,7 @@ public class CreateSkillController {
      */
     public Optional<Skill> createSkill(String name) {
 
-        Optional<Skill> newSkill = Optional.empty();
+        Optional<Skill> newSkill;
         newSkill = skillRepository.createSkill(name);
         
         return newSkill;

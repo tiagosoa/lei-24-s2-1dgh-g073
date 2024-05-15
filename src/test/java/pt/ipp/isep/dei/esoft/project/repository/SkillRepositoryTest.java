@@ -34,7 +34,7 @@ class SkillRepositoryTest {
         String skillName = "Skill Name";
         
         Skill skill = new Skill(skillName);
-        skillRepository.add(skill);
+        skillRepository.addSkill(skill);
     }
 
     @Test
@@ -57,7 +57,7 @@ class SkillRepositoryTest {
         String skillName = "Skill Name";
         
         Skill skill = new Skill(skillName);
-        skillRepository.add(skill);
+        skillRepository.addSkill(skill);
         Skill skill1 = skillRepository.getSkillByName(skillName);
         assertEquals(skill, skill1);
     }
@@ -68,7 +68,7 @@ class SkillRepositoryTest {
         String skillName = "Skill Name";
         
         Skill skill = new Skill(skillName);
-        skillRepository.add(skill);
+        skillRepository.addSkill(skill);
         String skillName1 = "Skill Name 1";
         assertThrows(IllegalArgumentException.class,
                 () -> skillRepository.getSkillByName(skillName1));
@@ -81,7 +81,7 @@ class SkillRepositoryTest {
         String skillName = "Skill Name";
         
         Skill skill = new Skill(skillName);
-        skillRepository.add(skill);
+        skillRepository.addSkill(skill);
 
         assertThrows(UnsupportedOperationException.class,
                 () -> skillRepository.getSkillList().add(new Skill("Skill Name One")));
@@ -95,7 +95,7 @@ class SkillRepositoryTest {
         
         String skillName = "Skill Name";
         Skill skill = new Skill(skillName);
-        skillRepository.add(skill);
+        skillRepository.addSkill(skill);
         int expectedSize = 1;
 
         //Act
@@ -113,13 +113,13 @@ class SkillRepositoryTest {
         
         Skill skill = new Skill("Skill Name");
         //Add the first skill
-        skillRepository.add(skill);
+        skillRepository.addSkill(skill);
 
         //Act
-        Optional<Skill> duplicateSkill = skillRepository.add(skill);
+        boolean duplicateSkill = skillRepository.addSkill(skill);
 
         //Assert
-        assertTrue(duplicateSkill.isEmpty());
+        assertFalse(duplicateSkill);
     }
 
     @Test
@@ -130,12 +130,12 @@ class SkillRepositoryTest {
         Skill skillOne = new Skill("Skill Name One");
         Skill skillTwo = new Skill("Skill Name Two");
         //Add the first task
-        skillRepository.add(skillOne);
+        skillRepository.addSkill(skillOne);
 
         //Act
-        Optional<Skill> result = skillRepository.add(skillTwo);
+        boolean expected = skillRepository.addSkill(skillTwo);
 
         //Assert
-        assertEquals(skillTwo, result.get());
+        assertTrue(expected);
     }
 }

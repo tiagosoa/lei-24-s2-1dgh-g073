@@ -10,12 +10,6 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
-'title Domain Model
-
-'class Platform {
-'  -description
-'}
-
 class HRM {
     name
     vatNumber
@@ -27,16 +21,16 @@ class Job {
     name
 }
 
+class JobRepository {
+    jobs
+}
+
 'class Collaborator {
     'name
     'email
     'password
 '}
 
-'Platform "1" -- "*" HRM : has registered >
-'Platform "1" -- "*" Category : defines >
-HRM "1" - "1...*" Job: creates >
-'Job "*" -- "1" HRM: created by >
-'HRM "0..1" -- "1" User: acts as >
-'Job "*" - "*" Collaborator: may be attributed to >
+HRM "1" - "*" Job: creates >
+Job "1" - "1" JobRepository : is saved in >
 @enduml

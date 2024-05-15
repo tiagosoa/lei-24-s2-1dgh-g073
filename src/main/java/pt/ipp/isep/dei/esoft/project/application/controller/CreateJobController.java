@@ -34,7 +34,7 @@ public class CreateJobController {
     }
 
     // Method to get the JobRepository instance
-    private JobRepository getJobRepository() {
+    public JobRepository getJobRepository() {
         if (jobRepository == null) {
             Repositories repositories = Repositories.getInstance();
             jobRepository = repositories.getJobRepository();
@@ -61,13 +61,9 @@ public class CreateJobController {
     }
 
     // Method to create a new job for a given organization
-    public Optional<Job> createJob(String name, HRM hrm) {
-        Optional<Organization> organization = getOrganizationRepository().getOrganizationByHRM(hrm);
-        Optional<Job> newJob = Optional.empty();
-
-        if (organization.isPresent()) {
-            newJob = organization.get().createJob(name);
-        }
+    public Optional<Job> createJob(String name) {
+        Optional<Job> newJob;
+            newJob = jobRepository.createJob(name);
         return newJob;
     }
 

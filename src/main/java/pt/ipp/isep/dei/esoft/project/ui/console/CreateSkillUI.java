@@ -53,9 +53,7 @@ public class CreateSkillUI implements Runnable {
         Optional<Skill> skill = getController().createSkill(skillName);
 
         if (skill.isPresent()) {
-            skillRepository.add(skill.get());
-
-            System.out.println(skillRepository.getSkillList());
+            skillRepository.addSkill(skill.get());
 
             System.out.println("\nSkill successfully created!");
         } else {
@@ -68,7 +66,16 @@ public class CreateSkillUI implements Runnable {
      */
     private void requestData() {
         //Request the Skill name from the console
+        Scanner input = new Scanner(System.in);
         skillName = requestSkillName();
+        System.out.println("'" + skillName + "' - is this skill name correct? (type 'yes' or 'no')");
+        String yesno;
+        do {
+            yesno = input.nextLine();
+            if (yesno.equals("no")) {
+                requestData();
+            }
+        } while (!(yesno.equals("no") || yesno.equals("yes")));
     }
 
     /**
