@@ -1,0 +1,16 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+participant ":TeamGeneratorUI" as UI
+
+
+activate UI
+UI -> UI : parseSkills(String inputSkills)
+    UI --> UI : requiredskills
+
+@enduml

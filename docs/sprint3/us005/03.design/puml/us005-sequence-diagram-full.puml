@@ -1,0 +1,164 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as ADM
+participant ":TeamGeneratorUI" as UI
+participant ":TeamGeneratorController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "skillRepository:\nSkillRepository" as SR
+participant "CollaboratorRepository:\ncollaboratorRepository" as CR
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
+participant "organization\n:Organization" as ORG
+participant "team\n:Team" as EQUIPA
+
+activate ADM
+
+        ADM -> UI : asks to generate team
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+
+                CTRL -> RepositorySingleton : getInstance()
+                activate CTRL
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+                deactivate CTRL
+
+            UI --> ADM : asks for minimum and maximum team size
+        deactivate UI
+
+    ADM -> UI : inputs minimum and maximum team size
+    activate UI
+
+                        CTRL -> RepositorySingleton : getInstance()
+                        activate RepositorySingleton
+
+                            RepositorySingleton --> CTRL: repositories
+                        deactivate RepositorySingleton
+
+
+        UI -> CTRL : getSkillRepository()
+
+        CTRL -> PLAT : getSkillRepository()
+                activate PLAT
+
+            PLAT -> CTRL : skillRepository
+            deactivate PLAT
+    UI -> ADM : asks to type suggested skills
+    deactivate UI
+
+    ADM -> UI : types skills
+    activate UI
+
+    UI -> UI : parseSkills(String inputSkills)
+    UI --> UI : requiredskills
+
+    UI -> ADM : shows team size and selected skills and asks for confirmation
+
+    ADM -> UI : confirms data
+
+
+
+
+          UI -> CTRL : getCollaboratorRepository()
+          activate CTRL
+
+
+            CTRL -> PLAT : getCollaboratorRepository()
+                activate PLAT
+
+            PLAT -> CTRL : collaboratorRepository
+            deactivate PLAT
+            deactivate CTRL
+
+
+
+            |||
+            CTRL -> CTRL : getHRMFromSession()
+            activate CTRL
+
+                CTRL -> _APP: getInstance()
+                activate _APP
+                    _APP -> CTRL: appSession
+                deactivate _APP
+
+
+                CTRL -> APP: getCurrentSession()
+                activate APP
+
+                    APP --> CTRL: currentSession
+                deactivate APP
+
+                CTRL -> SESSAO: email = getUserEmail()
+                activate SESSAO
+
+                    SESSAO --> CTRL: email
+                deactivate SESSAO
+
+
+                CTRL -> PLAT: getOrganizationRepository(email)
+                activate PLAT
+
+                    PLAT --> CTRL: organizationRepository
+                deactivate PLAT
+
+
+                CTRL -> OrganizationRepository: getOrganizationByHRMEmail(email)
+                activate OrganizationRepository
+
+                    loop [for each organization
+                        OrganizationRepository -> ORG : anyHRMHasEmail(email)
+                        activate ORG
+
+                             ORG --> OrganizationRepository : true/false
+                        deactivate ORG
+                    end
+                    OrganizationRepository --> CTRL : organization
+                deactivate OrganizationRepository
+
+                CTRL -> ORG: getHRMByEmail(email)
+                activate ORG
+
+                    ORG --> CTRL : hrm
+                deactivate ORG
+
+                CTRL --> CTRL : hrm
+            deactivate CTRL
+
+            |||
+            UI -> CTRL: generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
+            CTRL -> CTRL: generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
+            activate CTRL
+
+                CTRL -> EQUIPA**: create(generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills))
+                CTRL -> CTRL: filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills)
+
+                CTRL --> CTRL: qualifiedcollaborators
+
+            CTRL --> CTRL: team
+            deactivate CTRL
+
+                        CTRL --> UI: team
+                        deactivate CTRL
+
+            UI -> ADM: displays the team
+            ADM -> UI: either accepts or refuses the team
+            UI -> ADM: displays operation success
+
+deactivate ADM
+
+@enduml

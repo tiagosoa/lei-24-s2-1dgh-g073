@@ -1,0 +1,58 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":RegisterCollaboratorController" as CTRL
+participant ":collaboratorrepository\n:CollaboratorRepository" as CR
+participant "jobrepository\n:JobRepository" as JR
+participant "organization\n:Organization" as ORG
+participant "collaborator\n:Collaborator" as COLABORADOR
+
+
+autonumber 16
+
+autonumber 16.1
+activate CTRL
+
+    group Assign Job
+
+                        -> CTRL: assignJobToCollaborator(collaborator)
+
+                        CTRL -> CR: getCollaboratorByID(collaboratorID)
+                        activate CR
+
+                        CR --> CTRL: collaborator
+                        deactivate CR
+
+                        CTRL -> JR: getJobByName(jobName)
+                        activate JR
+
+                        JR --> CTRL: job
+                        deactivate JR
+
+                        CTRL -> COLABORADOR: addJob(job)
+
+                       ORG -> CR : addCollaborator (collaborator)
+
+
+
+
+                       ORG --> CTRL: collaborator
+
+                       deactivate ORG
+
+
+
+
+
+
+
+            deactivate ORG
+
+            <-- CTRL: collaborator
+
+deactivate ORG
+
+
+@enduml

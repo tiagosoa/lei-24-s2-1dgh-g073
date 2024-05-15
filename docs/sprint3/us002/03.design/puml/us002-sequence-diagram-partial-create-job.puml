@@ -1,0 +1,28 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "organization\n:Organization" as ORG
+participant "job\n:Job" as TAREFA
+participant "jobrepository\n:JobRepository" as SR
+
+-> ORG: createJob(jobname)
+
+activate ORG
+    group Create Job
+
+        ORG -> TAREFA**: createJob(jobname)
+        ORG -> ORG: validateJob(job)
+        ORG -> SR: addJob (job)
+
+
+
+
+    end
+
+    <-- ORG : job
+deactivate ORG
+
+
+@enduml

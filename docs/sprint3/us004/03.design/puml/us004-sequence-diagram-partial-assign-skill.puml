@@ -1,0 +1,31 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "organization\n:Organization" as ORG
+participant ":collaboratorrepository\n:CollaboratorRepository" as CR
+participant "Collaborator" as COLABORADOR
+
+    group Assign Skill
+            -> ORG: assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames)
+            activate ORG
+
+
+
+                    ORG -> ORG: validateSkill(selectedSkillNames)
+                    ORG -> ORG: validateCollaborator(collaboratorID)
+                ORG -> COLABORADOR: addskill(selectedSkillNames)
+                ORG -> CR: updateCollaborator(collaborator)
+
+
+               <-- ORG : assignedcollaborator
+
+            deactivate ORG
+
+
+                        deactivate ORG
+
+
+
+@enduml

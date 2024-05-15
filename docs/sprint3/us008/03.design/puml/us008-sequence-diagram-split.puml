@@ -1,0 +1,97 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Vehicle Fleet Manager" as ADM
+participant ":ProduceMaintenanceListUI" as UI
+participant ":ProduceMaintenanceListController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "vehicleRepository:\nVehicleRepository" as VR
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
+participant "organization\n:Organization" as ORG
+participant "list\n:List" as LISTA
+
+activate ADM
+
+        ADM -> UI : asks to list the vehicles that need maintenance
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+
+            UI -> CTRL : getVehicleRepository()
+            activate CTRL
+
+                CTRL -> PLAT : getVehicleRepository()
+                activate PLAT
+
+                    PLAT --> CTRL: vehicleRepository
+                deactivate PLAT
+
+                UI -> CTRL : getVehicles()
+                        activate CTRL
+
+                            CTRL -> PLAT : getVehicles()
+                            activate PLAT
+
+                                PLAT --> CTRL: vehicles
+                            deactivate PLAT
+
+
+
+        UI -> CTRL : produceMaintenanecList()
+        activate CTRL
+
+            |||
+            CTRL -> CTRL : getVFMFromSession()
+            activate CTRL
+
+             ref over CTRL
+              Get VFM
+
+              end
+                CTRL --> CTRL : vfm
+            deactivate CTRL
+
+            deactivate CTRL
+
+            deactivate CTRL
+
+            deactivate CTRL
+
+            |||
+            loop [for each vehicle
+                         ref over UI
+                          Get Vehicle Parts
+
+                          end
+
+            end
+            UI -> LISTA**: create
+
+            activate LISTA
+                         ref over LISTA
+                          Create List
+
+                          end
+
+                LISTA --> UI : maintenanceList
+
+            deactivate LISTA
+
+            UI --> ADM: displays maintenance list
+    deactivate UI
+
+deactivate ADM
+
+@enduml

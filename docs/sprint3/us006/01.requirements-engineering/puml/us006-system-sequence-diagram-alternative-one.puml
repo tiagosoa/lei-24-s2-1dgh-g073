@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "Vehicle and Equipment\nFleet Manager" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : asks to register a vehicle
+    activate System
+
+        System --> Employee : requests data (Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency, Plate Number, Last Maintenance Date)
+    deactivate System
+
+    Employee -> System : types requested data
+    activate System
+
+        System --> Employee : shows all data and requests confirmation
+    deactivate System
+
+    Employee -> System : confirms data
+    activate System
+
+        System --> Employee : displays operation success
+    deactivate System
+
+@enduml

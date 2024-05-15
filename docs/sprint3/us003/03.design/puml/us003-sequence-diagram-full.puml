@@ -1,0 +1,175 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as ADM
+participant ":RegisterCollaboratorUI" as UI
+participant ":RegisterCollaboratorController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant ":collaboratorrepository\n:CollaboratorRepository" as CR
+participant "jobrepository\n:JobRepository" as JR
+participant "repositories\n:Repositories" as PLAT
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
+participant "organization\n:Organization" as ORG
+participant "collaborator\n:Collaborator" as COLABORADOR
+
+activate ADM
+
+        ADM -> UI : asks to register a collaborator
+
+        activate UI
+
+'            UI --> ADM : requests data (name)
+            'create CTRL
+            UI -> CTRL** : create
+             UI -> CTRL : getCollaboratorRepository()
+             activate CTRL
+
+                     CTRL -> PLAT : getCollaboratorRepository()
+                             activate PLAT
+
+                         PLAT --> CTRL : collaboratorrepository
+                         deactivate PLAT
+
+                     UI -> CTRL: getJobRepository()
+
+                     CTRL -> PLAT : getJobRepository()
+                             activate PLAT
+
+                         PLAT --> CTRL : jobrepository
+                         deactivate PLAT
+                   deactivate CTRL
+
+    UI -> ADM : requests data (name, birthdate, admission date, address, \nmobile contact, email contact, taxpayer number, ID doc type, ID number)
+
+
+    ADM -> UI : types requested data
+
+                UI -> CTRL: getJobs()
+                activate CTRL
+
+                         CTRL -> JR: getJobs()
+                              activate JR
+
+                         JR --> CTRL: List<Jobs>
+                              deactivate JR
+
+                         CTRL --> UI: List<Jobs>
+            deactivate CTRL
+
+    UI -> ADM : shows job list and asks to select one
+
+    ADM -> UI : selects job
+
+
+        UI -> CTRL : registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, ID doc type, ID number, job)
+        activate CTRL
+
+            |||
+            CTRL -> CTRL : getHRMFromSession()
+            activate CTRL
+
+                CTRL -> _APP: getInstance()
+                activate _APP
+                    _APP -> CTRL: appSession
+                deactivate _APP
+
+
+                CTRL -> APP: getCurrentSession()
+                activate APP
+
+                    APP --> CTRL: currentSession
+                deactivate APP
+
+                CTRL -> SESSAO: email = getUserEmail()
+                activate SESSAO
+
+                    SESSAO --> CTRL: email
+                deactivate SESSAO
+
+
+                CTRL -> PLAT: getOrganizationRepository(email)
+                activate PLAT
+
+                    PLAT --> CTRL: organizationRepository
+                deactivate PLAT
+
+
+                CTRL -> OrganizationRepository: getOrganizationByHRMEmail(email)
+                activate OrganizationRepository
+
+                    loop [for each organization
+                        OrganizationRepository -> ORG : anyHRMHasEmail(email)
+                        activate ORG
+
+                             ORG --> OrganizationRepository : true/false
+                        deactivate ORG
+                    end
+                    OrganizationRepository --> CTRL : organization
+                deactivate OrganizationRepository
+
+                CTRL -> ORG: getHRMByEmail(email)
+                activate ORG
+
+                    ORG --> CTRL : hrm
+                deactivate ORG
+
+                CTRL --> CTRL : hrm
+deactivate CTRL
+
+            |||
+            CTRL -> ORG: registerCollaborator(name, birthdate, admission date, address, \nmobile contact, email contact, taxpayer number, ID doc type, ID number)
+            activate ORG
+                       
+                        ORG -> COLABORADOR**: create(name, birthdate, admission date, address, \nmobile contact, email contact, taxpayer number ID doc type, ID number)
+
+                        ORG -> ORG : validateCollaborator(collaborator)
+
+                        UI -> CTRL: assignJobToCollaborator(collaborator)
+
+                        CTRL -> CR: getCollaboratorByID(collaboratorID)
+                        activate CR
+
+                        CR --> CTRL: collaborator
+                        deactivate CR
+
+                        CTRL -> JR: getJobByName(jobName)
+                        activate JR
+
+                        JR --> CTRL: job
+                        deactivate JR
+
+                        CTRL -> COLABORADOR: addJob(job)
+
+                       ORG -> CR : addCollaborator (collaborator)
+
+
+                   
+
+                       ORG --> CTRL: collaborator
+
+                       deactivate ORG
+
+
+
+
+
+
+
+            deactivate ORG
+
+            CTRL --> UI: collaborator
+            deactivate CTRL
+            UI -> ADM: displays operation success
+    deactivate UI
+
+deactivate ADM
+
+@enduml

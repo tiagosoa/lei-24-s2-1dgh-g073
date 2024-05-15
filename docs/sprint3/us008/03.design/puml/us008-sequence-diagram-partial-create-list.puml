@@ -1,0 +1,18 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "list\n:List" as LISTA
+            -> LISTA**: create
+
+            activate LISTA
+            LISTA -> LISTA: String maintenanceData = String.format("%s %s %s %.0f %s %s",plateNumber, brand, model, currentKms, lastMaintenanceDate.toString(), nextMaintenanceDate.toString());
+            LISTA -> LISTA:                maintenanceList.add(maintenanceData);
+
+                <-- LISTA : maintenanceList
+
+            deactivate LISTA
+
+
+@enduml

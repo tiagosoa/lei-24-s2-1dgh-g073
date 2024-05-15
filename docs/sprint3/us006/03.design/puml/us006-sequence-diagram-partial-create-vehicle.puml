@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "organization\n:Organization" as ORG
+participant "vehicle\n:Vehicle" as Vehicle
+
+-> ORG: addVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate, vfm)
+
+activate ORG
+    group Create Vehicle
+
+        ORG -> Vehicle**: createVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate, vfm)
+        ORG -> ORG: addVehicle(vehicle)
+
+        activate ORG
+            ORG -> ORG: validateVehicle(vehicle)
+            deactivate ORG
+
+    end
+
+    <-- ORG : vehicle
+deactivate ORG
+
+
+@enduml

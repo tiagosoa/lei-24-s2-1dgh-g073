@@ -1,0 +1,28 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+participant ":TeamGeneratorController" as CTRL
+participant "team\n:Team" as EQUIPA
+
+
+
+            -> CTRL: generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
+                        CTRL -> CTRL: generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
+                        activate CTRL
+
+                            CTRL -> EQUIPA**: create(generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills))
+                            CTRL -> CTRL: filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills)
+
+                            CTRL --> CTRL: qualifiedcollaborators
+
+                        CTRL --> CTRL: team
+                        deactivate CTRL
+
+                                    <-- CTRL: team
+                                    deactivate CTRL
+@enduml

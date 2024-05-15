@@ -1,0 +1,75 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as ADM
+participant ":CreateJobUI" as UI
+participant ":CreateJobController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "jobrepository\n:JobRepository" as JR
+participant "repositories\n:Repositories" as PLAT
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
+participant "organization\n:Organization" as ORG
+participant "job\n:Job" as TAREFA
+
+activate ADM
+
+        ADM -> UI : asks to create a new job
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+            activate CTRL
+
+                CTRL -> RepositorySingleton : getJobRepository()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: jobrepository
+                deactivate RepositorySingleton
+                deactivate CTRL
+
+        UI --> ADM : requests name of job
+    deactivate UI
+
+    ADM -> UI : types requested name
+    activate UI
+
+        UI --> ADM : shows typed name
+    deactivate UI
+
+    ADM -> UI : submits name
+    activate UI
+
+    UI -> CTRL : createJob(jobname)
+    activate CTRL
+
+      ref over CTRL
+      Get HRM
+      end
+
+            |||
+            CTRL -> ORG: creatJob(name, hrm)
+            activate ORG
+            ref over ORG
+            Create Job
+            end
+                ORG -> CTRL: job
+deactivate ORG
+
+            CTRL --> UI: job
+            deactivate CTRL
+            UI --> ADM: displays operation success
+    deactivate UI
+
+deactivate ADM
+
+@enduml

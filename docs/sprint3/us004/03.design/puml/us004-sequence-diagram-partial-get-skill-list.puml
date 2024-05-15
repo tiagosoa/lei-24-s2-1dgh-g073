@@ -1,0 +1,22 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":AssignSkillController" as CTRL
+participant ":skillrepository\n:SkillRepository" as SR
+
+        -> CTRL: getSkillList()
+        activate CTRL
+
+        CTRL -> CR: getSkillList()
+        activate SR
+
+        SR -> CTRL: skills
+        deactivate SR
+
+        <- CTRL: skills
+        deactivate CTRL
+
+
+@enduml
