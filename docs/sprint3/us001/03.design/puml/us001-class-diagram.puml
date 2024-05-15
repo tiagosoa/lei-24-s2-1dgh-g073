@@ -26,10 +26,13 @@ class Skill {
 
 class SkillRepository {
   - List<Skill> skills
-  + Optional<Skill> add(Skill skill)
   + boolean validateSkill(Skill skill)
+  + boolean skillsDoNotContain(Skill skill)
+  + Optional<Skill> add(Skill skill)
+  + Optional<Skill> createSkill(String name)
   + List<Skill> getSkills()
   + Skill getSkillByName(String name)
+  + boolean addSkill(Skill skill)
 }
 
 class Organization {
@@ -38,10 +41,6 @@ class Organization {
   - String address
   - String phone
   - String email
-  + Optional<Skill> createSkill(String name)
-  + boolean addSkill(Skill skill)
-  + boolean validateSkill(Skill skill)
-  + boolean skillsDoNotContain(Skill skill)
   + boolean equals(Object o)
 }
 
@@ -60,8 +59,8 @@ class Repositories {
 }
 
 class CreateSkillController {
-  + CreateJobController(OrganizationRepository organizationRepository,
-                                   JobRepository jobRepository,
+  + CreateSkillController(OrganizationRepository organizationRepository,
+                                   SkillRepository skillRepository,
                                    AuthenticationRepository authenticationRepository)
   + Optional<Skill> createSkill(String name, HRM hrm)
 }
@@ -76,9 +75,6 @@ class HRM {
    - String email
    - int phonenumber
 }
-
-SkillManager --> Skill: Manages
-HRM --> SkillManager: Uses
 
 note right of CreateSkillController
   - Skill name is obtained from the HRM's input

@@ -81,39 +81,6 @@ class OrganizationTest {
         Organization organization = new Organization("123456789");
         assertEquals(organization, organization);
     }
-
-    @Test
-    void testThatCreateSkillWorks() {
-        Organization organization = new Organization("123456789");
-
-        HRM hrm = new HRM("john.doe@this.company.com");
-
-        Skill expected = new Skill("Skill Name");
-
-        Optional<Skill> skill =
-                organization.createSkill("Skill Name");
-
-        assertNotNull(skill);
-        assertTrue(skill.isPresent());
-        assertEquals(expected, skill.get());
-    }
-
-    @Test
-    void ensureAddingDuplicateSkillFails() {
-        //Arrange
-        Organization organization = new Organization("123456789");
-        HRM hrm = new HRM("john.doe@this.company.com");
-        //Add the first Skill
-        Optional<Skill> originalSkill =
-                organization.createSkill("Skill Name");
-
-        //Act
-        Optional<Skill> duplicateSkill =
-                organization.createSkill("Skill Name");
-
-        //Assert
-        assertTrue(duplicateSkill.isEmpty());
-    }
     @Test
     void testThatCreateJobWorks() {
         Organization organization = new Organization("123456789");
@@ -276,7 +243,6 @@ class OrganizationTest {
         Organization organization = new Organization("123456789");
         HRM hrm = new HRM("john.doe@this.company.com");
         organization.addHRM(hrm);
-        organization.createSkill("Skill Name");
 
         Organization clone = organization.clone();
         assertEquals(organization, clone);
@@ -334,7 +300,6 @@ class OrganizationTest {
         Organization organization = new Organization("123456789");
         VFM vfm = new VFM("john.doe@this.company.com");
         organization.addVFM(vfm);
-        organization.createSkill("Skill Name");
 
         Organization clone = organization.clone();
         assertEquals(organization, clone);

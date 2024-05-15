@@ -27,6 +27,10 @@ class Skill {
     name
 }
 
+class SkillRepository {
+    skills
+}
+
 'class User {
 '    name
 '    email
@@ -35,7 +39,8 @@ class Skill {
 
 'Platform "1" -- "*" HRM : has registered >
 'Platform "1" -- "*" Category : defines >
-HRM "1" - "1...*" Skill: creates >
+HRM "1" - "*" Skill: creates >
+Skill "1" - "1" SkillRepository: saved in >
 'Skill "*" -- "1" HRM: created by >
 'HRM "0..1" -- "1" User: acts as >
 @enduml

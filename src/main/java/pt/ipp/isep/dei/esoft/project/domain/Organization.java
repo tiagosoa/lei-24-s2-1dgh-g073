@@ -113,20 +113,6 @@ public class Organization {
     }
 
     /**
-     * Creates a new skill and adds it to the organization.
-     *
-     * @param name the name of the skill
-     * @return an optional containing the created skill, or empty if creation fails
-     */
-    public Optional<Skill> createSkill(String name) {
-        Skill skill = new Skill(name);
-        if (addSkill(skill)) {
-            return Optional.of(skill);
-        }
-        return Optional.empty();
-    }
-
-    /**
      * Creates a new vehicle and adds it to the organization.
      *
      * @param model                the model of the vehicle
@@ -204,14 +190,6 @@ public class Organization {
 
     // Private helper methods for adding entities
 
-    private boolean addSkill(Skill skill) {
-
-        if (validateSkill(skill)) {
-            return skills.add(skill.clone());
-        }
-        return false;
-    }
-
     private boolean addJob(Job job) {
         if (validateJob(job)) {
             return jobs.add(job.clone());
@@ -241,10 +219,6 @@ public class Organization {
     }
 
     // Private helper methods for entity validation
-
-    private boolean validateSkill(Skill skill) {
-        return !skills.contains(skill);
-    }
 
     private boolean validateVehicle(Vehicle vehicle) {
         return !vehicles.contains(vehicle);

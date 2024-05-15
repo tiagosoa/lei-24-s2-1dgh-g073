@@ -23,7 +23,7 @@ public class CreateSkillUI implements Runnable {
      */
     public CreateSkillUI() {
         controller = new CreateSkillController();
-        this.skillRepository = Repositories.getInstance().getSkillRepository();
+        this.skillRepository = getController().getSkillRepository();
     }
 
     /**
@@ -50,9 +50,7 @@ public class CreateSkillUI implements Runnable {
      * Submit the data entered by the user to create a new skill.
      */
     private void submitData() {
-
-        HRM hrm = getController().getHRMFromSession();
-        Optional<Skill> skill = getController().createSkill(skillName, hrm);
+        Optional<Skill> skill = getController().createSkill(skillName);
 
         if (skill.isPresent()) {
             skillRepository.add(skill.get());

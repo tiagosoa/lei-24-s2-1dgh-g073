@@ -65,6 +65,28 @@ public class SkillRepository {
     }
 
     /**
+     * Creates a new skill and adds it to the organization.
+     *
+     * @param name the name of the skill
+     * @return an optional containing the created skill, or empty if creation fails
+     */
+    public Optional<Skill> createSkill(String name) {
+        Skill skill = new Skill(name);
+        if (addSkill(skill)) {
+            return Optional.of(skill);
+        }
+        return Optional.empty();
+    }
+
+    private boolean addSkill(Skill skill) {
+        if (validateSkill(skill)) {
+            return skills.add(skill.clone());
+        }
+        return false;
+    }
+
+
+    /**
      * Validates if a Skill can be added to the repository.
      *
      * @param skill The Skill to validate.
