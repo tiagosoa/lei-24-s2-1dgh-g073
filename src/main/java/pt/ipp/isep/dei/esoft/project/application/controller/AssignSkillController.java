@@ -24,10 +24,11 @@ public class AssignSkillController {
      * Default constructor that initializes the repositories.
      */
     public AssignSkillController() {
-        this.organizationRepository = getOrganizationRepository();
-        this.skillRepository = getSkillRepository();
-        this.collaboratorRepository = getCollaboratorRepository();
-        this.authenticationRepository = getAuthenticationRepository();
+        Repositories repositories = Repositories.getInstance();
+        this.organizationRepository = repositories.getOrganizationRepository();
+        this.skillRepository = repositories.getSkillRepository();
+        this.collaboratorRepository = repositories.getCollaboratorRepository();
+        this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
     /**
@@ -53,7 +54,7 @@ public class AssignSkillController {
      *
      * @return SkillRepository instance
      */
-    private SkillRepository getSkillRepository() {
+    public SkillRepository getSkillRepository() {
         if (skillRepository == null) {
             Repositories repositories = Repositories.getInstance();
             skillRepository = repositories.getSkillRepository();
@@ -66,7 +67,7 @@ public class AssignSkillController {
      *
      * @return CollaboratorRepository instance
      */
-    private CollaboratorRepository getCollaboratorRepository() {
+    public CollaboratorRepository getCollaboratorRepository() {
         if (collaboratorRepository == null) {
             Repositories repositories = Repositories.getInstance();
             collaboratorRepository = repositories.getCollaboratorRepository();

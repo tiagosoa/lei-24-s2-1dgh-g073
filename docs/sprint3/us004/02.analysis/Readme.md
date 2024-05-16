@@ -13,7 +13,10 @@ Attributes include only the name.
 
 ### Collaborator:
 Receives skill assignments.
-Attributes include name, birthdate, admission date, address, contact info (mobile and email), ID doc type and a respective number.
+Attributes include name, birthdate, admission date, address, contact info (mobile and email), taxpayer number ID doc type and a respective number.
+
+### Collaborator:
+Stores saved/updated collaborators
 
 ### 2.2. System Interactions Based on Domain Model
 

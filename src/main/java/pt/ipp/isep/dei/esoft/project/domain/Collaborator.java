@@ -27,7 +27,7 @@ public class Collaborator {
      * Constructor for Collaborator class.
      *
      * @param name          the name of the collaborator
-     * @param birthdate     the birth date of the collaborator
+     * @param birthdate     the birthdate of the collaborator
      * @param admissiondate the admission date of the collaborator
      * @param address       the address of the collaborator
      * @param mobile        the mobile number of the collaborator
@@ -54,7 +54,7 @@ public class Collaborator {
      * Validates the input parameters for creating a collaborator.
      *
      * @param name         the name of the collaborator
-     * @param birthdate    the birth date of the collaborator
+     * @param birthdate    the birthdate of the collaborator
      * @param admissiondate the admission date of the collaborator
      * @param address      the address of the collaborator
      * @param mobile       the mobile number of the collaborator
@@ -102,7 +102,6 @@ public class Collaborator {
     public boolean addSkill(Skill skill) {
         if (!skills.contains(skill)) {
             skills.add(skill);
-            skill.addCollaborator(this);
             return true;
         }
         return false;

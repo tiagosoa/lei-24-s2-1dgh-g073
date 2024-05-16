@@ -10,7 +10,7 @@ _**Note that SSD - Alternative One is adopted.**_
 |:---------------|:----------------------------------------------|:-------------------------------|:--------------------------------------------------------------------------------------------------------------|
 | Step 1  		     | 	... interacting with the actor?              | RegisterCollaboratorUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
 | 			  		        | 	... coordinating the US?                     | RegisterCollaboratorController | Controller                                                                                                    |
-| 			  		        | 	... registering a new Collaborator?          | CollaboratorRepository         | Creator (Rule 1): in the DM CollaboratorRepository has a Collaborator.                                        |
+| 			  		        | 	... instantiating a new Collaborator?        | CollaboratorRepository         | Creator (Rule 1): in the DM CollaboratorRepository has a Collaborator.                                        |
 | 			  		        | ... knowing the user using the system?        | UserSession                    | IE: cf. A&A component documentation.                                                                          |
 | 			  		        | 							                                       | CollaboratorRepository         | IE: knows/has its own HRMs/Collaborators                                                                      |
 | 			  		        | 							                                       | HRM                            | IE: knows its own data (e.g. email)                                                                           |
