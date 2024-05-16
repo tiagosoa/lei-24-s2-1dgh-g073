@@ -6,37 +6,35 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for...  | Answer                   | Justification (with patterns)                                                                                 |
-|:---------------|:---------------------------------------------|:-------------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1         | ... interacting with the actor?              | :TeamGeneratorUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                | ... coordinating the team generation?        | :TeamGeneratorController | Controller                                                                                                    |
-|                | ... instantiating a new team?                | :Organization            | Creator (Rule 1): in the Domain Model, Organization has a Team.                                               |
-|                | ... retrieving user session data?            | :ApplicationSession      | IE: responsible for managing application session data.                                                        |
-|                | ... accessing organization data?             | :Organization            | IE: Organization class encapsulates its own data.                                                             |
-| Step 2         | ... checking team size?                      | :TeamGeneratorController | Controller                                                                                                    |
-| Step 3         | ... saving the inputted data?                | :Organization            | IE: Organization class holds data relevant to team creation.                                                  |
-| Step 4         | ... knowing the required skills?             | :TeamGeneratorController | Controller                                                                                                    |
-| Step 5         | ... saving the selected skills?              | :Organization            | IE: Organization class holds data relevant to team creation.                                                  |
-| Step 6         |                                              |                          |                                                                                                               |
-| Step 7         | ... retrieving collaborator data?            | :CollaboratorRepository  | Repository: responsible for accessing collaborator data.                                                      |
-|                | ... selecting suitable collaborators?        | :CollaboratorRepository  | Repository: responsible for selecting collaborators based on criteria.                                        |
-|                | ... adding selected collaborators?           | :Organization            | IE: Organization class manages its own collaborators.                                                         |
-|                | ... validating all data (global validation)? | :Organization            | IE: Organization class validates team proposal data.                                                          |
-|                | ... validating all data (local validation)?  | Task                     | IE: owns its data                                                                                             |
-| Step 8         | ... informing operation success?             | :TeamGeneratorUI         | Pure Fabrication: UI is responsible for user interactions and feedback.                                       |
+| Interaction ID | Question: Which class is responsible for...  | Answer                  | Justification (with patterns)                                                                                 |
+|:---------------|:---------------------------------------------|:------------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1         | ... interacting with the actor?              | :GenerateTeamUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+|                | ... coordinating the team generation?        | :GenerateTeamController | Controller                                                                                                    |
+|                | ... instantiating a new team?                | :CollaboratorRepository | Creator (Rule 1): in the Domain Model, CollaboratorRepository has a Team.                                     |
+|                | ... retrieving user session data?            | :ApplicationSession     | IE: responsible for managing application session data.                                                        |
+| Step 2         | ... checking team size?                      | :GenerateTeamController | Controller                                                                                                    |
+| Step 3         | ... saving the inputted data?                | :CollaboratorRepository | IE: CollaboratorRepository class holds data relevant to team creation.                                        |
+| Step 4         | ... knowing the required skills?             | :GenerateTeamController | Controller                                                                                                    |
+| Step 5         | ... saving the selected skills?              | :CollaboratorRepository | IE: CollaboratorRepository class holds data relevant to team creation.                                        |
+| Step 6         | ... retrieving collaborator data?            | :CollaboratorRepository | Repository: responsible for accessing collaborator data.                                                      |
+|                | ... selecting suitable collaborators?        | :CollaboratorRepository | Repository: responsible for selecting collaborators based on criteria.                                        |
+|                | ... adding selected collaborators?           | :CollaboratorRepository | IE: CollaboratorRepository class manages its own collaborators.                                               |
+|                | ... validating all data (global validation)? | :CollaboratorRepository | IE: CollaboratorRepository class validates team proposal data.                                                |
+|                | ... showing the generated team?              | :GenerateTeamUI         | IE: UI is responsible for user interactions                                                                   |
+| Step 7         | ... receiving the user's input?              | :GenerateTeamUI         | IE: UI is responsible for user interactions                                                                                                              |
+| Step 8         | ... informing operation success?             | :GenerateTeamUI         | IE: UI is responsible for user interactions                                                                   |
 
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are: 
 
-* Organization
-* Team
+* CollaboratorRepository
 
 Other software classes (i.e. Pure Fabrication) identified: 
 
-* TeamGeneratorUI  
-* TeamGeneratorController
+* GenerateTeamUI  
+* GenerateTeamController
 
 
 ## 3.2. Sequence Diagram (SD)
@@ -59,17 +57,9 @@ It uses Interaction Occurrence (a.k.a. Interaction Use).
 
 ### Partial Diagrams
 
-**Get Required Skills**
-
-![Sequence Diagram - Partial - Get Required Skills](svg/us005-sequence-diagram-partial-get-required-skills.svg)
-
 **Get HRM**
 
 ![Sequence Diagram - Partial - Get HRM](svg/us005-sequence-diagram-partial-get-hrm.svg)
-
-**Get Collaborators**
-
-![Sequence Diagram - Partial - Get Collaborators](svg/us005-sequence-diagram-partial-get-collaborators.svg)
 
 **Generate Team**
 

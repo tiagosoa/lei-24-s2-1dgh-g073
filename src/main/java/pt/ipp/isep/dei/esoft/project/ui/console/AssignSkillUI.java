@@ -69,6 +69,19 @@ public class AssignSkillUI implements Runnable {
 
     private void submitData(){
         assert collaborator != null;
+        System.out.println("Selected Collaborator: " + collaborator.getName());
+        System.out.println("Selected Skills:");
+        for (String skillName : skillNames) {
+            System.out.println("- " + skillName);
+        }
+        System.out.println("Are these correct?");
+        String yesno;
+        do {
+            yesno = scanner.nextLine();
+            if (yesno.equals("no")) {
+                requestData();
+            }
+        } while (!(yesno.equals("no") || yesno.equals("yes")));
         getController().assignSkillsToCollaborator(collaborator.getIDNumber(), skillNames);
         System.out.println("Skills assigned successfully to " + collaborator.getName());
     }

@@ -6,11 +6,11 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-participant ":TeamGeneratorUI" as UI
+participant ":SkillRepository" as SR
 
 
-activate UI
-UI -> UI : parseSkills(String inputSkills)
-    UI --> UI : requiredskills
+activate SR
+-> SR : parseSkills(String inputSkills)
+    <-- SR : requiredskills
 
 @enduml

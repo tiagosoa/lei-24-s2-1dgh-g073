@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +116,31 @@ public class CollaboratorRepository {
     }
 
     /**
+     * Filters a list of collaborators based on required skills.
+     *
+     * @param collaborators     the list of collaborators to filter
+     * @param requiredSkills    the list of required skills
+     * @return a list of collaborators with all required skills
+     */
+    public List<Collaborator> filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills) {
+        List<Collaborator> qualifiedCollaborators = new ArrayList<>();
+        for (Collaborator collaborator : collaborators) {
+            List<Skill> collaboratorSkills = collaborator.getSkills();
+            boolean hasAllRequiredSkills = true;
+            for (Skill requiredSkill : requiredSkills) {
+                if (!collaboratorSkills.contains(requiredSkill)) {
+                    hasAllRequiredSkills = false;
+                    break;
+                }
+            }
+            if (hasAllRequiredSkills) {
+                qualifiedCollaborators.add(collaborator);
+            }
+        }
+        return qualifiedCollaborators;
+    }
+
+    /**
      * Returns a defensive (immutable) copy of the list of collaborators.
      *
      * @return The list of collaborators.
@@ -122,5 +148,21 @@ public class CollaboratorRepository {
     public List<Collaborator> getCollaboratorList() {
         // This is a defensive copy, so that the repository cannot be modified from the outside.
         return List.copyOf(collaborators);
+    }
+
+    public List<Collaborator> generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills) {
+        List<Collaborator> allCollaborators = getCollaboratorList();
+        List<Collaborator> qualifiedCollaborators = filterCollaboratorsBySkills(allCollaborators, requiredSkills);
+
+        if (qualifiedCollaborators.size() < minTeamSize) {
+            throw new IllegalArgumentException("Not enough qualified collaborators available.");
+        }
+
+        List<Collaborator> team = new ArrayList<>();
+        for (int i = 0; i < maxTeamSize && i < qualifiedCollaborators.size(); i++) {
+            team.add(qualifiedCollaborators.get(i));
+        }
+
+        return team;
     }
 }

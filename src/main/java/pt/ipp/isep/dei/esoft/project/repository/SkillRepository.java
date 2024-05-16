@@ -77,6 +77,15 @@ public class SkillRepository {
         return !skills.contains(skill);
     }
 
+    public List<Skill> parseSkills(String inputSkills) {
+        String[] skillsArray = inputSkills.split(";");
+        List<Skill> skillsList = new ArrayList<>();
+        for (String skillName : skillsArray) {
+            skillsList.add(new Skill(skillName.trim()));
+        }
+        return skillsList;
+    }
+
     /**
      * Returns a defensive (immutable) copy of the list of skills.
      *

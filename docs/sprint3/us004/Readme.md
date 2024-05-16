@@ -1,4 +1,4 @@
-# US001 - Create a Skill 
+# US004 - Assign a Skill 
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

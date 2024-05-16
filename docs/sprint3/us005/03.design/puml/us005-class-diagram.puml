@@ -50,7 +50,6 @@ class GenerateTeamController {
   + AuthenticationRepository getAuthenticationRepository()
   + SkillRepository getSkillRepository()
   + List<Collaborator> generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
-  + List<Collaborator> filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills)
   + HRM getHRMFromSession()
 }
 
@@ -61,18 +60,25 @@ class Repositories {
   + getSkillRepository() : SkillRepository
 }
 
-class CollaboratorRepository {
-  + List<Collaborator> findAll()
-  + Team selectCollaborators(List<RequiredSkills>)
-}
+ class CollaboratorRepository {
+   - List<Collaborator> collaborators
+   + Optional<Collaborator> addCollaborator(Collaborator collaborator)
+   + Collaborator getCollaboratorByID(int IDnumber)
+   + List<Collaborator> getCollaboratorList()
+   + Optional<Collaborator> registerCollaborator( \nname: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \ntaxpayer: int, \nIDdoctype: String, \nIDnumber: int)
+   + boolean validateCollaborator(Collaborator collaborator)
+   + void updateCollaborator(Collaborator collaborator)
+   + List<Collaborator> filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills)
+ }
 
-class Organization {
-  - String name
-  - String vatNumber
-  - List<Collaborator> collaborators
-  - List<Skill> skills
-  + findCollaboratorByID(String id) : Collaborator
-}
+ class Organization {
+   - String name
+   - String vatNumber
+   - String address
+   - String phone
+   - String email
+ }
+
 
 class GenerateTeamUI {
    + List<Skill> parseSkills(String inputSkills)
