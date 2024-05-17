@@ -3,25 +3,26 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "organization\n:Organization" as ORG
+participant "vehicleRepository\n:VehicleRepository" as VR
 participant "vehicle\n:Vehicle" as Vehicle
 
--> ORG: addVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate, vfm)
+-> VR: addVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate, vfm)
 
-activate ORG
+activate VR
     group Create Vehicle
 
-        ORG -> Vehicle**: createVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate, vfm)
-        ORG -> ORG: addVehicle(vehicle)
+        VR -> Vehicle**: createVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, \nvehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate)
+                activate VR
+                    VR -> VR: validateVehicle(vehicle)
+        VR -> VR: addVehicle(vehicle)
 
-        activate ORG
-            ORG -> ORG: validateVehicle(vehicle)
-            deactivate ORG
+
+            deactivate VR
 
     end
 
-    <-- ORG : vehicle
-deactivate ORG
+    <-- VR : vehicle
+deactivate VR
 
 
 @enduml

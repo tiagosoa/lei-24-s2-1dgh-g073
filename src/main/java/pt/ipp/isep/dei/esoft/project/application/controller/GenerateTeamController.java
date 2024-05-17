@@ -22,10 +22,11 @@ public class GenerateTeamController {
      * Default constructor that initializes repositories.
      */
     public GenerateTeamController() {
-        this.organizationRepository = getOrganizationRepository();
-        this.collaboratorRepository = getCollaboratorRepository();
-        this.authenticationRepository = getAuthenticationRepository();
-        this.skillRepository = getSkillRepository();
+        Repositories repositories = Repositories.getInstance();
+        this.organizationRepository = repositories.getOrganizationRepository();
+        this.skillRepository = repositories.getSkillRepository();
+        this.collaboratorRepository = repositories.getCollaboratorRepository();
+        this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
     /**
@@ -53,7 +54,7 @@ public class GenerateTeamController {
      *
      * @return the collaborator repository
      */
-    private CollaboratorRepository getCollaboratorRepository() {
+    public CollaboratorRepository getCollaboratorRepository() {
         return collaboratorRepository == null ? Repositories.getInstance().getCollaboratorRepository() : collaboratorRepository;
     }
 
@@ -80,7 +81,7 @@ public class GenerateTeamController {
      *
      * @return the skill repository
      */
-    private SkillRepository getSkillRepository() {
+    public SkillRepository getSkillRepository() {
         return skillRepository == null ? Repositories.getInstance().getSkillRepository() : skillRepository;
     }
 
@@ -98,44 +99,7 @@ public class GenerateTeamController {
             throw new IllegalArgumentException("Invalid input parameters.");
         }
 
-        List<Collaborator> allCollaborators = collaboratorRepository.getCollaboratorList();
-        List<Collaborator> qualifiedCollaborators = filterCollaboratorsBySkills(allCollaborators, requiredSkills);
-
-        if (qualifiedCollaborators.size() < minTeamSize) {
-            throw new IllegalArgumentException("Not enough qualified collaborators available.");
-        }
-
-        List<Collaborator> team = new ArrayList<>();
-        for (int i = 0; i < maxTeamSize && i < qualifiedCollaborators.size(); i++) {
-            team.add(qualifiedCollaborators.get(i));
-        }
-
-        return team;
-    }
-
-    /**
-     * Filters a list of collaborators based on required skills.
-     *
-     * @param collaborators     the list of collaborators to filter
-     * @param requiredSkills    the list of required skills
-     * @return a list of collaborators with all required skills
-     */
-    private List<Collaborator> filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills) {
-        List<Collaborator> qualifiedCollaborators = new ArrayList<>();
-        for (Collaborator collaborator : collaborators) {
-            List<Skill> collaboratorSkills = collaborator.getSkills();
-            boolean hasAllRequiredSkills = true;
-            for (Skill requiredSkill : requiredSkills) {
-                if (!collaboratorSkills.contains(requiredSkill)) {
-                    hasAllRequiredSkills = false;
-                    break;
-                }
-            }
-            if (hasAllRequiredSkills) {
-                qualifiedCollaborators.add(collaborator);
-            }
-        }
-        return qualifiedCollaborators;
+        return collaboratorRepository.generateTeam(maxTeamSize, minTeamSize, requiredSkills);
     }
 
     /**

@@ -6,23 +6,24 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-participant ":TeamGeneratorController" as CTRL
+participant ":collaboratorRepository\n:CollaboratorRepository" as CR
 participant "team\n:Team" as EQUIPA
 
 
 
-            -> CTRL: generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
-                        CTRL -> CTRL: generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
-                        activate CTRL
+            -> CR: generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
+                        activate CR
 
-                            CTRL -> EQUIPA**: create(generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills))
-                            CTRL -> CTRL: filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills)
+                            CR -> CR: filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills)
+                            activate CR
 
-                            CTRL --> CTRL: qualifiedcollaborators
+                            CR --> CR: qualifiedcollaborators
+                            deactivate CR
 
-                        CTRL --> CTRL: team
-                        deactivate CTRL
+                            CR -> EQUIPA**: create
 
-                                    <-- CTRL: team
-                                    deactivate CTRL
+                            CR -> EQUIPA: add(qualifiedCollaborators.get(i));
+
+                        <-- CR : team
+                        deactivate CR
 @enduml

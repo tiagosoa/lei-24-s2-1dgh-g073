@@ -18,14 +18,19 @@ public class GenerateTeamUI implements Runnable {
     private CollaboratorRepository collaboratorRepository;
     private SkillRepository skillRepository;
     private final Scanner scanner;
+    private List<Skill> requiredSkills;
+
+    private int minTeamSize;
+
+    private int maxTeamSize;
 
     /**
      * Constructor for the GenerateTeamUI class.
      */
     public GenerateTeamUI() {
         controller = new GenerateTeamController();
-        this.collaboratorRepository = new CollaboratorRepository();
-        this.skillRepository = new SkillRepository();
+        this.collaboratorRepository = getController().getCollaboratorRepository();
+        this.skillRepository = getController().getSkillRepository();
         this.scanner = new Scanner(System.in);
     }
 
@@ -39,11 +44,17 @@ public class GenerateTeamUI implements Runnable {
     public void run() {
         Scanner scanner = new Scanner(System.in);
 
+        requestData();
+
+        submitData();
+    }
+
+    private void requestData(){
         System.out.println("Enter the minimum team size:");
-        int minTeamSize = scanner.nextInt();
+        minTeamSize = scanner.nextInt();
 
         System.out.println("Enter the maximum team size:");
-        int maxTeamSize = scanner.nextInt();
+        maxTeamSize = scanner.nextInt();
 
         scanner.nextLine(); // Consume newline
         if (minTeamSize >= maxTeamSize || minTeamSize <= 0 || maxTeamSize <= 0) {
@@ -51,23 +62,26 @@ public class GenerateTeamUI implements Runnable {
         }
         System.out.println("Enter the required skills separated by semicolons:");
         String inputSkills = scanner.nextLine();
-        List<Skill> requiredSkills = parseSkills(inputSkills);
+        requiredSkills = skillRepository.parseSkills(inputSkills);
+    }
 
+    private void submitData() {
         try {
             List<Collaborator> team = getController().generateTeam(maxTeamSize, minTeamSize, requiredSkills);
             displayTeam(team);
+            System.out.print("Do you accept this team? (yes/no): ");
+            String yesno;
+            do {
+                yesno = scanner.nextLine();
+            } while (!(yesno.equals("no") || yesno.equals("yes")));
+            if (yesno.equals("yes")) {
+                System.out.println("Team accepted.");
+            } else {
+                System.out.println("Team rejected.");
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
-    }
-
-    private List<Skill> parseSkills(String inputSkills) {
-        String[] skillsArray = inputSkills.split(";");
-        List<Skill> skillsList = new ArrayList<>();
-        for (String skillName : skillsArray) {
-            skillsList.add(new Skill(skillName.trim()));
-        }
-        return skillsList;
     }
 
     private void displayTeam(List<Collaborator> team) {

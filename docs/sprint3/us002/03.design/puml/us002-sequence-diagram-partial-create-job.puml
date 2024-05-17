@@ -3,26 +3,30 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "organization\n:Organization" as ORG
-participant "job\n:Job" as TAREFA
-participant "jobrepository\n:JobRepository" as SR
 
--> ORG: createJob(jobname)
+participant "jobrepository\n:JobRepository" as JR
+participant "job\n:Job" as TRABALHO
 
-activate ORG
     group Create Job
 
-        ORG -> TAREFA**: createJob(jobname)
-        ORG -> ORG: validateJob(job)
-        ORG -> SR: addJob (job)
+                    -> JR: createJob(jobname)
+                    activate JR
+
+                        JR -> TRABALHO**: createJob(jobname)
+
+                        JR -> JR: validateJob(job)
+
+                        JR -> JR: addJob(job)
+
+
+                        <-- JR  : job
+
+                    deactivate JR
 
 
 
 
     end
-
-    <-- ORG : job
-deactivate ORG
 
 
 @enduml

@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.GSM;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
 import pt.ipp.isep.dei.esoft.project.domain.VFM;
@@ -61,6 +62,25 @@ public class OrganizationRepository {
     }
 
     /**
+     * Retrieves an organization by its associated GSM.
+     *
+     * @param gsm The GSM associated with the organization.
+     * @return An optional containing the organization if found, or an empty optional otherwise.
+     */
+    public Optional<Organization> getOrganizationByGSM(GSM gsm) {
+
+        Optional<Organization> returnOrganization = Optional.empty();
+
+        for (Organization organization : organizations) {
+            if (organization.employs(gsm)) {
+                returnOrganization = Optional.of(organization);
+            }
+        }
+
+        return returnOrganization;
+    }
+
+    /**
      * Retrieves an organization by the email of one of its HRMs.
      *
      * @param email The email of the HRM associated with the organization.
@@ -80,9 +100,9 @@ public class OrganizationRepository {
     }
 
     /**
-     * Retrieves an organization by the email of one of its VFMs.
+     * Retrieves an organization by the email of one of its GSMs.
      *
-     * @param email The email of the VFM associated with the organization.
+     * @param email The email of the GSM associated with the organization.
      * @return An optional containing the organization if found, or an empty optional otherwise.
      */
     public Optional<Organization> getOrganizationByVFMEmail(String email) {
@@ -90,7 +110,7 @@ public class OrganizationRepository {
         Optional<Organization> returnOrganization = Optional.empty();
 
         for (Organization organization : organizations) {
-            if (organization.anyVFMHasEmail(email)) {
+            if (organization.anyGSMHasEmail(email)) {
                 returnOrganization = Optional.of(organization);
             }
         }

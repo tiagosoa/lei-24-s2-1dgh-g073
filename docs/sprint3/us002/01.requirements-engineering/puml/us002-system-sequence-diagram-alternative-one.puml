@@ -7,27 +7,27 @@ title System Sequence Diagram (SSD) - US02 Alternative One
 
 autonumber
 
-actor "Human Resources Manager" as Employee
+actor "Human Resources Manager" as HRM
 participant ":System" as System
 
-activate Employee
+activate HRM
 
-    Employee -> System : asks to register a new job
+    HRM -> System : asks to register a new job
     activate System
 
-        System --> Employee : requests job data (name)
+        System --> HRM : requests job name
     deactivate System
 
-    Employee -> System : types requested job data
+    HRM -> System : types requested job name
     activate System
 
-    System --> Employee : shows all data and requests confirmation
+    System --> HRM : shows all data and requests confirmation
     deactivate System
 
-    Employee -> System : confirms data
+    HRM -> System : confirms data
     activate System
 
-        System --> Employee : displays operation success
+        System --> HRM : displays operation success
     deactivate System
 
 @enduml
@@ -40,33 +40,33 @@ title System Sequence Diagram (SSD) - US03 Alternative Two
 
 autonumber
 
-actor "Human Resources Management" as Employee
+actor "Human Resources Management" as HRM
 participant ":System" as System
 
-activate Employee
+activate HRM
 
-    Employee -> System : asks to register a collaborator to a job
+    HRM -> System : asks to register a collaborator to a job
     activate System
 
-        System --> Employee : shows job categories list and asks to select one
+        System --> HRM : shows job categories list and asks to select one
     deactivate System
 
-    Employee -> System : selects job category
+    HRM -> System : selects job category
     activate System
 
-        System --> Employee : shows employees and asks to assign one to the job
+        System --> HRM : shows employees and asks to assign one to the job
     deactivate System
 
-    Employee -> System : selects employee
+    HRM -> System : selects employee
     activate System
 
-        System --> Employee : shows all data and requests confirmation
+        System --> HRM : shows all data and requests confirmation
     deactivate System
 
-    Employee -> System : confirms data
+    HRM -> System : confirms data
     activate System
 
-        System --> Employee : displays operation success
+        System --> HRM : displays operation success
     deactivate System
 @enduml
 @startuml
@@ -78,33 +78,33 @@ title System Sequence Diagram (SSD) - US02 Alternative One
 
 autonumber
 
-actor "Human Resources Manager" as Employee
+actor "Human Resources Manager" as HRM
 participant ":System" as System
 
-activate Employee
+activate HRM
 
-    Employee -> System : asks to register a new job
+    HRM -> System : asks to register a new job
     activate System
 
-        System --> Employee : requests job data (i.e. job type, duration, cost, description)
+        System --> HRM : requests job data (i.e. job type, duration, cost, description)
     deactivate System
 
-    Employee -> System : types requested job data
+    HRM -> System : types requested job data
     activate System
 
-        System --> Employee : shows jobs category list and asks to select one
+        System --> HRM : shows jobs category list and asks to select one
     deactivate System
 
-    Employee -> System : selects one job category
+    HRM -> System : selects one job category
     activate System
 
-        System --> Employee : shows all data and requests confirmation
+        System --> HRM : shows all data and requests confirmation
     deactivate System
 
-    Employee -> System : confirms data
+    HRM -> System : confirms data
     activate System
 
-        System --> Employee : displays operation success
+        System --> HRM : displays operation success
     deactivate System
 
 @enduml

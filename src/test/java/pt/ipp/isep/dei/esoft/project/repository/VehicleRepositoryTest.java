@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import org.junit.jupiter.api.Test;
+import pt.ipp.isep.dei.esoft.project.domain.HRM;
+import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 import pt.ipp.isep.dei.esoft.project.domain.VFM;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 
@@ -42,6 +44,25 @@ class VehicleRepositoryTest {
         vehicleRepository.add(vehicle);
     }
 
+    @Test
+    void testThatCreateVehicleWorks() {
+        VehicleRepository vehicleRepository = new VehicleRepository();
+
+        HRM hrm = new HRM("john.doe@this.company.com");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
+        LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
+        LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
+
+        Vehicle expected = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
+
+        Optional<Vehicle> vehicle =
+                vehicleRepository.createVehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
+
+        assertNotNull(vehicle);
+        assertTrue(vehicle.isPresent());
+        assertEquals(expected, vehicle.get());
+    }
     @Test
     void ensureGetVehicleForExistingVehicle() {
         VehicleRepository vehicleRepository = new VehicleRepository();

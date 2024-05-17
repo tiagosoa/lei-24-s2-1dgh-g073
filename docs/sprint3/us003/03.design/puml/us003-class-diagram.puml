@@ -34,12 +34,14 @@ class Collaborator {
 }
 
  class CollaboratorRepository {
-   - List<Job>: jobs
+   - List<Collaborator> collaborators
    + Optional<Collaborator> add(Collaborator collaborator)
    + Collaborator getCollaboratorByID(int IDnumber)
-   + List<Collaborator> getCollaborators()
+   + List<Collaborator> getCollaboratorList()
+   + addCollaborator(Collaborator collaborator)
+   + Optional<Collaborator> registerCollaborator( \nname: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \ntaxpayer: int, \nIDdoctype: String, \nIDnumber: int)
    + boolean validateCollaborator(Collaborator collaborator)
-   + void updateCollaborator(Collaborator collaboratorToUpdate)
+   + void updateCollaborator(Collaborator collaborator)
  }
 
  class Organization {
@@ -48,11 +50,6 @@ class Collaborator {
    - String address
    - String phone
    - String email
-   + addCollaborator(Collaborator collaborator)
-   + validateCollaborator(Collaborator collaborator)
-   + Collaborator getCollaboratorByID(int IDnumber)
-   + List<Collaborator> getCollaboratorList()
-   + Optional<Collaborator> registerCollaborator(HRManager hrm, \nname: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \ntaxpayer: int, \nIDdoctype: String, \nIDnumber: int)
  }
 
 class OrganizationRepository {
@@ -66,6 +63,7 @@ class OrganizationRepository {
  class Repositories {
    + getInstance() : Repositories
    + getCollaboratorRepository() : CollaboratorRepository
+   + getJobRepository() : JobRepository
    + getOrganizationRepository() : OrganizationRepository
  }
 
@@ -100,9 +98,6 @@ class OrganizationRepository {
     - int number
  }
 
- CollaboratorManager --> Collaborator: Manages
- HRManager --> CollaboratorManager: Uses
-
  note right of RegisterCollaboratorController
    - Collaborator data is obtained from the HRM's input
    - Updates the Collaborator Repository
@@ -117,8 +112,11 @@ class OrganizationRepository {
    - Communicates with RegisterCollaboratorController
  end note
 
+  note left of CollaboratorRepository
+    - Manages collaborators
+  end note
+
  note left of Organization
-   - Manages collaborators
    - Handles organizational details
  end note
 

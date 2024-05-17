@@ -33,7 +33,12 @@ class Collaborator {
     admission date
     address
     contact info (mobile and email)
+    taxpayer number
     ID doc type and number
+}
+
+class CollaboratorRepository {
+    collaborators
 }
 
 
@@ -43,10 +48,7 @@ class Collaborator {
 '    password
 '}
 
-'Platform "1" -- "*" HRM : has registered >
-'Platform "1" -- "*" Category : defines >
 HRM "1" - "0...*" Skill: creates >
-'Skill "*" -- "1" HRM: created by >
-'HRM "0..1" -- "1" User: acts as >
 Skill "*" - "1" Collaborator: is assigned to >
+Collaborator "1" -- "1" CollaboratorRepository : saved in >
 @enduml

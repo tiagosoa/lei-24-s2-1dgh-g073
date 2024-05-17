@@ -60,13 +60,4 @@ public class Skill {
     public String getName() {
         return name;
     }
-
-    /**
-     * Adds the skill to a collaborator.
-     *
-     * @param collaborator the collaborator to add the skill to
-     */
-    public void addCollaborator(Collaborator collaborator) {
-        collaborator.addSkill(this);
-    }
 }

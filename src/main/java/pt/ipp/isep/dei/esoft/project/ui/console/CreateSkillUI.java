@@ -6,6 +6,7 @@ import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import java.util.Optional;
 import java.util.Scanner;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 
 /**
@@ -22,7 +23,7 @@ public class CreateSkillUI implements Runnable {
      */
     public CreateSkillUI() {
         controller = new CreateSkillController();
-        this.skillRepository = new SkillRepository();
+        this.skillRepository = getController().getSkillRepository();
     }
 
     /**
@@ -49,12 +50,11 @@ public class CreateSkillUI implements Runnable {
      * Submit the data entered by the user to create a new skill.
      */
     private void submitData() {
-
-        HRM hrm = getController().getHRMFromSession();
-        Optional<Skill> skill = getController().createSkill(skillName, hrm);
+        Optional<Skill> skill = getController().createSkill(skillName);
 
         if (skill.isPresent()) {
-            skillRepository.add(skill.get());
+            skillRepository.addSkill(skill.get());
+
             System.out.println("\nSkill successfully created!");
         } else {
             System.out.println("\nSkill not created!");
@@ -66,7 +66,16 @@ public class CreateSkillUI implements Runnable {
      */
     private void requestData() {
         //Request the Skill name from the console
+        Scanner input = new Scanner(System.in);
         skillName = requestSkillName();
+        System.out.println("'" + skillName + "' - is this skill name correct? (type 'yes' or 'no')");
+        String yesno;
+        do {
+            yesno = input.nextLine();
+            if (yesno.equals("no")) {
+                requestData();
+            }
+        } while (!(yesno.equals("no") || yesno.equals("yes")));
     }
 
     /**

@@ -1,8 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import org.junit.jupiter.api.Test;
+import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
-import pt.ipp.isep.dei.esoft.project.domain.HRM;
 
 import java.util.Optional;
 
@@ -14,7 +14,7 @@ class SkillRepositoryTest {
     void getSkillByNameEmptyList() {
         SkillRepository skillRepository = new SkillRepository();
         String skillName = "Skill Name";
-        HRM hrm = new HRM("john.doe@this.company.com");
+        
         assertThrows(IllegalArgumentException.class,
                 () -> skillRepository.getSkillByName(skillName));
     }
@@ -23,7 +23,7 @@ class SkillRepositoryTest {
     void getSkillByNameNullList() {
         SkillRepository skillRepository = new SkillRepository();
         String skillName = "Task Category Description";
-        HRM hrm = new HRM("john.doe@this.company.com");
+        
         assertThrows(IllegalArgumentException.class,
                 () -> skillRepository.getSkillByName(skillName));
     }
@@ -32,18 +32,32 @@ class SkillRepositoryTest {
     void ensureNewSkillSuccessfullyAdded() {
         SkillRepository skillRepository = new SkillRepository();
         String skillName = "Skill Name";
-        HRM hrm = new HRM("john.doe@this.company.com");
+        
         Skill skill = new Skill(skillName);
-        skillRepository.add(skill);
+        skillRepository.addSkill(skill);
+    }
+
+    @Test
+    void testThatCreateSkillWorks() {
+        SkillRepository skillRepository = new SkillRepository();
+
+        Skill expected = new Skill("Skill Name");
+
+        Optional<Skill> skill =
+                skillRepository.createSkill("Skill Name");
+
+        assertNotNull(skill);
+        assertTrue(skill.isPresent());
+        assertEquals(expected, skill.get());
     }
 
     @Test
     void ensureGetSkillForExistingSkill() {
         SkillRepository skillRepository = new SkillRepository();
         String skillName = "Skill Name";
-        HRM hrm = new HRM("john.doe@this.company.com");
+        
         Skill skill = new Skill(skillName);
-        skillRepository.add(skill);
+        skillRepository.addSkill(skill);
         Skill skill1 = skillRepository.getSkillByName(skillName);
         assertEquals(skill, skill1);
     }
@@ -52,9 +66,9 @@ class SkillRepositoryTest {
     void ensureGetSkillFailsForNonExistingSkill() {
         SkillRepository skillRepository = new SkillRepository();
         String skillName = "Skill Name";
-        HRM hrm = new HRM("john.doe@this.company.com");
+        
         Skill skill = new Skill(skillName);
-        skillRepository.add(skill);
+        skillRepository.addSkill(skill);
         String skillName1 = "Skill Name 1";
         assertThrows(IllegalArgumentException.class,
                 () -> skillRepository.getSkillByName(skillName1));
@@ -65,9 +79,9 @@ class SkillRepositoryTest {
     void ensureGetSkillReturnsAnImmutableList() {
         SkillRepository skillRepository = new SkillRepository();
         String skillName = "Skill Name";
-        HRM hrm = new HRM("john.doe@this.company.com");
+        
         Skill skill = new Skill(skillName);
-        skillRepository.add(skill);
+        skillRepository.addSkill(skill);
 
         assertThrows(UnsupportedOperationException.class,
                 () -> skillRepository.getSkillList().add(new Skill("Skill Name One")));
@@ -78,10 +92,10 @@ class SkillRepositoryTest {
     void ensureGetSkillReturnsTheCorrectList() {
         //Arrange
         SkillRepository skillRepository = new SkillRepository();
-        HRM hrm = new HRM("john.doe@this.company.com");
+        
         String skillName = "Skill Name";
         Skill skill = new Skill(skillName);
-        skillRepository.add(skill);
+        skillRepository.addSkill(skill);
         int expectedSize = 1;
 
         //Act
@@ -96,32 +110,32 @@ class SkillRepositoryTest {
     void ensureAddingDuplicateSkillFails() {
         //Arrange
         SkillRepository skillRepository = new SkillRepository();
-        HRM hrm = new HRM("john.doe@this.company.com");
+        
         Skill skill = new Skill("Skill Name");
         //Add the first skill
-        skillRepository.add(skill);
+        skillRepository.addSkill(skill);
 
         //Act
-        Optional<Skill> duplicateSkill = skillRepository.add(skill);
+        boolean duplicateSkill = skillRepository.addSkill(skill);
 
         //Assert
-        assertTrue(duplicateSkill.isEmpty());
+        assertFalse(duplicateSkill);
     }
 
     @Test
     void ensureAddingDifferentSkillsWorks() {
         //Arrange
         SkillRepository skillRepository = new SkillRepository();
-        HRM hrm = new HRM("john.doe@this.company.com");
+        
         Skill skillOne = new Skill("Skill Name One");
         Skill skillTwo = new Skill("Skill Name Two");
         //Add the first task
-        skillRepository.add(skillOne);
+        skillRepository.addSkill(skillOne);
 
         //Act
-        Optional<Skill> result = skillRepository.add(skillTwo);
+        boolean expected = skillRepository.addSkill(skillTwo);
 
         //Assert
-        assertEquals(skillTwo, result.get());
+        assertTrue(expected);
     }
 }

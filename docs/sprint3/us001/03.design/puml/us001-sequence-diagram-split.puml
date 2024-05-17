@@ -12,11 +12,6 @@ participant ":CreateSkillController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "skillrepository\n:SkillRepository" as SR
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
 participant "skill\n:Skill" as HABILIDADE
 
 activate ADM
@@ -29,8 +24,15 @@ activate ADM
             'create CTRL
             UI -> CTRL** : create
 
-         UI -> CTRL : getSkillRepository()
-         activate CTRL
+            UI -> CTRL : getSkillRepository()
+
+            activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+                            activate RepositorySingleton
+
+                                RepositorySingleton --> CTRL: repositories
+                            deactivate RepositorySingleton
 
                  CTRL -> PLAT : getSkillRepository()
                          activate PLAT
@@ -44,27 +46,37 @@ activate ADM
     ADM -> UI : types requested name
     activate UI
 
+            UI --> ADM : shows typed name and asks for confirmation
+        deactivate UI
+
+        ADM -> UI : confirms data
+        activate UI
+
         UI -> CTRL : createSkill(skillname)
         activate CTRL
 
             |||
-                                ref over CTRL
-                                    Get HRM
+            CTRL -> CTRL : getHRMFromSession()
+            activate CTRL
 
-                                end ref
+                ref over CTRL
+                Get HRM
+                end
+
+                CTRL --> CTRL : hrm
+            deactivate CTRL
 
             |||
-            CTRL -> ORG: createSkill(skillname)
-            activate ORG
+            CTRL -> SR: createSkill(skillname)
+            activate SR
 
-                                    ref over ORG
-                                        Create Skill
+                ref over SR
+                Create Skill
+                end
 
-                                    end ref
+                SR --> CTRL : skill
 
-                ORG --> CTRL : skill
-
-            deactivate ORG
+            deactivate SR
 
             CTRL --> UI: skill
             deactivate CTRL

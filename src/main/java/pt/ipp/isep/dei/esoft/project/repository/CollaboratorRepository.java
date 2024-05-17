@@ -1,7 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.Organization;
+import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +19,7 @@ public class CollaboratorRepository {
      * Initializes the list of collaborators.
      */
     public CollaboratorRepository() {
-        this.collaborators = Organization.getCollaboratorList();
-        if (this.collaborators == null) {
-            // Initialize the collaborators list if it's null
-            this.collaborators = new ArrayList<>();
-        }
+        this.collaborators = new ArrayList<>();
     }
 
     /**
@@ -40,6 +36,35 @@ public class CollaboratorRepository {
             }
         }
         throw new IllegalArgumentException("Collaborator does not exist.");
+    }
+
+    /**
+     * Registers a new collaborator with the organization.
+     *
+     * @param name          the name of the collaborator
+     * @param birthdate     the birthdate of the collaborator
+     * @param admissiondate the admission date of the collaborator
+     * @param address       the address of the collaborator
+     * @param mobile        the mobile number of the collaborator
+     * @param email         the email of the collaborator
+     * @param taxpayer      the taxpayer number of the collaborator
+     * @param doctype       the document type of the collaborator
+     * @param IDnumber      the ID number of the collaborator
+     * @return an optional containing the registered collaborator, or empty if registration fails
+     */
+    public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber) {
+        Collaborator collaborator = new Collaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber);
+        if (addCollaborator(collaborator)) {
+            return Optional.of(collaborator);
+        }
+        return Optional.empty();
+    }
+
+    public boolean addCollaborator(Collaborator collaborator) {
+        if (validateCollaborator(collaborator)) {
+            return collaborators.add(collaborator.clone());
+        }
+        return false;
     }
 
     /**
@@ -91,6 +116,31 @@ public class CollaboratorRepository {
     }
 
     /**
+     * Filters a list of collaborators based on required skills.
+     *
+     * @param collaborators     the list of collaborators to filter
+     * @param requiredSkills    the list of required skills
+     * @return a list of collaborators with all required skills
+     */
+    public List<Collaborator> filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills) {
+        List<Collaborator> qualifiedCollaborators = new ArrayList<>();
+        for (Collaborator collaborator : collaborators) {
+            List<Skill> collaboratorSkills = collaborator.getSkills();
+            boolean hasAllRequiredSkills = true;
+            for (Skill requiredSkill : requiredSkills) {
+                if (!collaboratorSkills.contains(requiredSkill)) {
+                    hasAllRequiredSkills = false;
+                    break;
+                }
+            }
+            if (hasAllRequiredSkills) {
+                qualifiedCollaborators.add(collaborator);
+            }
+        }
+        return qualifiedCollaborators;
+    }
+
+    /**
      * Returns a defensive (immutable) copy of the list of collaborators.
      *
      * @return The list of collaborators.
@@ -98,5 +148,21 @@ public class CollaboratorRepository {
     public List<Collaborator> getCollaboratorList() {
         // This is a defensive copy, so that the repository cannot be modified from the outside.
         return List.copyOf(collaborators);
+    }
+
+    public List<Collaborator> generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills) {
+        List<Collaborator> allCollaborators = getCollaboratorList();
+        List<Collaborator> qualifiedCollaborators = filterCollaboratorsBySkills(allCollaborators, requiredSkills);
+
+        if (qualifiedCollaborators.size() < minTeamSize) {
+            throw new IllegalArgumentException("Not enough qualified collaborators available.");
+        }
+
+        List<Collaborator> team = new ArrayList<>();
+        for (int i = 0; i < maxTeamSize && i < qualifiedCollaborators.size(); i++) {
+            team.add(qualifiedCollaborators.get(i));
+        }
+
+        return team;
     }
 }

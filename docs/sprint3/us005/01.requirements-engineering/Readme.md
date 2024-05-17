@@ -40,10 +40,9 @@ As a HRM, I want to generate a team proposal automatically.
 
 * Typed data:
     * team size (maximum and minimum)
-    * one or more skill names
 	
 * Selected data:
-  n/a
+    * one or more skill names
 
 **Output Data:**
 

@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
+import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
@@ -24,9 +25,10 @@ public class CreateSkillController {
      * Default constructor that initializes the repositories by obtaining them from the Repositories class.
      */
     public CreateSkillController() {
-        this.organizationRepository = getOrganizationRepository();
-        this.skillRepository = getSkillRepository();
-        this.authenticationRepository = getAuthenticationRepository();
+        Repositories repositories = Repositories.getInstance();
+        this.organizationRepository = repositories.getOrganizationRepository();
+        this.skillRepository = repositories.getSkillRepository();
+        this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
     /**
@@ -49,13 +51,14 @@ public class CreateSkillController {
      *
      * @return the SkillRepository instance
      */
-    private SkillRepository getSkillRepository() {
+    public SkillRepository getSkillRepository() {
         if (skillRepository == null) {
             Repositories repositories = Repositories.getInstance();
             skillRepository = repositories.getSkillRepository();
         }
         return skillRepository;
     }
+
 
     /**
      * Retrieves the OrganizationRepository instance, initializing it if necessary.
@@ -87,20 +90,15 @@ public class CreateSkillController {
      * Creates a new Skill for a given name and HRM.
      *
      * @param name the name of the Skill
-     * @param hrm  the HRM associated with the Skill
      * @return an Optional containing the newly created Skill, or empty if the Organization is not found
      */
-    public Optional<Skill> createSkill(String name, HRM hrm) {
-        Optional<Organization> organization = getOrganizationRepository().getOrganizationByHRM(hrm);
+    public Optional<Skill> createSkill(String name) {
 
-        Optional<Skill> newSkill = Optional.empty();
-
-        if (organization.isPresent()) {
-            newSkill = organization.get().createSkill(name);
-        }
+        Optional<Skill> newSkill;
+        newSkill = skillRepository.createSkill(name);
+        
         return newSkill;
     }
-
     /**
      * Retrieves the HRM associated with the current user session.
      *

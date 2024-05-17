@@ -15,11 +15,17 @@ activate Employee
     Employee -> System : asks to generate a team
     activate System
 
-        System --> Employee : requests data (max. and min. team size and suggested skills)
+        System --> Employee : requests data (max. and min. team size)
     deactivate System
 
     Employee -> System : types requested data
     activate System
+
+            System --> Employee : shows skills and asks to select one or more
+        deactivate System
+
+        Employee -> System : selects skills
+        activate System
 
         System --> Employee : generates team
     deactivate System

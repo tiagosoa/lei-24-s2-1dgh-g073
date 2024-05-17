@@ -6,28 +6,28 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for...   | Answer                | Justification (with patterns)                                                                                 |
-|:---------------|:----------------------------------------------|:----------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		     | 	... interacting with the actor?              | AssignSkillUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		        | 	... coordinating the US?                     | AssignSkillController | Controller                                                                                                    |
-| 			  		        | 	... assigning the Skills?                    | Organization          | Creator (Rule 1): in the DM Organization has Collaborators and Skills.                                        |
-| 			  		        | ... knowing the user using the system?        | UserSession           | IE: cf. A&A component documentation.                                                                          |
-| 			  		        | 							                                       | Organization          | IE: knows/has its own Collaborators/Skills                                                                    |
-| 			  		        | 							                                       | HRM                   | IE: knows its own data (e.g. email)                                                                           |
-| Step 2  		     | 	...assigning the Skill?						                | AssignSkillController | Controller                                                                                                    |
-| Step 3  		     | 	...saving the inputted data?                 | AssignedCollaborator  | IE: object created in step 1 has its own data.                                                                |	|                      |                                                                                                               |              
-| Step 4 		      | 	... validating all data (local validation)?  | AssignedCollaborator  | IE: owns its data.                                                                                            | 
-| 			  		        | 	... validating all data (global validation)? | Organization          | IE: knows all its skills and collaborators.                                                                   | 
-| 			  		        | 	... saving the assigned collaborator?        | Organization          | IE: owns all its skills and collaborators.                                                                    | 
-| Step 5 		      | 	... informing operation success?             | AssignSkillUI         | IE: is responsible for user interactions.                                                                     | 
-
+| Interaction ID | Question: Which class is responsible for...    | Answer                         | Justification (with patterns)                                                                                  |
+|:---------------|:-----------------------------------------------|:-------------------------------|:---------------------------------------------------------------------------------------------------------------|
+| Step 1         | ... interacting with the actor?                | AssignSkillUI                  | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.  |
+|                | ... coordinating the US?                       | AssignSkillController          | Controller (UI Pattern): The Controller class orchestrates the user story and interacts with other components. |
+| 			  		        | 	... instantiating a new Collaborator?         | CollaboratorRepository         | Creator (Rule 1): in the DM CollaboratorRepository has a Collaborator.                                         |
+|                | ... knowing the user using the system?         | UserSession                    | IE: cf. A&A component documentation.                                                                           |
+|                |                                                |                                |                                                                                                                |
+| Step 2         | ... showing the collaborator list?             | AssignSkillUI                  | IE: is responsible for user interactions.                                                                      |
+| Step 3         | ... saving the selected collaborators?         | AssignSkillUI                  | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.  |
+| Step 4         | ... showing the skill list?                    | AssignSkillUI                  | IE: is responsible for user interactions.                                                                      |
+| Step 5         | ... saving the selected skills?                | AssignSkillUI                  | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.  |
+| Step 6 		      | 	... showing the data before confirmation?     | AssignSkillUI                  | IE: is responsible for user interactions.                                                                      |
+| Step 7 		      | 	... validating all data (local validation)?   | Collaborator                   | IE: object created in US03 has its own data.                                                                   |
+| 			  		        | 	... validating all data (global validation)?  | CollaboratorRepository         | IE: knows all its collaborators.                                                                               | 
+|                | ... knowing the user using the system?         | UserSession                    | IE: cf. A&A component documentation.                                                                           |
+| Step 8 		      | 	... informing operation success?              | RegisterCollaboratorUI         | IE: is responsible for user interactions.                                                                      |
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are: 
 
-* Organization
+* CollaboratorRepository
 * Collaborator
-* Skill
 
 Other software classes (i.e. Pure Fabrication) identified: 
 

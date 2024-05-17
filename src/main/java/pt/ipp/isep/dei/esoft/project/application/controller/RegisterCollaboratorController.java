@@ -32,28 +32,30 @@ public class RegisterCollaboratorController {
         this.jobRepository = jobRepository;
     }
 
+    public CollaboratorRepository getCollaboratorRepository() {
+        if (collaboratorRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            collaboratorRepository = repositories.getCollaboratorRepository();
+        }
+        return collaboratorRepository;
+    }
+
+    public JobRepository getJobRepository() {
+        if (jobRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            jobRepository = repositories.getJobRepository();
+        }
+        return jobRepository;
+    }
+
     public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissiondate,
                                                        String address, int mobile, String email, int taxpayer, String doctype,
-                                                       int IDnumber, HRM hrm) {
-        Optional<Organization> organization = organizationRepository.getOrganizationByHRM(hrm);
+                                                       int IDnumber) {
 
-        Optional<Collaborator> newCollaborator = Optional.empty();
-
-        if (organization.isPresent()) {
-            newCollaborator = organization.get()
-                    .registerCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
-            if (newCollaborator.isPresent()) {
-                newCollaborator.get().setJobs(new ArrayList<>());
-            }
-        }
-
-        if (organization.isPresent()) {
-            newCollaborator.ifPresent(collaboratorRepository::add);
+        Optional<Collaborator> newCollaborator;
+            newCollaborator = collaboratorRepository.registerCollaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber);
             return newCollaborator;
         }
-
-        return Optional.empty();
-    }
 
     public void assignJobToCollaborator(int collaboratorID, String jobname) {
         Collaborator collaborator = collaboratorRepository.getCollaboratorByID(collaboratorID);

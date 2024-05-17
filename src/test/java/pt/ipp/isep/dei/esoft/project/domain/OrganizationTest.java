@@ -82,146 +82,6 @@ class OrganizationTest {
         assertEquals(organization, organization);
     }
 
-    @Test
-    void testThatCreateSkillWorks() {
-        Organization organization = new Organization("123456789");
-
-        HRM hrm = new HRM("john.doe@this.company.com");
-
-        Skill expected = new Skill("Skill Name");
-
-        Optional<Skill> skill =
-                organization.createSkill("Skill Name");
-
-        assertNotNull(skill);
-        assertTrue(skill.isPresent());
-        assertEquals(expected, skill.get());
-    }
-
-    @Test
-    void ensureAddingDuplicateSkillFails() {
-        //Arrange
-        Organization organization = new Organization("123456789");
-        HRM hrm = new HRM("john.doe@this.company.com");
-        //Add the first Skill
-        Optional<Skill> originalSkill =
-                organization.createSkill("Skill Name");
-
-        //Act
-        Optional<Skill> duplicateSkill =
-                organization.createSkill("Skill Name");
-
-        //Assert
-        assertTrue(duplicateSkill.isEmpty());
-    }
-    @Test
-    void testThatCreateJobWorks() {
-        Organization organization = new Organization("123456789");
-
-        HRM hrm = new HRM("john.doe@this.company.com");
-
-        Job expected = new Job("Job Name");
-
-        Optional<Job> job =
-                organization.createJob("Job Name");
-
-        assertNotNull(job);
-        assertTrue(job.isPresent());
-        assertEquals(expected, job.get());
-    }
-
-    @Test
-    void ensureAddingDuplicateJobFails() {
-        //Arrange
-        Organization organization = new Organization("123456789");
-        HRM hrm = new HRM("john.doe@this.company.com");
-        //Add the first job
-        Optional<Job> originalJob =
-                organization.createJob("Job Name");
-
-        //Act
-        Optional<Job> duplicateJob =
-                organization.createJob("Job Name");
-
-        //Assert
-        assertTrue(duplicateJob.isEmpty());
-    }
-
-    @Test
-    void testThatRegisterCollaboratorWorks() {
-        Organization organization = new Organization("123456789");
-
-        HRM hrm = new HRM("john.doe@this.company.com");
-
-        Collaborator expected = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, hrm);
-
-        Optional<Collaborator> collaborator =
-                organization.registerCollaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, hrm);
-
-        assertNotNull(collaborator);
-        assertTrue(collaborator.isPresent());
-        assertEquals(expected, collaborator.get());
-    }
-
-    @Test
-    void ensureAddingDuplicateCollaboratorFails() {
-        //Arrange
-        Organization organization = new Organization("123456789");
-        HRM hrm = new HRM("john.doe@this.company.com");
-        //Add the first collaborator
-        Optional<Collaborator> originalCollaborator =
-                organization.registerCollaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, hrm);
-
-        //Act
-        Optional<Collaborator> duplicateCollaborator =
-                organization.registerCollaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, hrm);
-
-        //Assert
-        assertTrue(duplicateCollaborator.isEmpty());
-    }
-
-    @Test
-    void testThatCreateVehicleWorks() {
-        Organization organization = new Organization("123456789");
-
-        HRM hrm = new HRM("john.doe@this.company.com");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
-        LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
-        LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
-
-        Vehicle expected = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
-
-        Optional<Vehicle> vehicle =
-                organization.createVehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
-
-        assertNotNull(vehicle);
-        assertTrue(vehicle.isPresent());
-        assertEquals(expected, vehicle.get());
-    }
-
-    @Test
-    void ensureAddingDuplicateVehicleFails() {
-        //Arrange
-        Organization organization = new Organization("123456789");
-        HRM hrm = new HRM("john.doe@this.company.com");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
-        LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
-        LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
-
-        //Add the first vehicle
-        Optional<Vehicle> originalVehicle =
-                organization.createVehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
-
-        //Act
-        Optional<Vehicle> duplicateVehicle =
-                organization.createVehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
-
-        //Assert
-        assertTrue(duplicateVehicle.isEmpty());
-    }
-
 
     @Test
     void ensureHRMEmploysFails() {
@@ -276,7 +136,6 @@ class OrganizationTest {
         Organization organization = new Organization("123456789");
         HRM hrm = new HRM("john.doe@this.company.com");
         organization.addHRM(hrm);
-        organization.createSkill("Skill Name");
 
         Organization clone = organization.clone();
         assertEquals(organization, clone);
@@ -334,7 +193,6 @@ class OrganizationTest {
         Organization organization = new Organization("123456789");
         VFM vfm = new VFM("john.doe@this.company.com");
         organization.addVFM(vfm);
-        organization.createSkill("Skill Name");
 
         Organization clone = organization.clone();
         assertEquals(organization, clone);

@@ -77,8 +77,6 @@ class SkillRepository {
    - String address
    - String phone
    - String email
-   + List<Collaborator> getCollaboratorList()
-   + List<Skill> getSkillList()
  }
 
 class OrganizationRepository {
@@ -101,8 +99,8 @@ class OrganizationRepository {
  }
 
 AssignSkillController -- Skill: assigns
-Skill --> Collaborator: to
-HRManager -> AssignSkillController: Uses
+Skill --> Collaborator: assigned to
+HRManager -> AssignSkillUI: Uses
 
 
 Repositories -> Repositories : instance
@@ -142,7 +140,7 @@ note left of AssignSkillUI
 end note
 
 note left of Organization
-  - Manages skills and collaborators
+  - Owns skills and collaborators
   - Handles organizational details
 end note
 

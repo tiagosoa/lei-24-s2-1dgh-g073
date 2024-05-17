@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.CreateJobController;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -17,8 +18,6 @@ public class CreateJobUI implements Runnable {
     private String jobName;
 
     private JobRepository jobRepository;
-    private String taskCategoryDescription;
-    private String employeeEmail;
 
     /**
      * Constructor for CreateJobUI class.
@@ -26,7 +25,7 @@ public class CreateJobUI implements Runnable {
      */
     public CreateJobUI() {
         controller = new CreateJobController();
-        this.jobRepository = new JobRepository();
+        this.jobRepository = getController().getJobRepository();
     }
 
     /**
@@ -53,11 +52,10 @@ public class CreateJobUI implements Runnable {
      * Submits the data input by the user to create a new job.
      */
     private void submitData() {
-        HRM hrm = getController().getHRMFromSession();
-        Optional<Job> job = getController().createJob(jobName, hrm);
+        Optional<Job> job = getController().createJob(jobName);
 
         if (job.isPresent()) {
-            jobRepository.add(job.get());
+            jobRepository.addJob(job.get());
             System.out.println("\nJob successfully created!");
         } else {
             System.out.println("\nJob not created!");
@@ -68,7 +66,16 @@ public class CreateJobUI implements Runnable {
      * Requests necessary data from the user.
      */
     private void requestData() {
+        Scanner input = new Scanner(System.in);
         jobName = requestJobName();
+        System.out.println("'" + jobName + "' - is this job name correct? (type 'yes' or 'no')");
+        String yesno;
+        do {
+            yesno = input.nextLine();
+            if (yesno.equals("no")) {
+                requestData();
+            }
+        } while (!(yesno.equals("no") || yesno.equals("yes")));
     }
 
     /**

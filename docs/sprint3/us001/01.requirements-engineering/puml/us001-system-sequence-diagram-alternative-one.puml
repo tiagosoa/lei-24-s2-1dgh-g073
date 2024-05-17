@@ -7,27 +7,27 @@ title System Sequence Diagram (SSD) - Alternative One
 
 autonumber
 
-actor "Organization\nEmployee" as Employee
+actor "Human Resources Manager" as HRM
 participant ":System" as System
 
-activate Employee
+activate HRM
 
-    Employee -> System : asks to register skills that may be appointed to a collaborator
+    HRM -> System : asks to register skills that may be appointed to a collaborator
     activate System
 
-        System --> Employee : requests name(s) of skill(s)
+        System --> HRM : requests name(s) of skill(s)
     deactivate System
 
-    Employee -> System : types requested name(s)
+    HRM -> System : types requested name(s)
     activate System
 
-        System --> Employee : shows list of categories and asks to select one or more
+        System --> HRM : shows typed name and asks for confirmation
     deactivate System
 
-    Employee -> System : confirms data
+    HRM -> System : confirms data
     activate System
 
-        System --> Employee : displays operation success
+        System --> HRM : displays operation success
     deactivate System
 
 @enduml

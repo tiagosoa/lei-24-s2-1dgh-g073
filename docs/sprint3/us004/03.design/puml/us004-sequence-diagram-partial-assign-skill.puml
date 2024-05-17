@@ -3,28 +3,22 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "organization\n:Organization" as ORG
+participant ":AssignSkillController" as CTRL
 participant ":collaboratorrepository\n:CollaboratorRepository" as CR
 participant "Collaborator" as COLABORADOR
 
     group Assign Skill
-            -> ORG: assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames)
-            activate ORG
+    CTRL -> COLABORADOR: assignSkillsToCollaborator(collaborator.getIDNumber(), skillNames)
+    activate COLABORADOR
+
+                                COLABORADOR -> COLABORADOR: addSkill(skill)
 
 
 
-                    ORG -> ORG: validateSkill(selectedSkillNames)
-                    ORG -> ORG: validateCollaborator(collaboratorID)
-                ORG -> COLABORADOR: addskill(selectedSkillNames)
-                ORG -> CR: updateCollaborator(collaborator)
 
 
-               <-- ORG : assignedcollaborator
-
-            deactivate ORG
-
-
-                        deactivate ORG
+                        CTRL --> CR: updateCollaborator(collaborator)
+                        deactivate CR
 
 
 

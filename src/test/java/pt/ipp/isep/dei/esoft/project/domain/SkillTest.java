@@ -82,7 +82,7 @@ class SkillTest {
     @Test
     void ensureSkillCanBeAssignedToCollaborator() {
         Skill skill = new Skill("Java");
-        Collaborator collaborator = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789, new HRM("john.doe@this.company.com"));
+        Collaborator collaborator = new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789);
 
         assertTrue(collaborator.addSkill(skill));
     }

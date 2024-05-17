@@ -7,18 +7,18 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Represents an organization with various entities such as HRMs, VFMs, GSMs, skills, jobs, collaborators, and vehicles.
+ * Represents an organization with various entities such as HRMs, VFMs, GSMs, skills, jobs, collaborators, vehicles, and green spaces.
  */
 public class Organization {
     private final String vatNumber;
     private final List<HRM> hrms = new ArrayList<>();
     private final List<VFM> vfms = new ArrayList<>();
-
     private final List<GSM> gsms = new ArrayList<>();
     private static final List<Skill> skills = new ArrayList<>();
     private static final List<Job> jobs = new ArrayList<>();
     private static final List<Collaborator> collaborators = new ArrayList<>();
     private static final List<Vehicle> vehicles = new ArrayList<>();
+    private static final List<GreenSpace> greenSpaces = new ArrayList<>();
     private String name;
     private String website;
     private String phone;
@@ -71,6 +71,15 @@ public class Organization {
         return new ArrayList<>(vehicles);
     }
 
+    /**
+     * Returns a copy of the list of green spaces.
+     *
+     * @return a list of green spaces
+     */
+    public static List<GreenSpace> getGreenSpaceList() {
+        return new ArrayList<>(greenSpaces);
+    }
+
     // Methods for entity management
 
     /**
@@ -104,130 +113,34 @@ public class Organization {
     }
 
     /**
-     * Creates a new skill and adds it to the organization.
+     * Registers a new green space and adds it to the organization.
      *
-     * @param name the name of the skill
-     * @return an optional containing the created skill, or empty if creation fails
+     * @param type the type of the green space
+     * @return an optional containing the registered green space, or empty if registration fails
      */
-    public Optional<Skill> createSkill(String name) {
-        Skill skill = new Skill(name);
-        if (addSkill(skill)) {
-            return Optional.of(skill);
-        }
-        return Optional.empty();
-    }
-
-    /**
-     * Creates a new vehicle and adds it to the organization.
-     *
-     * @param model                the model of the vehicle
-     * @param brand                the brand of the vehicle
-     * @param type                 the type of the vehicle
-     * @param tareWeight           the tare weight of the vehicle
-     * @param grossWeight          the gross weight of the vehicle
-     * @param currentKm            the current kilometers of the vehicle
-     * @param registerDate         the registration date of the vehicle
-     * @param acquisitionDate      the acquisition date of the vehicle
-     * @param maintenanceFrequencyKm the maintenance frequency in kilometers
-     * @param plateNumber          the plate number of the vehicle
-     * @param lastMaintenanceDate  the date of the last maintenance
-     * @return an optional containing the created vehicle, or empty if creation fails
-     */
-    public Optional<Vehicle> createVehicle(String model, String brand, String type, double tareWeight, double grossWeight,
-                                           double currentKm, LocalDate registerDate, LocalDate acquisitionDate, int maintenanceFrequencyKm, String plateNumber, LocalDate lastMaintenanceDate) {
-        Vehicle vehicle = new Vehicle(model, brand, type, tareWeight, grossWeight, currentKm, registerDate, acquisitionDate, maintenanceFrequencyKm, plateNumber, lastMaintenanceDate);
-        if (addVehicle(vehicle)) {
-            return Optional.of(vehicle);
-        }
-        return Optional.empty();
-    }
-
-    /**
-     * Creates a new job and adds it to the organization.
-     *
-     * @param name the name of the job
-     * @return an optional containing the created job, or empty if creation fails
-     */
-    public Optional<Job> createJob(String name) {
-        Job job = new Job(name);
-        if (addJob(job)) {
-            return Optional.of(job);
-        }
-        return Optional.empty();
-    }
-
-    /**
-     * Registers a new collaborator with the organization.
-     *
-     * @param name         the name of the collaborator
-     * @param birthdate    the birthdate of the collaborator
-     * @param admissiondate the admission date of the collaborator
-     * @param address      the address of the collaborator
-     * @param mobile       the mobile number of the collaborator
-     * @param email        the email of the collaborator
-     * @param taxpayer     the taxpayer number of the collaborator
-     * @param doctype      the document type of the collaborator
-     * @param IDnumber     the ID number of the collaborator
-     * @param hrm          the HRM associated with the collaborator
-     * @return an optional containing the registered collaborator, or empty if registration fails
-     */
-    public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissiondate, String address, int mobile, String email, int taxpayer, String doctype, int IDnumber, HRM hrm) {
-        Collaborator collaborator = new Collaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
-        if (addCollaborator(collaborator)) {
-            return Optional.of(collaborator);
+    public Optional<GreenSpace> registerGreenSpace(String type, double area) {
+        GreenSpace greenSpace = new GreenSpace(type, area);
+        if (addGreenSpace(greenSpace)) {
+            return Optional.of(greenSpace);
         }
         return Optional.empty();
     }
 
     // Private helper methods for adding entities
 
-    private boolean addSkill(Skill skill) {
-        if (validateSkill(skill)) {
-            return skills.add(skill.clone());
+
+    private boolean addGreenSpace(GreenSpace greenSpace) {
+        if (validateGreenSpace(greenSpace)) {
+            return greenSpaces.add(greenSpace.clone());
         }
         return false;
     }
 
-    private boolean addJob(Job job) {
-        if (validateJob(job)) {
-            return jobs.add(job.clone());
-        }
-        return false;
+    private boolean validateGreenSpace(GreenSpace greenSpace) {
+        return !greenSpaces.contains(greenSpace);
     }
 
-    private boolean addCollaborator(Collaborator collaborator) {
-        if (validateCollaborator(collaborator)) {
-            return collaborators.add(collaborator.clone());
-        }
-        return false;
-    }
-
-    private boolean addVehicle(Vehicle vehicle) {
-        if (validateVehicle(vehicle)) {
-            return vehicles.add(vehicle.clone());
-        }
-        return false;
-    }
-
-    // Private helper methods for entity validation
-
-    private boolean validateSkill(Skill skill) {
-        return !skills.contains(skill);
-    }
-
-    private boolean validateVehicle(Vehicle vehicle) {
-        return !vehicles.contains(vehicle);
-    }
-
-    private boolean validateJob(Job job) {
-        return !jobs.contains(job);
-    }
-
-    private boolean validateCollaborator(Collaborator collaborator) {
-        return !collaborators.contains(collaborator);
-    }
-
-    // Check if any HRM or VFM has a specific email
+    // Check if any HRM, VFM or GSM has a specific email
 
     /**
      * Checks if any HRM has a specific email.
@@ -247,6 +160,16 @@ public class Organization {
      */
     public boolean anyVFMHasEmail(String email) {
         return vfms.stream().anyMatch(vfm -> vfm.hasEmail(email));
+    }
+
+    /**
+     * Checks if any GSM has a specific email.
+     *
+     * @param email the email to check
+     * @return true if any GSM has the email, false otherwise
+     */
+    public boolean anyGSMHasEmail(String email) {
+        return gsms.stream().anyMatch(gsm -> gsm.hasEmail(email));
     }
 
     // Equals, hashCode, and cloning

@@ -20,11 +20,8 @@ public class SkillRepository {
      * If the skills list is null, it creates a new empty list.
      */
     public SkillRepository() {
-        this.skills = Organization.getSkillList();
-        if (this.skills == null) {
-            this.skills = new ArrayList<>();
+        this.skills = new ArrayList<>();
         }
-    }
 
     /**
      * Retrieves an existing Skill by its name.
@@ -43,26 +40,32 @@ public class SkillRepository {
     }
 
     /**
+     * Creates a new skill and adds it to the organization.
+     *
+     * @param name the name of the skill
+     * @return an optional containing the created skill, or empty if creation fails
+     */
+    public Optional<Skill> createSkill(String name) {
+        Skill skill = new Skill(name);
+        if (addSkill(skill)) {
+            return Optional.of(skill);
+        }
+        return Optional.empty();
+    }
+
+    /**
      * Adds a new Skill to the repository.
      *
      * @param skill The Skill to add.
      * @return An Optional containing the added Skill if successful, empty otherwise.
      */
-    public Optional<Skill> add(Skill skill) {
-        Optional<Skill> newSkill = Optional.empty();
-        boolean operationSuccess = false;
-
+    public boolean addSkill(Skill skill) {
         if (validateSkill(skill)) {
-            newSkill = Optional.of(skill.clone());
-            operationSuccess = skills.add(newSkill.get());
+            return skills.add(skill.clone());
         }
-
-        if (!operationSuccess) {
-            newSkill = Optional.empty();
-        }
-
-        return newSkill;
+        return false;
     }
+
 
     /**
      * Validates if a Skill can be added to the repository.
@@ -72,6 +75,15 @@ public class SkillRepository {
      */
     private boolean validateSkill(Skill skill) {
         return !skills.contains(skill);
+    }
+
+    public List<Skill> parseSkills(String inputSkills) {
+        String[] skillsArray = inputSkills.split(";");
+        List<Skill> skillsList = new ArrayList<>();
+        for (String skillName : skillsArray) {
+            skillsList.add(new Skill(skillName.trim()));
+        }
+        return skillsList;
     }
 
     /**

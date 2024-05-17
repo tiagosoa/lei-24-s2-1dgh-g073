@@ -10,6 +10,9 @@ Attributes include name, vatNumber, phoneNumber, and email.
 Can be created by an HRM and is then assigned to one or more Collaborators.
 Attributes include only the name.
 
+### Skill Repository:
+Saves created skills.
+
 ### 2.1. Relevant Domain Model Excerpt 
 
 ![Domain Model](svg/us001-domain-model.svg)

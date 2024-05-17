@@ -13,11 +13,7 @@ participant ":Repositories" as RepositorySingleton
 participant ":collaboratorrepository\n:CollaboratorRepository" as CR
 participant "skillrepository\n:SkillRepository" as SR
 participant "repositories\n:Repositories" as PLAT
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
+participant "collaborator\n:Collaborator" as COLABORADOR
 
 activate ADM
 
@@ -32,11 +28,19 @@ activate ADM
                          UI -> CTRL : getCollaboratorRepository()
                          activate CTRL
 
+                        CTRL -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> CTRL: repositories
+                                        deactivate RepositorySingleton
+
                                  CTRL -> PLAT : getCollaboratorRepository()
                                          activate PLAT
 
                                      PLAT -> CTRL : collaboratorrepository
                                      deactivate PLAT
+
+                                 UI -> CTRL : getSkillRepository()
 
                                  CTRL -> PLAT : getSkillRepository()
                                          activate PLAT
@@ -93,7 +97,7 @@ activate ADM
 
    ADM -> UI : confirms data
 
-   UI -> CTRL: assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames)
+   UI -> CTRL: assignSkillsToCollaborator(collaborator.getIDNumber(), skillNames)
    activate CTRL
 
 
@@ -101,71 +105,28 @@ activate ADM
             CTRL -> CTRL : getHRMFromSession()
             activate CTRL
 
-                CTRL -> _APP: getInstance()
-                activate _APP
-                    _APP -> CTRL: appSession
-                deactivate _APP
-
-
-                CTRL -> APP: getCurrentSession()
-                activate APP
-
-                    APP --> CTRL: currentSession
-                deactivate APP
-
-                CTRL -> SESSAO: email = getUserEmail()
-                activate SESSAO
-
-                    SESSAO --> CTRL: email
-                deactivate SESSAO
-
-
-                CTRL -> PLAT: getOrganizationRepository(email)
-                activate PLAT
-
-                    PLAT --> CTRL: organizationRepository
-                deactivate PLAT
-
-
-                CTRL -> OrganizationRepository: getOrganizationByHRMEmail(email)
-                activate OrganizationRepository
-
-                    loop [for each organization
-                        OrganizationRepository -> ORG : anyHRMHasEmail(email)
-                        activate ORG
-
-                             ORG --> OrganizationRepository : true/false
-                        deactivate ORG
-                    end
-                    OrganizationRepository --> CTRL : organization
-                deactivate OrganizationRepository
-
-                CTRL -> ORG: getHRMByEmail(email)
-                activate ORG
-
-                    ORG --> CTRL : hrm
-                deactivate ORG
+                ref over CTRL
+                Get HRM
+                end
 
                 CTRL --> CTRL : hrm
             deactivate CTRL
 
             |||
-            CTRL -> ORG: assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames)
-            activate ORG
+            CTRL -> COLABORADOR: assignSkillsToCollaborator(collaborator.getIDNumber(), skillNames)
+            activate COLABORADOR
 
 
 
-                    ORG -> ORG: validateSkill(selectedSkillNames)
-                    ORG -> ORG: validateCollaborator(collaboratorID)
-                ORG -> COLABORADOR: addskill(selectedSkillNames)
-                ORG -> CR: updateCollaborator(collaborator)
+                    COLABORADOR -> COLABORADOR: validateSkill(selectedSkillNames)
+                    COLABORADOR -> COLABORADOR: addSkill(skill)
 
 
-                ORG --> CTRL : assignedcollaborator
 
-            deactivate ORG
 
-            CTRL --> UI: assignedcollaborator
+
+            CTRL --> CR: updateCollaborator(collaborator)
+            deactivate COLABORADOR
             deactivate CTRL
             UI --> ADM: displays operation success
     deactivate UI

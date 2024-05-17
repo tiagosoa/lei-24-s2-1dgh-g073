@@ -3,37 +3,37 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - Alternative Two
+title System Sequence Diagram (SSD) - Alternative One
 
 autonumber
 
-actor "Organization\nEmployee" as Employee
+actor "Human Resources Manager" as HRM
 participant ":System" as System
 
-activate Employee
+activate HRM
 
-    Employee -> System : asks to register skills that may be appointed to a collaborator
+    HRM -> System : asks to register skills that may be appointed to a collaborator
     activate System
 
-    System --> Employee : shows list of collaborators and asks to select one or more
+    System --> HRM : shows list of collaborators and asks to select one or more
     deactivate System
 
-    Employee -> System : selects collaborator(s)
+    HRM -> System : selects collaborator(s)
     activate System
 
-    System --> Employee : shows list of skills and asks to select one or more
+    System --> HRM : shows list of skills and asks to select one or more
     deactivate System
 
-    Employee -> System : selects skill(s)
+    HRM -> System : selects skill(s)
     activate System
 
-    System --> Employee : shows all data and requests confirmation
+    System --> HRM : shows all data and requests confirmation
     deactivate System
 
-    Employee -> System : confirms data
+    HRM -> System : confirms data
     activate System
 
-    System --> Employee : displays operation success
+    System --> HRM : displays operation success
     deactivate System
 
 @enduml

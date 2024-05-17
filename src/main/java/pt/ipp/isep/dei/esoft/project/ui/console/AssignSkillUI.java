@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.AssignSkillControlle
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 
@@ -20,6 +21,10 @@ public class AssignSkillUI implements Runnable {
     private CollaboratorRepository collaboratorRepository;
 
     private SkillRepository skillRepository;
+
+    private Collaborator collaborator;
+
+    private List<String> skillNames;
     private Scanner scanner;
 
 
@@ -28,8 +33,8 @@ public class AssignSkillUI implements Runnable {
      */
     public AssignSkillUI() {
         controller = new AssignSkillController();
-        this.collaboratorRepository = new CollaboratorRepository();
-        this.skillRepository = new SkillRepository();
+        this.collaboratorRepository = getController().getCollaboratorRepository();
+        this.skillRepository = getController().getSkillRepository();
         this.scanner = new Scanner(System.in);
     }
 
@@ -50,26 +55,59 @@ public class AssignSkillUI implements Runnable {
      */
     public void run() {
         System.out.println("\n\n--- Assign Skill ------------------------");
-        List<Collaborator> collaborators = getController().getCollaboratorList();
-        // Show list of registered collaborators
+
+        requestData();
+
+        submitData();
+    }
+
+    private void requestData() {
+        collaborator = selectCollaborator();
+
+        skillNames = selectSkills(collaborator);
+    }
+
+    private void submitData(){
+        assert collaborator != null;
+        System.out.println("Selected Collaborator: " + collaborator.getName());
+        System.out.println("Selected Skills:");
+        for (String skillName : skillNames) {
+            System.out.println("- " + skillName);
+        }
+        System.out.println("Are these correct?");
+        String yesno;
+        do {
+            yesno = scanner.nextLine();
+            if (yesno.equals("no")) {
+                requestData();
+            }
+        } while (!(yesno.equals("no") || yesno.equals("yes")));
+        getController().assignSkillsToCollaborator(collaborator.getIDNumber(), skillNames);
+        System.out.println("Skills assigned successfully to " + collaborator.getName());
+    }
+
+    private Collaborator selectCollaborator(){
+        List<Collaborator> collaborators = collaboratorRepository.getCollaboratorList();
         if (collaborators.isEmpty()) {
             System.out.println("No collaborators registered.");
-            return;
+            return null;
         }
         System.out.println("Collaborator List:");
         for (int i = 0; i < collaborators.size(); i++) {
             System.out.println((i + 1) + ". " + collaborators.get(i).getName());
         }
         int collaboratorIndex = readInput(1, collaborators.size()) - 1;
-        Collaborator selectedCollaborator = collaborators.get(collaboratorIndex);
+        return collaborators.get(collaboratorIndex);
+    }
 
-        // Show list of skills
+    private List<String> selectSkills(Collaborator collaborator){
         List<Skill> skills = skillRepository.getSkillList();
         if (skills.isEmpty()) {
             System.out.println("No skills registered.");
-            return;
+            return null;
         }
-        System.out.println("Select skill(s) to assign to " + selectedCollaborator.getName() + ":");
+        assert collaborator != null;
+        System.out.println("Select skill(s) to assign to " + collaborator.getName() + ":");
         for (int i = 0; i < skills.size(); i++) {
             System.out.println((i + 1) + ". " + skills.get(i).getName());
         }
@@ -81,11 +119,7 @@ public class AssignSkillUI implements Runnable {
             int skillIndex = Integer.parseInt(index.trim()) - 1;
             selectedSkillNames.add(skills.get(skillIndex).getName().trim());
         }
-        HRM hrm = getController().getHRMFromSession();
-
-        // Assign selected skills to collaborator
-        getController().assignSkillsToCollaborator(selectedCollaborator.getIDNumber(), selectedSkillNames);
-        System.out.println("Skills assigned successfully to " + selectedCollaborator.getName());
+        return selectedSkillNames;
     }
 
     /**
