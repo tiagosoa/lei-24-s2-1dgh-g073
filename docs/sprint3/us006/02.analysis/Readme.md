@@ -8,7 +8,10 @@ Attributes include name, vatNumber, phoneNumber, and email.
 
 ### Vehicle:
 Registered by the manager.
-Attributes include Brand, Model, Type, Tare, Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance/Check-up Frequency (in Kms).
+Attributes include Brand, Model, Type, Tare, Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance/Check-up Frequency (in Kms), Plante Number and Last Maintenance Date.
+
+### Vehicle Repository:
+Stores registered vehicles
 
 ### 2.1. Relevant Domain Model Excerpt 
 

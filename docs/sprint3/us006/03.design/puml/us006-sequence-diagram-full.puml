@@ -13,11 +13,6 @@ participant ":Repositories" as RepositorySingleton
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "vehicleRepository\n:VehicleRepository" as VR
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
 participant "vehicle\n:Vehicle" as VEICULO
 
 activate ADM
@@ -29,6 +24,20 @@ activate ADM
 '            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
             UI -> CTRL** : create
+            activate CTRL
+
+                        CTRL -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> CTRL: repositories
+                                        deactivate RepositorySingleton
+
+                             CTRL -> PLAT : getVehicleRepository()
+                                     activate PLAT
+
+                                 PLAT -> CTRL : vehicleRepository
+                                 deactivate PLAT
+                                 deactivate CTRL
 
             UI --> ADM : requests data (Brand, Model, Type, Tare, Gross Weight, Current Km, \nRegister Date, Acquisition Date, Maintenance/Check-up Frequency, Plate Number, Last Maintenance Date)
         deactivate UI
@@ -39,10 +48,10 @@ activate ADM
         UI --> ADM : shows all data and requests confirmation
     deactivate UI
 
-    ADM -> UI : confirmation data
+    ADM -> UI : confirms data
     activate UI
 
-        UI -> CTRL : addVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate, vfm)
+        UI -> CTRL : addVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate)
         activate CTRL
 
 
@@ -50,69 +59,29 @@ activate ADM
             CTRL -> CTRL : getVFMFromSession()
             activate CTRL
 
-                CTRL -> _APP: getInstance()
-                activate _APP
-                    _APP -> CTRL: appSession
-                deactivate _APP
-
-
-                CTRL -> APP: getCurrentSession()
-                activate APP
-
-                    APP --> CTRL: currentSession
-                deactivate APP
-
-                CTRL -> SESSAO: email = getUserEmail()
-                activate SESSAO
-
-                    SESSAO --> CTRL: email
-                deactivate SESSAO
-
-
-                CTRL -> PLAT: getOrganizationRepository(email)
-                activate PLAT
-
-                    PLAT --> CTRL: organizationRepository
-                deactivate PLAT
-
-
-                CTRL -> OrganizationRepository: getOrganizationByVFMEmail(email)
-                activate OrganizationRepository
-
-                    loop [for each organization
-                        OrganizationRepository -> ORG : anyVFMHasEmail(email)
-                        activate ORG
-
-                             ORG --> OrganizationRepository : true/false
-                        deactivate ORG
-                    end
-                    OrganizationRepository --> CTRL : organization
-                deactivate OrganizationRepository
-
-                CTRL -> ORG: getVFMByEmail(email)
-                activate ORG
-
-                    ORG --> CTRL : vfm
-                deactivate ORG
+            ref over CTRL
+            Get VFM
+            end
 
                 CTRL --> CTRL : vfm
             deactivate CTRL
 
             |||
-            CTRL -> ORG: addVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate, vfm)
-            activate ORG
+            CTRL -> VR: addVehicle(vehicleModel,vehicleBrand,vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate)
+            activate VR
 
-                ORG -> VEICULO**: create
-                ORG -> ORG: addVehicle (vehicle)
+                VR -> VEICULO**: create
+                activate VR
+                VR -> VR: validateVehicle (vehicle)
+                VR -> VR: addVehicle (vehicle)
 
 
-                activate ORG
-                    ORG -> ORG: validateVehicle (vehicle)
-                deactivate ORG
 
-                ORG --> CTRL : vehicle
+                deactivate VR
 
-            deactivate ORG
+                VR --> CTRL : vehicle
+
+            deactivate VR
 
             CTRL --> UI: vehicle
             deactivate CTRL

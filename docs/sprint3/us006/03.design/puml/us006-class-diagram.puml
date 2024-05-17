@@ -39,11 +39,6 @@ class Organization {
   - String address
   - String phone
   - String email
-  - List<Vehicle> vehicles
-  + Optional<Vehicle> createVehicle(String model,String brand, String type, VFM vfm)
-  + boolean addVehicle(Vehicle vehicle)
-  + boolean validateVehicle(Vehicle vehicle)
-  + boolean vehiclesDoNotContain(Vehicle vehicle)
 }
 
 class OrganizationRepository {
@@ -86,9 +81,11 @@ class AddVehicleUI {
 class VehicleRepository {
   - List<Vehicle> vehicles
   + Vehicle getVehiclebyPlateNumber(String plateNumber)
-  + Optional<Vehicle> add(Vehicle vehicle)
   + boolean validateVehicle(Vehicle vehicle)
   + List<Vehicle> getVehicles()
+  + Optional<Vehicle> createVehicle(String model,String brand, String type, VFM vfm)
+  + boolean addVehicle(Vehicle vehicle)
+  + boolean vehiclesDoNotContain(Vehicle vehicle)
 }
 
 note right of AddVehicleController

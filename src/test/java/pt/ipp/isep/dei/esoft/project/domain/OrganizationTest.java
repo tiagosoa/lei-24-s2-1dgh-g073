@@ -82,48 +82,6 @@ class OrganizationTest {
         assertEquals(organization, organization);
     }
 
-    @Test
-    void testThatCreateVehicleWorks() {
-        Organization organization = new Organization("123456789");
-
-        HRM hrm = new HRM("john.doe@this.company.com");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
-        LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
-        LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
-
-        Vehicle expected = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
-
-        Optional<Vehicle> vehicle =
-                organization.createVehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
-
-        assertNotNull(vehicle);
-        assertTrue(vehicle.isPresent());
-        assertEquals(expected, vehicle.get());
-    }
-
-    @Test
-    void ensureAddingDuplicateVehicleFails() {
-        //Arrange
-        Organization organization = new Organization("123456789");
-        HRM hrm = new HRM("john.doe@this.company.com");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
-        LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
-        LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
-
-        //Add the first vehicle
-        Optional<Vehicle> originalVehicle =
-                organization.createVehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
-
-        //Act
-        Optional<Vehicle> duplicateVehicle =
-                organization.createVehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
-
-        //Assert
-        assertTrue(duplicateVehicle.isEmpty());
-    }
-
 
     @Test
     void ensureHRMEmploysFails() {

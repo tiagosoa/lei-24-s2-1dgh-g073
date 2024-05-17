@@ -2,8 +2,6 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.AddVehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
-import pt.ipp.isep.dei.esoft.project.domain.VFM;
-import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 
 import java.time.LocalDate;
@@ -21,14 +19,14 @@ public class AddVehicleUI implements Runnable {
     private double vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm;
     private LocalDate vehicleRegisterDate, vehicleAcquisitionDate, vehicleLastMaintenanceDate;
     private int vehicleMaintenanceFrequencyKm;
-    private final VehicleRepository vehicleRepository;
+    private VehicleRepository vehicleRepository;
 
     /**
      * Constructor for AddVehicleUI.
      */
     public AddVehicleUI() {
         controller = new AddVehicleController();
-        this.vehicleRepository = Repositories.getInstance().getVehicleRepository();
+        this.vehicleRepository = getController().getVehicleRepository();
     }
 
     private AddVehicleController getController() {
@@ -46,8 +44,7 @@ public class AddVehicleUI implements Runnable {
 
     // Submits the data entered by the user to create a new vehicle
     private void submitData() {
-        VFM vfm = getController().getVFMFromSession();
-        Optional<Vehicle> vehicle = getController().addVehicle(vehicleModel, vehicleBrand, vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate, vfm);
+        Optional<Vehicle> vehicle = getController().addVehicle(vehicleModel, vehicleBrand, vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate);
 
         if (vehicle.isPresent()) {
             vehicleRepository.add(vehicle.get());

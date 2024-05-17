@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
+import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.VFM;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
@@ -22,9 +23,10 @@ public class AddVehicleController {
      * Default constructor that initializes repositories.
      */
     public AddVehicleController() {
-        this.organizationRepository = getOrganizationRepository();
-        this.vehicleRepository = getVehicleRepository();
-        this.authenticationRepository = getAuthenticationRepository();
+        Repositories repositories = Repositories.getInstance();
+        this.organizationRepository = repositories.getOrganizationRepository();
+        this.vehicleRepository = repositories.getVehicleRepository();
+        this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
     /**
@@ -62,27 +64,27 @@ public class AddVehicleController {
     /**
      * Adds a new Vehicle to the system based on the provided information.
      *
-     * @param model                 the model of the vehicle
-     * @param brand                 the brand of the vehicle
-     * @param type                  the type of the vehicle
-     * @param tareWeight            the tare weight of the vehicle
-     * @param grossWeight           the gross weight of the vehicle
-     * @param currentKm             the current kilometers of the vehicle
-     * @param registerDate          the registration date of the vehicle
-     * @param acquisitionDate       the acquisition date of the vehicle
+     * @param model                  the model of the vehicle
+     * @param brand                  the brand of the vehicle
+     * @param type                   the type of the vehicle
+     * @param tareWeight             the tare weight of the vehicle
+     * @param grossWeight            the gross weight of the vehicle
+     * @param currentKm              the current kilometers of the vehicle
+     * @param registerDate           the registration date of the vehicle
+     * @param acquisitionDate        the acquisition date of the vehicle
      * @param maintenanceFrequencyKm the maintenance frequency in kilometers
-     * @param plateNumber           the plate number of the vehicle
-     * @param lastMaintenanceDate   the date of the last maintenance
-     * @param vfm                   the VFM associated with the vehicle
+     * @param plateNumber            the plate number of the vehicle
+     * @param lastMaintenanceDate    the date of the last maintenance
      * @return an Optional containing the newly created Vehicle
      */
     public Optional<Vehicle> addVehicle(String model, String brand, String type, double tareWeight,
                                         double grossWeight, double currentKm, LocalDate registerDate,
                                         LocalDate acquisitionDate, int maintenanceFrequencyKm, String plateNumber,
-                                        LocalDate lastMaintenanceDate, VFM vfm) {
-        Optional<Organization> organization = getOrganizationRepository().getOrganizationByVFM(vfm);
-        return organization.flatMap(optionalOrganization -> optionalOrganization.createVehicle(model, brand, type, tareWeight, grossWeight,
-                currentKm, registerDate, acquisitionDate, maintenanceFrequencyKm, plateNumber, lastMaintenanceDate));
+                                        LocalDate lastMaintenanceDate) {
+        Optional<Vehicle> newVehicle;
+        newVehicle = vehicleRepository.createVehicle(model, brand, type, tareWeight, grossWeight, currentKm, registerDate, acquisitionDate, maintenanceFrequencyKm, plateNumber, lastMaintenanceDate);
+
+        return newVehicle;
     }
 
     /**
