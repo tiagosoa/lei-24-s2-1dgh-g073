@@ -113,7 +113,7 @@ ApplicationSession --> "1" UserSession : userSession
 CreateJobController ..> "1" Organization : organization
 CreateJobController ..> ApplicationSession
 CreateJobController ..> UserSession
-Organization "1" --> "*" Job : owns
+JobRepository "1" --> "*" Job : saves
 Job --> HRM : createdBy
 
 Organization --> "*" HRM : employs

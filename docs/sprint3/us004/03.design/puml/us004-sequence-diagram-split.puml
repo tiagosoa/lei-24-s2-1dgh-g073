@@ -58,6 +58,7 @@ activate ADM
 
 
             UI -> CTRL: getSkillList()
+            activate CTRL
         ref over CTRL
         Get Skill List
         end

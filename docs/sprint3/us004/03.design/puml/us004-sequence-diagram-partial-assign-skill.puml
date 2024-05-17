@@ -10,7 +10,7 @@ participant "Collaborator" as COLABORADOR
     group Assign Skill
     CTRL -> COLABORADOR: assignSkillsToCollaborator(collaborator.getIDNumber(), skillNames)
     activate COLABORADOR
-
+COLABORADOR -> COLABORADOR: validateSkill(selectedSkillNames)
                                 COLABORADOR -> COLABORADOR: addSkill(skill)
 
 

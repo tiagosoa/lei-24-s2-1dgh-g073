@@ -43,22 +43,22 @@ _**Note that SSD - Alternative One is adopted.**_
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-[Sequence Diagram - Full](svg/us004-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us004-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
-[Sequence Diagram - Split](svg/us004-sequence-diagram-split.svg)
+![Sequence Diagram - Split](svg/us004-sequence-diagram-split.svg)
 
 
 ### Partial Diagrams
 
-[Sequence Diagram - Assign Skill](svg/us004-sequence-diagram-partial-assign-skill.svg)
-[Sequence Diagram - Get Skill List](svg/us004-sequence-diagram-partial-get-skill-list.svg)
-[Sequence Diagram - Get Selected Skills](svg/us004-sequence-diagram-partial-get-selected-skills.svg)
-[Sequence Diagram - Get Collaborator](svg/us004-sequence-diagram-partial-get-collaborator.svg)
-[Sequence Diagram - Get Collaborator List](svg/us004-sequence-diagram-partial-get-collaborator-list.svg)
-[Sequence Diagram - Get HRM](svg/us004-sequence-diagram-partial-get-hrm.svg)
+![Sequence Diagram - Assign Skill](svg/us004-sequence-diagram-partial-assign-skill.svg)
+![Sequence Diagram - Get Skill List](svg/us004-sequence-diagram-partial-get-skill-list.svg)
+![Sequence Diagram - Get Selected Skills](svg/us004-sequence-diagram-partial-get-selected-skills.svg)
+![Sequence Diagram - Get Collaborator](svg/us004-sequence-diagram-partial-get-collaborator.svg)
+![Sequence Diagram - Get Collaborator List](svg/us004-sequence-diagram-partial-get-collaborator-list.svg)
+![Sequence Diagram - Get HRM](svg/us004-sequence-diagram-partial-get-hrm.svg)
 
 ## 3.3. Class Diagram (CD)
 
-[Class Diagram](svg/us004-class-diagram.svg)
+![Class Diagram](svg/us004-class-diagram.svg)

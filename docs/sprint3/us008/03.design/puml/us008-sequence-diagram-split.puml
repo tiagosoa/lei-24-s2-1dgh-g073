@@ -12,12 +12,7 @@ participant ":ProduceMaintenanceListController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "vehicleRepository:\nVehicleRepository" as VR
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
-participant "list\n:List" as LISTA
+participant "Vehicle" as VEICULO
 
 activate ADM
 
@@ -37,6 +32,7 @@ activate ADM
 
                     PLAT --> CTRL: vehicleRepository
                 deactivate PLAT
+                deactivate CTRL
 
                 UI -> CTRL : getVehicles()
                         activate CTRL
@@ -46,6 +42,9 @@ activate ADM
 
                                 PLAT --> CTRL: vehicles
                             deactivate PLAT
+                            deactivate CTRL
+
+
 
 
 
@@ -56,38 +55,29 @@ activate ADM
             CTRL -> CTRL : getVFMFromSession()
             activate CTRL
 
-             ref over CTRL
-              Get VFM
+ref over CTRL
+Get VFM
+end
 
-              end
                 CTRL --> CTRL : vfm
             deactivate CTRL
 
-            deactivate CTRL
-
-            deactivate CTRL
-
-            deactivate CTRL
+            CTRL -> VR :  produceMaintenanecList()
+                                 activate VR
 
             |||
-            loop [for each vehicle
-                         ref over UI
-                          Get Vehicle Parts
-
-                          end
-
+            ref over VR
+            Get Vehicle Parts
             end
-            UI -> LISTA**: create
 
-            activate LISTA
-                         ref over LISTA
-                          Create List
+ref over VR
+Create List
+end
+                VR --> CTRL : maintenanceList
 
-                          end
+            deactivate VR
 
-                LISTA --> UI : maintenanceList
-
-            deactivate LISTA
+            CTRL --> UI : maintenanceList
 
             UI --> ADM: displays maintenance list
     deactivate UI

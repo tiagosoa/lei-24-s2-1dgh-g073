@@ -17,9 +17,4 @@ public class ProduceMaintenanceListController {
     public VehicleRepository getVehicleRepository() {
         return vehicleRepository == null ? Repositories.getInstance().getVehicleRepository() : vehicleRepository;
     }
-
-    public List<Vehicle> getVehicles() {
-        // Retrieve vehicles from the repository
-        return vehicleRepository.getVehicles();
-    }
 }

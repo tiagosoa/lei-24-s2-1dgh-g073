@@ -9,7 +9,7 @@ participant ":skillrepository\n:SkillRepository" as SR
         -> CTRL: getSkillList()
         activate CTRL
 
-        CTRL -> CR: getSkillList()
+        CTRL -> SR: getSkillList()
         activate SR
 
         SR -> CTRL: skills

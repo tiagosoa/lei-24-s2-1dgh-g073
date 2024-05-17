@@ -6,8 +6,9 @@
 Asks the System to generate list of vehicles that need maintenance.
 Attributes include name, vatNumber, phoneNumber, and email.
 
-### System:
-Generates list of vehicles that need maintenance, after request from the FM.
+### Maintenance date:
+Assigned to a vehicle by the FM.
+Is introduced in the format: DD-MM-YYYY
 
 ### Vehicle:
 Registered by the VFM, may be included in the list of vehicles that need maintenance.

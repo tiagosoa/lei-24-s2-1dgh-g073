@@ -3,65 +3,66 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "vehicleRepository:\nVehicleRepository" as VR
-participant ":ProduceMaintenanceListUI" as UI
 
+participant ":vehicleRepository\n:VehicleRepository" as VR
+participant "Vehicle" as VEICULO
+activate VR
             loop [for each vehicle
-             UI -> VR: getPlateNumber()
-             activate VR
+             VR -> VEICULO: getPlateNumber()
+             activate VEICULO
 
-             VR -> UI: plateNumber
-             deactivate VR
+             VEICULO -> VR: plateNumber
+             deactivate VEICULO
 
-             UI -> VR: getBrand()
-                         activate VR
+             VR -> VEICULO: getBrand()
+                         activate VEICULO
 
-                         VR -> UI: brand
-                         deactivate VR
+                         VEICULO -> VR: brand
+                         deactivate VEICULO
 
-             UI -> VR: getModel
-                         activate VR
+             VR -> VEICULO: getModel
+                         activate VEICULO
 
-                         VR -> UI: model
-                         deactivate VR
-
-
-             UI -> VR: getCurrentKm()
-                         activate VR
-
-                         VR -> UI: currentKm()
-                         deactivate VR
-
-             UI -> VR: getLastMaintenanceDate()
-                         activate VR
-
-                         VR -> UI: lastMaintenanceDate
-                         deactivate VR
-
-             UI -> VR: getMaintenanceFrequencyKm()
-                         activate VR
-
-                         VR -> UI: maintenanceFrequencyKm
-                         deactivate VR
-
-             UI -> VR: plusDays(maintenanceFrequencyKm)
-                         activate VR
-
-                         VR -> UI: nextMaintenanceDate
-                         deactivate VR
-
-             UI -> VR: getPlateNumber()
-                         activate VR
-
-                         VR -> UI: plateNumber()
-                         deactivate VR
+                         VEICULO -> VR: model
+                         deactivate VEICULO
 
 
-             UI -> VR: plusDays(maintenanceFrequencyKm).until(LocalDate.now(), java.time.temporal.ChronoUnit.DAYS);
-                         activate VR
+             VR -> VEICULO: getCurrentKm()
+                         activate VEICULO
 
-                         VR -> UI: nextMaintenanceKms
-                         deactivate VR
+                         VEICULO -> VR: currentKm()
+                         deactivate VEICULO
+
+             VR -> VEICULO: getLastMaintenanceDate()
+                         activate VEICULO
+
+                         VEICULO -> VR: lastMaintenanceDate
+                         deactivate VEICULO
+
+             VR -> VEICULO: getMaintenanceFrequencyKm()
+                         activate VEICULO
+
+                         VEICULO -> VR: maintenanceFrequencyKm
+                         deactivate VEICULO
+
+             VR -> VEICULO: plusDays(maintenanceFrequencyKm)
+                         activate VEICULO
+
+                         VEICULO -> VR: nextMaintenanceDate
+                         deactivate VEICULO
+
+             VR -> VEICULO: getPlateNumber()
+                         activate VEICULO
+
+                         VEICULO -> VR: plateNumber()
+                         deactivate VEICULO
+
+
+             VR -> VEICULO: plusDays(maintenanceFrequencyKm).until(LocalDate.now(), java.time.temporal.ChronoUnit.DAYS);
+                         activate VEICULO
+
+                         VEICULO -> VR: nextMaintenanceKms
+                         deactivate VEICULO
 
              end
 

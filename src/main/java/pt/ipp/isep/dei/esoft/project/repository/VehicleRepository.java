@@ -20,10 +20,6 @@ public class VehicleRepository {
      */
     public VehicleRepository() {
         this.vehicles = new ArrayList<>();
-        List<Vehicle> orgVehicles = Organization.getVehicleList();
-        if (orgVehicles != null) {
-            this.vehicles.addAll(orgVehicles);
-        }
     }
 
     /**
@@ -96,5 +92,32 @@ public class VehicleRepository {
      */
     public List<Vehicle> getVehicles() {
         return List.copyOf(vehicles);
+    }
+
+    public List<String> produceMaintenanceList() {
+        // Retrieve vehicles needing maintenance
+        List<String> maintenanceList = new ArrayList<>();
+        List<Vehicle> vehicles = getVehicles();
+
+        // Iterate over vehicles and add data to the maintenance list
+        for (Vehicle vehicle : vehicles) {
+            String plate = vehicle.getPlateNumber();
+            String brand = vehicle.getBrand();
+            String model = vehicle.getModel();
+            double currentKms = vehicle.getCurrentKm();
+            LocalDate lastMaintenanceDate = vehicle.getLastMaintenanceDate();
+            int maintenanceFrequencyKm = vehicle.getMaintenanceFrequencyKm();
+            LocalDate nextMaintenanceDate = lastMaintenanceDate.plusDays(maintenanceFrequencyKm);
+            double nextMaintenanceKms = lastMaintenanceDate.plusDays(maintenanceFrequencyKm).until(LocalDate.now(), java.time.temporal.ChronoUnit.DAYS);
+
+            if (currentKms >= nextMaintenanceKms) {
+                // Format data and add to the maintenance list
+                String maintenanceData = String.format("%s %s %s %.0f %s %s",
+                        plate, brand, model, currentKms, lastMaintenanceDate, nextMaintenanceDate);
+                maintenanceList.add(maintenanceData);
+            }
+        }
+
+        return maintenanceList;
     }
 }

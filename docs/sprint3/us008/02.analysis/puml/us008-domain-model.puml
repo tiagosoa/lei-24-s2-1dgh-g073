@@ -27,10 +27,6 @@ class MaintenanceCheckup {
     date
 }
 
-class System {
-
-}
-
 class Vehicles {
     brand
     model
@@ -42,7 +38,6 @@ class Vehicles {
     acquisition date
     maintenance/check-up frequency
 }
-VFM "1" -- "1" System : requests creation of list to >
-System "1" -- "0..*" Vehicles: generates list of >
+VFM "1" -- "1" Vehicles : requests creation of list of >
 Vehicles "1" - "1..*" MaintenanceCheckup: that need >
 @enduml

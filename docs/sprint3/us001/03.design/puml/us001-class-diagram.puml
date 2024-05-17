@@ -113,7 +113,7 @@ ApplicationSession --> "1" UserSession : userSession
 CreateSkillController ..> "1" Organization : organization
 CreateSkillController ..> ApplicationSession
 CreateSkillController ..> UserSession
-Organization "1" --> "*" Skill : owns
+SkillRepository"1" --> "*" Skill : saves
 Skill --> HRM : createdBy
 
 Organization --> "*" HRM : employs
