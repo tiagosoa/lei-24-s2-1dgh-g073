@@ -100,16 +100,16 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserWithRole("Tiago Soares", "1231246@isep.ipp.pt", "1231246",
                 AuthenticationController.ROLE_ADMIN);
 
-        authenticationRepository.addUserWithRole("Diogo Cabral", "1230603@isep.app", "1230603",
+        authenticationRepository.addUserWithRole("Diogo Cabral", "1230603@isep.ipp.pt", "1230603",
                 AuthenticationController.ROLE_ADMIN);
 
-        authenticationRepository.addUserWithRole("Diogo Vilela", "1230804@isep.app", "1230804",
+        authenticationRepository.addUserWithRole("Diogo Vilela", "1230804@isep.ipp.pt", "1230804",
                 AuthenticationController.ROLE_ADMIN);
 
-        authenticationRepository.addUserWithRole("Guilherme Miranda", "1230582@isep.app", "1230582",
+        authenticationRepository.addUserWithRole("Guilherme Miranda", "1230582@isep.ipp.pt", "1230582",
                 AuthenticationController.ROLE_ADMIN);
 
-        authenticationRepository.addUserWithRole("Hugo Ramos", "1231219@isep.app", "1231219",
+        authenticationRepository.addUserWithRole("Hugo Ramos", "1231219@isep.ipp.pt", "1231219",
                 AuthenticationController.ROLE_ADMIN);
 
         authenticationRepository.addUserWithRole("Tiago Soares", "1231246@isep.ipp.pt", "isep",

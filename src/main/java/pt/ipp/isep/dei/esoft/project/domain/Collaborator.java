@@ -47,7 +47,7 @@ public class Collaborator {
         this.taxpayer = taxpayer;
         this.doctype = doctype;
         this.IDnumber = IDnumber;
-        this.hrm = hrm;
+
     }
 
     /**
@@ -93,12 +93,43 @@ public class Collaborator {
         }
     }
 
+    private void validateName(String name){
+        if (name == null || name.isEmpty() || !name.matches("[a-zA-Z]+")) {
+            throw new IllegalArgumentException("Collaborator name cannot be null, empty, or contain special characters or digits.");
+        }
+    }
+    private void validateBirthdate(String birthdate){
+
+    }
+    private void validateAdmissiondate(String admissiondate){
+
+    }
+    private void validateAddress(String address){
+
+    }
+    private void validateMobile(int mobile){
+
+    }
+    private void validateEmail(String email){
+
+    }
+    private void validateTaxpayer(int taxpayer){
+
+    }
+    private void validateDocType(String doctype){
+
+    }
+    private void validateIDnumber(int IDnumber){
+
+    }
+
     /**
      * Adds a skill to the collaborator.
      *
      * @param skill the skill to be added
      * @return true if the skill was added successfully, false otherwise
      */
+
     public boolean addSkill(Skill skill) {
         if (!skills.contains(skill)) {
             skills.add(skill);
