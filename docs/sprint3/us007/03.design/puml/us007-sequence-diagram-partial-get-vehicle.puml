@@ -1,0 +1,53 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+
+participant ":RegisterMaintenanceController" as RMC
+participant ":Repositories" as RepositorySingleton
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "vehicleRepository\n:VehicleRepository" as VR
+autonumber 7
+
+ -> RMC : getVehicleByDescription(plate ID, brand, model, type)
+
+autonumber 7.1
+activate RMC
+    group Get Vehicle
+
+
+
+        activate RMC
+
+           RMC -> RepositorySingleton : getInstance()
+           activate RepositorySingleton
+
+               RepositorySingleton --> RMC: repositories
+           deactivate RepositorySingleton
+
+               RMC -> PLAT : getVehicleRepository()
+           activate PLAT
+
+               PLAT --> RMC : vehicleRepository
+           deactivate PLAT
+
+               RMC -> VR : getVehicleByDescription(plate ID, brand, model, type)
+           activate VR
+
+               VR --> RMC : vehicle
+           deactivate VR
+
+        deactivate RMC
+    end
+    autonumber 8
+    <-- RMC  : vehicle
+deactivate PLAT
+
+
+
+@enduml

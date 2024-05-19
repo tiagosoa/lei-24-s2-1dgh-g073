@@ -1,0 +1,110 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US02 Alternative One
+
+autonumber
+
+actor "Human Resources Manager" as HRM
+participant ":System" as System
+
+activate HRM
+
+    HRM -> System : asks to register a new job
+    activate System
+
+        System --> HRM : requests job name
+    deactivate System
+
+    HRM -> System : types requested job name
+    activate System
+
+    System --> HRM : shows all data and requests confirmation
+    deactivate System
+
+    HRM -> System : confirms data
+    activate System
+
+        System --> HRM : displays operation success
+    deactivate System
+
+@enduml
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US03 Alternative Two
+
+autonumber
+
+actor "Human Resources Management" as HRM
+participant ":System" as System
+
+activate HRM
+
+    HRM -> System : asks to register a collaborator to a job
+    activate System
+
+        System --> HRM : shows job categories list and asks to select one
+    deactivate System
+
+    HRM -> System : selects job category
+    activate System
+
+        System --> HRM : shows employees and asks to assign one to the job
+    deactivate System
+
+    HRM -> System : selects employee
+    activate System
+
+        System --> HRM : shows all data and requests confirmation
+    deactivate System
+
+    HRM -> System : confirms data
+    activate System
+
+        System --> HRM : displays operation success
+    deactivate System
+@enduml
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US02 Alternative One
+
+autonumber
+
+actor "Human Resources Manager" as HRM
+participant ":System" as System
+
+activate HRM
+
+    HRM -> System : asks to register a new job
+    activate System
+
+        System --> HRM : requests job data (i.e. job type, duration, cost, description)
+    deactivate System
+
+    HRM -> System : types requested job data
+    activate System
+
+        System --> HRM : shows jobs category list and asks to select one
+    deactivate System
+
+    HRM -> System : selects one job category
+    activate System
+
+        System --> HRM : shows all data and requests confirmation
+    deactivate System
+
+    HRM -> System : confirms data
+    activate System
+
+        System --> HRM : displays operation success
+    deactivate System
+
+@enduml

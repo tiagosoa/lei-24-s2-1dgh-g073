@@ -1,0 +1,138 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as ADM
+participant ":AssignSkillUI" as UI
+participant ":AssignSkillController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant ":collaboratorrepository\n:CollaboratorRepository" as CR
+participant "skillrepository\n:SkillRepository" as SR
+participant "repositories\n:Repositories" as PLAT
+participant "collaborator\n:Collaborator" as COLABORADOR
+
+activate ADM
+
+        ADM -> UI : asks to assign a skill to a collaborator.
+
+        activate UI
+
+'            UI --> ADM : requests data (name)
+            'create CTRL
+            UI -> CTRL** : create
+
+                         UI -> CTRL : getCollaboratorRepository()
+                         activate CTRL
+
+                        CTRL -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> CTRL: repositories
+                                        deactivate RepositorySingleton
+
+                                 CTRL -> PLAT : getCollaboratorRepository()
+                                         activate PLAT
+
+                                     PLAT -> CTRL : collaboratorrepository
+                                     deactivate PLAT
+
+                                 UI -> CTRL : getSkillRepository()
+
+                                 CTRL -> PLAT : getSkillRepository()
+                                         activate PLAT
+
+                                     PLAT -> CTRL : skillrepository
+                                     deactivate PLAT
+
+            UI -> CTRL: getCollaboratorList()
+        CTRL -> CR: getCollaboratorList()
+        activate CR
+
+        CR -> CTRL: collaborators
+        deactivate CR
+
+        CTRL -> UI: collaborators
+        deactivate CTRL
+
+    UI --> ADM : shows list of existing collaborators and asks to select one or more
+    deactivate UI
+
+    ADM -> UI : selects collaborator(s)
+    activate UI
+
+        UI -> UI: get(collaboratorindex)
+
+        UI --> UI: selectedcollaborators
+
+
+            UI -> CTRL: getSkillList()
+        activate CTRL
+
+        CTRL -> SR: getSkillList()
+        activate SR
+
+        SR -> CTRL: skills
+        deactivate SR
+
+        CTRL -> UI: skills
+        deactivate CTRL
+
+
+    UI --> ADM : shows list of existing skills and asks to select one or more
+    deactivate UI
+
+
+   ADM -> UI : selects skill(s)
+   activate UI
+
+        UI -> UI: add(skills.get(skillIndex).getName().trim())
+
+        UI --> UI: selectedSkillNames
+
+
+
+   UI -> ADM : shows selected data and requests confirmation
+
+   ADM -> UI : confirms data
+
+   UI -> CTRL: assignSkillsToCollaborator(collaborator.getIDNumber(), skillNames)
+   activate CTRL
+
+
+            |||
+            CTRL -> CTRL : getHRMFromSession()
+            activate CTRL
+
+                ref over CTRL
+                Get HRM
+                end
+
+                CTRL --> CTRL : hrm
+            deactivate CTRL
+
+            |||
+            CTRL -> COLABORADOR: assignSkillsToCollaborator(collaborator.getIDNumber(), skillNames)
+            activate COLABORADOR
+
+
+
+                    COLABORADOR -> COLABORADOR: validateSkill(selectedSkillNames)
+                    COLABORADOR -> COLABORADOR: addSkill(skill)
+
+
+
+
+
+            CTRL --> CR: updateCollaborator(collaborator)
+            deactivate COLABORADOR
+            deactivate CTRL
+            UI --> ADM: displays operation success
+    deactivate UI
+
+deactivate ADM
+
+@enduml

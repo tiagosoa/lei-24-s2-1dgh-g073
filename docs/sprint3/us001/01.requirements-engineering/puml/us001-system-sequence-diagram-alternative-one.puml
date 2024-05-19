@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "Human Resources Manager" as HRM
+participant ":System" as System
+
+activate HRM
+
+    HRM -> System : asks to register skills that may be appointed to a collaborator
+    activate System
+
+        System --> HRM : requests name(s) of skill(s)
+    deactivate System
+
+    HRM -> System : types requested name(s)
+    activate System
+
+        System --> HRM : shows typed name and asks for confirmation
+    deactivate System
+
+    HRM -> System : confirms data
+    activate System
+
+        System --> HRM : displays operation success
+    deactivate System
+
+@enduml

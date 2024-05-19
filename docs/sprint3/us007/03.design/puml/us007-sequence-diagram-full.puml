@@ -1,0 +1,155 @@
+
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Vehicle and Equipment\nFleet Manager" as VEFL
+participant ":MaintenanceRegisterUI" as UI
+participant ":RegisterMaintenanceController" as RMC
+participant ":Repositories" as RepositorySingleton
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "vehicleRepository\n:VehicleRepository" as VR
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
+participant "organization\n:Organization" as ORG
+participant "maintenanceDate\n:MaintenanceDate" as DATE
+
+activate VEFL
+
+        VEFL -> UI : asks to register a vehicle's maintenance date
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> RMC** : create
+
+
+
+            UI --> VEFL : requests data (plate ID, current KMs \nand date of maintenance)
+        deactivate UI
+
+    VEFL -> UI : types requested data
+    activate UI
+
+        UI --> VEFL : shows all data and requests confirmation
+    deactivate UI
+
+    VEFL -> UI : confirms data
+    activate UI
+
+        UI -> RMC : RegisterMaintenanceController(plate ID, brand, model, type, \ncurrent KMs and date of maintenance)
+        activate RMC
+
+                RMC -> RMC : getVehicleByDescription(plate ID, brand, model, type, \ncurrent KMs and date of maintenance))
+                activate RMC
+
+                    RMC -> RepositorySingleton : getInstance()
+                    activate RepositorySingleton
+
+                        RepositorySingleton --> RMC: repositories
+                    deactivate RepositorySingleton
+
+                    RMC -> PLAT : getVehicleRepository()
+                    activate PLAT
+
+                        PLAT --> RMC : vehicleRepository
+                    deactivate PLAT
+
+                    RMC -> VR : getVehicleByDescription(plate ID, brand, model, type)
+                    activate VR
+
+                        VR --> RMC : vehicle
+                    deactivate VR
+
+                    RMC --> RMC : vehicle
+
+                deactivate RMC
+
+                RMC -> RMC : getVFMFromSession()
+                            activate RMC
+
+                                RMC -> _APP: getInstance()
+                                activate _APP
+                                    _APP -> RMC: appSession
+                                deactivate _APP
+
+
+                                RMC -> APP: getCurrentSession()
+                                activate APP
+
+                                    APP --> RMC: currentSession
+                                deactivate APP
+
+                                RMC -> SESSAO: email = getUserEmail()
+                                activate SESSAO
+
+                                    SESSAO --> RMC: email
+                                deactivate SESSAO
+
+
+                                RMC -> PLAT: getOrganizationRepository(email)
+                                activate PLAT
+
+                                    PLAT --> RMC: organizationRepository
+                                deactivate PLAT
+
+
+                                RMC -> OrganizationRepository: getOrganizationByVFMEmail(email)
+                                activate OrganizationRepository
+
+                                    loop [for each organization
+                                        OrganizationRepository -> ORG : anyVFMHasEmail(email)
+                                        activate ORG
+
+                                             ORG --> OrganizationRepository : true/false
+                                        deactivate ORG
+                                    end
+                                    OrganizationRepository --> RMC : organization
+                                deactivate OrganizationRepository
+
+                                RMC -> ORG: getVFMByEmail(email)
+                                activate ORG
+
+                                    ORG --> RMC : VFM
+                                deactivate ORG
+
+                                RMC --> RMC : VFM
+                            deactivate RMC
+
+            |||
+            RMC -> ORG: createMaintenanceDate(Vehicle, current KMs \nand date of maintenance)
+            activate ORG
+
+                ORG -> DATE**: create(plate ID, current KMs \nand date of maintenance)
+                ORG -> ORG: addMaintenanceDate(maintenanceDate)
+
+
+                activate ORG
+                    ORG -> ORG: validateMaintenanceDate(maintenanceDate)
+                    activate ORG
+                        ORG --> ORG
+                    deactivate ORG
+
+                    ORG --> ORG
+                deactivate ORG
+
+                ORG --> RMC : maintenanceDate
+
+            deactivate ORG
+
+            RMC --> UI: maintenanceDate
+        deactivate RMC
+            UI --> VEFL: displays operation success
+    deactivate UI
+
+deactivate VEFL
+
+@enduml

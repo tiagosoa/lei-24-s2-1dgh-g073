@@ -1,0 +1,54 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+'title Domain Model
+
+'class Platform {
+'  -description
+'}
+
+class HRM {
+    name
+    vatNumber
+    phoneNumber
+    email
+}
+
+class Skill {
+    name
+}
+
+class Collaborator {
+    name
+    birthdate
+    admission date
+    address
+    contact info (mobile and email)
+    taxpayer number
+    ID doc type and number
+}
+
+class CollaboratorRepository {
+    collaborators
+}
+
+
+'class User {
+'    name
+'    email
+'    password
+'}
+
+HRM "1" - "0...*" Skill: creates >
+Skill "*" - "1" Collaborator: is assigned to >
+Collaborator "1" -- "1" CollaboratorRepository : saved in >
+@enduml

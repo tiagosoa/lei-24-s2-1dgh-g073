@@ -1,0 +1,70 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+participant ":vehicleRepository\n:VehicleRepository" as VR
+participant "Vehicle" as VEICULO
+activate VR
+            loop [for each vehicle
+             VR -> VEICULO: getPlateNumber()
+             activate VEICULO
+
+             VEICULO -> VR: plateNumber
+             deactivate VEICULO
+
+             VR -> VEICULO: getBrand()
+                         activate VEICULO
+
+                         VEICULO -> VR: brand
+                         deactivate VEICULO
+
+             VR -> VEICULO: getModel
+                         activate VEICULO
+
+                         VEICULO -> VR: model
+                         deactivate VEICULO
+
+
+             VR -> VEICULO: getCurrentKm()
+                         activate VEICULO
+
+                         VEICULO -> VR: currentKm()
+                         deactivate VEICULO
+
+             VR -> VEICULO: getLastMaintenanceDate()
+                         activate VEICULO
+
+                         VEICULO -> VR: lastMaintenanceDate
+                         deactivate VEICULO
+
+             VR -> VEICULO: getMaintenanceFrequencyKm()
+                         activate VEICULO
+
+                         VEICULO -> VR: maintenanceFrequencyKm
+                         deactivate VEICULO
+
+             VR -> VEICULO: plusDays(maintenanceFrequencyKm)
+                         activate VEICULO
+
+                         VEICULO -> VR: nextMaintenanceDate
+                         deactivate VEICULO
+
+             VR -> VEICULO: getPlateNumber()
+                         activate VEICULO
+
+                         VEICULO -> VR: plateNumber()
+                         deactivate VEICULO
+
+
+             VR -> VEICULO: plusDays(maintenanceFrequencyKm).until(LocalDate.now(), java.time.temporal.ChronoUnit.DAYS);
+                         activate VEICULO
+
+                         VEICULO -> VR: nextMaintenanceKms
+                         deactivate VEICULO
+
+             end
+
+
+@enduml

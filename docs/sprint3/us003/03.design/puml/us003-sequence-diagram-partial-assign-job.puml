@@ -1,0 +1,42 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+participant ":collaboratorrepository\n:CollaboratorRepository" as CR
+participant "jobrepository\n:JobRepository" as JR
+participant "collaborator\n:Collaborator" as COLABORADOR
+
+activate CR
+    group Assign Job
+
+                                                -> CR: assignJobToCollaborator(collaborator)
+
+                                                CR -> CR: getCollaboratorByID(collaboratorID)
+                                                activate CR
+
+                                                CR --> CR: collaborator
+                                                deactivate CR
+
+                                                CR -> JR: getJobByName(jobName)
+                                                activate JR
+
+                                                JR --> CR: job
+                                                deactivate JR
+
+                                                CR -> COLABORADOR: addJob(job)
+
+                                               CR -> CR : addCollaborator (collaborator)
+
+
+
+
+                                               <-- CR: collaborator
+
+                                               deactivate CR
+
+
+
+
+@enduml

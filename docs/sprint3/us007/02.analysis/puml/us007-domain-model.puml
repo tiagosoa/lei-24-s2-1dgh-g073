@@ -1,0 +1,47 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+'title Domain Model
+
+'class Platform {
+'  -description
+'}
+
+class VFM {
+    name
+    vatNumber
+    phoneNumber
+    email
+}
+
+class MaintenanceCheckup {
+    date
+}
+
+class Vehicle {
+    brand
+    model
+    type
+    tare
+    gross weight
+    current KM
+    register date
+    acquisition date
+    maintenance/check-up frequency
+}
+
+'Platform "1" -- "*" HRM : has registered >
+VFM "1" - "1..*" MaintenanceCheckup : wants to register >
+'Task "*" -- "1" Employee: created by >
+MaintenanceCheckup "1" - "1" Vehicle: belongs to >
+'Employee "0..1" -- "1" User: acts as >
+@enduml

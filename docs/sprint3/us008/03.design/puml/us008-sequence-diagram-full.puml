@@ -1,0 +1,142 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Vehicle Fleet Manager" as ADM
+participant ":ProduceMaintenanceListUI" as UI
+participant ":ProduceMaintenanceListController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "vehicleRepository:\nVehicleRepository" as VR
+participant "Vehicle" as VEICULO
+
+activate ADM
+
+        ADM -> UI : asks to list the vehicles that need maintenance
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+
+            UI -> CTRL : getVehicleRepository()
+            activate CTRL
+
+                CTRL -> PLAT : getVehicleRepository()
+                activate PLAT
+
+                    PLAT --> CTRL: vehicleRepository
+                deactivate PLAT
+                deactivate CTRL
+
+                UI -> CTRL : getVehicles()
+                        activate CTRL
+
+                            CTRL -> PLAT : getVehicles()
+                            activate PLAT
+
+                                PLAT --> CTRL: vehicles
+                            deactivate PLAT
+                            deactivate CTRL
+
+
+
+
+
+        UI -> CTRL : produceMaintenanecList()
+        activate CTRL
+
+            |||
+            CTRL -> CTRL : getVFMFromSession()
+            activate CTRL
+
+ref over CTRL
+Get VFM
+end
+
+                CTRL --> CTRL : vfm
+            deactivate CTRL
+
+            CTRL -> VR :  produceMaintenanecList()
+                                 activate VR
+
+            |||
+            loop for each vehicle
+            VR -> VEICULO: getPlateNumber()
+            activate VEICULO
+
+            VEICULO -> VR: plateNumber
+            deactivate VEICULO
+
+            VR -> VEICULO: getBrand()
+                        activate VEICULO
+
+                        VEICULO -> VR: brand
+                        deactivate VEICULO
+
+            VR -> VEICULO: getModel
+                        activate VEICULO
+
+                        VEICULO -> VR: model
+                        deactivate VEICULO
+
+
+            VR -> VEICULO: getCurrentKm()
+                        activate VEICULO
+
+                        VEICULO -> VR: currentKm()
+                        deactivate VEICULO
+
+            VR -> VEICULO: getLastMaintenanceDate()
+                        activate VEICULO
+
+                        VEICULO -> VR: lastMaintenanceDate
+                        deactivate VEICULO
+
+            VR -> VEICULO: getMaintenanceFrequencyKm()
+                        activate VEICULO
+
+                        VEICULO -> VR: maintenanceFrequencyKm
+                        deactivate VEICULO
+
+           VR -> VEICULO: plusDays(maintenanceFrequencyKm)
+                        activate VEICULO
+
+                        VEICULO -> VR: nextMaintenanceDate
+                        deactivate VEICULO
+
+            VR -> VEICULO: getPlateNumber()
+                        activate VEICULO
+
+                        VEICULO -> VR: plateNumber()
+                        deactivate VEICULO
+
+
+            VR -> VEICULO: plusDays(maintenanceFrequencyKm).until(LocalDate.now(), java.time.temporal.ChronoUnit.DAYS);
+                        activate VEICULO
+
+                        VEICULO -> VR: nextMaintenanceKms
+                        deactivate VEICULO
+
+            end
+
+            loop for each maintenance date
+            VR -> VR:                maintenanceList.add(maintenanceData);
+            end
+                VR --> CTRL : maintenanceList
+
+            deactivate VR
+
+            CTRL --> UI : maintenanceList
+
+            UI --> ADM: displays maintenance list
+    deactivate UI
+
+deactivate ADM
+
+@enduml

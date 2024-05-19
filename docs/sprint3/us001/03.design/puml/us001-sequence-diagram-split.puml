@@ -1,0 +1,88 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as ADM
+participant ":CreateSkillUI" as UI
+participant ":CreateSkillController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "skillrepository\n:SkillRepository" as SR
+participant "skill\n:Skill" as HABILIDADE
+
+activate ADM
+
+        ADM -> UI : asks to create a new skill
+
+        activate UI
+
+'            UI --> ADM : requests data (name)
+            'create CTRL
+            UI -> CTRL** : create
+
+            UI -> CTRL : getSkillRepository()
+
+            activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+                            activate RepositorySingleton
+
+                                RepositorySingleton --> CTRL: repositories
+                            deactivate RepositorySingleton
+
+                 CTRL -> PLAT : getSkillRepository()
+                         activate PLAT
+
+                     PLAT -> CTRL : skillRepository
+                     deactivate PLAT
+    deactivate CTRL
+    UI --> ADM : requests name
+    deactivate UI
+
+    ADM -> UI : types requested name
+    activate UI
+
+            UI --> ADM : shows typed name and asks for confirmation
+        deactivate UI
+
+        ADM -> UI : confirms data
+        activate UI
+
+        UI -> CTRL : createSkill(skillname)
+        activate CTRL
+
+            |||
+            CTRL -> CTRL : getHRMFromSession()
+            activate CTRL
+
+                ref over CTRL
+                Get HRM
+                end
+
+                CTRL --> CTRL : hrm
+            deactivate CTRL
+
+            |||
+            CTRL -> SR: createSkill(skillname)
+            activate SR
+
+                ref over SR
+                Create Skill
+                end
+
+                SR --> CTRL : skill
+
+            deactivate SR
+
+            CTRL --> UI: skill
+            deactivate CTRL
+            UI --> ADM: displays operation success
+    deactivate UI
+
+deactivate ADM
+
+@enduml

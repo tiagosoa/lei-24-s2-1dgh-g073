@@ -1,0 +1,126 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam classAttributeIconSize 0
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
+class HRManager {
+  - String name
+  - String vatNumber
+  - String address
+  - String phone
+  - String email
+}
+
+class Skill {
+  - String name
+}
+
+class Job {
+  - String name
+}
+
+class Collaborator {
+    - name: String
+    - birthdate: String
+    - admission date: String
+    - address: String
+    - mobile Contact: int
+    - email contact: String
+    - ID doc type: String
+    - ID number: int
+    + addSkill(skill)
+}
+
+class GenerateTeamController {
+  + CollaboratorRepository getCollaboratorRepository()
+  + OrganizationRepository getOrganizationRepository()
+  + AuthenticationRepository getAuthenticationRepository()
+  + SkillRepository getSkillRepository()
+  + List<Collaborator> generateTeam(int maxTeamSize, int minTeamSize, List<Skill> requiredSkills)
+  + HRM getHRMFromSession()
+}
+
+class Repositories {
+  - static instance : Repositories
+  + getInstance() : Repositories
+  + getCollaboratorRepository() : CollaboratorRepository
+  + getSkillRepository() : SkillRepository
+}
+
+ class CollaboratorRepository {
+   - List<Collaborator> collaborators
+   + Optional<Collaborator> addCollaborator(Collaborator collaborator)
+   + Collaborator getCollaboratorByID(int IDnumber)
+   + List<Collaborator> getCollaboratorList()
+   + Optional<Collaborator> registerCollaborator( \nname: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \ntaxpayer: int, \nIDdoctype: String, \nIDnumber: int)
+   + boolean validateCollaborator(Collaborator collaborator)
+   + void updateCollaborator(Collaborator collaborator)
+   + List<Collaborator> filterCollaboratorsBySkills(List<Collaborator> collaborators, List<Skill> requiredSkills)
+ }
+
+ class Organization {
+   - String name
+   - String vatNumber
+   - String address
+   - String phone
+   - String email
+ }
+
+
+class GenerateTeamUI {
+   + List<Skill> parseSkills(String inputSkills)
+   + void displayTeam(List<Collaborator> team)
+}
+
+
+
+note right of HRManager
+  - HRM inputs team size and skill criteria
+end note
+
+note left of GenerateTeamController
+  - Ensures team meets size and skill requirements
+  - Team Size and required Skills are obtained from the HRM's input
+  - Updates the Team Repository
+end note
+
+note left of GenerateTeamUI
+  - UI for HRM to input min. and max. team size and skills
+  - Communicates with GenerateTeamController
+  - Creates list of required skills
+  - Checks if team meets size and skill requirements
+end note
+
+note bottom of Organization
+  - Manages collaborators, skills, and jobs
+end note
+
+HRManager -down-> GenerateTeamController : uses
+GenerateTeamController -down-> Collaborator : generates team of
+Collaborator -left-> Skill : possesses
+Collaborator -right-> Job : possesses
+Organization -right-> Collaborator : manages
+Organization -up-> HRManager : belongs to
+Repositories -right-> CollaboratorRepository : contains
+Repositories -right-> SkillRepository : contains
+GenerateTeamController -right-> Repositories : accesses
+ApplicationSession -> ApplicationSession : instance
+ApplicationSession --> "1" UserSession : userSession
+GenerateTeamController ..> ApplicationSession
+GenerateTeamController ..> UserSession
+GenerateTeamUI .> GenerateTeamController
+
+@enduml

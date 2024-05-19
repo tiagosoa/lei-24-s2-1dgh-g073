@@ -1,0 +1,125 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
+class VehicleFleetManager {
+  - String name
+  - String email
+  - String phone
+}
+
+class Vehicle {
+  - String brand
+  - String model
+  - String type
+  - Double tareWeight
+  - Double grossWeight
+  - Int currentKm
+  - LocalDate registerDate
+  - LocalDate acquisitionDate
+  - Int maintenanceFrequency
+  - String plateName
+  - LocalDate lastMaintenanceDate
+}
+
+class Organization {
+  - String name
+  - String vatNumber
+  - String address
+  - String phone
+  - String email
+  - List<Vehicle> vehicles
+  - Map<Vehicle, List<Maintenance>> maintenanceRecords
+  + addVehicle(Vehicle vehicle)
+  + addMaintenance(Vehicle vehicle, Maintenance maintenance)
+  + List<Maintenance> getVehicleMaintenanceRecords(Vehicle vehicle)
+}
+
+class VehicleRepository {
+  - List<Vehicle> vehicles
+  + Vehicle getVehiclebyPlateNumber(String plateNumber)
+  + Optional<Vehicle> add(Vehicle vehicle)
+  + boolean validateVehicle(Vehicle vehicle)
+  + List<Vehicle> getVehicles()
+}
+
+class OrganizationRepository {
+  + boolean save(Organization organization)
+  + Organization findByName(String name)
+  + Organization findByVatNumber(String vatNumber)
+}
+
+class Repositories {
+  + getInstance() : Repositories
+  + getVehicleRepository() : VehicleRepository
+  + getOrganizationRepository() : OrganizationRepository
+}
+
+class ProduceMaintenanceListController {
+    + VehicleRepository getVehicleRepository()
+    + List<Vehicle> getVehicles()
+}
+
+class ProduceMaintenanceListUI {
+    + VehicleRepository getVehicleRepository()
+    + List<Vehicle> getVehicles()
+}
+
+note right of ProduceMaintenanceListController
+    - userEmail is obtained
+    from the user session
+    - categoryDescription
+    is retrieved from selected data
+end note
+
+note bottom of VehicleRepository
+    - used for displaying the maintenance list
+end note
+
+class ProduceMaintenanceListUI {
+}
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+ProduceMaintenanceListUI .> ProduceMaintenanceListController
+
+ProduceMaintenanceListController .> Repositories : repositories
+
+Repositories -> "1" VehicleRepository
+
+ProduceMaintenanceListController ..> Vehicle
+ProduceMaintenanceListController ..> OrganizationRepository : organizationRepository
+ProduceMaintenanceListController ..> VehicleRepository : VehicleRepository
+
+Repositories --> "1" OrganizationRepository
+
+OrganizationRepository --> "*" Organization
+ApplicationSession --> "1" UserSession : userSession
+
+ProduceMaintenanceListController ..> "1" Organization : organization
+ProduceMaintenanceListController ..> ApplicationSession
+ProduceMaintenanceListController ..> UserSession
+VehicleRepository "1" --> "*" Vehicle : Vehicle
+
+Organization --> "*" VFM : employs
+
+@enduml
