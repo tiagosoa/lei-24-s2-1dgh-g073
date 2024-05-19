@@ -7,29 +7,21 @@
 
 As a Green Space Manager (GSM), I want to register a green space (garden, medium-sized park or large-sized park), and its respective area.
 
-### 1.2. Customer Specifications and Clarifications 
-
-**From the specifications document:**
-
->	Each skill is characterized only by its name.
-
->	As long as it is not attributed to a collaborator, access to the skill is exclusive to the employees of the respective organization. 
+### 1.2. Customer Specifications and Clarifications
 
 **From the client clarifications:**
 
-> **Question:** Can the skill be immediately attributed to a collaborator?
+> **Question:** Can two green spaces have the same name?
 >
-> **Answer:** No. The skill is to be created only.
+> **Answer:** No.
 
-> **Question:** What data is necessary to create a skill?
+> **Question:** We understand that type (garden, medium-size, large-size), area, name, and address are required inputs for a Green Space (and if we are wrong in this, please correct us), but are there any other inputs that we are unaware of?
 >
-> **Answer:** At the moment, the skill is only a name.
+> **Answer:** Seems enough.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The system should provide options to specify the type of green space: garden, medium-sized park, or large-sized park.
-* **AC2:** When creating a skill with a name that already exists, the system must reject such operation and the user must be able to modify the typed name.
-* **AC3:** A skill name can’t have special characters or digits.
+* n/a
 
 ### 1.4. Found out Dependencies
 
@@ -43,7 +35,7 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
     * type of green space
 
 * Typed data:
-    * green space area
+    * green space name and area
 
 **Output Data:**
 
@@ -57,4 +49,4 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 
 ### 1.7 Other Relevant Remarks
 
-* The created skill stays in a "not attributed" state in order to distinguish from "attributed" skills.
+* n/a

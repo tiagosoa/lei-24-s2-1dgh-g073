@@ -1,49 +1,47 @@
-# US020 - Registering a Green Space and Its Area
+# US021 - Add an entry to the To-Do List
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a Green Space Manager (GSM), I want to register a green space (garden, medium-sized park or large-sized park), and its respective area.
+As a Green Spaces Manager (GSM), I want to add a new entry to the To-Do List.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each skill is characterized only by its name.
-
->	As long as it is not attributed to a collaborator, access to the skill is exclusive to the employees of the respective organization. 
+>	The entries in this list describe the required task, the degree of urgency (High, Medium, and Low), and the approximate expected duration.
 
 **From the client clarifications:**
 
-> **Question:** Can the skill be immediately attributed to a collaborator?
+> **Question:** Should the to-do entries be unique or can a GSM repeat the same to-do entry, for the same Green Space, multiple times?
 >
-> **Answer:** No. The skill is to be created only.
+> **Answer:** Yes; Assuming the previous task with same description was previously processed and is not open anymore.
 
-> **Question:** What data is necessary to create a skill?
+> **Question:**  What are the details the GSM needs to input, other than the Green Space, frequency, estimated duration?Title and description are required?
 >
-> **Answer:** At the moment, the skill is only a name.
+> **Answer:** Title and description could be useful.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The system should provide options to specify the type of green space: garden, medium-sized park, or large-sized park.
-* **AC2:** When creating a skill with a name that already exists, the system must reject such operation and the user must be able to modify the typed name.
-* **AC3:** A skill name can’t have special characters or digits.
+* **AC1:** The new entry must be associated with a green space managed by the GSM.
+* **AC2:** The green space for the new entry should be chosen from a list presented to the GSM.
 
 ### 1.4. Found out Dependencies
 
-* n/a
+* There is a dependency found in "US20 - Registering a Green Space and Its Area", as there must be one green space registered to associate to the entry
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Selected data:
-    * type of green space
+    * green space
 
 * Typed data:
-    * green space area
+    * title and description
+    * approximate duration
 
 **Output Data:**
 
@@ -53,8 +51,8 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us020-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us021-system-sequence-diagram-alternative-one.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The created skill stays in a "not attributed" state in order to distinguish from "attributed" skills.
+* n/a
