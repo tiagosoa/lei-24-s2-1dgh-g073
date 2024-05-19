@@ -12,19 +12,19 @@ participant ":System" as System
 
 activate GSM
 
-    GSM -> System : asks to register a green space (garden, medium-sized park or large-sized park) and its respective area.
+    GSM -> System : asks to add a new entry to the To-Do List
     activate System
 
-        System --> GSM : shows possible types of green spaces and asks to select one
+        System --> GSM : shows list of green spaces and asks to select one
     deactivate System
 
-    GSM -> System : selects type of green space
+    GSM -> System : selects green space
     activate System
 
-    System --> GSM : requests area of the green space
+    System --> GSM : requests entry data (description, degree of urgency \n(this one is selectable), approximate duration)
     deactivate System
 
-    GSM -> System : types area
+    GSM -> System : types/selects data
     activate System
 
     System --> GSM : shows data and requests confirmation
