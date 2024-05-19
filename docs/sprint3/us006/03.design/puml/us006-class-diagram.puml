@@ -25,11 +25,7 @@ class Vehicle {
   - int maintenanceFrequency
   - String plateNumber
   - LocalDate lastMaintenanceDate
-  + validateVehicle(String trait)
-  + validateVehicle(LocalDate trait)
-  + validateVehicle(int trait)
-  + validateVehicle(Double trait)
-  + String getVehiclebyPlateNumber()
+  + validateTrait(Object trait)
 }
 
 
@@ -83,6 +79,7 @@ class VehicleRepository {
   + Vehicle getVehiclebyPlateNumber(String plateNumber)
   + boolean validateVehicle(Vehicle vehicle)
   + List<Vehicle> getVehicles()
+  + boolean registerMaintenance(plateNumber, currentKm, maintenanceDate)
   + Optional<Vehicle> createVehicle(String model,String brand, String type, VFM vfm)
   + boolean addVehicle(Vehicle vehicle)
   + boolean vehiclesDoNotContain(Vehicle vehicle)

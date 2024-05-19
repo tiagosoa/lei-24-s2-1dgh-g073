@@ -33,8 +33,36 @@ public class VehicleRepository {
         return vehicles.stream()
                 .filter(v -> v.getPlateNumber().equals(plateNumber))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Vehicle does not exist."));
+                .orElseThrow(() -> new IllegalArgumentException("Vehicle with plate number " + plateNumber + " does not exist."));
     }
+
+
+    /**
+     * Registers maintenance for a vehicle with the given plate number, current kilometers, and maintenance date.
+     *
+     * @param plateNumber The plate number of the vehicle.
+     * @param currentKm The current kilometers of the vehicle.
+     * @param maintenanceDate The date of the maintenance.
+     * @return true if maintenance registration is successful, false otherwise.
+     */
+    public boolean registerMaintenance(String plateNumber, int currentKm, LocalDate maintenanceDate) {
+        try {
+            Vehicle vehicle = getVehicleByPlateNumber(plateNumber);
+
+            if (maintenanceDate.isAfter(LocalDate.now())) {
+                System.out.println("Maintenance date cannot be in the future.");
+                return false;
+            }
+
+            vehicle.setCurrentKm(currentKm);
+            vehicle.setLastMaintenanceDate(maintenanceDate);
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
 
     /**
      * Creates a new vehicle and adds it to the organization.
@@ -60,25 +88,11 @@ public class VehicleRepository {
         }
         return Optional.empty();
     }
-    private boolean addVehicle(Vehicle vehicle) {
+    public boolean addVehicle(Vehicle vehicle) {
         if (validateVehicle(vehicle)) {
             return vehicles.add(vehicle.clone());
         }
         return false;
-    }
-
-    /**
-     * Adds a new vehicle to the repository.
-     *
-     * @param vehicle the vehicle to add
-     * @return an Optional containing the added vehicle if successful, empty otherwise
-     */
-    public Optional<Vehicle> add(Vehicle vehicle) {
-        if (validateVehicle(vehicle)) {
-            vehicles.add(vehicle.clone());
-            return Optional.of(vehicle.clone());
-        }
-        return Optional.empty();
     }
 
     private boolean validateVehicle(Vehicle vehicle) {

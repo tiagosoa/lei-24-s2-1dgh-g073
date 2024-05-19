@@ -6,20 +6,22 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for...          | Answer                | Justification (with patterns)                                                                                 |
-|:---------------|:-----------------------------------------------------|:----------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		     | 	... interacting with the actor?                     | RegisterMaintenanceUI | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                | ... obtaining the vehicle checkup list?              | VehicleRepository     | Information Expert, Pure Fabrication                                                                          |
-| 			  		        | 							                                              | Organization          | IE: knows/has its own VFMs                                                                                    |
-| 			  		        | 							                                              | VFM                   | IE: knows its own data (e.g. email)                                                                           |
-| Step 2  		     | 	... displaying the Vehicle list?                    | RegisterMaintenanceUI | Pure Fabrication                                                                                              |						 
-| Step 3  		     | 	 ... validating selected data?                                         | RegisterMaintenanceUI | Pure Fabrication                     |
-| Step 4  		     | ... displaying the form for the actor to input data? | RegisterMaintenanceUI | Pure Fabrication                                                                                              |
-| Step 5  		     | 	... validating input data?                                            | RegisterMaintenanceUI | Pure Fabrication                     |
-| Step 6  		     | 	... displaying all the information before submitting?                 | RegisterMaintenanceUI | Pure Fabrication                     |
-| 			  		        | 	... validating all data (global validation)?        | Organization          | IE: knows all its vehicles.                                                                                   |
-| Step 7  		     | 	... informing operation success?                    | RegisterMaintenanceUI | IE: is responsible for user interactions.                                                                     | 
-
+| Interaction ID | Question: Which class is responsible for...        | Answer                        | Justification (with patterns)                                                                                   |
+|:---------------|:---------------------------------------------------|:------------------------------|:----------------------------------------------------------------------------------------------------------------|
+| Step 1         | ... interacting with the actor?                    | RegisterMaintenanceUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.   |
+|                | ... coordinating the US?                           | RegisterMaintenanceController | Controller (UI Pattern): The Controller class orchestrates the user story and interacts with other components.  |
+| 			  		        | 	... instantiating a new Vehicle?             | VehicleRepository        | Creator (Rule 1): in the DM VehicleRepository has a Vehicle.                                                    |
+|                | ... knowing the user using the system?             | UserSession                   | IE: cf. A&A component documentation.                                                                            |
+|                | ... getting the vehicle list?                      | RegisterMaintenanceController | Controller  (UI Pattern): The Controller class orchestrates the user story and interacts with other components. |
+| Step 2         | ... showing the vehicle list?                      | RegisterMaintenanceUI         | IE: is responsible for user interactions.                                                                       |
+| Step 3         | ... getting the selected vehicle?                  | RegisterMaintenanceUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.   |
+| Step 4         | ... requesting the currentKm and Maintenance Date? | RegisterMaintenanceUI         | IE: is responsible for user interactions.                                                                       |
+| Step 5         | ... saving the typed data?                         | RegisterMaintenanceUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.   |
+| Step 6 		      | 	... showing the data before confirmation?         | RegisterMaintenanceUI         | IE: is responsible for user interactions.                                                                       |
+| Step 7 		      | 	... validating all data (local validation)?       | Vehicle                  | IE: object created in US06 has its own data.                                                                    |
+| 			  		        | 	... validating all data (global validation)?      | VehicleRepository        | IE: knows all its collaborators.                                                                                | 
+|                | ... knowing the user using the system?             | UserSession                   | IE: cf. A&A component documentation.                                                                            |
+| Step 8 		      | 	... informing operation success?                  | RegisterVehicleUI        | IE: is responsible for user interactions.                                                                       |
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are: 
@@ -53,7 +55,7 @@ It uses Interaction Occurrence (a.k.a. Interaction Use).
 
 **Create Maintenance**
 
-![Sequence Diagram - Partial - Create Maintenance Date](svg/us007-sequence-diagram-partial-create-MaintenanceDate.svg)
+![Sequence Diagram - Partial - Set Maintenance Date](svg/us007-sequence-diagram-partial-create-MaintenanceDate.svg)
 
 **Get Vehicle**
 

@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.domain;
 
 import org.junit.jupiter.api.Test;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterMaintenanceController;
+import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +14,7 @@ class VehicleTest {
 
     @Test
     void ensureVehicleIsCreatedSuccessfully() {
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
@@ -24,7 +25,7 @@ class VehicleTest {
     @Test
     void ensureVehiclePlateNumberIsNotNull() {
         //Arrange
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
@@ -36,7 +37,7 @@ class VehicleTest {
 
     @Test
     void testEqualsSameObject() {
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
@@ -47,7 +48,7 @@ class VehicleTest {
 
     @Test
     void testEqualsDifferentClass() {
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
@@ -58,7 +59,7 @@ class VehicleTest {
 
     @Test
     void testEqualsNull() {
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
@@ -69,7 +70,7 @@ class VehicleTest {
 
     @Test
     void testEqualsDifferentObjects() {
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
@@ -81,7 +82,7 @@ class VehicleTest {
 
     @Test
     void testHashCodeSameObject() {
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
@@ -92,7 +93,7 @@ class VehicleTest {
 
     @Test
     void testHashCodeDifferentObject() {
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
@@ -106,7 +107,7 @@ class VehicleTest {
 
     @Test
     void ensureCloneWorks() {
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
@@ -115,31 +116,10 @@ class VehicleTest {
         Vehicle clone = vehicle.clone();
         assertEquals(vehicle, clone);
     }
-    @Test
-    void ensureMaintenanceIsRegisteredSuccessfully() {
-        // Arrange
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate acquisitionDate = LocalDate.parse("01-01-2024", formatter);
-        LocalDate lastMaintenanceDate = LocalDate.parse("01-04-2024", formatter);
-        Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000,
-                LocalDate.now(), acquisitionDate, 5000,
-                "00-AA-00", lastMaintenanceDate);
-
-
-
-        RegisterMaintenanceController controller = new RegisterMaintenanceController();
-        LocalDate maintenanceDate = LocalDate.now();
-        Optional<Boolean> result = controller.registerMaintenance(vehicle.getPlateNumber(), 35000, maintenanceDate);
-
-        // Assert
-        assertTrue(result.isPresent());
-        assertTrue(result.get());
-        assertEquals(maintenanceDate, vehicle.getLastMaintenanceDate());
-        assertEquals(35000, vehicle.getCurrentKm());
-    }
 
     @Test
     void ensureMaintenanceIsNotRegisteredForFutureDate() {
+        VehicleRepository vehicleRepository = new VehicleRepository();
         // Arrange
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate acquisitionDate = LocalDate.parse("01-01-2024", formatter);
@@ -148,18 +128,18 @@ class VehicleTest {
                 LocalDate.now(), acquisitionDate, 5000,
                 "00-AA-00", lastMaintenanceDate);
 
-        RegisterMaintenanceController controller = new RegisterMaintenanceController();
         LocalDate futureDate = LocalDate.now().plusDays(1);
-        Optional<Boolean> result = controller.registerMaintenance(vehicle.getPlateNumber(), 35000, futureDate);
+        boolean result = vehicleRepository.registerMaintenance(vehicle.getPlateNumber(), 35000, futureDate);
 
         // Assert
-        assertFalse(result.isPresent());
+        assertFalse(result);
         assertNotEquals(futureDate, vehicle.getLastMaintenanceDate());
         assertNotEquals(35000, vehicle.getCurrentKm());
     }
 
     @Test
     void ensureMaintenanceIsNotRegisteredForInvalidPlateNumber() {
+        VehicleRepository vehicleRepository = new VehicleRepository();
         // Arrange
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate acquisitionDate = LocalDate.parse("01-01-2024", formatter);
@@ -169,12 +149,11 @@ class VehicleTest {
                 "00-AA-00", lastMaintenanceDate);
 
         // Act: Register maintenance with invalid plate number
-        RegisterMaintenanceController controller = new RegisterMaintenanceController();
         String invalidPlateNumber = "INVALID";
-        Optional<Boolean> result = controller.registerMaintenance(invalidPlateNumber, 35000, LocalDate.now());
+        boolean result = vehicleRepository.registerMaintenance(invalidPlateNumber, 35000, LocalDate.now());
 
         // Assert
-        assertFalse(result.isPresent());
+        assertFalse(result);
         assertNotEquals(LocalDate.now(), vehicle.getLastMaintenanceDate());
         assertNotEquals(35000, vehicle.getCurrentKm());
     }

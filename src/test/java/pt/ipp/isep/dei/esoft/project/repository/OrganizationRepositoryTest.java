@@ -104,7 +104,7 @@ class OrganizationRepositoryTest {
         organizationRepository.add(organization);
 
         Optional<Organization> returnOrganization =
-                organizationRepository.getOrganizationByVFMEmail("john.doe@this" + ".company.com");
+                organizationRepository.getOrganizationByHRMEmail("john.doe@this" + ".company.com");
 
         //Assert
         //Make sure both represents the same object

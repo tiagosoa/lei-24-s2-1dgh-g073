@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterMaintenanceController;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
+import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +19,8 @@ public class RegisterMaintenanceUI implements Runnable {
     private String vehiclePlateNumber;
     private int currentKM;
     private LocalDate maintenanceDate;
+    private VehicleRepository vehicleRepository;
+    private final Scanner scanner = new Scanner(System.in);
 
     /**
      * Constructor for RegisterMaintenanceUI.
@@ -25,6 +28,7 @@ public class RegisterMaintenanceUI implements Runnable {
      */
     public RegisterMaintenanceUI() {
         this.controller = new RegisterMaintenanceController();
+        this.vehicleRepository = getController().getVehicleRepository();
     }
 
     /**
@@ -52,8 +56,20 @@ public class RegisterMaintenanceUI implements Runnable {
      * Prints a success or failure message based on the result.
      */
     private void submitData() {
-        Optional<Boolean> result = getController().registerMaintenance(vehiclePlateNumber, currentKM, maintenanceDate);
-        System.out.println(result.orElse(false) ? "\nMaintenance successfully registered!" : "\nFailed to register maintenance!");
+        Vehicle vehicle = vehicleRepository.getVehicleByPlateNumber(vehiclePlateNumber);
+        System.out.println("Vehicle: " + vehicle.getModel() + " " + vehicle.getBrand() + " " + vehiclePlateNumber);
+        System.out.println("Inputted current KM: " + currentKM);
+        System.out.println("Inputted Maintenance Date: " + maintenanceDate);
+        System.out.println("Are these correct?");
+        String yesno;
+        do {
+            yesno = scanner.nextLine();
+            if (yesno.equals("no")) {
+                requestData();
+            }
+        } while (!(yesno.equals("no") || yesno.equals("yes")));
+        boolean result = vehicleRepository.registerMaintenance(vehiclePlateNumber, currentKM, maintenanceDate);
+        System.out.println(result ? "\nMaintenance successfully registered!" : "\nFailed to register maintenance!");
     }
 
     /**
@@ -73,7 +89,7 @@ public class RegisterMaintenanceUI implements Runnable {
      * @return the selected vehicle's plate number
      */
     private String requestVehiclePlateNumber() {
-        List<Vehicle> vehicles = getController().getVehicles();
+        List<Vehicle> vehicles = vehicleRepository.getVehicles();
         if (vehicles.isEmpty()) {
             System.out.println("No vehicles registered.");
             return null;
@@ -95,7 +111,6 @@ public class RegisterMaintenanceUI implements Runnable {
      * @return the validated user input
      */
     private int readInput(int min, int max) {
-        Scanner scanner = new Scanner(System.in);
         int input;
         do {
             System.out.print("Select the vehicle by entering a number between " + min + " and " + max + ": ");

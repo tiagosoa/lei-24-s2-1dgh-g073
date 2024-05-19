@@ -7,81 +7,78 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Vehicle and Equipment\nFleet Manager" as VEFL
-participant ":MaintenanceRegisterUI" as UI
-participant ":RegisterMaintenanceController" as RMC
-participant "organization\n:Organization" as ORG
+actor "Vehicle and Equipment\nFleet Manager" as VFM
+participant ":RegisterMaintenanceUI" as UI
+participant ":RegisterMaintenanceController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "vehicleRepository\n:VehicleRepository" as VR
+participant "Vehicle" as VEICULO
 
-activate VEFL
+activate VFM
 
-        VEFL -> UI : asks to register a vehicle's maintenance date
+        VFM -> UI : asks to register a vehicle's maintenance date
 
         activate UI
 
 '            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
-            UI -> RMC** : create
+            UI -> CTRL** : create
+            activate CTRL
+ref over CTRL
+Get Vehicles
+end
+                           CTRL --> UI : vehicles
+                           deactivate CTRL
 
 
-
-            UI --> VEFL : requests data (plate ID, current KMs \nand date of maintenance)
+            UI --> VFM : shows list of vehicles (by their plate number) and asks to select one.
         deactivate UI
 
-    VEFL -> UI : types requested data
+    VFM -> UI : selects vehicle
     activate UI
 
-        UI --> VEFL : shows all data and requests confirmation
+                   UI -> VR : getPlateNumber()
+                   activate VR
+
+                               VR --> UI : vehiclePlateNumber
+                               deactivate VR
+
+    UI --> VFM : requests data (current Km and maintenance date)
     deactivate UI
 
-    VEFL -> UI : confirms data
+    VFM -> UI : types data
     activate UI
 
-        UI -> RMC : registerMaintenanceController(plate ID, current KMs \nand date of maintenance)
-        activate RMC
+        UI --> VFM : shows all data and requests confirmation
+    deactivate UI
 
-            RMC -> RMC : getVehicleByDescription(plate ID, brand, model, type)
-            activate RMC
-                     ref over RMC
-                        Get Vehicle
+    VFM -> UI : confirms data
+    activate UI
 
-                     end
+        UI -> CTRL : registerMaintenace(plate ID, brand, model, type, \ncurrent KMs and date of maintenance)
+        activate CTRL
 
-               RMC-->RMC : vehicle
-            deactivate RMC
+                CTRL -> CTRL : getVFMFromSession()
+                            activate CTRL
 
+                ref over CTRL
+                Get VFM
+                end
 
-             RMC -> RMC : getVFMFromSession()
-                        activate RMC
-            
-                            ref over RMC
-                              Get VFM
-            
-                            end ref
-            
-                            RMC --> RMC : VFM
-                        deactivate RVC
+                                CTRL --> CTRL : VFM
+                          deactivate CTRL
+
             |||
-            RMC -> ORG: createMaintenanceDate(plate ID, current KMs \nand date of maintenance)
-            activate ORG
-
-               activate ORG
-
-                               ref over ORG
-                                   Create Maintenance Date
-
-                               end
-
-                               ORG --> RMC : maintenanceDate
-               deactivate ORG
-
-
-            deactivate ORG
-
-            RMC --> UI: maintenanceDate
-            deactivate RMC
-            UI --> VEFL: displays operation success
+            CTRL -> VR: registerMaintenance(plateID, currentKm, maintenanceDate)
+            activate VR
+ref over VR
+Register Maintenace
+end
+            UI --> VFM: displays operation success
     deactivate UI
 
-deactivate VEFL
+deactivate VFM
 
 @enduml

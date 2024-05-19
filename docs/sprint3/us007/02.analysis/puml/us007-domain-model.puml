@@ -23,10 +23,6 @@ class VFM {
     email
 }
 
-class MaintenanceCheckup {
-    date
-}
-
 class Vehicle {
     brand
     model
@@ -39,9 +35,10 @@ class Vehicle {
     maintenance/check-up frequency
 }
 
-'Platform "1" -- "*" HRM : has registered >
-VFM "1" - "1..*" MaintenanceCheckup : wants to register >
-'Task "*" -- "1" Employee: created by >
-MaintenanceCheckup "1" - "1" Vehicle: belongs to >
-'Employee "0..1" -- "1" User: acts as >
+class VehicleRepository {
+      vehicles
+}
+
+VFM "1" - "1" Vehicle : wants to register one or \nmore maintenance dates to >
+Vehicle "1" -- "1" VehicleRepository : updated in >
 @enduml

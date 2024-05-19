@@ -1,6 +1,5 @@
 # US007 - Register a Vehicle's Maintenance 
 
-
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
@@ -40,10 +39,14 @@ As a VFM, I wish to register a vehicle’s maintenance.
 
 **Input Data:**
 
-* Typed data:
+* Selected data:
     * the vehicle ID
-    * the date of the maintenance
+  
+* Typed data:
+
     * the current KMs of the vehicle
+    * the date of the maintenance
+    
 
 **Output Data:**
 * (In)Success of the operation

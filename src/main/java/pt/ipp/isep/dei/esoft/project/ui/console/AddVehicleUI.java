@@ -47,7 +47,7 @@ public class AddVehicleUI implements Runnable {
         Optional<Vehicle> vehicle = getController().addVehicle(vehicleModel, vehicleBrand, vehicleType, vehicleTareWeight, vehicleGrossWeight, vehicleCurrentKm, vehicleRegisterDate, vehicleAcquisitionDate, vehicleMaintenanceFrequencyKm, vehiclePlateNumber, vehicleLastMaintenanceDate);
 
         if (vehicle.isPresent()) {
-            vehicleRepository.add(vehicle.get());
+            vehicleRepository.addVehicle(vehicle.get());
             System.out.println("\nVehicle successfully created!");
         } else {
             System.out.println("\nVehicle not created!");

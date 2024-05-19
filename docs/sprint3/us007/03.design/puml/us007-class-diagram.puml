@@ -9,7 +9,8 @@ skinparam linetype polyline
 class VehicleFleetManager {
   - String name
   - String email
-  - String phone
+  - String position
+  - int phone
 }
 
 class Vehicle {
@@ -24,6 +25,7 @@ class Vehicle {
   - Int maintenanceFrequency
   - String plateName
   - LocalDate lastMaintenanceDate
+  + validateTrait(Object trait)
 }
 
 class Organization {
@@ -32,20 +34,20 @@ class Organization {
   - String address
   - String phone
   - String email
-  - List<Vehicle> vehicles
-  + addVehicle(Vehicle vehicle)
 }
 
 class OrganizationRepository {
-  + boolean save(Organization organization)
-  + Organization findByName(String name)
-  + Organization findByVatNumber(String vatNumber)
+  + Optional<Organization> getOrganizationByHRM(HRM hrm)
+  + Optional<Organization> getOrganizationByVFM(VFM vfm)
+  + Optional<Organization> getOrganizationByHRMEmail(String email)
+  + Optional<Organization> add(Organization organization)
+  + boolean validateOrganization(Organization organization)
 }
 
 class Repositories {
-  + getInstance() : Repositories
-  + getVehicleRepository() : VehicleRepository
-  + getOrganizationRepository() : OrganizationRepository
+  + Repositories getInstance()
+  + OrganizationRepository getOrganizationRepository()
+  + VehicleRepository getVehicleRepository()
 }
 
 class RegisterMaintenanceController {
@@ -54,9 +56,21 @@ class RegisterMaintenanceController {
 }
 
 class RegisterMaintenanceUI {
-  - RegisterMaintenanceController controller
-  + displayMaintenanceForm()
-  + submitMaintenanceForm(Vehicle vehicle, Date maintenanceDate,Double cost)
+        - controller: RegisterMaintenanceController
+        - vehiclePlateNumber: String
+        - currentKM: int
+        - maintenanceDate: LocalDate
+        - vehicleRepository: VehicleRepository
+        - scanner: Scanner
+        + RegisterMaintenanceUI()
+        + getController(): RegisterMaintenanceController
+        + run()
+        + submitData()
+        + requestData()
+        + requestVehiclePlateNumber(): String
+        + readInput(min: int, max: int): int
+        + requestCurrentKMs(): int
+        + requestMaintenanceDate(): LocalDate
 }
 
 note right of RegisterMaintenanceController
@@ -78,11 +92,12 @@ note left of VehicleFleetManager
   - Interfaces with the UI and controllers
 end note
 
+VehicleFleetManager -right> OrganizationRepository
 VehicleFleetManager -down-> RegisterMaintenanceUI : interacts with
 RegisterMaintenanceUI -right-> RegisterMaintenanceController : sends data to
 RegisterMaintenanceController -down-> Repositories : uses
 Organization -right-> Vehicle : owns
-RegisterMaintenanceController ..> Maintenance : creates
+VehicleRepository ..> Vehicle : registers maintenance date to
 RegisterMaintenanceController ..> Organization : updates records
 
 @enduml

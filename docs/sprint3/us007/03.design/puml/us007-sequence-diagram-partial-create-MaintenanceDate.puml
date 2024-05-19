@@ -3,29 +3,18 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "organization\n:Organization" as ORG
-participant "maintenanceDate\n:MaintenanceDate" as DATE
-autonumber 8
--> ORG: createMaintenanceDate(plateNumber, \ncurrent KMs and date of maintenance)
+participant "VehicleRepository" as VR
+participant "Vehicle" as VEICULO
 
-autonumber 8.1
-activate ORG
-    group Create Maintenance Date
+    group Register Maintenance Date
 
-        ORG -> DATE**: createMaintenanceDate(Vehicle, \ncurrent KMs and date of maintenance)
-        ORG -> ORG: addMaintenanceDate(maintenanceDate)
+         -> VR: registerMaintenance(plateID, currentKm, maintenanceDate)
+            activate VR
 
-
-                        activate ORG
-                            ORG -> ORG: validateMaintenanceDate(maintenanceDate)
-                            deactivate ORG
-
-
-    end
-
-    autonumber 9
-    <-- ORG : maintenanceDate
-deactivate ORG
+                VR -> VEICULO: setLastMaintenanceDate(maintenanceDate)
+                activate VEICULO
+                VR -> VEICULO: setCurrentKm(currentKm)
+                deactivate VEICULO
 
 
 @enduml

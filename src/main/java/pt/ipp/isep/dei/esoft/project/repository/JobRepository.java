@@ -33,14 +33,11 @@ public class JobRepository {
         for (Job existingJob : jobs) {
             if (existingJob.getName().equals(name)) {
                 return existingJob;
-            } else {
-                throw new IllegalArgumentException("Job does not exist.");
             }
 
         }
-        return null;
+        throw new IllegalArgumentException("Job does not exist.");
     }
-
 
     /**
      * Creates a new job and adds it to the organization.

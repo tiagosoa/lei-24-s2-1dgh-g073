@@ -18,7 +18,7 @@ class VehicleRepositoryTest {
     void getVehicleByPlateNumberEmptyList() {
         VehicleRepository vehicleRepository = new VehicleRepository();
         String vehiclePlateNumber = "00-AA-00";
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         assertThrows(IllegalArgumentException.class,
                 () -> vehicleRepository.getVehicleByPlateNumber(vehiclePlateNumber));
     }
@@ -27,7 +27,7 @@ class VehicleRepositoryTest {
     void getVehiclebyPlateNumberNullList() {
         VehicleRepository vehicleRepository = new VehicleRepository();
         String vehiclePlateNumber = "00-AA-00";
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         assertThrows(IllegalArgumentException.class,
                 () -> vehicleRepository.getVehicleByPlateNumber(vehiclePlateNumber));
     }
@@ -41,14 +41,14 @@ class VehicleRepositoryTest {
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
         LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
         Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, vehiclePlateNumber, date3);
-        vehicleRepository.add(vehicle);
+        vehicleRepository.addVehicle(vehicle);
     }
 
     @Test
     void testThatCreateVehicleWorks() {
         VehicleRepository vehicleRepository = new VehicleRepository();
 
-        HRM hrm = new HRM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
@@ -67,13 +67,13 @@ class VehicleRepositoryTest {
     void ensureGetVehicleForExistingVehicle() {
         VehicleRepository vehicleRepository = new VehicleRepository();
         String vehiclePlateNumber = "00-AA-00";
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
         LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
         Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
-        vehicleRepository.add(vehicle);
+        vehicleRepository.addVehicle(vehicle);
         Vehicle vehicle1 = vehicleRepository.getVehicleByPlateNumber(vehiclePlateNumber);
         assertEquals(vehicle, vehicle1);
     }
@@ -82,13 +82,13 @@ class VehicleRepositoryTest {
     void ensureGetVehicleFailsForNonExistingVehicle() {
         VehicleRepository vehicleRepository = new VehicleRepository();
         String vehiclePlateNumber = "00-AA-00";
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
         LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
         Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
-        vehicleRepository.add(vehicle);
+        vehicleRepository.addVehicle(vehicle);
         String vehiclePlateNumber1 = "01-AB-01";
         assertThrows(IllegalArgumentException.class,
                 () -> vehicleRepository.getVehicleByPlateNumber(vehiclePlateNumber1));
@@ -99,13 +99,13 @@ class VehicleRepositoryTest {
     void ensureGetVehicleReturnsAnImmutableList() {
         VehicleRepository vehicleRepository = new VehicleRepository();
         String vehiclePlateNumber = "00-AA-00";
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
         LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
         Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
-        vehicleRepository.add(vehicle);
+        vehicleRepository.addVehicle(vehicle);
 
         assertThrows(UnsupportedOperationException.class,
                 () -> vehicleRepository.getVehicles().add(new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3)));
@@ -116,14 +116,14 @@ class VehicleRepositoryTest {
     void ensureGetVehicleReturnsTheCorrectList() {
         //Arrange
         VehicleRepository vehicleRepository = new VehicleRepository();
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         String vehiclePlateNumber = "00-AA-00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
         LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
         Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
-        vehicleRepository.add(vehicle);
+        vehicleRepository.addVehicle(vehicle);
         int expectedSize = 1;
 
         //Act
@@ -138,27 +138,47 @@ class VehicleRepositoryTest {
     void ensureAddingDuplicateVehicleFails() {
         //Arrange
         VehicleRepository vehicleRepository = new VehicleRepository();
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
         LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
         Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
         //Add the first vehicle
-        vehicleRepository.add(vehicle);
+        vehicleRepository.addVehicle(vehicle);
 
         //Act
-        Optional<Vehicle> duplicateVehicle = vehicleRepository.add(vehicle);
+        boolean duplicateVehicle = vehicleRepository.addVehicle(vehicle);
 
         //Assert
-        assertTrue(duplicateVehicle.isEmpty());
+        assertFalse(duplicateVehicle);
+    }
+
+    @Test
+    void ensureMaintenanceIsRegisteredSuccessfully() {
+        VehicleRepository vehicleRepository = new VehicleRepository();
+        // Arrange
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate acquisitionDate = LocalDate.parse("01-01-2024", formatter);
+        LocalDate lastMaintenanceDate = LocalDate.parse("01-04-2024", formatter);
+        Vehicle vehicle = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, LocalDate.now(), acquisitionDate, 5000, "00-AA-00", lastMaintenanceDate);
+        vehicleRepository.addVehicle(vehicle);
+        LocalDate maintenanceDate = LocalDate.now();
+
+        // Act
+        boolean result = vehicleRepository.registerMaintenance(vehicle.getPlateNumber(), 35000, maintenanceDate);
+
+        // Assert
+        assertTrue(result);
+        assertEquals(maintenanceDate, vehicle.getLastMaintenanceDate());
+        assertEquals(35000, vehicle.getCurrentKm());
     }
 
     @Test
     void ensureAddingDifferentVehiclesWorks() {
         //Arrange
         VehicleRepository vehicleRepository = new VehicleRepository();
-        VFM vfm = new VFM("john.doe@this.company.com");
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
@@ -166,12 +186,12 @@ class VehicleRepositoryTest {
         Vehicle vehicleOne = new Vehicle("Toyota", "Avensis", "Van", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3);
         Vehicle vehicleTwo = new Vehicle("Ford", "Focus", "Car", 1275, 1820, 30000, date1, date2, 1, "01-AB-01", date3);
         //Add the first task
-        vehicleRepository.add(vehicleOne);
+        vehicleRepository.addVehicle(vehicleOne);
 
         //Act
-        Optional<Vehicle> result = vehicleRepository.add(vehicleTwo);
+        boolean result = vehicleRepository.addVehicle(vehicleTwo);
 
         //Assert
-        assertEquals(vehicleTwo, result.get());
+        assertTrue(result);
     }
 }

@@ -144,11 +144,11 @@ public class Vehicle {
         return lastMaintenanceDate;
     }
 
-    public void setCurrentKilometers(double currentKm) {
+    public void setCurrentKm(double currentKm) {
         this.currentKm = currentKm;
     }
 
-    public void setMaintenanceDate(LocalDate lastMaintenanceDate) {
+    public void setLastMaintenanceDate(LocalDate lastMaintenanceDate) {
         this.lastMaintenanceDate = lastMaintenanceDate;
     }
 }

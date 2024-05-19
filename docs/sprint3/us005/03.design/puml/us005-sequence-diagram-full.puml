@@ -53,8 +53,10 @@ activate ADM
             CTRL -> SR : getSkillList()
                     activate SR
 
-                SR --> CTRL : skillRepository
+                SR --> CTRL : skills
                 deactivate SR
+
+                CTRL --> UI : skills
                 deactivate CTRL
 
 

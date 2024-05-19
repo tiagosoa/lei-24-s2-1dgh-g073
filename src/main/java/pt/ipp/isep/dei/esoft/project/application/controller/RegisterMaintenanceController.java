@@ -30,26 +30,25 @@ public class RegisterMaintenanceController {
         this.authenticationRepository = authenticationRepository;
     }
 
-    public Optional<Boolean> registerMaintenance(String plateNumber, int currentKm, LocalDate maintenanceDate) {
-        try {
-            Vehicle vehicle = vehicleRepository.getVehicleByPlateNumber(plateNumber);
-
-            if (maintenanceDate.isAfter(LocalDate.now())) {
-                System.out.println("Maintenance date cannot be in the future.");
-                return Optional.empty();
-            } else {
-                vehicle.setCurrentKilometers(currentKm);
-                vehicle.setMaintenanceDate(maintenanceDate);
-                return Optional.of(true);
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return Optional.empty();
-        }
+    /**
+     * Retrieves the Vehicle Repository instance.
+     */
+    public VehicleRepository getVehicleRepository() {
+        return vehicleRepository == null ? Repositories.getInstance().getVehicleRepository() : vehicleRepository;
     }
 
-    public List<Vehicle> getVehicles() {
-        return vehicleRepository.getVehicles();
+    /**
+     * Retrieves the Organization Repository instance.
+     */
+    public OrganizationRepository getOrganizationRepository() {
+        return organizationRepository == null ? Repositories.getInstance().getOrganizationRepository() : organizationRepository;
+    }
+
+    /**
+     * Retrieves the Authentication Repository instance.
+     */
+    public AuthenticationRepository getAuthenticationRepository() {
+        return authenticationRepository == null ? Repositories.getInstance().getAuthenticationRepository() : authenticationRepository;
     }
 
     public VFM getVFMFromSession() {
