@@ -30,7 +30,8 @@ As a Green Space Manager (GSM), I want to add a new entry in the Agenda.
 
 ### 1.4. Found out Dependencies
 
-* n/a
+* There is a dependency found in "US20 - Registering a Green Space and Its Area", as there must be one green space registered to associate to the entry.
+* There is a dependency found in "US021 - Add an entry to the To-Do List", as there must be at least one entry present in the to-do list to carry out this User Story.
 
 ### 1.5 Input and Output Data
 

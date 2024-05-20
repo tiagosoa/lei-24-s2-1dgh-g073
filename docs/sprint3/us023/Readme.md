@@ -1,4 +1,4 @@
-# US001 - Create a Skill 
+# US023 - Assign a Team
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

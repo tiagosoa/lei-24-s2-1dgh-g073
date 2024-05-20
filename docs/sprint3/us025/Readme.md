@@ -1,4 +1,4 @@
-# US001 - Create a Skill 
+# US025 - Cancel an entry in the Agenda 
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

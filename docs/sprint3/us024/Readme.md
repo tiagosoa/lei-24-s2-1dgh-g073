@@ -1,4 +1,4 @@
-# US001 - Create a Skill 
+# US024 - Postpone an Entry in the Agenda
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

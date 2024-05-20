@@ -1,4 +1,4 @@
-# US001 - Create a Skill 
+# US027 - List all managed Green Spaces
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

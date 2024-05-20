@@ -1,60 +1,55 @@
-# US020 - Registering a Green Space and Its Area
+# US029 - Record Completion of Task
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a Green Space Manager (GSM), I want to register a green space (garden, medium-sized park or large-sized park), and its respective area.
+As a Collaborator, I want to record the completion of a task.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each skill is characterized only by its name.
-
->	As long as it is not attributed to a collaborator, access to the skill is exclusive to the employees of the respective organization. 
+>	The Agenda is made up of entries that relate to a task (which was previously in the To-Do List), the team that will carry out the task, the vehicles/equipment assigned to the task, expected duration, and the status (Planned, Postponed, Canceled, Done).
 
 **From the client clarifications:**
 
-> **Question:** Can the skill be immediately attributed to a collaborator?
+> **Question:** When a collaborator records a task, should the system ask for any observations regarding the completed task?
 >
-> **Answer:** No. The skill is to be created only.
+> **Answer:** Maybe if optional, not mandatory.
 
-> **Question:** What data is necessary to create a skill?
+
+> **Question:** Can an employee record more than one completed task at a time?
 >
-> **Answer:** At the moment, the skill is only a name.
+> **Answer:** It's a matter of UX/UI, each dev team can decide about it.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The system should provide options to specify the type of green space: garden, medium-sized park, or large-sized park.
-* **AC2:** When creating a skill with a name that already exists, the system must reject such operation and the user must be able to modify the typed name.
-* **AC3:** A skill name can’t have special characters or digits.
+n/a
 
 ### 1.4. Found out Dependencies
 
-* n/a
+* There is a dependency on "US022 - Add an entry to the Agenda" and "US023 - Assign a Team", as there must be at least one entry in the Agenda with a Team assigned to it to consult the tasks.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Selected data:
-    * type of green space
-
-* Typed data:
-    * green space area
+    * the task
 
 **Output Data:**
 
 * (In)Success of the operation
+* Record of the completion of the task
 
 ### 1.6. System Sequence Diagram (SSD)
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us020-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us029-system-sequence-diagram-alternative-one.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The created skill stays in a "not attributed" state in order to distinguish from "attributed" skills.
+* The task might have to be in "Done" status.

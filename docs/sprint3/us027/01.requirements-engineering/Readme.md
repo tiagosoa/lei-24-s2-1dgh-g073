@@ -1,60 +1,44 @@
-# US020 - Registering a Green Space and Its Area
+# US027 - List all managed Green Spaces
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a Green Space Manager (GSM), I want to register a green space (garden, medium-sized park or large-sized park), and its respective area.
+As a Green Space Manager (GSM), I need to list all green spaces managed by me.
 
 ### 1.2. Customer Specifications and Clarifications 
 
-**From the specifications document:**
-
->	Each skill is characterized only by its name.
-
->	As long as it is not attributed to a collaborator, access to the skill is exclusive to the employees of the respective organization. 
-
 **From the client clarifications:**
 
-> **Question:** Can the skill be immediately attributed to a collaborator?
+> **Question:** Which info about Green Spaces do you want the GSM see when listing?
 >
-> **Answer:** No. The skill is to be created only.
-
-> **Question:** What data is necessary to create a skill?
->
-> **Answer:** At the moment, the skill is only a name.
+> **Answer:** Each team can decide about the aspects related to UX/UI.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The system should provide options to specify the type of green space: garden, medium-sized park, or large-sized park.
-* **AC2:** When creating a skill with a name that already exists, the system must reject such operation and the user must be able to modify the typed name.
-* **AC3:** A skill name can’t have special characters or digits.
+* **AC1:** The list of green spaces must be sorted by size in descending order. The sorting algorithm to be used by the application must be defined through a configuration file. At least two sorting algorithms should be available.
 
 ### 1.4. Found out Dependencies
 
-* n/a
+* There is a dependency found in "US20 - Registering a Green Space and Its Area", as there must be one green space registered to carry out the User Story.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* Selected data:
-    * type of green space
-
-* Typed data:
-    * green space area
+n/a
 
 **Output Data:**
 
-* (In)Success of the operation
+* List of Green Spaces
 
 ### 1.6. System Sequence Diagram (SSD)
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us020-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us027-system-sequence-diagram-alternative-one.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The created skill stays in a "not attributed" state in order to distinguish from "attributed" skills.
+* n/a

@@ -1,60 +1,53 @@
-# US020 - Registering a Green Space and Its Area
+# US028 - Consult Tasks
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a Green Space Manager (GSM), I want to register a green space (garden, medium-sized park or large-sized park), and its respective area.
+As a Collaborator, I wish to consult the tasks assigned to me.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each skill is characterized only by its name.
+>	The Agenda is made up of entries that relate to a task (which was previously in the To-Do List), the team that will carry out the task, the vehicles/equipment assigned to the task, expected duration, and the status (Planned, Postponed, Canceled, Done).
 
->	As long as it is not attributed to a collaborator, access to the skill is exclusive to the employees of the respective organization. 
 
 **From the client clarifications:**
 
-> **Question:** Can the skill be immediately attributed to a collaborator?
+> **Question:** Could a task belong to different teams and collaborators?
 >
-> **Answer:** No. The skill is to be created only.
+> **Answer:** No. Maybe a distinction should be made between the type of task and a task. (Task type is "Prunning trees", a specific task is "Prunning trees" in specific park in a specific date.)
 
-> **Question:** What data is necessary to create a skill?
+> **Question:** Are the tasks that should be shown to the Collaborator in this US where the starting date is between the two mentioned by the Collaborator?
 >
-> **Answer:** At the moment, the skill is only a name.
+> **Answer:** I would suggest to consider any tasks which intercept the supplied period (defined by the two dates).
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The system should provide options to specify the type of green space: garden, medium-sized park, or large-sized park.
-* **AC2:** When creating a skill with a name that already exists, the system must reject such operation and the user must be able to modify the typed name.
-* **AC3:** A skill name can’t have special characters or digits.
+* **AC1:** The list of green spaces must be sorted by date, starting with the first to be performed
 
 ### 1.4. Found out Dependencies
 
-* n/a
+* There is a dependency on "US022 - Add an entry to the Agenda" and "US023 - Assign a Team", as there must be at least one entry in the Agenda with a Team assigned to it to consult the tasks.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* Selected data:
-    * type of green space
-
-* Typed data:
-    * green space area
+n/a
 
 **Output Data:**
 
-* (In)Success of the operation
+* List of tasks
 
 ### 1.6. System Sequence Diagram (SSD)
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us020-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us028-system-sequence-diagram-alternative-one.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The created skill stays in a "not attributed" state in order to distinguish from "attributed" skills.
+* n/a

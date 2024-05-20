@@ -1,49 +1,45 @@
-# US020 - Registering a Green Space and Its Area
+# US026 - Assign vehicles to an entry in the Agenda.
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a Green Space Manager (GSM), I want to register a green space (garden, medium-sized park or large-sized park), and its respective area.
+As a Green Space Manager (GSM), I want to assign one or more vehicles to an entry in the Agenda
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each skill is characterized only by its name.
+>	The Agenda is made up of entries that relate to a task (which was previously in the To-Do List), the team that will carry out the task, the vehicles/equipment assigned to the task, expected duration, and the status (Planned, Postponed, Canceled, Done).
 
->	As long as it is not attributed to a collaborator, access to the skill is exclusive to the employees of the respective organization. 
 
 **From the client clarifications:**
 
-> **Question:** Can the skill be immediately attributed to a collaborator?
+> **Question:** Is the user able to assign only unassigned vehicles?
 >
-> **Answer:** No. The skill is to be created only.
+> **Answer:** The vehicle needs to be available in the period.
 
-> **Question:** What data is necessary to create a skill?
+> **Question:** Is it possible to add any kind of vehicle?
 >
-> **Answer:** At the moment, the skill is only a name.
+> **Answer:** Yes, any kind of vehicle can be assigned.
+
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The system should provide options to specify the type of green space: garden, medium-sized park, or large-sized park.
-* **AC2:** When creating a skill with a name that already exists, the system must reject such operation and the user must be able to modify the typed name.
-* **AC3:** A skill name can’t have special characters or digits.
+* n/a
 
 ### 1.4. Found out Dependencies
 
-* n/a
+* There is a dependency on "US022 - Add an entry to the Agenda", as there must be at least one entry in the Agenda to assign vehicles to it.
+* There is a dependency on "US006 - Register a Vehicle", as there must be at least one vehicle registered to assign it to an entry.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Selected data:
-    * type of green space
-
-* Typed data:
-    * green space area
+    * the vehicle(s) to assign to the entry
 
 **Output Data:**
 
@@ -53,8 +49,8 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us020-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us026-system-sequence-diagram-alternative-one.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The created skill stays in a "not attributed" state in order to distinguish from "attributed" skills.
+* n/a
