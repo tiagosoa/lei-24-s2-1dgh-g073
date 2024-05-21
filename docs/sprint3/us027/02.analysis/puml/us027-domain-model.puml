@@ -23,17 +23,16 @@ class GSM {
     email
 }
 
-class GreenSpace {
-    type
-    area
+class GreenSpaceRepository {
+    GreenSpaces
 }
 
-'class User {
-'    name
-'    email
-'    password
-'}
-
-GSM "1" - "1...*" GreenSpace: registers >
-
+class GreenSpace {
+        name
+        type
+        area
+}
+GSM "1" -- "*" GreenSpace : requests creation of list of >
+GreenSpace "*" - "1" GreenSpaceRepository: stored in >
+GreenSpace "*" - "1" GSM: managed by >
 @enduml

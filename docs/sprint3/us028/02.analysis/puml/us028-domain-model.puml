@@ -1,0 +1,49 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+'title Domain Model
+
+'class Platform {
+'  -description
+'}
+
+class Collaborator {
+    name
+    birthdate
+    admission date
+    address
+    contact info (mobile and email)
+    taxpayer number
+    ID doc type and number
+}
+
+class Entry {
+    team
+    vehicles/equipment
+    expected duration
+    status
+}
+
+class Agenda {
+    entries
+}
+
+'class User {
+'    name
+'    email
+'    password
+'}
+
+Collaborator "1" - "*" Entry: requests list of >
+Collaborator "1" - "*" Entry: assigned to <
+Entry "1" -- "1" Agenda: is from >
+@enduml

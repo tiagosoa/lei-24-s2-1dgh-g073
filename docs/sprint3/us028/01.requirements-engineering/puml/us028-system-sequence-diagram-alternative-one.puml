@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "Collaborator" as Collaborator
+participant ":System" as System
+
+activate Collaborator
+
+    Collaborator -> System : asks to consult the tasks assigned to me between two dates.
+    activate System
+
+    System --> Collaborator : requests dates
+    deactivate System
+
+    Collaborator -> System : types dates
+    activate System
+
+    System --> Collaborator : asks if it would like to filter the tasks by status
+    deactivate System
+
+    Collaborator -> System : either accepts or declines
+    activate System
+
+    System --> Collaborator : shows tasks assigned to the collaborator
+    deactivate System
+
+@enduml

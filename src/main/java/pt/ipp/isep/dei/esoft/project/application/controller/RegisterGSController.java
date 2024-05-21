@@ -24,9 +24,10 @@ public class RegisterGSController {
      * Default constructor that initializes the repositories by obtaining them from the Repositories class.
      */
     public RegisterGSController() {
-        this.organizationRepository = getOrganizationRepository();
-        this.greenSpaceRepository = getGreenSpaceRepository();
-        this.authenticationRepository = getAuthenticationRepository();
+        Repositories repositories = Repositories.getInstance();
+        this.organizationRepository = repositories.getOrganizationRepository();
+        this.greenSpaceRepository = repositories.getGreenSpaceRepository();
+        this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
     /**
@@ -49,7 +50,7 @@ public class RegisterGSController {
      *
      * @return the GreenSpaceRepository instance
      */
-    private GreenSpaceRepository getGreenSpaceRepository() {
+    public GreenSpaceRepository getGreenSpaceRepository() {
         if (greenSpaceRepository == null) {
             Repositories repositories = Repositories.getInstance();
             greenSpaceRepository = repositories.getGreenSpaceRepository();
@@ -97,7 +98,7 @@ public class RegisterGSController {
         Optional<GreenSpace> newGreenSpace = Optional.empty();
 
         if (organization.isPresent()) {
-            newGreenSpace = organization.get().registerGreenSpace(type, area);
+            newGreenSpace = greenSpaceRepository.registerGreenSpace(type, area);
         }
         return newGreenSpace;
     }

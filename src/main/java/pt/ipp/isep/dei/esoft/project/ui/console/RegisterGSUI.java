@@ -23,7 +23,7 @@ public class RegisterGSUI implements Runnable {
      */
     public RegisterGSUI() {
         controller = new RegisterGSController();
-        this.greenSpaceRepository = new GreenSpaceRepository();
+        this.greenSpaceRepository = getController().getGreenSpaceRepository();
     }
 
     /**
@@ -55,7 +55,7 @@ public class RegisterGSUI implements Runnable {
         Optional<GreenSpace> greenSpace = getController().registerGreenSpace(greenSpaceType, greenSpaceArea, gsm);
 
         if (greenSpace.isPresent()) {
-            greenSpaceRepository.add(greenSpace.get());
+            greenSpaceRepository.addGreenSpace(greenSpace.get());
             System.out.println("\nGreen Space successfully registered!");
         } else {
             System.out.println("\nGreen Space not registered!");

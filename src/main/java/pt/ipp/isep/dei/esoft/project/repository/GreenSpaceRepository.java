@@ -20,10 +20,7 @@ public class GreenSpaceRepository {
      * If the greenSpaces list is null, it creates a new empty list.
      */
     public GreenSpaceRepository() {
-        this.greenSpaces = Organization.getGreenSpaceList();
-        if (this.greenSpaces == null) {
             this.greenSpaces = new ArrayList<>();
-        }
     }
 
     /**
@@ -44,43 +41,39 @@ public class GreenSpaceRepository {
     }
 
     /**
-     * Adds a new GreenSpace to the repository.
+     * Registers a new green space and adds it to the organization.
      *
-     * @param greenSpace The GreenSpace to add.
-     * @return An Optional containing the added GreenSpace if successful, empty otherwise.
+     * @param type the type of the green space
+     * @return an optional containing the registered green space, or empty if registration fails
      */
-    public Optional<GreenSpace> add(GreenSpace greenSpace) {
-        Optional<GreenSpace> newGreenSpace = Optional.empty();
-        boolean operationSuccess = false;
-
-        if (validateGreenSpace(greenSpace)) {
-            newGreenSpace = Optional.of(greenSpace.clone());
-            operationSuccess = greenSpaces.add(newGreenSpace.get());
+    public Optional<GreenSpace> registerGreenSpace(String type, double area) {
+        GreenSpace greenSpace = new GreenSpace(type, area);
+        if (addGreenSpace(greenSpace)) {
+            return Optional.of(greenSpace);
         }
-
-        if (!operationSuccess) {
-            newGreenSpace = Optional.empty();
-        }
-
-        return newGreenSpace;
+        return Optional.empty();
     }
 
-    /**
-     * Validates if a GreenSpace can be added to the repository.
-     *
-     * @param greenSpace The GreenSpace to validate.
-     * @return true if the GreenSpace is valid and can be added, false otherwise.
-     */
+    // Private helper methods for adding entities
+
+
+    public boolean addGreenSpace(GreenSpace greenSpace) {
+        if (validateGreenSpace(greenSpace)) {
+            return greenSpaces.add(greenSpace.clone());
+        }
+        return false;
+    }
+
     private boolean validateGreenSpace(GreenSpace greenSpace) {
         return !greenSpaces.contains(greenSpace);
     }
 
     /**
-     * Returns a defensive (immutable) copy of the list of greenSpaces.
+     * Returns a copy of the list of green spaces.
      *
-     * @return A copy of the list of greenSpaces.
+     * @return a list of green spaces
      */
     public List<GreenSpace> getGreenSpaceList() {
-        return List.copyOf(greenSpaces);
+        return greenSpaces;
     }
 }

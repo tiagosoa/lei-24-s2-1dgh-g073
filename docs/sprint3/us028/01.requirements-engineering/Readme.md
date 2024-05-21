@@ -36,7 +36,11 @@ As a Collaborator, I wish to consult the tasks assigned to me.
 
 **Input Data:**
 
-n/a
+* Typed Data:
+  * dates
+
+* Selected Data:
+  * status filter
 
 **Output Data:**
 

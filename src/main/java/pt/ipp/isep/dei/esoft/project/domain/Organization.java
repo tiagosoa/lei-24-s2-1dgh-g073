@@ -14,11 +14,6 @@ public class Organization {
     private final List<HRM> hrms = new ArrayList<>();
     private final List<VFM> vfms = new ArrayList<>();
     private final List<GSM> gsms = new ArrayList<>();
-    private static final List<Skill> skills = new ArrayList<>();
-    private static final List<Job> jobs = new ArrayList<>();
-    private static final List<Collaborator> collaborators = new ArrayList<>();
-    private static final List<Vehicle> vehicles = new ArrayList<>();
-    private static final List<GreenSpace> greenSpaces = new ArrayList<>();
     private String name;
     private String website;
     private String phone;
@@ -32,55 +27,6 @@ public class Organization {
     public Organization(String vatNumber) {
         this.vatNumber = vatNumber;
     }
-
-    // Getters for lists of entities
-
-    /**
-     * Returns a copy of the list of collaborators.
-     *
-     * @return a list of collaborators
-     */
-    public static List<Collaborator> getCollaboratorList() {
-        return new ArrayList<>(collaborators);
-    }
-
-    /**
-     * Returns a copy of the list of skills.
-     *
-     * @return a list of skills
-     */
-    public static List<Skill> getSkillList() {
-        return new ArrayList<>(skills);
-    }
-
-    /**
-     * Returns a copy of the list of jobs.
-     *
-     * @return a list of jobs
-     */
-    public static List<Job> getJobList() {
-        return new ArrayList<>(jobs);
-    }
-
-    /**
-     * Returns a copy of the list of vehicles.
-     *
-     * @return a list of vehicles
-     */
-    public static List<Vehicle> getVehicleList() {
-        return new ArrayList<>(vehicles);
-    }
-
-    /**
-     * Returns a copy of the list of green spaces.
-     *
-     * @return a list of green spaces
-     */
-    public static List<GreenSpace> getGreenSpaceList() {
-        return new ArrayList<>(greenSpaces);
-    }
-
-    // Methods for entity management
 
     /**
      * Checks if the organization employs a specific HRM.
@@ -110,34 +56,6 @@ public class Organization {
      */
     public boolean employs(GSM gsm) {
         return gsms.contains(gsm);
-    }
-
-    /**
-     * Registers a new green space and adds it to the organization.
-     *
-     * @param type the type of the green space
-     * @return an optional containing the registered green space, or empty if registration fails
-     */
-    public Optional<GreenSpace> registerGreenSpace(String type, double area) {
-        GreenSpace greenSpace = new GreenSpace(type, area);
-        if (addGreenSpace(greenSpace)) {
-            return Optional.of(greenSpace);
-        }
-        return Optional.empty();
-    }
-
-    // Private helper methods for adding entities
-
-
-    private boolean addGreenSpace(GreenSpace greenSpace) {
-        if (validateGreenSpace(greenSpace)) {
-            return greenSpaces.add(greenSpace.clone());
-        }
-        return false;
-    }
-
-    private boolean validateGreenSpace(GreenSpace greenSpace) {
-        return !greenSpaces.contains(greenSpace);
     }
 
     // Check if any HRM, VFM or GSM has a specific email
@@ -265,23 +183,6 @@ public class Organization {
         for (GSM gsm : this.gsms) {
             clone.gsms.add(gsm.clone());
         }
-
-        for (Skill skill : skills) {
-            skills.add(skill.clone());
-        }
-
-        for (Job job : jobs) {
-            jobs.add(job.clone());
-        }
-
-        for (Collaborator collaborator : collaborators) {
-            collaborators.add(collaborator.clone());
-        }
-
-        for (Vehicle vehicle : vehicles) {
-            vehicles.add(vehicle.clone());
-        }
-
         return clone;
     }
 }
