@@ -81,7 +81,7 @@ public class RegisterCollaboratorUI implements Runnable {
 
         name = requestCollaboratorName();
         while(!name.matches("[a-zA-Z]+")){
-            System.out.println("This name " + name + " is not valide.");
+            System.out.println("This name " + name + " is not valid.");
             name = requestCollaboratorName();
         }
 
@@ -124,6 +124,7 @@ public class RegisterCollaboratorUI implements Runnable {
             } else {
                 System.out.println("Invalid address format.");
             }
+            address = requestCollaboratorAddress();
         }
 
 
@@ -147,6 +148,7 @@ public class RegisterCollaboratorUI implements Runnable {
             } catch (Exception e) {
                 System.out.println("Invalid input. Please enter a valid 9-digit phone number starting with 9.");
             }
+            mobile = requestCollaboratorMobile();
         }
 
         email = requestCollaboratorEmail();
@@ -161,6 +163,7 @@ public class RegisterCollaboratorUI implements Runnable {
             } else {
                 System.out.println("Invalid email address format.");
             }
+            email = requestCollaboratorEmail();
         }
 
         taxpayer = requestCollaboratorTaxpayerNumber();//rever
@@ -176,12 +179,13 @@ public class RegisterCollaboratorUI implements Runnable {
             } else {
                 System.out.println("Invalid Portuguese taxpayer number format. It must have 9 digits.");
             }
+            taxpayer = requestCollaboratorTaxpayerNumber();
         }
 
         doctype = requestCollaboratorDocType();// validar atravéz de uma lista
 
         IDnumber = requestCollaboratorIDNumber();//rever
-        pattern = "^[1-9]\\d{8}$";
+        pattern = "^[1-8]\\d{7}$";
         while (true) {
             String IDnumberStr = Integer.toString(IDnumber);
 
@@ -189,11 +193,13 @@ public class RegisterCollaboratorUI implements Runnable {
             Matcher matcher = compiledPattern.matcher(IDnumberStr);
 
             if (matcher.matches()) {
-                break; // NIF válido, sai do loop
+                break; // Nº CC válido, sai do loop
             } else {
                 System.out.println("Invalid Portuguese ID number format. It must have 9 digits.");
             }
+            IDnumber = requestCollaboratorIDNumber();
         }
+
     }
 
 
