@@ -105,13 +105,21 @@ public class RegisterGSUI implements Runnable {
     }
     private double requestGSArea() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Green Space area: ");
         double area = 0;
-        try {
-            area = input.nextDouble();
-        } catch (Exception e) {
-            e.printStackTrace();
+        boolean validInput = false;
+
+        while (!validInput) {
+            System.out.print("Green Space area (in acres): ");
+            String userInput = input.nextLine();
+            try {
+                userInput = userInput.replace(',', '.');
+                area = Double.parseDouble(userInput);
+                validInput = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number (example: 2,1 or 2.1).");
+            }
         }
+
         return area;
     }
 }

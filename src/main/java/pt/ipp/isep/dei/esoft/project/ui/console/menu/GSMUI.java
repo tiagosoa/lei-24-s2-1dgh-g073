@@ -1,10 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
 
-import pt.ipp.isep.dei.esoft.project.ui.console.AddVehicleUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.ProduceMaintenanceListUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.RegisterMaintenanceUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.ShowTextUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.*;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
@@ -20,10 +17,7 @@ public class GSMUI implements Runnable {
 
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("Add Vehicle", new AddVehicleUI()));
-        options.add(new MenuItem("Register Maintenance", new RegisterMaintenanceUI()));
-        options.add(new MenuItem("Produce Maintenance List", new ProduceMaintenanceListUI()));
-        options.add(new MenuItem("Option 4", new ShowTextUI("You have chosen Option 4.")));
+        options.add(new MenuItem("Register Green Space", new RegisterGSUI()));
 
         int option = 0;
         do {
