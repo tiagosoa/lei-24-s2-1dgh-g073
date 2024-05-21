@@ -1,18 +1,33 @@
-# US020 - Registering a Green Space and Its Area 
+# US026 - Assign Vehicles to an entry in the Agenda
 
 ## 2. Analysis
 
 ### GSM (Green Spaces Manager):
-* Responsible for registering Green Spaces.
+* Responsible for assigning vehicles to entries in the Agenda
+* Uses the Agenda
 * Attributes include name, vatNumber, phoneNumber, and email.
 
-### Green Space:
-* Can be created by a GSM.
-* Attributes include type and area.
+### VFM (Human Resources Manager):
+* Registers a vehicle that is then assigned to an entry in the Agenda
+* Attributes include name, vatNumber, phoneNumber, and email.
 
-### 2.1. Relevant Domain Model Excerpt 
+### Vehicle:
+* Registered by the VFM
+* Assigned to an entry in the Agenda
+* Attributes include Brand, Model, Type, Tare, Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance/Check-up Frequency (in Kms), Plante Number and Last Maintenance Date.
 
-![Domain Model](svg/us020-domain-model.svg)
+### Entry:
+* Added to the Agenda by the GSM.
+* Attributes include the team and the vehicles/equipment assigned to it, approximate duration, and status.
+* Exists simultaneously in the To-Do List.
+
+### Agenda:
+* Used by the GSM.
+* Includes all entries created by the GSM.
+
+### 2.1. Relevant Domain Model Excerpt
+
+![Domain Model](svg/us026-domain-model.svg)
 
 ### 2.2. Other Remarks
 

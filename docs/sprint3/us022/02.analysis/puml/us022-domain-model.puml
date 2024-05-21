@@ -23,9 +23,15 @@ class GSM {
     email
 }
 
-class GreenSpace {
-    type
-    area
+class Entry {
+    team
+    vehicles/equipment
+    expected duration
+    status
+}
+
+class Agenda {
+    entries
 }
 
 'class User {
@@ -34,6 +40,8 @@ class GreenSpace {
 '    password
 '}
 
-GSM "1" - "1...*" GreenSpace: registers >
+GSM "1" - "*" Entry: adds >
+GSM "1" -- "1" Agenda: uses >
+Entry "1" -- "1" Agenda: is shown in >
 
 @enduml

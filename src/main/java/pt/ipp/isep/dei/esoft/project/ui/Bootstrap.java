@@ -1,11 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.ui;
 
 import pt.ipp.isep.dei.esoft.project.application.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.domain.GSM;
-import pt.ipp.isep.dei.esoft.project.domain.Organization;
-import pt.ipp.isep.dei.esoft.project.domain.VFM;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.*;
-import pt.ipp.isep.dei.esoft.project.domain.HRM;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Bootstrap implements Runnable {
 
@@ -14,6 +14,7 @@ public class Bootstrap implements Runnable {
         addSkills();
         addJobs();
         addCollaborators();
+        addVehicles();
         addOrganization();
         addUsers();
     }
@@ -51,43 +52,41 @@ public class Bootstrap implements Runnable {
     private void addSkills() {
         SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();
 
-        //skillRepository.add(new TaskCategory("Analysis"));
-        //skillRepository.add(new TaskCategory("Design"));
-        //skillRepository.add(new TaskCategory("Implementation"));
-        //skillRepository.add(new TaskCategory("Development"));
-        //skillRepository.add(new TaskCategory("Testing"));
-        //skillRepository.add(new TaskCategory("Deployment"));
-        //skillRepository.add(new TaskCategory("Maintenance"));
+        skillRepository.addSkill(new Skill("Skill Name"));
+        skillRepository.addSkill(new Skill("Skill Name One"));
     }
 
     private void addJobs() {
-        //TODO: add bootstrap Task Categories here
 
         //get job repository
         JobRepository jobRepository = Repositories.getInstance().getJobRepository();
 
-        //skillRepository.add(new TaskCategory("Analysis"));
-        //skillRepository.add(new TaskCategory("Design"));
-        //skillRepository.add(new TaskCategory("Implementation"));
-        //skillRepository.add(new TaskCategory("Development"));
-        //skillRepository.add(new TaskCategory("Testing"));
-        //skillRepository.add(new TaskCategory("Deployment"));
-        //skillRepository.add(new TaskCategory("Maintenance"));
+        jobRepository.addJob(new Job("Job Name"));
+        jobRepository.addJob(new Job("Job Name One"));
     }
 
     private void addCollaborators() {
-        //TODO: add bootstrap Task Categories here
 
         //get job repository
         CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
 
-        //skillRepository.add(new TaskCategory("Analysis"));
-        //skillRepository.add(new TaskCategory("Design"));
-        //skillRepository.add(new TaskCategory("Implementation"));
-        //skillRepository.add(new TaskCategory("Development"));
-        //skillRepository.add(new TaskCategory("Testing"));
-        //skillRepository.add(new TaskCategory("Deployment"));
-        //skillRepository.add(new TaskCategory("Maintenance"));
+        collaboratorRepository.addCollaborator(new Collaborator("name", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456789,"CC", 123456789));
+        collaboratorRepository.addCollaborator(new Collaborator("nemlei", "dd-MM-yyyy", "dd-MM-yyyy", "somewhere", 123456789, "johnlemon@beetle.thing", 123456799,"CC", 123456789));
+
+    }
+
+    private void addVehicles() {
+
+        //get job repository
+        VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
+        LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
+        LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
+        vehicleRepository.addVehicle(new Vehicle("Porsche", "Turbo", "Car", 1275, 1820, 30000, date1, date2, 1, "00-AA-00", date3));
+        vehicleRepository.addVehicle(new Vehicle("Ford", "Focus", "Car", 1275, 1820, 30000, date1, date2, 1, "01-AB-01", date3));
+
     }
 
     private void addUsers() {

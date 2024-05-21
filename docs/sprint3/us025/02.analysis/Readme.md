@@ -1,18 +1,24 @@
-# US020 - Registering a Green Space and Its Area 
+# US025 - Cancel an entry in the Agenda
 
 ## 2. Analysis
 
 ### GSM (Green Spaces Manager):
-* Responsible for registering Green Spaces.
+* Responsible for cancelling entries in the Agenda
 * Attributes include name, vatNumber, phoneNumber, and email.
 
-### Green Space:
-* Can be created by a GSM.
-* Attributes include type and area.
+### Entry:
+* Cancelled by the GSM.
+* Attributes include the team and the vehicles/equipment assigned to it, approximate duration, and status.
+* Exists simultaneously in the To-Do List.
+* Has its status changed to "Cancelled" after this US. It is not actually deleted from the Agenda.
 
-### 2.1. Relevant Domain Model Excerpt 
+### Agenda:
+* Used by the GSM.
+* Includes all entries created by the GSM.
 
-![Domain Model](svg/us020-domain-model.svg)
+### 2.1. Relevant Domain Model Excerpt
+
+![Domain Model](svg/us025-domain-model.svg)
 
 ### 2.2. Other Remarks
 

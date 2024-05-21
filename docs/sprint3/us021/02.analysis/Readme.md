@@ -1,18 +1,22 @@
-# US020 - Registering a Green Space and Its Area 
+# US021 - Add an entry to the To-Do List
 
 ## 2. Analysis
 
 ### GSM (Green Spaces Manager):
-* Responsible for registering Green Spaces.
+* Responsible for adding entries to the To-Do List
 * Attributes include name, vatNumber, phoneNumber, and email.
 
-### Green Space:
-* Can be created by a GSM.
-* Attributes include type and area.
+### Entry:
+* Added to the To-Do List by the GSM.
+* Attributes include title/description, degree of urgency and approximate duration.
+
+### To-do List/TDList:
+* Used by the GSM.
+* Includes all entries created by the GSM.
 
 ### 2.1. Relevant Domain Model Excerpt 
 
-![Domain Model](svg/us020-domain-model.svg)
+![Domain Model](svg/us021-domain-model.svg)
 
 ### 2.2. Other Remarks
 

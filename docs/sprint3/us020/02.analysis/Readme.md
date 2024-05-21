@@ -8,7 +8,10 @@
 
 ### Green Space:
 * Can be created by a GSM.
-* Attributes include type and area.
+* Attributes include name, type and area.
+* 
+### Green Space Repository:
+* Stores Green Spaces and related information.
 
 ### 2.1. Relevant Domain Model Excerpt 
 

@@ -39,10 +39,10 @@ As a Green Space Manager (GSM), I want to add a new entry in the Agenda.
 
 * Selected data:
     * the to-do list entry
-    * the team/vehicles/equipment associated with the task
+    * the entry's status
 
 * Typed data:
-    * expected duration
+    * the starting date for the task
 
 **Output Data:**
 
@@ -56,4 +56,5 @@ As a Green Space Manager (GSM), I want to add a new entry in the Agenda.
 
 ### 1.7 Other Relevant Remarks
 
-* n/a
+* The team and vehicles/equipment are to be assigned in later USs.
+* Considering all entries in the To-Do List have expected durations, the ones which are also included in the Agenda should have the same duration.

@@ -18,7 +18,7 @@ As a Green Space Manager (GSM), I want to assign one or more vehicles to an entr
 
 > **Question:** Is the user able to assign only unassigned vehicles?
 >
-> **Answer:** The vehicle needs to be available in the period.
+> **Answer:** Yes, the vehicle needs to be available in the period.
 
 > **Question:** Is it possible to add any kind of vehicle?
 >

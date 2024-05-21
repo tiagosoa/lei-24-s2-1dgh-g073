@@ -1,0 +1,70 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+'title Domain Model
+
+'class Platform {
+'  -description
+'}
+
+class GSM {
+    name
+    vatNumber
+    phoneNumber
+    email
+}
+
+class VFM {
+    name
+    vatNumber
+    phoneNumber
+    email
+}
+
+class Vehicle {
+    brand
+    model
+    type
+    tare
+    gross weight
+    current KM
+    register date
+    acquisition date
+    maintenance/check-up frequency
+    plate number
+    last maintenance date
+}
+
+class Entry {
+    team
+    vehicles/equipment
+    expected duration
+    status
+}
+
+class Agenda {
+    entries
+}
+
+'class User {
+'    name
+'    email
+'    password
+'}
+
+VFM "1" -- "1" Vehicle: registers >
+GSM "1" - "1" Vehicle: assigns >
+Vehicle "1" - "1" Entry: assigned to >
+GSM "1" -- "1" Agenda: uses >
+Entry "1" -- "1" Agenda: is shown in >
+
+@enduml

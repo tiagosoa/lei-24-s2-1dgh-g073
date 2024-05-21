@@ -39,6 +39,9 @@ As a Green Space Manager (GSM), I want to Postpone an entry in the Agenda to a s
 * Selected data:
     * the entry to postpone
 
+* Typed data:
+    * the date the entry will be postponed to 
+
 **Output Data:**
 
 * (In)Success of the operation
@@ -51,4 +54,4 @@ As a Green Space Manager (GSM), I want to Postpone an entry in the Agenda to a s
 
 ### 1.7 Other Relevant Remarks
 
-* n/a
+* The entry will be in "Postponed" status after this US.
