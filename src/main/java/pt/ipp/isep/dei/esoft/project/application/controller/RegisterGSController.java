@@ -92,14 +92,10 @@ public class RegisterGSController {
      * @param gsm  the GSM associated with the GreenSpace
      * @return an Optional containing the newly created GreenSpace, or empty if the Organization is not found
      */
-    public Optional<GreenSpace> registerGreenSpace(String type, double area, GSM gsm) {
-        Optional<Organization> organization = getOrganizationRepository().getOrganizationByGSM(gsm);
+    public Optional<GreenSpace> registerGreenSpace(String name, String type, double area, GSM gsm) {
 
-        Optional<GreenSpace> newGreenSpace = Optional.empty();
-
-        if (organization.isPresent()) {
-            newGreenSpace = greenSpaceRepository.registerGreenSpace(type, area);
-        }
+        Optional<GreenSpace> newGreenSpace;
+        newGreenSpace = greenSpaceRepository.registerGreenSpace(name, type, area, gsm);
         return newGreenSpace;
     }
 

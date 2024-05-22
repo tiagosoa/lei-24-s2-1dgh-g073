@@ -6,7 +6,7 @@ import java.util.Objects;
  * Represents a greenSpace.
  */
 public class GreenSpace {
-    private final String type;
+    private final String name, type;
 
     private final double area;
 
@@ -16,20 +16,29 @@ public class GreenSpace {
      * @param type the type of the greenSpace.
      * @param area the area of the greenSpace.
      */
-    public GreenSpace(String type, double area) {
+    public GreenSpace(String name, String type, double area) {
+        this.name = name;
+        validateGreenSpaceName(name);
         this.type = type;
-        validateGreenSpace(type);
+        validateGreenSpaceType(type);
         this.area = area;
-        validateGreenSpace(area);
+        validateGreenSpaceArea(area);
     }
 
-    private void validateGreenSpace(String type) {
+    private void validateGreenSpaceName(String name) {
+        if (name == null || name.isEmpty()){
+            throw new IllegalArgumentException("GreenSpace name is null or empty.");
+        }
+    }
+
+
+    private void validateGreenSpaceType(String type) {
         if (type == null || type.isEmpty() || !(type.equals("Garden") || type.equals("Medium-sized Park") || type.equals("Large-sized Park"))){
             throw new IllegalArgumentException("GreenSpace type is invalid, or null or empty.");
         }
     }
 
-    private void validateGreenSpace(double area) {
+    private void validateGreenSpaceArea(double area) {
         if (area <= 0) {
             throw new IllegalArgumentException("GreenSpace area value is invalid.");
         }
@@ -58,7 +67,16 @@ public class GreenSpace {
      * @return A clone of the current instance.
      */
     public GreenSpace clone() {
-        return new GreenSpace(this.type, this.area);
+        return new GreenSpace(this.name, this.type, this.area);
+    }
+
+    /**
+     * Gets the name of the greenSpace.
+     *
+     * @return the name of the greenSpace
+     */
+    public String getName() {
+        return name;
     }
 
     /**
@@ -79,7 +97,7 @@ public class GreenSpace {
         return area;
     }
 
-    public boolean isOfTypeAndArea(String type, double area) {
-        return this.type.equals(type) && this.area == area;
+    public boolean isOfNameTypeAndArea(String name, String type, double area) {
+        return this.name.equals(name) && this.type.equals(type) && this.area == area;
     }
 }

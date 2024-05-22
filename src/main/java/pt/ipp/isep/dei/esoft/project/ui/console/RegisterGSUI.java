@@ -5,6 +5,8 @@ import pt.ipp.isep.dei.esoft.project.domain.GSM;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
 
+import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -14,6 +16,7 @@ import java.util.Scanner;
 public class RegisterGSUI implements Runnable {
 
     private final RegisterGSController controller;
+    private String greenSpaceName;
     private String greenSpaceType;
     private double greenSpaceArea;
     private GreenSpaceRepository greenSpaceRepository;
@@ -52,7 +55,7 @@ public class RegisterGSUI implements Runnable {
     private void submitData() {
 
         GSM gsm = getController().getGSMFromSession();
-        Optional<GreenSpace> greenSpace = getController().registerGreenSpace(greenSpaceType, greenSpaceArea, gsm);
+        Optional<GreenSpace> greenSpace = getController().registerGreenSpace(greenSpaceName, greenSpaceType, greenSpaceArea, gsm);
 
         if (greenSpace.isPresent()) {
             greenSpaceRepository.addGreenSpace(greenSpace.get());
@@ -67,6 +70,7 @@ public class RegisterGSUI implements Runnable {
      */
     private void requestData() {
         //Request the GS data from the console
+        greenSpaceName = requestGSName();
         greenSpaceType = requestGSType();
         greenSpaceArea = requestGSArea();
     }
@@ -78,30 +82,41 @@ public class RegisterGSUI implements Runnable {
      */
     private String requestGSType() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please select the type of green space:");
-        System.out.println("1. Garden");
-        System.out.println("2. Medium-sized Park");
-        System.out.println("3. Large-sized Park");
-        System.out.print("Enter your choice: ");
-        int type = scanner.nextInt();
-
-        // Validate input and assign the type accordingly
         String greenSpaceType = null;
-        switch (type) {
-            case 1:
-                greenSpaceType = "Garden";
-                break;
-            case 2:
-                greenSpaceType = "Medium-sized Park";
-                break;
-            case 3:
-                greenSpaceType = "Large-sized Park";
-                break;
-            default:
-                System.out.println("Invalid choice. Exiting...");
 
+        while (!(Objects.equals(greenSpaceType, "Garden") || Objects.equals(greenSpaceType, "Medium-sized Park") || Objects.equals(greenSpaceType, "Large-sized Park"))) {
+            System.out.println("Please select the type of green space:");
+            System.out.println("1. Garden");
+            System.out.println("2. Medium-sized Park");
+            System.out.println("3. Large-sized Park");
+            System.out.print("Enter your choice: ");
+            try {
+            int type = scanner.nextInt();
+                switch (type) {
+                    case 1:
+                        greenSpaceType = "Garden";
+                        break;
+                    case 2:
+                        greenSpaceType = "Medium-sized Park";
+                        break;
+                    case 3:
+                        greenSpaceType = "Large-sized Park";
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+                } catch(InputMismatchException e){
+                System.out.println("Invalid input. Please enter a number between 1 and 3.");
+                scanner.next(); // Clear the invalid input from the scanner
+            }
         }
         return greenSpaceType;
+    }
+
+    private String requestGSName() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Green Space name: ");
+        return input.nextLine();
     }
     private double requestGSArea() {
         Scanner input = new Scanner(System.in);

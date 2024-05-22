@@ -30,7 +30,6 @@ public class ProduceMaintenanceListUI implements Runnable {
         List<String> maintenanceList = new ArrayList<>();
 
         // Add header
-        maintenanceList.add("Plate Brand Model Curr.Kms Last Next");
 
         maintenanceList = vehicleRepository.produceMaintenanceList();
 

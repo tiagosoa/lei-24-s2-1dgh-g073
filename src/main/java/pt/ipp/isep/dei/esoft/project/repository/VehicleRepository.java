@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.Organization;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 
 import java.time.LocalDate;
@@ -112,6 +111,7 @@ public class VehicleRepository {
         // Retrieve vehicles needing maintenance
         List<String> maintenanceList = new ArrayList<>();
         List<Vehicle> vehicles = getVehicles();
+        maintenanceList.add("Plate | Brand | Model | Curr.Kms | Last | Next");
 
         // Iterate over vehicles and add data to the maintenance list
         for (Vehicle vehicle : vehicles) {
@@ -121,13 +121,12 @@ public class VehicleRepository {
             double currentKms = vehicle.getCurrentKm();
             LocalDate lastMaintenanceDate = vehicle.getLastMaintenanceDate();
             int maintenanceFrequencyKm = vehicle.getMaintenanceFrequencyKm();
-            LocalDate nextMaintenanceDate = lastMaintenanceDate.plusDays(maintenanceFrequencyKm);
             double nextMaintenanceKms = lastMaintenanceDate.plusDays(maintenanceFrequencyKm).until(LocalDate.now(), java.time.temporal.ChronoUnit.DAYS);
 
             if (currentKms >= nextMaintenanceKms) {
                 // Format data and add to the maintenance list
-                String maintenanceData = String.format("%s %s %s %.0f %s %s",
-                        plate, brand, model, currentKms, lastMaintenanceDate, nextMaintenanceDate);
+                String maintenanceData = String.format("%s %s %s %.0f %s %.0f",
+                        plate, brand, model, currentKms, lastMaintenanceDate, nextMaintenanceKms);
                 maintenanceList.add(maintenanceData);
             }
         }

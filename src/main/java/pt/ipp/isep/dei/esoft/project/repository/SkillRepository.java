@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.Organization;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
 import java.util.ArrayList;
@@ -77,6 +76,11 @@ public class SkillRepository {
         return !skills.contains(skill);
     }
 
+    /**
+     * Parses a string containing a list of skills separated by semicolons and creates a list of Skill objects.
+     * @param inputSkills The string containing the skills to be parsed
+     * @return A list of Skill objects parsed from the input string
+     */
     public List<Skill> parseSkills(String inputSkills) {
         String[] skillsArray = inputSkills.split(";");
         List<Skill> skillsList = new ArrayList<>();
