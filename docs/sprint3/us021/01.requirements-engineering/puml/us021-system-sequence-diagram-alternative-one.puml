@@ -21,7 +21,7 @@ activate GSM
     GSM -> System : selects green space
     activate System
 
-    System --> GSM : requests entry data (description, degree of urgency \n(this one is selectable), approximate duration)
+    System --> GSM : requests entry data (title, task description, degree of urgency \n(this one is selectable), approximate duration)
     deactivate System
 
     GSM -> System : types/selects data

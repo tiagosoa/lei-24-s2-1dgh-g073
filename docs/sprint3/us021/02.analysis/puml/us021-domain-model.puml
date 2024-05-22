@@ -29,7 +29,7 @@ class Entry {
     approx. duration
 }
 
-class TDList {
+class ToDoList {
     entries
 }
 
@@ -40,7 +40,7 @@ class TDList {
 '}
 
 GSM "1" - "*" Entry: adds >
-GSM "1" -- "1" TDList: uses >
-Entry "1" -- "1" TDList: is shown in >
+GSM "1" -- "1" ToDoList: uses >
+Entry "1" -- "1" ToDoList: is shown in >
 
 @enduml

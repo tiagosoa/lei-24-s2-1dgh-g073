@@ -15,19 +15,19 @@ activate Collaborator
     Collaborator -> System : asks to record the completion of a task.
     activate System
 
-    System --> Collaborator : shows list of tasks the collaborator is assgined to and asks to select one
+    System --> Collaborator : shows list of tasks the collaborator is assigned to and asks to select one
     deactivate System
 
     Collaborator -> System : selects task
     activate System
 
-    System --> Collaborator : asks if it would like to filter the tasks by status
+    System --> Collaborator : asks for confirmation
     deactivate System
 
-    Collaborator -> System : either accepts or declines
+    Collaborator -> System : confirms
     activate System
 
-    System --> Collaborator : shows tasks assigned to the collaborator
+    System --> Collaborator : sends record to the Collaborator
     deactivate System
 
 @enduml

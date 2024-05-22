@@ -6,16 +6,17 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for... | Answer                           | Justification (with patterns)                                                                                 |
-|:---------------|:--------------------------------------------|:---------------------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		     | 	... interacting with the actor?            | ProduceMaintenanceListUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		        | 	... coordinating the US?                   | ProduceMaintenanceListController | Controller                                                                                                    |
-| 			  		        | 	... creating a new List?                   | VehicleRepository                | Creator (Rule 1): in the DM Organization has a List                                                           |
-| 			  		        | ... knowing the user using the system?      | UserSession                      | IE: cf. A&A component documentation.                                                                          |
-| 			  		        | 							                                     | Organization                     | IE: knows/has its own VFMs                                                                                    |
-| 			  		        | 							                                     | VFM                              | IE: knows its own data (e.g. email)                                                                           |
-| Step 2  		     | ... getting the vehicle parts?							       | VehicleRepository                | IE: Stores all information related to vehicles                                                                |
-|   		           | ... 							                                 | VehicleRepository                | IE: Stores all information related to vehicles                                                                |
+| Interaction ID | Question: Which class is responsible for...                                                 | Answer                           | Justification (with patterns)                                                                                 |
+|:---------------|:--------------------------------------------------------------------------------------------|:---------------------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1  		     | 	... interacting with the actor?                                                            | ProduceMaintenanceListUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			  		        | 	... coordinating the US?                                                                   | ProduceMaintenanceListController | Controller                                                                                                    |
+| 			  		        | 	... creating a new List?                                                                   | VehicleRepository                | Creator (Rule 1): in the DM Organization has a List                                                           |
+| 			  		        | ... knowing the user using the system?                                                      | UserSession                      | IE: cf. A&A component documentation.                                                                          |
+| 			  		        | 							                                                                                     | Organization                     | IE: knows/has its own VFMs                                                                                    |
+| 			  		        | 							                                                                                     | VFM                              | IE: knows its own data (e.g. email)                                                                           |
+| Step 2  		     | ... getting the vehicle parts?							                                                       | VehicleRepository                | IE: Stores all information related to vehicles                                                                |
+|   		           | ... calculating which vehicles need maintenance and adding those who do to the list?							 | VehicleRepository                | Repository: responsible for filtering vehicles based on their current Km and maintenance Frequency            |
+|   		           | ... showing the List?							                                                                | ProduceMaintenanceListUI         | IE: responsible for User interactions                                                                         |
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are: 

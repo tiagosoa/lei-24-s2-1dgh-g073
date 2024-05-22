@@ -119,7 +119,7 @@ ProduceMaintenanceListController ..> "1" Organization : organization
 ProduceMaintenanceListController ..> ApplicationSession
 ProduceMaintenanceListController ..> UserSession
 VehicleRepository "1" --> "*" Vehicle : Vehicle
-
-Organization --> "*" VFM : employs
+VehicleFleetManager "1" -> "1" ProduceMaintenanceListUI: uses
+Organization --> "*" VehicleFleetManager : employs
 
 @enduml
