@@ -101,7 +101,8 @@ public class RegisterCollaboratorUI implements Runnable {
         while (true) {
             try {
                 LocalDate admissionDateParsed = LocalDate.parse(admissiondate, formatter);
-                if (isOlderThan18(admissionDateParsed)) {
+                LocalDate birthdateParsed = LocalDate.parse(birthdate, formatter);
+                if (isOlderThan18(admissionDateParsed, birthdateParsed)) {
                     break; // Data válida, sai do loop
                 } else {
                     System.out.println("A data precisa ser superior a 18 anos da data atual.");
@@ -286,9 +287,8 @@ public class RegisterCollaboratorUI implements Runnable {
         System.out.println("Jobs assigned successfully to " + collaborator.getName());
         return jobname;
     }
-    public static boolean isOlderThan18(LocalDate date) {
-        LocalDate today = LocalDate.now();
-        Period period = Period.between(date, today);
+    public static boolean isOlderThan18(LocalDate date, LocalDate birthDate) {
+        Period period = Period.between(birthDate, date);
         return period.getYears() >= 18;
     }
 }
