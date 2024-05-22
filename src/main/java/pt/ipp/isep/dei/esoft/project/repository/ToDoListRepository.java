@@ -7,17 +7,17 @@ import java.util.List;
 
 public class ToDoListRepository {
 
-    private final List<ToDoEntry> toDoEntries;
+    private final List<Entry> toDoEntries;
 
     public ToDoListRepository() {
         this.toDoEntries = new ArrayList<>();
     }
 
-    public boolean addToDoEntry(ToDoEntry entry) {
+    public boolean addToDoEntry(Entry entry) {
         return toDoEntries.add(entry);
     }
 
-    public List<ToDoEntry> getToDoEntries() {
+    public List<Entry> getToDoEntries() {
         return new ArrayList<>(toDoEntries);
     }
 }

@@ -98,30 +98,6 @@ public class Collaborator {
             throw new IllegalArgumentException("Collaborator name cannot be null, empty, or contain special characters or digits.");
         }
     }
-    private void validateBirthdate(String birthdate){
-
-    }
-    private void validateAdmissiondate(String admissiondate){
-
-    }
-    private void validateAddress(String address){
-
-    }
-    private void validateMobile(int mobile){
-
-    }
-    private void validateEmail(String email){
-
-    }
-    private void validateTaxpayer(int taxpayer){
-
-    }
-    private void validateDocType(String doctype){
-
-    }
-    private void validateIDnumber(int IDnumber){
-
-    }
 
     /**
      * Adds a skill to the collaborator.
