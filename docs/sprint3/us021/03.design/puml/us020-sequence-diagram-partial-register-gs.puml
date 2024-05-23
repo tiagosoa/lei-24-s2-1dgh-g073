@@ -1,0 +1,32 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+participant "ToDoList" as TDL
+participant "Entry" as ENTRADA
+
+
+    group Add Entry
+
+            -> TDL: addEntry(entryTitle, entryDescription, entryUrgency, entryDuration, gsm)
+            activate TDL
+
+                TDL -> ENTRADA**: create
+
+                TDL -> TDL: validateEntry(Entry entry)
+                activate TDL
+
+                TDL --> TDL: true
+                deactivate TDL
+
+                TDL -> TDL: addEntry(Entry entry)
+                                activate TDL
+
+                                TDL --> TDL: true
+                                deactivate TDL
+
+
+
+@enduml

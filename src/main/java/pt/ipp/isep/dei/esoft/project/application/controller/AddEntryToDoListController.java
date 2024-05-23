@@ -1,13 +1,14 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.Entry;
-import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.domain.ToDoList;
+import pt.ipp.isep.dei.esoft.project.domain.GSM;
 import pt.ipp.isep.dei.esoft.project.repository.*;
+import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.List;
 
 public class AddEntryToDoListController {
-
     private ToDoListRepository toDoListRepository;
     private OrganizationRepository organizationRepository;
     private GreenSpaceRepository greenSpaceRepository;
@@ -76,11 +77,13 @@ public class AddEntryToDoListController {
 
     public Entry addEntry(String title, String taskDescription, String urgency, String duration) {
         Entry entry = new Entry(title, taskDescription, urgency, duration);
-        toDoListRepository.addEntry(entry);
+        ToDoList toDoList = toDoListRepository.getToDoListByGSM(getGSMFromSession());
+        toDoList.addEntry(entry);
         return entry;
     }
 
-    public List<Entry> getToDoEntries() {
-        return toDoListRepository.getToDoEntries();
+    public GSM getGSMFromSession() {
+        Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
+        return new GSM(email.getEmail());
     }
 }

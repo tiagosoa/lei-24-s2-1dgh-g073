@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Represents a Collaborator in the system.
+ * Represents a To-Do List in the system.
  */
 public class ToDoList {
 
@@ -73,46 +73,36 @@ public class ToDoList {
     }
 
     /**
-     * Adds a skill to the collaborator.
+     * Adds an entry to the to-do list
      *
-     * @param skill the skill to be added
-     * @return true if the skill was added successfully, false otherwise
+     * @param entry the entry to be added
+     * @return true if the entry was added successfully, false otherwise
      */
 
     public boolean addEntry(Entry entry) {
-        if (!skills.contains(skill)) {
-            skills.add(skill);
+        if (!entries.contains(entry)) {
+            entries.add(entry);
             return true;
         }
         return false;
     }
 
-    /**
-     * Adds a job to the collaborator.
-     *
-     * @param job the job to be added
-     */
-    public void addJob(Job job) {
-        if (!jobs.contains(job)) {
-            jobs.add(job);
-            job.addCollaborator(this);
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Collaborator)) return false;
-        Collaborator that = (Collaborator) o;
-        return mobile == that.mobile && taxpayer == that.taxpayer && IDnumber == that.IDnumber && name.equals(that.name) && birthdate.equals(that.birthdate) && admissiondate.equals(that.admissiondate) && address.equals(that.address) && email.equals(that.email) && doctype.equals(that.doctype) && Objects.equals(hrm, that.hrm);
+        if (!(o instanceof ToDoList)) return false;
+        ToDoList that = (ToDoList) o;
+        return entries.equals(that.entries) && gsm.equals(that.gsm);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber, hrm);
+        return Objects.hash(entries, gsm);
     }
 
-    public Collaborator clone() {
-        return new Collaborator(name, birthdate, admissiondate, address, mobile, email, taxpayer, doctype, IDnumber);
+    public ToDoList clone() {
+        return new ToDoList(entries, gsm);
     }
+
+    public GSM getGSM() {return gsm;}
 }

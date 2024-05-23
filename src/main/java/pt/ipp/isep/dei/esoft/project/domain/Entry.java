@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Entry {
 
-    private String title, taskDescription, urgency, duration;
+    private final String title, taskDescription, urgency, duration;
 
     private GreenSpace associatedGreenSpace;
 

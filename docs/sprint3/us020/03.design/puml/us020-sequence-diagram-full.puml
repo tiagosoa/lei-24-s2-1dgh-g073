@@ -6,7 +6,7 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Human Resources Manager" as ADM
+actor "Green Spaces Manager" as ADM
 participant ":RegisterGSUI" as UI
 participant ":RegisterGSController" as CTRL
 participant ":Repositories" as RepositorySingleton
@@ -43,16 +43,8 @@ activate ADM
     UI --> ADM : shows possible types of green spaces and asks to select one
     deactivate UI
 
-    ADM -> UI : selects type
-    activate UI
-
-    UI --> ADM : shows possible types of green spaces and asks to select one
-    deactivate UI
-
         ADM -> UI : selects type
         activate UI
-            ADM -> UI : selects type of green space
-            activate UI
         
             UI --> ADM : requests name and area of the green space
             deactivate UI
@@ -65,12 +57,10 @@ activate ADM
         
             ADM -> UI : confirms data
             activate UI
-        
-            UI --> ADM : displays operation success
-            deactivate UI
 
 
-        UI -> CTRL : submitData(skillname)
+
+        UI -> CTRL : registerGreenSpace(String name, String type, double area, GSM gsm)
         activate CTRL
 
             |||

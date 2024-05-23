@@ -6,17 +6,18 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Human Resources Manager" as ADM
-participant ":RegisterGSUI" as UI
-participant ":RegisterGSController" as CTRL
+actor "Green Spaces Manager" as ADM
+participant ":AddEntryToDoListUI" as UI
+participant ":AddEntryToDoListController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "greenSpaceRepository\n:GreenSpaceRepository" as GSR
-participant "GreenSpace" as HABILIDADE
+participant "toDoListRepository\n:ToDoListRepository" as TDR
+participant "ToDoList" as TDL
 
 activate ADM
 
-        ADM -> UI : asks to register a green space (garden, medium-sized park or large-sized park) and its respective area.
+        ADM -> UI : asks to add a new entry to the To-Do List
 
         activate UI
 
@@ -37,28 +38,39 @@ activate ADM
 
                                  PLAT -> CTRL : GreenSpaceRepository
                                  deactivate PLAT
-                                 deactivate CTRL
+
+                             CTRL -> PLAT : getToDoListRepository()
+                                     activate PLAT
+
+                                 PLAT -> CTRL : ToDoListRepository
+                                 deactivate PLAT
 
 
-    UI --> ADM : shows possible types of green spaces and asks to select one
+
+                             UI -> CTRL : getGreenSpaceList()
+                            CTRL -> GSR : getGreenSpaceList()
+                            activate GSR
+
+                            GSR --> CTRL : greenSpaces
+                            deactivate GSR
+
+                            CTRL --> UI : greenSpaces
+                            deactivate CTRL
+
+
+
+
+    UI --> ADM : shows list of green spaces and asks to select one
     deactivate UI
 
-    ADM -> UI : selects type
+    ADM -> UI : selects green space
     activate UI
 
-    UI --> ADM : shows possible types of green spaces and asks to select one
+    UI --> ADM : requests entry data (title, task description, degree of urgency \n(this one is selectable), approximate duration)
     deactivate UI
 
-        ADM -> UI : selects type
+        ADM -> UI : types/selects data
         activate UI
-            ADM -> UI : selects type of green space
-            activate UI
-
-            UI --> ADM : requests name and area of the green space
-            deactivate UI
-
-            ADM -> UI : types name and area
-            activate UI
 
             UI --> ADM : shows data and requests confirmation
             deactivate UI
@@ -66,11 +78,8 @@ activate ADM
             ADM -> UI : confirms data
             activate UI
 
-            UI --> ADM : displays operation success
-            deactivate UI
 
-
-        UI -> CTRL : submitData(skillname)
+        UI -> CTRL : addEntry(entryTitle, entryDescription, entryUrgency, entryDuration)
         activate CTRL
 
             |||
@@ -85,19 +94,20 @@ activate ADM
             deactivate CTRL
 
             |||
-            CTRL -> GSR: registerGreenSpace(String name, String type, double area, GSM gsm)
-            activate GSR
 
-               ref over GSR
-               Register Green Space
-               end
+            CTRL -> TDR: getToDoListByGSM(gsm)
+            activate TDR
 
-                GSR --> CTRL : greenSpace
+            TDR --> CTRL: toDoList
+            deactivate TDR
 
-            deactivate GSR
+            CTRL -> TDL: addEntry(entryTitle, entryDescription, entryUrgency, entryDuration, gsm)
+            activate TDL
 
-            CTRL --> UI: greenSpace
-            deactivate CTRL
+            ref over TDL
+            Add Entry
+            end
+
             UI --> ADM: displays operation success
     deactivate UI
 

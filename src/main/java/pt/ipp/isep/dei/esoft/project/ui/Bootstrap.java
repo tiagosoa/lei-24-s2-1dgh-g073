@@ -88,8 +88,6 @@ public class Bootstrap implements Runnable {
         collaborator1.addSkill(skill1);
         collaborator2.addSkill(skill2);
         collaborator3.addSkill(skill3);
-
-
     }
 
     private void addVehicles() {

@@ -1,0 +1,167 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
+class GreenSpace {
+    - name: String
+    - type: String
+    - area: double
+    + GreenSpace(String name, String type, double area)
+    + void validateGreenSpaceName(String name)
+    + void validateGreenSpaceType(String type)
+    + void validateGreenSpaceArea(double area)
+    + boolean equals(Object o)
+    + int hashCode()
+    + GreenSpace clone()
+    + boolean isOfName(String name)
+}
+
+class Entry {
+    - title: String
+    - taskDescription: String
+    - urgency: String
+    - duration: String
+    - associatedGreenSpace: GreenSpace
+    + Entry(String title, String taskDescription, String urgency, String duration)
+    + boolean addGreenSpace(GreenSpace greenSpace)
+    + boolean equals(Object o)
+    + int hashCode()
+    + Entry clone()
+}
+
+class ToDoList {
+    - entries: List<Entry>
+    - gsm: GSM
+    + ToDoList(List<Entry> entries, GSM gsm)
+    + boolean addEntry(Entry entry)
+    + boolean equals(Object o)
+    + int hashCode()
+    + Entry clone()
+}
+
+class GreenSpaceRepository {
+  - List<GreenSpace> greenSpaces
+  + Optional<GreenSpace> registerGreenSpace(String name, String type, double area, GSM gsm)
+  + boolean addGreenSpace(GreenSpace greenSpace)
+  + boolean validateGreenSpace(GreenSpace greenSpace)
+  + List<GreenSpace> getGreenSpaceList()
+}
+
+class ToDoListRepository {
+  - List<ToDoList> toDoLists
+  + boolean addToDoList(ToDoList toDoList)
+  + List<ToDoList> getToDoLists()
+  + ToDoList getToDoListByGSM(GSM gsm)
+  + boolean addToDoList(ToDoList toDoList)
+}
+
+class Repositories {
+  + getInstance() : Repositories
+  + getGreenSpaceRepository() : GreenSpaceRepository
+  + getToDoListRepository() : ToDoListRepository
+}
+
+class AddEntryToDoListUI {
+  - controller: AddEntryToDoListController
+  - entryTitle: String
+  - entryDescription: String
+  - entryUrgency: String
+  - entryDuration: String
+  - associatedGreenSpace: GreenSpace
+  + AddEntryToDoListController getController()
+  + void run()
+  + void submitData()
+  + void requestData()
+  + String requestEntryTitle()
+  + String requestEntryDescription()
+  + String requestEntryUrgency()
+  + String requestEntryDuration()
+  + GreenSpace associateGreenSpace()
+  + int readInput(int min, int max)
+}
+
+class AddEntryToDoListController {
+  - greenSpaceRepository: GreenSpaceRepository
+  - toDoListRepository: ToDoListRepository
+  - authenticationRepository: AuthenticationRepository
+  + AddEntryToDoListController(GreenSpaceRepository greenSpaceRepository, ToDoListRepository toDoListRepository, AuthenticationRepository authenticationRepository)
+  + GreenSpaceRepository getGreenSpaceRepository()
+  + ToDoListRepository getToDoListRepository()
+  + AuthenticationRepository getAuthenticationRepository()
+  + Optional<Entry> addEntry(String title, String taskDescription, String urgency, String duration)
+  + GSM getGSMFromSession()
+}
+
+class GSM {
+   - String name
+   - int vatNumber
+   - String email
+   - int phonenumber
+}
+
+note left of AddEntryToDoListController
+  - Entry data is read from GSM's input
+  - Updates the ToDoList
+end note
+
+note left of GSM
+ - Responsible for adding Entries to the ToDoList.
+ - Communicates with the AddEntryToDoListUI
+end note
+
+note left of AddEntryToDoListUI
+  - UI for GSM to add entries to the ToDoList
+  - Communicates with AddEntryToDoListController
+  - Receives repositories from AddEntryToDoListController
+end note
+
+note right of Entry
+ - Registered by the GSM in the ToDoList
+end note
+
+GSM --> Entry: registers
+GSM -> ToDoList: uses
+Entry --> ToDoList: shown in
+ToDoList .> ToDoListRepository: stored in
+GSM -> AddEntryToDoListUI: uses
+GreenSpace --> Entry: associated to
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+AddEntryToDoListUI .> AddEntryToDoListController
+
+AddEntryToDoListController -down-> Repositories : retrieves instances
+
+Repositories -down-> GreenSpaceRepository : accesses
+Repositories -down-> ToDoListRepository : accesses
+
+AddEntryToDoListController ..> GreenSpaceRepository : organizationRepository
+
+ApplicationSession --> "1" UserSession : userSession
+
+AddEntryToDoListController ..> ApplicationSession
+AddEntryToDoListController ..> UserSession
+
+GreenSpaceRepository --> GreenSpace: stores
+
+
+@enduml

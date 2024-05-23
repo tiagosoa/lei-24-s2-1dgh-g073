@@ -43,13 +43,13 @@ _**Note that SSD - Alternative One is adopted.**_
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-[Sequence Diagram - Full](svg/us020-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us020-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
-[Sequence Diagram - Register Green Space](svg/us020-sequence-diagram-partial-register-gs.svg)
-[Sequence Diagram - Get GSM](svg/us020-sequence-diagram-partial-get-gsm.svg)
+![Sequence Diagram - Register Green Space](svg/us020-sequence-diagram-partial-register-gs.svg)
+![Sequence Diagram - Get GSM](svg/us020-sequence-diagram-partial-get-gsm.svg)
 
 ## 3.3. Class Diagram (CD)
 
-[Class Diagram](svg/us020-class-diagram.svg)
+![Class Diagram](svg/us020-class-diagram.svg)

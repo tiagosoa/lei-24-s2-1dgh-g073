@@ -21,7 +21,7 @@ public class GSMUI implements Runnable {
 
         int option = 0;
         do {
-            option = Utils.showAndSelectIndex(options, "\n\n--- Vehicle Fleet Manager MENU -------------------------");
+            option = Utils.showAndSelectIndex(options, "\n\n--- Green Space Manager MENU -------------------------");
 
             if ((option >= 0) && (option < options.size())) {
                 options.get(option).run();

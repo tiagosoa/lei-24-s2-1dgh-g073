@@ -1,24 +1,36 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.Entry;
+import pt.ipp.isep.dei.esoft.project.application.session.UserSession;
+import pt.ipp.isep.dei.esoft.project.domain.GSM;
+import pt.ipp.isep.dei.esoft.project.domain.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.ToDoList;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ToDoListRepository {
 
-    private final List<Entry> toDoEntries;
+    private final List<ToDoList> toDoLists;
 
     public ToDoListRepository() {
-        this.toDoEntries = new ArrayList<>();
+        this.toDoLists = new ArrayList<>();
     }
 
-    public boolean addToDoEntry(Entry entry) {
-        return toDoEntries.add(entry);
+    public ToDoList getToDoListByGSM(GSM gsm) {
+        for (ToDoList existingTDList : toDoLists) {
+            if (existingTDList.getGSM().equals(gsm)) {
+                return existingTDList;
+            }
+        }
+        throw new IllegalArgumentException("Skill does not exist.");
     }
 
-    public List<Entry> getToDoEntries() {
-        return new ArrayList<>(toDoEntries);
+    public boolean addToDoList(ToDoList toDoList) {
+        return toDoLists.add(toDoList);
+    }
+
+    public List<ToDoList> getToDoLists() {
+        return toDoLists;
     }
 }
 

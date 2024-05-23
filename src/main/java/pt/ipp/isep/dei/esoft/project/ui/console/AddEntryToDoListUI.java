@@ -1,8 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.AddEntryToDoListController;
-import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.esoft.project.repository.ToDoListRepository;
 
@@ -11,12 +10,10 @@ import java.util.*;
 public class AddEntryToDoListUI implements Runnable {
 
     private final AddEntryToDoListController controller;
-    private String name;
-
     private String entryTitle, entryDescription, entryUrgency, entryDuration;
 
     private Scanner scanner;
-
+    private GreenSpace associatedGreenSpace;
     private ToDoListRepository toDoListRepository;
     private GreenSpaceRepository greenSpaceRepository;
 
@@ -40,11 +37,7 @@ public class AddEntryToDoListUI implements Runnable {
     }
 
     private void submitData() {
-        Optional<Collaborator> collaborator = getController().registerCollaborator(name);
-
-        if (GreenSpace.isPresent()) {
-            GreenSpace greenSpacenname = assignGreenSpaceToDoList(collaborator.get());
-            System.out.println("'" + name + "'" + "- is this data correct? (type 'yes' or 'no')");
+        System.out.println("'" + entryTitle + "'" + "'" + entryDescription + "'" + "'" + entryUrgency + "'" + "'" + entryDuration + "'" + "- is this data correct? (type 'yes' or 'no')");
             String yesno;
             do {
                 yesno = scanner.nextLine();
@@ -52,20 +45,20 @@ public class AddEntryToDoListUI implements Runnable {
                     requestData();
                 }
             } while (!(yesno.equals("no") || yesno.equals("yes")));
-            collaboratorRepository.addCollaborator(collaborator.get());
-            System.out.println("\nCollaborator successfully registered!");
-        } else {
-            System.out.println("\nCollaborator not registered!");
+            Entry entry = getController().addEntry(entryTitle, entryDescription, entryUrgency, entryDuration);
+            if (entry != null) {
+                System.out.println("\n Entry successfully added!");
+            } else {
+                System.out.println("\n Entry not added!");
+            }
         }
-    }
 
     private void requestData() {
-
+        associatedGreenSpace = associateGreenSpace();
         entryTitle = requestEntryTitle();
         entryDescription = requestEntryDescription();
         entryUrgency = requestEntryUrgency();
         entryDuration = requestEntryDuration();
-        associateGreenSpace();
     }
 
 
