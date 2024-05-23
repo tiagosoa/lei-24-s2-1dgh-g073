@@ -70,8 +70,8 @@ public class RegisterGSUI implements Runnable {
      */
     private void requestData() {
         //Request the GS data from the console
-        greenSpaceName = requestGSName();
         greenSpaceType = requestGSType();
+        greenSpaceName = requestGSName();
         greenSpaceArea = requestGSArea();
     }
 

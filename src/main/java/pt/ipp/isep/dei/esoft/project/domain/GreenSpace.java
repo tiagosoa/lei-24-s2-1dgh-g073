@@ -10,19 +10,24 @@ public class GreenSpace {
 
     private final double area;
 
+    private final GSM gsm;
+
     /**
      * Creates a new GreenSpace with the given type and area.
      *
+     * @param name the name of the greenSpace.
      * @param type the type of the greenSpace.
      * @param area the area of the greenSpace.
+     * @param gsm the GSM that manages the greenSpace.
      */
-    public GreenSpace(String name, String type, double area) {
+    public GreenSpace(String name, String type, double area, GSM gsm) {
         this.name = name;
         validateGreenSpaceName(name);
         this.type = type;
         validateGreenSpaceType(type);
         this.area = area;
         validateGreenSpaceArea(area);
+        this.gsm = gsm;
     }
 
     private void validateGreenSpaceName(String name) {
@@ -53,7 +58,7 @@ public class GreenSpace {
             return false;
         }
         GreenSpace greenSpace = (GreenSpace) o;
-        return Objects.equals(type, greenSpace.type) && Objects.equals(area, greenSpace.area);
+        return Objects.equals(type, greenSpace.type) && Objects.equals(area, greenSpace.area) && Objects.equals(name, greenSpace.name) && Objects.equals(gsm, greenSpace.gsm);
     }
 
     @Override
@@ -67,7 +72,7 @@ public class GreenSpace {
      * @return A clone of the current instance.
      */
     public GreenSpace clone() {
-        return new GreenSpace(this.name, this.type, this.area);
+        return new GreenSpace(this.name, this.type, this.area, this.gsm);
     }
 
     /**
@@ -97,7 +102,7 @@ public class GreenSpace {
         return area;
     }
 
-    public boolean isOfNameTypeAndArea(String name, String type, double area) {
-        return this.name.equals(name) && this.type.equals(type) && this.area == area;
+    public boolean isOfName(String name) {
+        return this.name.equals(name);
     }
 }

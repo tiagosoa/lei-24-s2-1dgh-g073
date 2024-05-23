@@ -21,10 +21,10 @@ activate GSM
     GSM -> System : selects type of green space
     activate System
 
-    System --> GSM : requests area of the green space
+    System --> GSM : requests name and area of the green space
     deactivate System
 
-    GSM -> System : types area
+    GSM -> System : types name and area
     activate System
 
     System --> GSM : shows data and requests confirmation

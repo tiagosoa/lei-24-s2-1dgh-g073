@@ -20,106 +20,100 @@ class UserSession
     + getUserEmail()
 }
 
-class Skill {
+class GreenSpace {
     - name: String
+    - type: String
+    - area: double
+    + GreenSpace(String name, String type, double area)
+    + void validateGreenSpaceName(String name)
+    + void validateGreenSpaceType(String type)
+    + void validateGreenSpaceArea(double area)
+    + boolean equals(Object o)
+    + int hashCode()
+    + GreenSpace clone()
+    + boolean isOfName(String name)
 }
 
-class SkillRepository {
-  - List<Skill> skills
-  + Optional<Skill> add(Skill skill)
-  + boolean validateSkill(Skill skill)
-  + List<Skill> getSkills()
-  + Skill getSkillByName(String name)
-}
-
-class Organization {
-  - String name
-  - String vatNumber
-  - String address
-  - String phone
-  - String email
-  + Optional<Skill> createSkill(String name)
-  + boolean addSkill(Skill skill)
-  + boolean validateSkill(Skill skill)
-  + boolean skillsDoNotContain(Skill skill)
-  + boolean equals(Object o)
-}
-
-class OrganizationRepository {
-  + Optional<Organization> getOrganizationByHRM(HRM hrm)
-  + Optional<Organization> getOrganizationByVFM(VFM vfm)
-  + Optional<Organization> getOrganizationByHRMEmail(String email)
-  + Optional<Organization> add(Organization organization)
-  + boolean validateOrganization(Organization organization)
+class GreenSpaceRepository {
+  - List<GreenSpace> greenSpaces
+  + Optional<GreenSpace> registerGreenSpace(String name, String type, double area, GSM gsm)
+  + boolean addGreenSpace(GreenSpace greenSpace)
+  + boolean validateGreenSpace(GreenSpace greenSpace)
+  + List<GreenSpace> getGreenSpaceList()
 }
 
 class Repositories {
   + getInstance() : Repositories
-  + getSkillRepository() : SkillRepository
-  + getOrganizationRepository() : OrganizationRepository
+  + getGreenSpaceRepository() : GreenSpaceRepository
 }
 
-class CreateSkillController {
-  + CreateJobController(OrganizationRepository organizationRepository,
-                                   JobRepository jobRepository,
-                                   AuthenticationRepository authenticationRepository)
-  + Optional<Skill> createSkill(String name, HRM hrm)
+class RegisterGSUI {
+  - controller: RegisterGSController
+  - greenSpaceName: String
+  - greenSpaceType: String
+  - greenSpaceArea: double
+  + RegisterGSController getController()
+  + void run()
+  + void submitData()
+  + void requestData()
+  + String requestGSType()
+  + String requestGSName()
+  + double requestGSArea()
 }
 
-class CreateSkillUI {
-  + requestSkillName()
+class RegisterGSController {
+  - greenSpaceRepository: GreenSpaceRepository
+  - authenticationRepository: AuthenticationRepository
+  + RegisterGSController(GreenSpaceRepository greenSpaceRepository, AuthenticationRepository authenticationRepository)
+  + GreenSpaceRepository getGreenSpaceRepository()
+  + AuthenticationRepository getAuthenticationRepository()
+  + Optional<GreenSpace> registerGreenSpace(String name, String type, double area, GSM gsm)
+  + GSM getGSMFromSession()
 }
 
-class HRM {
+class GSM {
    - String name
    - int vatNumber
    - String email
    - int phonenumber
 }
 
-SkillManager --> Skill: Manages
-HRM --> SkillManager: Uses
-
-note right of CreateSkillController
-  - Skill name is obtained from the HRM's input
-  - Updates the Skill Repository
+note right of RegisterGSController
+  - Green Space data is read from GSM's input
+  - Updates the Green Space Repository
 end note
 
-note right of HRM
-  - HRM initiates skill creation
+note right of GSM
+ - Responsible for registering Green Spaces.
+ - Communicates with the RegisterGSUI
 end note
 
-note left of CreateSkillUI
-  - UI for HRM to input and confirm skill name
-  - Communicates with CreateSkillController
+note left of RegisterGSUI
+  - UI for GSM to input green space data
+  - Communicates with RegisterGSController
+  - Receives repositories from RegisterGSController
 end note
 
-note left of Organization
-  - Manages skills
-  - Handles organizational details
-end note
+GSM --> GreenSpace: registers and manages
+GSM -> RegisterGSUI: uses
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
-CreateSkillUI .> CreateSkillController
+RegisterGSUI .> RegisterGSController
 
-CreateSkillController -down-> Repositories : retrieves instances
+RegisterGSController -down-> Repositories : retrieves instances
 
-Repositories -down-> SkillRepository : accesses
-Repositories -down-> OrganizationRepository : accesses
+Repositories -down-> GreenSpaceRepository : accesses
 
-CreateSkillController ..> OrganizationRepository : organizationRepository
+RegisterGSController ..> GreenSpaceRepository : organizationRepository
 
-OrganizationRepository --> "*" Organization : persists
 ApplicationSession --> "1" UserSession : userSession
 
-CreateSkillController ..> "1" Organization : organization
-CreateSkillController ..> ApplicationSession
-CreateSkillController ..> UserSession
-Organization "1" --> "*" Skill : owns
-Skill --> HRM : createdBy
+RegisterGSController ..> ApplicationSession
+RegisterGSController ..> UserSession
 
-Organization --> "*" HRM : employs
+GreenSpaceRepository --> GreenSpace: stores
+
 
 @enduml

@@ -3,26 +3,36 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "organization\n:Organization" as ORG
-participant "skill\n:Skill" as TAREFA
-participant "skillrepository\n:SkillRepository" as SR
 
--> ORG: createSkill(skillname)
-
-activate ORG
-    group Create Skill
-
-        ORG -> TAREFA**: createSkill(skillname)
-        ORG -> ORG: validateSkill(skill)
-        ORG -> SR: addSkill (skill)
+participant "GreenSpaceRepository" as GSR
+participant "GreenSpace" as HABILIDADE
 
 
+    group Register Green Space
+
+                    -> GSR: registerGreenSpace(String name, String type, double area, GSM gsm)
+                    activate GSR
+
+                        GSR -> HABILIDADE**: create
+                                GSR -> GSR: validateGreenSpace(GreenSpace greenSpace)
+                                activate GSR
+
+                                GSR --> GSR: true
+                                deactivate GSR
+
+                GSR -> GSR: addGreenSpace(GreenSpace greenSpace)
+                                activate GSR
+
+                                GSR --> GSR: true
+                                deactivate GSR
 
 
-    end
 
-    <-- ORG : skill
-deactivate ORG
+
+                        <-- GSR  : greenSpace
+
+                    deactivate GSR
+
 
 
 @enduml

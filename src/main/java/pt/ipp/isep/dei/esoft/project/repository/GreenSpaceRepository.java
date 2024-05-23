@@ -23,18 +23,16 @@ public class GreenSpaceRepository {
     }
 
     /**
-     * Retrieves an existing GreenSpace by its name, type, and area.
+     * Retrieves an existing GreenSpace by its name.
      *
      * @param name The name of the greenSpace to retrieve.
-     * @param type The type of the greenSpace to retrieve.
-     * @param area The area of the greenSpace to retrieve.
-     * @return The GreenSpace with the specified name, type, and area.
+     * @return The GreenSpace with the specified name.
      * @throws IllegalArgumentException if the greenSpace does not exist.
      */
-    public GreenSpace getGreenSpaceByName(String name, String type, double area) {
+    public GreenSpace getGreenSpacebyName(String name) {
         // Iterate through the greenSpaces list to find a matching greenSpace
         for (GreenSpace existingGreenSpace : greenSpaces) {
-            if (existingGreenSpace.isOfNameTypeAndArea(name, type, area)) {
+            if (existingGreenSpace.isOfName(name)) {
                 return existingGreenSpace;
             }
         }
@@ -52,7 +50,7 @@ public class GreenSpaceRepository {
      */
     public Optional<GreenSpace> registerGreenSpace(String name, String type, double area, GSM gsm) {
         // Create a new GreenSpace object
-        GreenSpace greenSpace = new GreenSpace(name, type, area);
+        GreenSpace greenSpace = new GreenSpace(name, type, area, gsm);
         // Add the green space to the list if validation passes
         if (addGreenSpace(greenSpace)) {
             return Optional.of(greenSpace);

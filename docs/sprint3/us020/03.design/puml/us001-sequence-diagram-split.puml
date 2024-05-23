@@ -7,21 +7,16 @@ autonumber
 
 'hide footbox
 actor "Human Resources Manager" as ADM
-participant ":CreateSkillUI" as UI
-participant ":CreateSkillController" as CTRL
+participant ":RegisterGSUI" as UI
+participant ":RegisterGSController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "skillrepository\n:SkillRepository" as SR
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
-participant "skill\n:Skill" as HABILIDADE
+participant "greenSpaceRepository\n:GreenSpaceRepository" as GSR
+participant "GreenSpace" as HABILIDADE
 
 activate ADM
 
-        ADM -> UI : asks to create a new skill
+        ADM -> UI : asks to register a green space (garden, medium-sized park or large-sized park) and its respective area.
 
         activate UI
 
@@ -29,44 +24,79 @@ activate ADM
             'create CTRL
             UI -> CTRL** : create
 
-         UI -> CTRL : getSkillRepository()
-         activate CTRL
+            activate CTRL
 
-                 CTRL -> PLAT : getSkillRepository()
-                         activate PLAT
+                        CTRL -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
 
-                     PLAT -> CTRL : skillRepository
-                     deactivate PLAT
-    deactivate CTRL
-    UI --> ADM : requests name
+                                            RepositorySingleton --> CTRL: repositories
+                                        deactivate RepositorySingleton
+
+                             CTRL -> PLAT : getGreenSpaceRepository()
+                                     activate PLAT
+
+                                 PLAT -> CTRL : GreenSpaceRepository
+                                 deactivate PLAT
+                                 deactivate CTRL
+
+
+    UI --> ADM : shows possible types of green spaces and asks to select one
     deactivate UI
 
-    ADM -> UI : types requested name
+    ADM -> UI : selects type
     activate UI
 
-        UI -> CTRL : createSkill(skillname)
+    UI --> ADM : shows possible types of green spaces and asks to select one
+    deactivate UI
+
+        ADM -> UI : selects type
+        activate UI
+            ADM -> UI : selects type of green space
+            activate UI
+
+            UI --> ADM : requests name and area of the green space
+            deactivate UI
+
+            ADM -> UI : types name and area
+            activate UI
+
+            UI --> ADM : shows data and requests confirmation
+            deactivate UI
+
+            ADM -> UI : confirms data
+            activate UI
+
+            UI --> ADM : displays operation success
+            deactivate UI
+
+
+        UI -> CTRL : submitData(skillname)
         activate CTRL
 
             |||
-                                ref over CTRL
-                                    Get HRM
+            CTRL -> CTRL : getGSMFromSession()
+            activate CTRL
 
-                                end ref
+            ref over CTRL
+            Get GSM
+            end
+
+                CTRL --> CTRL : gsm
+            deactivate CTRL
 
             |||
-            CTRL -> ORG: createSkill(skillname)
-            activate ORG
+            CTRL -> GSR: registerGreenSpace(String name, String type, double area, GSM gsm)
+            activate GSR
 
-                                    ref over ORG
-                                        Create Skill
+               ref over GSR
+               Register Green Space
+               end
 
-                                    end ref
+                GSR --> CTRL : greenSpace
 
-                ORG --> CTRL : skill
+            deactivate GSR
 
-            deactivate ORG
-
-            CTRL --> UI: skill
+            CTRL --> UI: greenSpace
             deactivate CTRL
             UI --> ADM: displays operation success
     deactivate UI

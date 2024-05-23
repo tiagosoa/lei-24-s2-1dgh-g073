@@ -7,21 +7,16 @@ autonumber
 
 'hide footbox
 actor "Human Resources Manager" as ADM
-participant ":CreateSkillUI" as UI
-participant ":CreateSkillController" as CTRL
+participant ":RegisterGSUI" as UI
+participant ":RegisterGSController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "skillrepository\n:SkillRepository" as SR
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
-participant "skill\n:Skill" as HABILIDADE
+participant "greenSpaceRepository\n:GreenSpaceRepository" as GSR
+participant "GreenSpace" as HABILIDADE
 
 activate ADM
 
-        ADM -> UI : asks to create a new skill
+        ADM -> UI : asks to register a green space (garden, medium-sized park or large-sized park) and its respective area.
 
         activate UI
 
@@ -31,89 +26,88 @@ activate ADM
 
             activate CTRL
 
-                 CTRL -> PLAT : getSkillRepository()
-                         activate PLAT
+                        CTRL -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
 
-                     PLAT -> CTRL : skillRepository
-                     deactivate PLAT
-    deactivate CTRL
-    UI --> ADM : requests name
+                                            RepositorySingleton --> CTRL: repositories
+                                        deactivate RepositorySingleton
+
+                             CTRL -> PLAT : getGreenSpaceRepository()
+                                     activate PLAT
+
+                                 PLAT -> CTRL : GreenSpaceRepository
+                                 deactivate PLAT
+                                 deactivate CTRL
+
+
+    UI --> ADM : shows possible types of green spaces and asks to select one
     deactivate UI
 
-    ADM -> UI : types requested name
+    ADM -> UI : selects type
     activate UI
 
-        UI -> CTRL : createSkill(skillname)
+    UI --> ADM : shows possible types of green spaces and asks to select one
+    deactivate UI
+
+        ADM -> UI : selects type
+        activate UI
+            ADM -> UI : selects type of green space
+            activate UI
+        
+            UI --> ADM : requests name and area of the green space
+            deactivate UI
+        
+            ADM -> UI : types name and area
+            activate UI
+        
+            UI --> ADM : shows data and requests confirmation
+            deactivate UI
+        
+            ADM -> UI : confirms data
+            activate UI
+        
+            UI --> ADM : displays operation success
+            deactivate UI
+
+
+        UI -> CTRL : submitData(skillname)
         activate CTRL
 
             |||
-            CTRL -> CTRL : getHRMFromSession()
+            CTRL -> CTRL : getGSMFromSession()
             activate CTRL
 
-                CTRL -> _APP: getInstance()
-                activate _APP
-                    _APP -> CTRL: appSession
-                deactivate _APP
+            ref over CTRL
+            Get GSM
+            end
 
-
-                CTRL -> APP: getCurrentSession()
-                activate APP
-
-                    APP --> CTRL: currentSession
-                deactivate APP
-
-                CTRL -> SESSAO: email = getUserEmail()
-                activate SESSAO
-
-                    SESSAO --> CTRL: email
-                deactivate SESSAO
-
-
-                CTRL -> PLAT: getOrganizationRepository(email)
-                activate PLAT
-
-                    PLAT --> CTRL: organizationRepository
-                deactivate PLAT
-
-
-                CTRL -> OrganizationRepository: getOrganizationByHRMEmail(email)
-                activate OrganizationRepository
-
-                    loop [for each organization
-                        OrganizationRepository -> ORG : anyHRMHasEmail(email)
-                        activate ORG
-
-                             ORG --> OrganizationRepository : true/false
-                        deactivate ORG
-                    end
-                    OrganizationRepository --> CTRL : organization
-                deactivate OrganizationRepository
-
-                CTRL -> ORG: getHRMByEmail(email)
-                activate ORG
-
-                    ORG --> CTRL : hrm
-                deactivate ORG
-
-                CTRL --> CTRL : hrm
+                CTRL --> CTRL : gsm
             deactivate CTRL
 
             |||
-            CTRL -> ORG: createSkill(skillname)
-            activate ORG
+            CTRL -> GSR: registerGreenSpace(String name, String type, double area, GSM gsm)
+            activate GSR
 
-                ORG -> HABILIDADE**: createSkill(skillname)
+                GSR -> HABILIDADE**: create
 
-                ORG -> ORG: validateSkill(skill)
+                GSR -> GSR: validateGreenSpace(GreenSpace greenSpace)
+                activate GSR
 
-                ORG -> SR: addSkill(skill)
+                GSR --> GSR: true
+                deactivate GSR
+
+                GSR -> GSR: addGreenSpace(GreenSpace greenSpace)
+                                activate GSR
+
+                                GSR --> GSR: true
+                                deactivate GSR
 
 
-                ORG --> CTRL : skill
+                GSR --> CTRL : greenSpace
 
-            deactivate ORG
+            deactivate GSR
 
-            CTRL --> UI: skill
+            CTRL --> UI: greenSpace
             deactivate CTRL
             UI --> ADM: displays operation success
     deactivate UI

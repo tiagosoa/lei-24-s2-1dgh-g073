@@ -15,8 +15,6 @@ import java.util.Optional;
  * Controller class responsible for creating a new GreenSpace.
  */
 public class RegisterGSController {
-
-    private OrganizationRepository organizationRepository;
     private GreenSpaceRepository greenSpaceRepository;
     private AuthenticationRepository authenticationRepository;
 
@@ -25,7 +23,6 @@ public class RegisterGSController {
      */
     public RegisterGSController() {
         Repositories repositories = Repositories.getInstance();
-        this.organizationRepository = repositories.getOrganizationRepository();
         this.greenSpaceRepository = repositories.getGreenSpaceRepository();
         this.authenticationRepository = repositories.getAuthenticationRepository();
     }
@@ -33,14 +30,11 @@ public class RegisterGSController {
     /**
      * Constructor that allows receiving repositories as parameters for testing purposes.
      *
-     * @param organizationRepository     the OrganizationRepository to use
      * @param greenSpaceRepository            the GreenSpaceRepository to use
      * @param authenticationRepository   the AuthenticationRepository to use
      */
-    public RegisterGSController(OrganizationRepository organizationRepository,
-                                GreenSpaceRepository greenSpaceRepository,
+    public RegisterGSController(GreenSpaceRepository greenSpaceRepository,
                                 AuthenticationRepository authenticationRepository) {
-        this.organizationRepository = organizationRepository;
         this.greenSpaceRepository = greenSpaceRepository;
         this.authenticationRepository = authenticationRepository;
     }
@@ -58,18 +52,6 @@ public class RegisterGSController {
         return greenSpaceRepository;
     }
 
-    /**
-     * Retrieves the OrganizationRepository instance, initializing it if necessary.
-     *
-     * @return the OrganizationRepository instance
-     */
-    private OrganizationRepository getOrganizationRepository() {
-        if (organizationRepository == null) {
-            Repositories repositories = Repositories.getInstance();
-            organizationRepository = repositories.getOrganizationRepository();
-        }
-        return organizationRepository;
-    }
 
     /**
      * Retrieves the AuthenticationRepository instance, initializing it if necessary.
