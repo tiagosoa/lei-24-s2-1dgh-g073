@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.AddEntryToDoListCont
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.esoft.project.repository.ToDoListRepository;
+import pt.ipp.isep.dei.esoft.project.ui.console.menu.GSMUI;
 
 import java.util.*;
 
@@ -37,22 +38,23 @@ public class AddEntryToDoListUI implements Runnable {
     private void submitData() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("'" + entryTitle + "'" + "'" + entryDescription + "'" + "'" + entryUrgency + "'" + "'" + entryDuration + "'" + "- is this data correct? (type 'yes' or 'no')");
-            String yesno;
-            do {
-                yesno = scanner.nextLine();
-                if (yesno.equals("no")) {
-                    requestData();
-                }
-            } while (!(yesno.equals("no") || yesno.equals("yes")));
-            Entry entry = getController().addEntry(entryTitle, entryDescription, entryUrgency, entryDuration);
-            if (entry != null) {
-                System.out.println("\n Entry successfully added!");
-            } else {
-                System.out.println("\n Entry not added!");
+        String yesno;
+        do {
+            yesno = scanner.nextLine();
+            if (yesno.equals("no")) {
+                requestData();
             }
+        } while (!(yesno.equals("no") || yesno.equals("yes")));
+        Entry entry = getController().addEntry(entryTitle, entryDescription, entryUrgency, entryDuration);
+        if (entry != null) {
+            System.out.println("\n Entry successfully added!");
+        } else {
+            System.out.println("\n Entry not added!");
         }
+    }
 
     private void requestData() {
+
         associatedGreenSpace = associateGreenSpace();
         entryTitle = requestEntryTitle();
         entryDescription = requestEntryDescription();
@@ -99,7 +101,7 @@ public class AddEntryToDoListUI implements Runnable {
                     default:
                         System.out.println("Invalid choice. Please try again.");
                 }
-            } catch(InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number between 1 and 3.");
                 scanner.next(); // Clear the invalid input from the scanner
             }
@@ -113,9 +115,16 @@ public class AddEntryToDoListUI implements Runnable {
         System.out.print("Entry Approximate Duration: ");
         return scanner.nextLine();
     }
+
     private GreenSpace associateGreenSpace() {
-        System.out.println("Select a green space for the new entry:");
         List<GreenSpace> greenSpaces = greenSpaceRepository.getGreenSpaceList();
+
+        if (greenSpaces.isEmpty()) {
+            System.out.println("\n There are no registered Green Spaces!\n First regist a Green Space");
+            new GSMUI().run();
+        }
+
+        System.out.println("Select a green space for the new entry:");
 
         for (int i = 0; i < greenSpaces.size(); i++) {
             System.out.println((i + 1) + ". " + greenSpaces.get(i).getName());
@@ -123,6 +132,7 @@ public class AddEntryToDoListUI implements Runnable {
 
         int selectedIndex = readInput(1, greenSpaces.size()) - 1;
         return greenSpaces.get(selectedIndex);
+
     }
 
     private int readInput(int min, int max) {
