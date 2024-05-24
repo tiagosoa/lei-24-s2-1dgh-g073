@@ -26,7 +26,8 @@ public class AddVehicleUI implements Runnable {
      */
     public AddVehicleUI() {
         controller = new AddVehicleController();
-        this.vehicleRepository = getController().getVehicleRepository();
+        this.vehicleRepository = getController().getVehicleRepository(
+        );
     }
 
     private AddVehicleController getController() {

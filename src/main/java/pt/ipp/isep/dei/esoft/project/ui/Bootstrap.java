@@ -3,9 +3,14 @@ package pt.ipp.isep.dei.esoft.project.ui;
 import pt.ipp.isep.dei.esoft.project.application.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.*;
+import pt.ipp.isep.dei.esoft.project.domain.GSM;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+
 
 public class Bootstrap implements Runnable {
 
@@ -17,6 +22,7 @@ public class Bootstrap implements Runnable {
         addVehicles();
         addOrganization();
         addUsers();
+        addEmptyToDoList();
     }
 
     private void addOrganization() {
@@ -107,6 +113,21 @@ public class Bootstrap implements Runnable {
          */
 
     }
+
+    private void addEmptyToDoList() {
+        // Get the ToDoList repository
+        ToDoListRepository toDoListRepository = Repositories.getInstance().getToDoListRepository();
+
+        // Check if the repository already contains a ToDoList (optional)
+        if (toDoListRepository.getToDoLists().isEmpty()) {
+            // Create an empty ToDoList
+            ToDoList toDoList = new ToDoList(new ArrayList<>(), new GSM("gsm@this.app"));
+
+            // Add the empty ToDoList to the repository
+            toDoListRepository.addToDoList(toDoList);
+        }
+    }
+
 
     private void addUsers() {
         //TODO: add Authentication users here: should be created for each user in the organization
