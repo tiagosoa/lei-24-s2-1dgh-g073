@@ -36,16 +36,6 @@ activate ADM
                                             RepositorySingleton --> CTRL: repositories
                                         deactivate RepositorySingleton
 
-                                    CTRL -> CTRL : getGSMFromSession()
-                                    activate CTRL
-
-                                    ref over CTRL
-                                    Get GSM
-                                    end
-
-                                        CTRL --> CTRL : gsm
-                                    deactivate CTRL
-
                              CTRL -> PLAT : getGreenSpaceRepository()
                                      activate PLAT
 
@@ -109,7 +99,16 @@ activate ADM
         UI -> CTRL : addEntry(toDoListEntry, status, startDate)
         activate CTRL
 
+            |||
+            CTRL -> CTRL : getGSMFromSession()
+            activate CTRL
 
+            ref over CTRL
+            Get GSM
+            end
+
+                CTRL --> CTRL : gsm
+            deactivate CTRL
 
             |||
 

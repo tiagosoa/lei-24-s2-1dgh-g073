@@ -21,7 +21,7 @@ activate GSM
     GSM -> System : selects entry
     activate System
 
-    System --> GSM : shows list of team and asks to select one
+    System --> GSM : shows list of teams and asks to select one
     deactivate System
 
     GSM -> System : selects team

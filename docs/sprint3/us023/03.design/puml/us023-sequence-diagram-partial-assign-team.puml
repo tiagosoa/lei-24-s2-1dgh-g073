@@ -1,0 +1,29 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+participant "AgendaEntry" as ENTRADA
+
+
+    group Add Entry
+
+            -> ENTRADA: assignTeam(agendaEntry, team)
+                           activate ENTRADA
+
+                               ENTRADA -> ENTRADA: validateTeam(Team team)
+                                           activate ENTRADA
+
+                                           ENTRADA --> ENTRADA: true
+                                           deactivate ENTRADA
+
+                               ENTRADA -> ENTRADA: addTeam(team)
+                               activate ENTRADA
+                               ENTRADA --> ENTRADA: true
+                               deactivate ENTRADA
+
+
+
+@enduml

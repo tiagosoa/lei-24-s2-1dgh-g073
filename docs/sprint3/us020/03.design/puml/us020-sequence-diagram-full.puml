@@ -35,8 +35,9 @@ activate ADM
                              CTRL -> PLAT : getGreenSpaceRepository()
                                      activate PLAT
 
-                                 PLAT -> CTRL : GreenSpaceRepository
+                                 PLAT --> CTRL : GreenSpaceRepository
                                  deactivate PLAT
+                                 CTRL --> UI : GreenSpaceRepository
                                  deactivate CTRL
 
 

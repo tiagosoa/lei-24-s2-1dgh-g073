@@ -1,0 +1,175 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
+class Team {
+    - collaborators: List<Collaborator>
+    - teamID: int
+    + boolean addCollaborator(collaborator)
+    + boolean equals(Object o)
+    + int hashCode()
+    + Team clone()
+}
+
+class TeamRepository {
+       - List<Team> teams
+       + Optional<Team> createTeam(List<Collaborator>)
+       + boolean addTeam(Team team)
+       + boolean validateTeam(Team team)
+       + List<Team> getTeamList()
+}
+
+class Collaborator {
+    - name: String
+    - birthdate: String
+    - admission date: String
+    - address: String
+    - mobile Contact: int
+    - email contact: String
+    - taxpayer number: int
+    - ID doc type: String
+    - ID number: int
+    + boolean addSkill(skill)
+}
+
+class AgendaEntry {
+    - title: String
+    - taskDescription: String
+    - urgency: String
+    - duration: String
+    - associatedGreenSpace: GreenSpace
+    - associatedTeam: Team
+    - associatedVehicles: List<Vehicle>
+    - status: String
+    - startDate: LocalDate
+    + AgendaEntry(String title, String taskDescription, String urgency, String duration, String status, LocalDate startDate)
+    + boolean addGreenSpace(GreenSpace greenSpace)
+    + boolean addTeam(Team team)
+    + boolean addVehicle(Vehicle vehicle)
+    + boolean equals(Object o)
+    + int hashCode()
+    + AgendaEntry clone()
+}
+
+class Agenda {
+    - entries: List<AgendaEntry>
+    - gsm: GSM
+    + ToDoList(List<AgendaEntry> entries, GSM gsm)
+    + boolean addEntry(Entry entry)
+    + boolean equals(Object o)
+    + int hashCode()
+    + AgendaEntry clone()
+}
+
+class AgendaRepository {
+  - List<Agenda> agendas
+  + boolean addAgenda(Agenda agenda)
+  + List<Agenda> getAgendas()
+  + Agenda getAgendaByGSM(GSM gsm)
+  + boolean addAgenda(Agenda agenda)
+}
+
+class Repositories {
+  + getInstance() : Repositories
+  + getTeamRepository() : TeamRepository
+  + getAgendaRepository() : AgendaRepository
+}
+
+class AssignTeamUI {
+  - controller: AssignTeamController
+  - team: Team
+  - agendaEntry: AgendaEntry
+  + AssignTeamController getController()
+  + void run()
+  + void submitData()
+  + void requestData()
+  + AgendaEntry requestAgendaEntry()
+  + Team requestTeam()
+  + PERGUNTAR AO PROFESSOR PPROG
+}
+
+class AssignTeamController {
+  - teamRepository: TeamRepository
+  - agendaRepository: AgendaRepository
+  - authenticationRepository: AuthenticationRepository
+  + AssignTeamController(teamRepository TeamRepository, AgendaRepository agendaRepository, AuthenticationRepository authenticationRepository)
+  + TeamRepository getTeamRepository()
+  + AgendaRepository getAgendaRepository()
+  + AuthenticationRepository getAuthenticationRepository()
+  + Optional<AgendaEntry> assignTeam(AgendaEntry entry, Team team)
+  + GSM getGSMFromSession()
+}
+
+class GSM {
+   - String name
+   - int vatNumber
+   - String email
+   - int phonenumber
+}
+
+note left of AssignTeamController
+  - Selected AgendaEntry and team are read from GSM's input.
+  - Updates the AgendaEntry.
+  - Sends message to the collaborators of the assigned Team.
+end note
+
+note left of GSM
+ - Responsible for assigning Teams to an Entry in the Agenda.
+ - Communicates with the AssignTeamUI
+end note
+
+note left of AssignTeamUI
+  - UI for GSM to assign teams to entries in the Agenda
+  - Communicates with AssignTeamController
+  - Receives repositories from AssignTeamController
+end note
+
+note right of AgendaEntry
+ - Registered by the GSM in the ToDoList
+end note
+
+GSM --> Team: assigns
+Team -> AgendaEntry: assigned to
+Team -> Collaborator: consists of
+GSM --> Agenda: uses
+AgendaEntry --> Agenda: shown in
+GSM -> AssignTeamUI: uses
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+AssignTeamUI .> AssignTeamController
+
+AssignTeamController -down-> Repositories : retrieves instances
+
+Repositories -down-> AgendaRepository : accesses
+Repositories -down-> TeamRepository : accesses
+
+AssignTeamController ..> TeamRepository : teamRepository
+AssignTeamController ..> AgendaRepository : agendaRepository
+
+ApplicationSession --> "1" UserSession : userSession
+
+AssignTeamController ..> ApplicationSession
+AssignTeamController ..> UserSession
+
+TeamRepository ..> Team: stores
+AgendaRepository ..> Agenda: stores
+
+@enduml
