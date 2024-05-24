@@ -11,8 +11,6 @@ public class AddEntryToDoListUI implements Runnable {
 
     private final AddEntryToDoListController controller;
     private String entryTitle, entryDescription, entryUrgency, entryDuration;
-
-    private Scanner scanner;
     private GreenSpace associatedGreenSpace;
     private ToDoListRepository toDoListRepository;
     private GreenSpaceRepository greenSpaceRepository;
@@ -37,6 +35,7 @@ public class AddEntryToDoListUI implements Runnable {
     }
 
     private void submitData() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("'" + entryTitle + "'" + "'" + entryDescription + "'" + "'" + entryUrgency + "'" + "'" + entryDuration + "'" + "- is this data correct? (type 'yes' or 'no')");
             String yesno;
             do {
@@ -64,16 +63,19 @@ public class AddEntryToDoListUI implements Runnable {
 
     // Request collaborator name from the user
     private String requestEntryTitle() {
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Entry Title: ");
         return scanner.nextLine();
     }
 
     private String requestEntryDescription() {
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Entry Description: ");
         return scanner.nextLine();
     }
 
     private String requestEntryUrgency() {
+        Scanner scanner = new Scanner(System.in);
         String urgency = null;
 
         while (!(Objects.equals(urgency, "High") || Objects.equals(urgency, "Medium") || Objects.equals(urgency, "Low"))) {
@@ -107,6 +109,7 @@ public class AddEntryToDoListUI implements Runnable {
 
 
     private String requestEntryDuration() {
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Entry Approximate Duration: ");
         return scanner.nextLine();
     }
@@ -123,6 +126,7 @@ public class AddEntryToDoListUI implements Runnable {
     }
 
     private int readInput(int min, int max) {
+        Scanner scanner = new Scanner(System.in);
         int input;
         do {
             System.out.print("Select the green space by entering a number between " + min + " and " + max + ": ");
