@@ -6,14 +6,20 @@
 * Responsible for adding entries to the Agenda
 * Attributes include name, vatNumber, phoneNumber, and email.
 
-### Entry:
+### AgendaEntry:
 * Added to the Agenda by the GSM.
 * Attributes include the team and the vehicles/equipment assigned to it, approximate duration, and status.
 * Exists simultaneously in the To-Do List.
 
 ### Agenda:
 * Used by the GSM.
-* Includes all entries created by the GSM.
+* Includes entries created by the GSM that relate to a task.
+* Comprises entries that were previously in the To-Do List.
+
+### ToDoList
+* Used by the GSM.
+* Includes all pending entries created by the GSM.
+* Some entries may exist in the Agenda.
 
 ### 2.1. Relevant Domain Model Excerpt
 

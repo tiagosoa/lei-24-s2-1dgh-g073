@@ -1,0 +1,32 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+participant "Agenda" as AG
+participant "AgendaEntry" as ENTRADA
+
+
+    group Add Entry
+
+            -> AG: addEntry(toDoListEntry, status, startDate)
+            activate AG
+
+                AG -> ENTRADA**: create
+
+                AG -> AG: validateEntry(AgendaEntry entry)
+                activate AG
+
+                AG --> AG: true
+                deactivate AG
+
+                AG -> AG: addEntry(AgendaEntry entry)
+                                activate AG
+
+                                AG --> AG: true
+                                deactivate AG
+
+
+
+@enduml

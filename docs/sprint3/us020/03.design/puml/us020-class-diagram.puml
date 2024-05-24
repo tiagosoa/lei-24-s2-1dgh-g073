@@ -106,7 +106,7 @@ RegisterGSController -down-> Repositories : retrieves instances
 
 Repositories -down-> GreenSpaceRepository : accesses
 
-RegisterGSController ..> GreenSpaceRepository : organizationRepository
+RegisterGSController ..> GreenSpaceRepository : greenSpaceRepository
 
 ApplicationSession --> "1" UserSession : userSession
 

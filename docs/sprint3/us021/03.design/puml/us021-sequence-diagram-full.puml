@@ -1,0 +1,127 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Green Spaces Manager" as ADM
+participant ":AddEntryToDoListUI" as UI
+participant ":AddEntryToDoListController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "greenSpaceRepository\n:GreenSpaceRepository" as GSR
+participant "toDoListRepository\n:ToDoListRepository" as TDR
+participant "ToDoList" as TDL
+participant "TDLEntry" as ENTRADA
+
+activate ADM
+
+        ADM -> UI : asks to add a new entry to the To-Do List
+
+        activate UI
+
+'            UI --> ADM : requests data (name)
+            'create CTRL
+            UI -> CTRL** : create
+
+            activate CTRL
+
+                        CTRL -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> CTRL: repositories
+                                        deactivate RepositorySingleton
+
+                             CTRL -> PLAT : getGreenSpaceRepository()
+                                     activate PLAT
+
+                                 PLAT -> CTRL : GreenSpaceRepository
+                                 deactivate PLAT
+
+                             CTRL -> PLAT : getToDoListRepository()
+                                     activate PLAT
+
+                                 PLAT -> CTRL : ToDoListRepository
+                                 deactivate PLAT
+
+
+
+                             UI -> CTRL : getGreenSpaceList()
+                            CTRL -> GSR : getGreenSpaceList()
+                            activate GSR
+
+                            GSR --> CTRL : greenSpaces
+                            deactivate GSR
+
+                            CTRL --> UI : greenSpaces
+                            deactivate CTRL
+
+
+
+
+    UI --> ADM : shows list of green spaces and asks to select one
+    deactivate UI
+
+    ADM -> UI : selects green space
+    activate UI
+
+    UI --> ADM : requests entry data (title, task description, degree of urgency \n(this one is selectable), approximate duration)
+    deactivate UI
+
+        ADM -> UI : types/selects data
+        activate UI
+        
+            UI --> ADM : shows data and requests confirmation
+            deactivate UI
+        
+            ADM -> UI : confirms data
+            activate UI
+
+
+        UI -> CTRL : addEntry(entryTitle, entryDescription, entryUrgency, entryDuration)
+        activate CTRL
+
+            |||
+            CTRL -> CTRL : getGSMFromSession()
+            activate CTRL
+
+            ref over CTRL
+            Get GSM
+            end
+
+                CTRL --> CTRL : gsm
+            deactivate CTRL
+
+            |||
+
+            CTRL -> TDR: getToDoListByGSM(gsm)
+            activate TDR
+
+            TDR --> CTRL: toDoList
+            deactivate TDR
+
+            CTRL -> TDL: addEntry(entryTitle, entryDescription, entryUrgency, entryDuration, gsm)
+            activate TDL
+
+                TDL -> ENTRADA**: create
+
+                TDL -> TDL: validateEntry(TDLEntry entry)
+                activate TDL
+
+                TDL --> TDL: true
+                deactivate TDL
+
+                TDL -> TDL: addEntry(TDLEntry entry)
+                                activate TDL
+
+                                TDL --> TDL: true
+                                deactivate TDL
+
+            UI --> ADM: displays operation success
+    deactivate UI
+
+deactivate ADM
+
+@enduml

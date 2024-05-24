@@ -6,14 +6,11 @@ skinparam shadowing false
 
 
 'hide footbox
-participant ":RegisterGSController" as CTRL
+participant ":AddEntryAgendaController" as CTRL
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO
-
-autonumber 14
 -> CTRL : getGSMFromSession()
-autonumber 14.1
 activate CTRL
 
     group Get GSM

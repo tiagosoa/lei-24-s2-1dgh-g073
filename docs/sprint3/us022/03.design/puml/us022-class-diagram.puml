@@ -1,0 +1,210 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+left to right direction
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
+class GreenSpace {
+    - name: String
+    - type: String
+    - area: double
+    + GreenSpace(String name, String type, double area)
+    + void validateGreenSpaceName(String name)
+    + void validateGreenSpaceType(String type)
+    + void validateGreenSpaceArea(double area)
+    + boolean equals(Object o)
+    + int hashCode()
+    + GreenSpace clone()
+    + boolean isOfName(String name)
+}
+
+class TDLEntry {
+    - title: String
+    - taskDescription: String
+    - urgency: String
+    - duration: String
+    - associatedGreenSpace: GreenSpace
+    + TDLEntry(String title, String taskDescription, String urgency, String duration)
+    + boolean addGreenSpace(GreenSpace greenSpace)
+    + boolean equals(Object o)
+    + int hashCode()
+    + TDLEntry clone()
+}
+
+class AgendaEntry {
+    - title: String
+    - taskDescription: String
+    - urgency: String
+    - duration: String
+    - associatedGreenSpace: GreenSpace
+    - associatedTeam: Team
+    - associatedVehicles: List<Vehicle>
+    - status: String
+    - startDate: LocalDate
+    + AgendaEntry(String title, String taskDescription, String urgency, String duration, String status, LocalDate startDate)
+    + boolean addGreenSpace(GreenSpace greenSpace)
+    + boolean addTeam(Team team)
+    + boolean addVehicle(Vehicle vehicle)
+    + boolean equals(Object o)
+    + int hashCode()
+    + AgendaEntry clone()
+}
+
+class ToDoList {
+    - entries: List<AgendaEntry>
+    - gsm: GSM
+    + ToDoList(List<AgendaEntry> entries, GSM gsm)
+    + boolean addEntry(Entry entry)
+    + boolean equals(Object o)
+    + int hashCode()
+    + ToDoList clone()
+}
+
+class Agenda {
+    - entries: List<AgendaEntry>
+    - gsm: GSM
+    + ToDoList(List<AgendaEntry> entries, GSM gsm)
+    + boolean addEntry(Entry entry)
+    + boolean equals(Object o)
+    + int hashCode()
+    + AgendaEntry clone()
+}
+
+class GreenSpaceRepository {
+  - List<GreenSpace> greenSpaces
+  + Optional<GreenSpace> registerGreenSpace(String name, String type, double area, GSM gsm)
+  + boolean addGreenSpace(GreenSpace greenSpace)
+  + boolean validateGreenSpace(GreenSpace greenSpace)
+  + List<GreenSpace> getGreenSpaceList()
+}
+
+class ToDoListRepository {
+  - List<ToDoList> toDoLists
+  + boolean addToDoList(ToDoList toDoList)
+  + List<ToDoList> getToDoLists()
+  + ToDoList getToDoListByGSM(GSM gsm)
+  + boolean addToDoList(ToDoList toDoList)
+}
+
+class AgendaRepository {
+  - List<Agenda> agendas
+  + boolean addAgenda(Agenda agenda)
+  + List<Agenda> getAgendas()
+  + Agenda getAgendaByGSM(GSM gsm)
+  + boolean addAgenda(Agenda agenda)
+}
+
+class Repositories {
+  + getInstance() : Repositories
+  + getGreenSpaceRepository() : GreenSpaceRepository
+  + getToDoListRepository() : ToDoListRepository
+  + getAgendaRepository() : AgendaRepository
+}
+
+class AddEntryAgendaUI {
+  - controller: AddEntryAgendaController
+  - toDoListEntry: TDLEntry
+  - entryStatus: String
+  - entryStartDate: LocalDate
+  - associatedGreenSpace: GreenSpace
+  + AddEntryAgendaController getController()
+  + void run()
+  + void submitData()
+  + void requestData()
+  + TDLEntry requestToDoListEntry()
+  + String requestEntryStatus()
+  + LocalDate requestEntryStartingDate()
+}
+
+class AddEntryAgendaController {
+  - greenSpaceRepository: GreenSpaceRepository
+  - toDoListRepository: ToDoListRepository
+  - agendaRepository: AgendaRepository
+  - authenticationRepository: AuthenticationRepository
+  + AddEntryAgendaController(GreenSpaceRepository greenSpaceRepository, ToDoListRepository toDoListRepository, AgendaRepository agendaRepository, AuthenticationRepository authenticationRepository)
+  + GreenSpaceRepository getGreenSpaceRepository()
+  + ToDoListRepository getToDoListRepository()
+  + AgendaRepository getAgendaRepository()
+  + AuthenticationRepository getAuthenticationRepository()
+  + Optional<AgendaEntry> addEntry(TDLEntry entry, String status, LocalDate startDate)
+  + GSM getGSMFromSession()
+}
+
+class GSM {
+   - String name
+   - int vatNumber
+   - String email
+   - int phonenumber
+}
+
+note left of AddEntryAgendaController
+  - AgendaEntry data is read from GSM's input
+  - Updates the Agenda
+end note
+
+note left of GSM
+ - Responsible for adding Entries to the ToDoList and the Agenda.
+ - Communicates with the AddEntryAgendaUI
+end note
+
+note left of AddEntryAgendaUI
+  - UI for GSM to add entries to the ToDoList
+  - Communicates with AddEntryAgendaController
+  - Receives repositories from AddEntryAgendaController
+end note
+
+note right of AgendaEntry
+ - Registered by the GSM in the ToDoList
+end note
+
+GSM --> AgendaEntry: registers
+GSM --> ToDoList: uses
+GSM --> Agenda: uses
+AgendaEntry --> Agenda: shown in
+TDLEntry --> ToDoList: shown in
+TDLEntry --> AgendaEntry: related to
+GSM -> AddEntryAgendaUI: uses
+GreenSpace --> AgendaEntry: associated to
+GreenSpace -> TDLEntry: associated to
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+AddEntryAgendaUI .> AddEntryAgendaController
+
+AddEntryAgendaController -down-> Repositories : retrieves instances
+
+Repositories -down-> GreenSpaceRepository : accesses
+Repositories -down-> ToDoListRepository : accesses
+Repositories -down-> AgendaRepository : accesses
+
+AddEntryAgendaController ..> GreenSpaceRepository : greenSpaceRepository
+AddEntryAgendaController ..> ToDoListRepository : toDoListRepository
+AddEntryAgendaController ..> AgendaRepository : agendaRepository
+
+ApplicationSession --> "1" UserSession : userSession
+
+AddEntryAgendaController ..> ApplicationSession
+AddEntryAgendaController ..> UserSession
+
+GreenSpaceRepository ..> GreenSpace: stores
+ToDoListRepository ..> ToDoList: stores
+AgendaRepository ..> Agenda: stores
+
+@enduml

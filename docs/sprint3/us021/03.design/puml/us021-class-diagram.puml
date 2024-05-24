@@ -34,27 +34,27 @@ class GreenSpace {
     + boolean isOfName(String name)
 }
 
-class Entry {
+class TDLEntry {
     - title: String
     - taskDescription: String
     - urgency: String
     - duration: String
     - associatedGreenSpace: GreenSpace
-    + Entry(String title, String taskDescription, String urgency, String duration)
+    + TDLEntry(String title, String taskDescription, String urgency, String duration)
     + boolean addGreenSpace(GreenSpace greenSpace)
     + boolean equals(Object o)
     + int hashCode()
-    + Entry clone()
+    + TDLEntry clone()
 }
 
 class ToDoList {
-    - entries: List<Entry>
+    - entries: List<TDLEntry>
     - gsm: GSM
-    + ToDoList(List<Entry> entries, GSM gsm)
-    + boolean addEntry(Entry entry)
+    + ToDoList(List<TDLEntry> entries, GSM gsm)
+    + boolean addEntry(entryTitle, entryDescription, entryUrgency, entryDuration)
     + boolean equals(Object o)
     + int hashCode()
-    + Entry clone()
+    + TDLEntry clone()
 }
 
 class GreenSpaceRepository {
@@ -106,7 +106,7 @@ class AddEntryToDoListController {
   + GreenSpaceRepository getGreenSpaceRepository()
   + ToDoListRepository getToDoListRepository()
   + AuthenticationRepository getAuthenticationRepository()
-  + Optional<Entry> addEntry(String title, String taskDescription, String urgency, String duration)
+  + Optional<TDLEntry> addEntry(String title, String taskDescription, String urgency, String duration)
   + GSM getGSMFromSession()
 }
 
@@ -118,7 +118,7 @@ class GSM {
 }
 
 note left of AddEntryToDoListController
-  - Entry data is read from GSM's input
+  - TDLEntry data is read from GSM's input
   - Updates the ToDoList
 end note
 
@@ -133,16 +133,15 @@ note left of AddEntryToDoListUI
   - Receives repositories from AddEntryToDoListController
 end note
 
-note right of Entry
+note right of TDLEntry
  - Registered by the GSM in the ToDoList
 end note
 
-GSM --> Entry: registers
+GSM --> TDLEntry: registers
 GSM -> ToDoList: uses
-Entry --> ToDoList: shown in
-ToDoList .> ToDoListRepository: stored in
+TDLEntry --> ToDoList: shown in
 GSM -> AddEntryToDoListUI: uses
-GreenSpace --> Entry: associated to
+GreenSpace -> TDLEntry: associated to
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
@@ -154,14 +153,17 @@ AddEntryToDoListController -down-> Repositories : retrieves instances
 Repositories -down-> GreenSpaceRepository : accesses
 Repositories -down-> ToDoListRepository : accesses
 
-AddEntryToDoListController ..> GreenSpaceRepository : organizationRepository
+AddEntryToDoListController ..> GreenSpaceRepository : greenSpaceRepository
+
+AddEntryToDoListController ..> ToDoListRepository : toDoListRepository
 
 ApplicationSession --> "1" UserSession : userSession
 
 AddEntryToDoListController ..> ApplicationSession
 AddEntryToDoListController ..> UserSession
 
-GreenSpaceRepository --> GreenSpace: stores
+GreenSpaceRepository ..> GreenSpace: stores
+ToDoListRepository ..> ToDoList: stores
 
 
 @enduml

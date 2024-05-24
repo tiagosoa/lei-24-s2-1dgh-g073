@@ -23,7 +23,7 @@ class GSM {
     email
 }
 
-class Entry {
+class AgendaEntry {
     team
     vehicles/equipment
     expected duration
@@ -34,14 +34,20 @@ class Agenda {
     entries
 }
 
+class ToDoList {
+    entries
+}
+
 'class User {
 '    name
 '    email
 '    password
 '}
 
-GSM "1" - "*" Entry: adds >
+GSM "1" - "*" AgendaEntry: adds >
 GSM "1" -- "1" Agenda: uses >
-Entry "1" -- "1" Agenda: is shown in >
+AgendaEntry "1" -- "1" Agenda: is shown in >
+AgendaEntry "1" -- "1" ToDoList: previously in >
+Agenda "1" - "1" ToDoList: comprises entries previously in >
 
 @enduml

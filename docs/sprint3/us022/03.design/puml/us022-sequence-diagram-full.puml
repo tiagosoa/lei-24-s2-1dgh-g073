@@ -1,0 +1,143 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Green Spaces Manager" as ADM
+participant ":AddEntryAgendaUI" as UI
+participant ":AddEntryAgendaController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "greenSpaceRepository\n:GreenSpaceRepository" as GSR
+participant "toDoListRepository\n:ToDoListRepository" as TDR
+participant "agendaRepository\n:AgendaRepository" as AR
+participant "ToDoList" as TDL
+participant "Agenda" as AG
+participant "AgendaEntry" as ENTRADA
+
+activate ADM
+
+        ADM -> UI : asks to add an entry to the Agenda
+
+        activate UI
+
+'            UI --> ADM : requests data (name)
+            'create CTRL
+            UI -> CTRL** : create
+
+            activate CTRL
+
+                        CTRL -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> CTRL: repositories
+                                        deactivate RepositorySingleton
+
+                             CTRL -> PLAT : getGreenSpaceRepository()
+                                     activate PLAT
+
+                                 PLAT -> CTRL : GreenSpaceRepository
+                                 deactivate PLAT
+
+                             CTRL -> PLAT : getToDoListRepository()
+                                     activate PLAT
+
+                                 PLAT -> CTRL : ToDoListRepository
+                                 deactivate PLAT
+
+                             CTRL -> PLAT : getAgendaRepository()
+                                     activate PLAT
+
+                                 PLAT -> CTRL : AgendaRepository
+                                 deactivate PLAT
+
+                             UI -> CTRL: getToDoListByGSM(gsm)
+
+                             CTRL -> TDR: getToDoListByGSM(gsm)
+                                         activate TDR
+
+                                         TDR --> CTRL: toDoList
+                                         deactivate TDR
+                             CTRL --> UI : toDoList
+
+
+                             UI -> CTRL : getToDoListEntries()
+                            CTRL -> TDR : getToDoListEntries()
+                            activate TDR
+
+                            TDR --> CTRL : todoListEntries
+                            deactivate GSR
+
+                            CTRL --> UI : toDoListEntries
+                            deactivate CTRL
+
+
+
+
+    UI --> ADM : shows list of entries in the To-Do List and asks to select one
+    deactivate UI
+
+    ADM -> UI : selects entry
+    activate UI
+
+    UI --> ADM : asks to select current status and type the starting date
+    deactivate UI
+
+        ADM -> UI : selects status and types starting date
+        activate UI
+        
+            UI --> ADM : shows data and requests confirmation
+            deactivate UI
+        
+            ADM -> UI : confirms data
+            activate UI
+
+
+        UI -> CTRL : addEntry(toDoListEntry, status, startDate)
+        activate CTRL
+
+            |||
+            CTRL -> CTRL : getGSMFromSession()
+            activate CTRL
+
+            ref over CTRL
+            Get GSM
+            end
+
+                CTRL --> CTRL : gsm
+            deactivate CTRL
+
+            |||
+
+            CTRL -> AR: getAgendaByGSM(gsm)
+            activate AR
+
+            AR --> CTRL: agenda
+            deactivate AR
+
+            CTRL -> AG: addEntry(toDoListEntry, status, startDate)
+            activate AG
+
+                AG -> ENTRADA**: create
+
+                AG -> AG: validateEntry(AgendaEntry entry)
+                activate AG
+
+                AG --> AG: true
+                deactivate AG
+
+                AG -> AG: addEntry(AgendaEntry entry)
+                                activate AG
+
+                                AG --> AG: true
+                                deactivate AG
+
+            UI --> ADM: displays operation success
+    deactivate UI
+
+deactivate ADM
+
+@enduml
