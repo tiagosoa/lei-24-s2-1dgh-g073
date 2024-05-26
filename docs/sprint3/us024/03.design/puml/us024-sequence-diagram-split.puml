@@ -7,18 +7,16 @@ autonumber
 
 'hide footbox
 actor "Green Spaces Manager" as ADM
-participant ":AssignTeamUI" as UI
-participant ":AssignTeamController" as CTRL
+participant ":PostponeEntryUI" as UI
+participant ":PostponeEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "agendaRepository\n:AgendaRepository" as AR
-participant "teamRepository\n:TeamRepository" as TR
 participant "Agenda" as AG
-participant "AgendaEntry" as ENTRADA
 
 activate ADM
 
-        ADM -> UI : asks to assign a team to an entry in the Agenda
+        ADM -> UI : asks to postpone an entry in the Agenda to a future date.
 
         activate UI
 
@@ -43,12 +41,6 @@ activate ADM
 
                                              CTRL --> CTRL : gsm
                                          deactivate CTRL
-
-                             CTRL -> PLAT : getTeamRepository()
-                                     activate PLAT
-
-                                 PLAT -> CTRL : TeamRepository
-                                 deactivate PLAT
 
                              CTRL -> PLAT : getAgendaRepository()
                                      activate PLAT
@@ -92,31 +84,12 @@ activate ADM
 
                                     AG --> UI : agendaEntry
                                     deactivate AG
-
-
-                                 UI -> CTRL : getTeamList()
-                                 activate CTRL
-
-                                CTRL -> TR : getTeamList()
-                                activate TR
-
-                                TR --> CTRL : teams
-                                deactivate TR
-
-                                CTRL --> UI : teams
-                                deactivate CTRL
-
-    UI --> ADM : shows list of teams and asks to select one
+    UI --> ADM : requests date to postpone the entry to
     deactivate UI
 
-        ADM -> UI : selects team
+        ADM -> UI : types date
         activate UI
 
-                                             UI -> TR : get(selectedIndex)
-                                             activate TR
-
-                                            TR --> UI : team
-                                            deactivate TR
 
             UI --> ADM : shows data and requests confirmation
             deactivate UI
@@ -125,23 +98,21 @@ activate ADM
             activate UI
 
 
-        UI -> CTRL : assignTeam(agendaEntry, team)
+        UI -> CTRL : postponeEntry(agendaEntry, date)
         activate CTRL
 
             |||
 
-            CTRL -> ENTRADA: assignTeam(agendaEntry, team)
-            activate ENTRADA
+            CTRL -> AG: postponeEntry(agendaEntry, date)
+            activate AG
 
-                ref over ENTRADA
-                Assign Team
-                end
-                deactivate ENTRADA
+             ref over AG
+             Postpone Entry
+             end
 
-                deactivate CTRL
+
 
             UI --> ADM: displays operation success
-            UI --> ADM: sends message to team members
     deactivate UI
 
 deactivate ADM

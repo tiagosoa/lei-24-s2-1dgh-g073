@@ -78,8 +78,10 @@ class ToDoList {
 class Agenda {
     - entries: List<AgendaEntry>
     - gsm: GSM
-    + ToDoList(List<AgendaEntry> entries, GSM gsm)
-    + boolean addEntry(Entry entry)
+    + Agenda(List<AgendaEntry> entries, GSM gsm)
+    + boolean addEntry(AgendaEntry entry)
+    + boolean postponeEntry(AgendaEntry entry)
+    + boolean cancelEntry(AgendaEntry entry)
     + boolean equals(Object o)
     + int hashCode()
     + AgendaEntry clone()
@@ -169,7 +171,7 @@ note left of AddEntryAgendaUI
 end note
 
 note right of AgendaEntry
- - Registered by the GSM in the ToDoList
+ - Registered by the GSM in the Agenda
 end note
 
 GSM --> AgendaEntry: registers

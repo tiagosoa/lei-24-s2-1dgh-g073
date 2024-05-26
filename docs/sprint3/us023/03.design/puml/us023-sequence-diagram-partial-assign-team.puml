@@ -8,7 +8,7 @@ skinparam shadowing false
 participant "AgendaEntry" as ENTRADA
 
 
-    group Add Entry
+    group Assign Team
 
             -> ENTRADA: assignTeam(agendaEntry, team)
                            activate ENTRADA
