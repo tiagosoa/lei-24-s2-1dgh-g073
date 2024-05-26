@@ -1,0 +1,23 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+participant "Agenda" as AG
+
+    group Cancel Entry
+
+            -> AG: cancelEntry(agendaEntry)
+                        activate AG
+
+                            AG -> AG: cancelEntry(agendaEntry)
+                                        activate AG
+
+                                        AG --> AG: true
+                                        deactivate AG
+
+
+
+@enduml

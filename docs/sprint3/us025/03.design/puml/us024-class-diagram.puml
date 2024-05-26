@@ -40,7 +40,7 @@ class AgendaEntry {
 class Agenda {
     - entries: List<AgendaEntry>
     - gsm: GSM
-    + Agenda(List<AgendaEntry> entries, GSM gsm)
+    + ToDoList(List<AgendaEntry> entries, GSM gsm)
     + boolean addEntry(AgendaEntry entry)
     + boolean postponeEntry(AgendaEntry entry, LocalDate postponeDate)
     + boolean cancelEntry(AgendaEntry entry)
@@ -62,24 +62,23 @@ class Repositories {
   + getAgendaRepository() : AgendaRepository
 }
 
-class PostponeEntryUI {
-  - controller: PostponeEntryController
+class CancelEntryUI {
+  - controller: CancelEntryController
   - agendaEntry: AgendaEntry
-  + PostponeEntryController getController()
+  + CancelEntryController getController()
   + void run()
   + void submitData()
   + void requestData()
   + AgendaEntry requestAgendaEntry()
-  + LocalDate requestPostponeDate()
 }
 
-class PostponeEntryController {
+class CancelEntryController {
   - agendaRepository: AgendaRepository
   - authenticationRepository: AuthenticationRepository
-  + PostponeEntryController(AgendaRepository agendaRepository, AuthenticationRepository authenticationRepository)
+  + CancelEntryController(AgendaRepository agendaRepository, AuthenticationRepository authenticationRepository)
   + AgendaRepository getAgendaRepository()
   + AuthenticationRepository getAuthenticationRepository()
-  + Optional<AgendaEntry> postponeEntry(AgendaEntry entry, LocalDate date)
+  + Optional<AgendaEntry> cancelEntry(AgendaEntry entry)
   + GSM getGSMFromSession()
 }
 
@@ -90,47 +89,47 @@ class GSM {
    - int phonenumber
 }
 
-note left of PostponeEntryController
+note left of CancelEntryController
   - Selected AgendaEntry is read from GSM's input.
   - Updates the AgendaEntry.
 end note
 
 note left of GSM
- - Responsible for postponing Agenda Entry.
- - Communicates with the PostponeEntryUI
+ - Responsible for cancelling Agenda Entry.
+ - Communicates with the CancelEntryUI
 end note
 
-note left of PostponeEntryUI
-  - UI for GSM to postpone entries in the Agenda
-  - Communicates with PostponeEntryController
-  - Receives repositories from PostponeEntryController
+note left of CancelEntryUI
+  - UI for GSM to cancel entries in the Agenda
+  - Communicates with CancelEntryController
+  - Receives repositories from CancelEntryController
 end note
 
 note right of AgendaEntry
  - Registered by the GSM in the Agenda
- - Postponed by the GSM
+ - Cancelled by the GSM
 end note
 
-GSM --> AgendaEntry: postpones
+GSM --> AgendaEntry: cancels
 GSM --> Agenda: uses
 AgendaEntry --> Agenda: shown in
-GSM -> PostponeEntryUI: uses
+GSM -> CancelEntryUI: uses
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
-PostponeEntryUI .> PostponeEntryController
+CancelEntryUI .> CancelEntryController
 
-PostponeEntryController -down-> Repositories : retrieves instances
+CancelEntryController -down-> Repositories : retrieves instances
 
 Repositories -down-> AgendaRepository : accesses
 
-PostponeEntryController ..> AgendaRepository : agendaRepository
+CancelEntryController ..> AgendaRepository : agendaRepository
 
 ApplicationSession --> "1" UserSession : userSession
 
-PostponeEntryController ..> ApplicationSession
-PostponeEntryController ..> UserSession
+CancelEntryController ..> ApplicationSession
+CancelEntryController ..> UserSession
 
 AgendaRepository ..> Agenda: stores
 
