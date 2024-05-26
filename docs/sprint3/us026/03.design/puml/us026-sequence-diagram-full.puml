@@ -1,0 +1,156 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Green Spaces Manager" as ADM
+participant ":AssignVehiclesUI" as UI
+participant ":AssignVehiclesController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "agendaRepository\n:AgendaRepository" as AR
+participant "vehicleRepository\n:VehicleRepository" as VR
+participant "Agenda" as AG
+participant "AgendaEntry" as ENTRADA
+
+activate ADM
+
+        ADM -> UI : asks to assign vehicles to an entry in the Agenda
+
+        activate UI
+
+'            UI --> ADM : requests data (name)
+            'create CTRL
+            UI -> CTRL** : create
+
+            activate CTRL
+
+                        CTRL -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> CTRL: repositories
+                                        deactivate RepositorySingleton
+
+                                         CTRL -> CTRL : getGSMFromSession()
+                                         activate CTRL
+
+                                         ref over CTRL
+                                         Get GSM
+                                         end
+
+                                             CTRL --> CTRL : gsm
+                                         deactivate CTRL
+
+                             CTRL -> PLAT : getVehicleRepository()
+                                     activate PLAT
+
+                                 PLAT -> CTRL : VehicleRepository
+                                 deactivate PLAT
+
+                             CTRL -> PLAT : getAgendaRepository()
+                                     activate PLAT
+
+                                 PLAT -> CTRL : AgendaRepository
+                                 deactivate PLAT
+
+                             UI -> CTRL: getAgendaByGSM(gsm)
+
+                             CTRL -> AR: getAgendaByGSM(gsm)
+                                         activate AR
+
+                                         AR --> CTRL: agenda
+                                         deactivate AR
+                             CTRL --> UI : agenda
+
+
+                             UI -> CTRL : getAgendaEntries()
+                            CTRL -> AG : getAgendaEntries()
+                            activate AG
+
+                            AG --> CTRL : agendaEntries
+                            deactivate AG
+
+                            CTRL --> UI : agendaEntries
+                            deactivate CTRL
+
+
+
+
+    UI --> ADM : shows list of entries and asks to select one
+    deactivate UI
+
+
+
+    ADM -> UI : selects entry
+    activate UI
+
+                                     UI -> AG : get(selectedIndex)
+                                     activate AG
+
+                                    AG --> UI : agendaEntry
+                                    deactivate AG
+
+
+                                 UI -> CTRL : getVehicleList()
+                                 activate CTRL
+
+                                CTRL -> VR : getVehicleList()
+                                activate VR
+
+                                VR --> CTRL : vehicles
+                                deactivate VR
+
+                                CTRL --> UI : vehicles
+                                deactivate CTRL
+
+    UI --> ADM : shows list of vehicles and asks to select one or more
+    deactivate UI
+
+        ADM -> UI : selects vehicle
+        activate UI
+                                            loop for each selected vehicle
+                                             UI -> VR : get(selectedIndex)
+                                             activate VR
+                                             end
+
+                                            VR --> UI : selectedVehicles
+                                            deactivate VR
+        
+            UI --> ADM : shows data and requests confirmation
+            deactivate UI
+        
+            ADM -> UI : confirms data
+            activate UI
+
+
+        UI -> CTRL : assignVehicles(agendaEntry, selectedVehicles)
+        activate CTRL
+
+            |||
+
+            CTRL -> ENTRADA: assignVehicle(agendaEntry, selectedVehicles)
+            activate ENTRADA
+            loop for each vehicle
+                ENTRADA -> ENTRADA: validateVehicle(Vehicle vehicle)
+                            activate ENTRADA
+
+                            ENTRADA --> ENTRADA: true
+                            deactivate ENTRADA
+
+                ENTRADA -> ENTRADA: addVehicle(vehicle)
+                activate ENTRADA
+                ENTRADA --> ENTRADA: true
+                deactivate ENTRADA
+                end
+
+                deactivate CTRL
+
+            UI --> ADM: displays operation success
+    deactivate UI
+
+deactivate ADM
+
+@enduml

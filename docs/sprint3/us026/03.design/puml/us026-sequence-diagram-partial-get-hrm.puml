@@ -1,0 +1,44 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+'hide footbox
+participant ":AssignVehiclesController" as CTRL
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+-> CTRL : getGSMFromSession()
+activate CTRL
+
+    group Get GSM
+        CTRL -> _APP: getInstance()
+        activate _APP
+            _APP -> CTRL: appSession
+        deactivate _APP
+
+        CTRL -> APP: getCurrentSession()
+        activate APP
+
+            APP --> CTRL: currentSession
+        deactivate APP
+
+        CTRL -> SESSAO: email = getUserEmail()
+        activate SESSAO
+
+            SESSAO --> CTRL: email
+        deactivate SESSAO
+
+        CTRL -> SESSAO: getGSMByEmail(email)
+        activate SESSAO
+
+            SESSAO --> CTRL : gsm
+        deactivate SESSAO
+    end
+    autonumber 15
+    <-- CTRL : gsm
+deactivate CTRL
+
+@enduml

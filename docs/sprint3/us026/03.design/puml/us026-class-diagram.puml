@@ -1,0 +1,171 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
+class Vehicle {
+  - String brand
+  - String model
+  - String type
+  - Double tareWeight
+  - Double grossWeight
+  - int currentKm
+  - LocalDate registerDate
+  - LocalDate acquisitionDate
+  - int maintenanceFrequency
+  - String plateNumber
+  - LocalDate lastMaintenanceDate
+  + validateTrait(Object trait)
+}
+
+class VehicleRepository {
+  - List<Vehicle> vehicles
+  + Vehicle getVehiclebyPlateNumber(String plateNumber)
+  + boolean validateVehicle(Vehicle vehicle)
+  + List<Vehicle> getVehicles()
+  + boolean registerMaintenance(plateNumber, currentKm, maintenanceDate)
+  + Optional<Vehicle> createVehicle(String model,String brand, String type, VFM vfm)
+  + boolean addVehicle(Vehicle vehicle)
+  + boolean vehiclesDoNotContain(Vehicle vehicle)
+}
+
+class AgendaEntry {
+    - title: String
+    - taskDescription: String
+    - urgency: String
+    - duration: String
+    - associatedGreenSpace: GreenSpace
+    - associatedVehicle: Vehicle
+    - associatedVehicles: List<Vehicle>
+    - status: String
+    - startDate: LocalDate
+    + AgendaEntry(String title, String taskDescription, String urgency, String duration, String status, LocalDate startDate)
+    + boolean addGreenSpace(GreenSpace greenSpace)
+    + boolean addVehicle(Vehicle vehicle)
+    + boolean addVehicle(Vehicle vehicle)
+    + boolean equals(Object o)
+    + int hashCode()
+    + AgendaEntry clone()
+}
+
+class Agenda {
+    - entries: List<AgendaEntry>
+    - gsm: GSM
+    + Agenda(List<AgendaEntry> entries, GSM gsm)
+    + boolean addEntry(Entry entry)
+    + boolean postponeEntry(AgendaEntry entry)
+    + boolean cancelEntry(AgendaEntry entry)
+    + boolean equals(Object o)
+    + int hashCode()
+    + AgendaEntry clone()
+}
+
+class AgendaRepository {
+  - List<Agenda> agendas
+  + boolean addAgenda(Agenda agenda)
+  + List<Agenda> getAgendas()
+  + Agenda getAgendaByGSM(GSM gsm)
+  + boolean addAgenda(Agenda agenda)
+}
+
+class Repositories {
+  + getInstance() : Repositories
+  + getVehicleRepository() : VehicleRepository
+  + getAgendaRepository() : AgendaRepository
+}
+
+class AssignVehiclesUI {
+  - controller: AssignVehiclesController
+  - selectedVehicles: List<Vehicles>
+  - agendaEntry: AgendaEntry
+  + AssignVehiclesController getController()
+  + void run()
+  + void submitData()
+  + void requestData()
+  + AgendaEntry requestAgendaEntry()
+  + Vehicle requestVehicles()
+  + PERGUNTAR AO PROFESSOR PPROG
+}
+
+class AssignVehiclesController {
+  - vehicleRepository: VehicleRepository
+  - agendaRepository: AgendaRepository
+  - authenticationRepository: AuthenticationRepository
+  + AssignVehiclesController(vehicleRepository VehicleRepository, AgendaRepository agendaRepository, AuthenticationRepository authenticationRepository)
+  + VehicleRepository getVehicleRepository()
+  + AgendaRepository getAgendaRepository()
+  + AuthenticationRepository getAuthenticationRepository()
+  + Optional<AgendaEntry> assignVehicle(AgendaEntry entry, List<Vehicle> selectedVehicles)
+  + GSM getGSMFromSession()
+}
+
+class GSM {
+   - String name
+   - int vatNumber
+   - String email
+   - int phonenumber
+}
+
+note left of AssignVehiclesController
+  - Selected AgendaEntry and vehicles are read from GSM's input.
+  - Updates the AgendaEntry.
+end note
+
+note left of GSM
+ - Responsible for assigning Vehicles to an Entry in the Agenda.
+ - Communicates with the AssignVehiclesUI
+end note
+
+note left of AssignVehiclesUI
+  - UI for GSM to assign vehicles to entries in the Agenda
+  - Communicates with AssignVehiclesController
+  - Receives repositories from AssignVehiclesController
+end note
+
+note right of AgendaEntry
+ - Registered by the GSM in the Agenda
+end note
+
+GSM --> Vehicle: assigns
+Vehicle -> AgendaEntry: assigned to
+GSM --> Agenda: uses
+AgendaEntry --> Agenda: shown in
+GSM -> AssignVehiclesUI: uses
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+AssignVehiclesUI .> AssignVehiclesController
+
+AssignVehiclesController -down-> Repositories : retrieves instances
+
+Repositories -down-> AgendaRepository : accesses
+Repositories -down-> VehicleRepository : accesses
+
+AssignVehiclesController ..> VehicleRepository : vehicleRepository
+AssignVehiclesController ..> AgendaRepository : agendaRepository
+
+ApplicationSession --> "1" UserSession : userSession
+
+AssignVehiclesController ..> ApplicationSession
+AssignVehiclesController ..> UserSession
+
+VehicleRepository ..> Vehicle: stores
+AgendaRepository ..> Agenda: stores
+
+@enduml

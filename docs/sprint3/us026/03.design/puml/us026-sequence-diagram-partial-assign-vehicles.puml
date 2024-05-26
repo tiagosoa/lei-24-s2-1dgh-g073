@@ -1,0 +1,30 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+participant "AgendaEntry" as ENTRADA
+
+
+    group Assign Vehicles
+
+            -> ENTRADA: assignVehicle(agendaEntry, selectedVehicles)
+                        activate ENTRADA
+                        loop for each vehicle
+                            ENTRADA -> ENTRADA: validateVehicle(Vehicle vehicle)
+                                        activate ENTRADA
+
+                                        ENTRADA --> ENTRADA: true
+                                        deactivate ENTRADA
+
+                            ENTRADA -> ENTRADA: addVehicle(vehicle)
+                            activate ENTRADA
+                            ENTRADA --> ENTRADA: true
+                            deactivate ENTRADA
+                            end
+
+
+
+@enduml
