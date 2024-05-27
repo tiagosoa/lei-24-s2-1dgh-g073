@@ -38,6 +38,16 @@ activate ADM
                                  deactivate PLAT
                                  CTRL --> UI : GreenSpaceRepository
 
+                                  UI -> CTRL : getGreenSpaceList()
+                                                             CTRL -> GSR : getGreenSpaceList()
+                                                             activate GSR
+
+                                                             GSR --> CTRL : greenSpaces
+                                                             deactivate GSR
+
+                                                             CTRL --> UI : greenSpaces
+
+
                                                                       CTRL -> CTRL : getGSMFromSession()
                                                                       activate CTRL
 
