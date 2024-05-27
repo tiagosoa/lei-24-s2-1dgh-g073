@@ -1,0 +1,117 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
+class GreenSpace {
+    - name: String
+    - type: String
+    - area: double
+    - gsm: GSM
+    + GreenSpace(String name, String type, double area)
+    + void validateGreenSpaceName(String name)
+    + void validateGreenSpaceType(String type)
+    + void validateGreenSpaceArea(double area)
+    + boolean equals(Object o)
+    + int hashCode()
+    + GreenSpace clone()
+    + boolean isOfNameTypeAndArea(String name, String type, double area, GSM gsm)
+}
+
+class GreenSpaceRepository {
+  - List<GreenSpace> greenSpaces
+  + Optional<GreenSpace> registerGreenSpace(String name, String type, double area, GSM gsm)
+  + boolean addGreenSpace(GreenSpace greenSpace)
+  + boolean validateGreenSpace(GreenSpace greenSpace)
+  + List<GreenSpace> getManagedGreenSpaces(GSM gsm)
+  + List<GreenSpace> sortManagedGreenSpaces(List<GreenSpace> managedGreenSpaces)
+  + List<GreenSpace> getGreenSpaceList()
+}
+
+class Repositories {
+  + getInstance() : Repositories
+  + getGreenSpaceRepository() : GreenSpaceRepository
+}
+
+class ListManagedGSUI {
+  - controller: ListManagedGSController
+  - gsm: GSM
+  + ListManagedGSController getController()
+  + void run()
+  + GSM getGSM()
+  + void produceManagedGSList(GSM gsm)
+}
+
+class ListManagedGSController {
+  - greenSpaceRepository: GreenSpaceRepository
+  - authenticationRepository: AuthenticationRepository
+  + ListManagedGSController(GreenSpaceRepository greenSpaceRepository, AuthenticationRepository authenticationRepository)
+  + GreenSpaceRepository getGreenSpaceRepository()
+  + AuthenticationRepository getAuthenticationRepository()
+  + List<GreenSpace> getManagedGreenSpaces(GSM gsm)
+  + GSM getGSMFromSession()
+}
+
+class GSM {
+   - String name
+   - int vatNumber
+   - String email
+   - int phonenumber
+}
+
+note right of ListManagedGSController
+  - Fetches the list of managed Green Spaces
+end note
+
+note right of GSM
+ - Responsible for managing Green Spaces.
+ - Communicates with the ListManagedGSUI
+end note
+
+note left of ListManagedGSUI
+  - UI that shows the GSM's managed Green Spaces
+  - Communicates with ListManagedGSController
+  - Receives repositories from ListManagedGSController
+end note
+
+GSM --> GreenSpace: manages
+GSM -> ListManagedGSUI: uses
+ListManagedGSUI --> GreenSpace: shows list of
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+ListManagedGSUI .> ListManagedGSController
+
+ListManagedGSController -down-> Repositories : retrieves instances
+
+Repositories -down-> GreenSpaceRepository : accesses
+
+ListManagedGSController ..> GreenSpaceRepository : greenSpaceRepository
+
+ApplicationSession --> "1" UserSession : userSession
+
+ListManagedGSController ..> ApplicationSession
+ListManagedGSController ..> UserSession
+
+GreenSpaceRepository --> GreenSpace: stores
+
+
+@enduml

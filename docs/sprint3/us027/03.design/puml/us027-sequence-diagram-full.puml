@@ -1,0 +1,86 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Green Spaces Manager" as ADM
+participant ":ListManagedGSUI" as UI
+participant ":ListManagedGSController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "greenSpaceRepository\n:GreenSpaceRepository" as GSR
+
+activate ADM
+
+        ADM -> UI : asks to list all green spaces managed by them
+
+        activate UI
+
+'            UI --> ADM : requests data (name)
+            'create CTRL
+            UI -> CTRL** : create
+
+            activate CTRL
+
+                        CTRL -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> CTRL: repositories
+                                        deactivate RepositorySingleton
+
+                             CTRL -> PLAT : getGreenSpaceRepository()
+                                     activate PLAT
+
+                                 PLAT --> CTRL : GreenSpaceRepository
+                                 deactivate PLAT
+                                 CTRL --> UI : GreenSpaceRepository
+
+                                                                      CTRL -> CTRL : getGSMFromSession()
+                                                                      activate CTRL
+
+                                                                      ref over CTRL
+                                                                      Get GSM
+                                                                      end
+
+                                                                          CTRL --> CTRL : gsm
+                                                                      deactivate CTRL
+
+ CTRL --> UI : gsm
+ deactivate CTRL
+
+
+
+        UI -> CTRL : produceManagedGSList(GSM gsm)
+        activate CTRL
+
+            CTRL -> GSR: getManagedGreenSpaces(GSM gsm)
+            activate GSR
+
+                GSR -> GSR: getManagedGreenSpaces(GSM gsm)
+                activate GSR
+
+                GSR --> GSR: managedGreenSpaces
+                deactivate GSR
+
+                GSR -> GSR: sortManagedGreenSpaces(List<GreenSpace> managedGreenSpaces)
+                                activate GSR
+
+                                GSR --> GSR: managedGreenSpaces
+                                deactivate GSR
+
+
+                GSR --> CTRL : managedGreenSpaces
+
+            deactivate GSR
+
+            CTRL --> UI: managedGreenSpaces
+            deactivate CTRL
+            UI --> ADM: shows list of green spaces managed by the GSM
+    deactivate UI
+
+deactivate ADM
+
+@enduml
