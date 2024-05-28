@@ -20,7 +20,7 @@ public class AuthenticationRepository {
      * Performs a login operation using the provided email and password.
      * @param email the user's email
      * @param pwd the user's password
-     * @return true if the login is successful, false otherwise
+     * @return true if the login is successful, false otherwise.
      */
     public boolean doLogin(String email, String pwd) {
         return authenticationFacade.doLogin(email, pwd).isLoggedIn();
