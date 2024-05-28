@@ -90,7 +90,7 @@ public class CreateSkillController {
      * Creates a new Skill for a given name and HRM.
      *
      * @param name the name of the Skill
-     * @return an Optional containing the newly created Skill, or empty if the Organization is not found
+     * @return an Optional containing the newly created Skill, or empty if it is not found
      */
     public Optional<Skill> createSkill(String name) {
 

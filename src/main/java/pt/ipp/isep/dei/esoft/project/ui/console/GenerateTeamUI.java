@@ -4,9 +4,11 @@ import pt.ipp.isep.dei.esoft.project.application.controller.GenerateTeamControll
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
+import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 /**
@@ -17,6 +19,7 @@ public class GenerateTeamUI implements Runnable {
     private final GenerateTeamController controller;
     private CollaboratorRepository collaboratorRepository;
     private SkillRepository skillRepository;
+    private TeamRepository teamRepository;
     private final Scanner scanner;
     private List<Skill> requiredSkills;
 
@@ -31,6 +34,7 @@ public class GenerateTeamUI implements Runnable {
         controller = new GenerateTeamController();
         this.collaboratorRepository = getController().getCollaboratorRepository();
         this.skillRepository = getController().getSkillRepository();
+        this.teamRepository = getController().getTeamRepository();
         this.scanner = new Scanner(System.in);
     }
 
@@ -75,7 +79,11 @@ public class GenerateTeamUI implements Runnable {
                 yesno = scanner.nextLine();
             } while (!(yesno.equals("no") || yesno.equals("yes")));
             if (yesno.equals("yes")) {
-                System.out.println("Team accepted.");
+                Optional<Team> newteam = getController().createTeam(team, 1);
+                if (newteam.isPresent()) {
+                    teamRepository.addTeam(newteam.get());
+                    System.out.println("Team accepted.");
+                }
             } else {
                 System.out.println("Team rejected.");
             }

@@ -10,6 +10,7 @@ public class Repositories {
     private final SkillRepository skillRepository;
     private final JobRepository jobRepository;
     private final CollaboratorRepository collaboratorRepository;
+    private final TeamRepository teamRepository;
     private final GreenSpaceRepository greenSpaceRepository;
     private final ToDoListRepository toDoListRepository;
     private final AgendaRepository agendaRepository;
@@ -25,6 +26,7 @@ public class Repositories {
         skillRepository = new SkillRepository();
         jobRepository = new JobRepository();
         collaboratorRepository = new CollaboratorRepository();
+        teamRepository = new TeamRepository();
         authenticationRepository = new AuthenticationRepository();
         vehicleRepository = new VehicleRepository();
         greenSpaceRepository = new GreenSpaceRepository();
@@ -80,6 +82,15 @@ public class Repositories {
      */
     public CollaboratorRepository getCollaboratorRepository() {
         return collaboratorRepository;
+    }
+
+    /**
+     * Returns the team repository.
+     *
+     * @return The team repository.
+     */
+    public TeamRepository getTeamRepository() {
+        return teamRepository;
     }
 
     /**

@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.HRM;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.Team;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
@@ -12,39 +13,39 @@ import java.util.*;
  * Controller class responsible for generating a team of collaborators based on required skills.
  */
 public class GenerateTeamController {
-
-    private OrganizationRepository organizationRepository;
     private CollaboratorRepository collaboratorRepository;
     private AuthenticationRepository authenticationRepository;
     private SkillRepository skillRepository;
+    private TeamRepository teamRepository;
 
     /**
      * Default constructor that initializes repositories.
      */
     public GenerateTeamController() {
         Repositories repositories = Repositories.getInstance();
-        this.organizationRepository = repositories.getOrganizationRepository();
         this.skillRepository = repositories.getSkillRepository();
         this.collaboratorRepository = repositories.getCollaboratorRepository();
+        this.teamRepository = repositories.getTeamRepository();
         this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
     /**
      * Parameterized constructor that sets repositories based on input.
      *
-     * @param organizationRepository     the organization repository
      * @param collaboratorRepository      the collaborator repository
+     * @param teamRepository              the team repository
      * @param authenticationRepository    the authentication repository
      * @param skillRepository             the skill repository
      */
-    public GenerateTeamController(OrganizationRepository organizationRepository,
+    public GenerateTeamController(
                                   CollaboratorRepository collaboratorRepository,
+                                  TeamRepository teamRepository,
                                   AuthenticationRepository authenticationRepository,
                                   SkillRepository skillRepository) {
-        this.organizationRepository = organizationRepository;
         this.collaboratorRepository = collaboratorRepository;
         this.authenticationRepository = authenticationRepository;
         this.skillRepository = skillRepository;
+        this.teamRepository = teamRepository;
     }
 
     // Methods for retrieving repositories if not set
@@ -56,15 +57,6 @@ public class GenerateTeamController {
      */
     public CollaboratorRepository getCollaboratorRepository() {
         return collaboratorRepository == null ? Repositories.getInstance().getCollaboratorRepository() : collaboratorRepository;
-    }
-
-    /**
-     * Retrieves the organization repository.
-     *
-     * @return the organization repository
-     */
-    private OrganizationRepository getOrganizationRepository() {
-        return organizationRepository == null ? Repositories.getInstance().getOrganizationRepository() : organizationRepository;
     }
 
     /**
@@ -86,6 +78,16 @@ public class GenerateTeamController {
     }
 
     /**
+     * Retrieves the skill repository.
+     *
+     * @return the skill repository
+     */
+    public TeamRepository getTeamRepository() {
+        return teamRepository == null ? Repositories.getInstance().getTeamRepository() : teamRepository;
+    }
+
+
+    /**
      * Generates a team of collaborators based on input parameters.
      *
      * @param maxTeamSize     the maximum team size
@@ -101,6 +103,21 @@ public class GenerateTeamController {
 
         return collaboratorRepository.generateTeam(maxTeamSize, minTeamSize, requiredSkills);
     }
+
+    /**
+     * Creates a team of collaborators and adds it to the repository
+     *
+     * @param collaborators    the collaborators to add to the team
+     * @param teamID     the ID number of the team
+     * @return an Optional containing the newly created Team, or empty if it is not found
+     */
+    public Optional<Team> createTeam(List<Collaborator> collaborators, int teamID) {
+        Optional<Team> newTeam;
+        newTeam = teamRepository.createTeam(collaborators, teamID);
+
+        return newTeam;
+    }
+
 
     /**
      * Retrieves the HRM (Human Resource Manager) from the current user session.
