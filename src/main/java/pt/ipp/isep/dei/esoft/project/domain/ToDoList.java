@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,7 +8,7 @@ import java.util.Objects;
  */
 public class ToDoList {
 
-    private List<Entry> entries;
+    private List<TDLEntry> entries;
     private GSM gsm;
 
     /**
@@ -18,7 +17,7 @@ public class ToDoList {
      * @param entries the list of entries to be added to the ToDoList
      * @param gsm the GSM object associated with the ToDoList
      */
-    public ToDoList(List<Entry> entries, GSM gsm) {
+    public ToDoList(List<TDLEntry> entries, GSM gsm) {
         this.entries = entries;
         this.gsm = gsm;
     }
@@ -72,6 +71,10 @@ public class ToDoList {
         }
     }
 
+    public List<TDLEntry> getEntries() {
+        return entries;
+    }
+
     /**
      * Adds an entry to the to-do list
      *
@@ -79,7 +82,7 @@ public class ToDoList {
      * @return true if the entry was added successfully, false otherwise
      */
 
-    public boolean addEntry(Entry entry) {
+    public boolean addEntry(TDLEntry entry) {
         if (!entries.contains(entry)) {
             entries.add(entry);
             return true;

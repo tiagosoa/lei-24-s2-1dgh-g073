@@ -45,7 +45,7 @@ public class AddEntryToDoListUI implements Runnable {
                 requestData();
             }
         } while (!(yesno.equals("no") || yesno.equals("yes")));
-        Entry entry = getController().addEntry(entryTitle, entryDescription, entryUrgency, entryDuration);
+        TDLEntry entry = getController().addEntry(entryTitle, entryDescription, entryUrgency, entryDuration);
         if (entry != null) {
             System.out.println("\n Entry successfully added!");
         } else {

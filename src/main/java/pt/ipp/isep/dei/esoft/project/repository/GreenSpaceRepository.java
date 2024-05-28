@@ -29,7 +29,7 @@ public class GreenSpaceRepository {
      * @return The GreenSpace with the specified name.
      * @throws IllegalArgumentException if the greenSpace does not exist.
      */
-    public GreenSpace getGreenSpacebyName(String name) {
+    public GreenSpace getGreenSpaceByName(String name) {
         // Iterate through the greenSpaces list to find a matching greenSpace
         for (GreenSpace existingGreenSpace : greenSpaces) {
             if (existingGreenSpace.isOfName(name)) {
@@ -37,6 +37,15 @@ public class GreenSpaceRepository {
             }
         }
         throw new IllegalArgumentException("GreenSpace does not exist.");
+    }
+
+    public GreenSpace findByName(String name) {
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getName().equals(name)) {
+                return greenSpace;
+            }
+        }
+        return null;
     }
 
     /**
@@ -93,6 +102,23 @@ public class GreenSpaceRepository {
      */
     public List<GreenSpace> getGreenSpaceList() {
         // Return a copy of the list of green spaces
-        return greenSpaces;
+        return new ArrayList<>(greenSpaces);
+    }
+
+    /**
+     * Returns the list of green spaces managed by the given GSM.
+     *
+     * @param gsm The GSM to retrieve managed green spaces for.
+     * @return a list of green spaces managed by the given GSM
+     */
+    public List<GreenSpace> getManagedGreenSpaces(GSM gsm) {
+        List<GreenSpace> managedGreenSpaces = new ArrayList<>();
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getGSM().equals(gsm)) {
+                managedGreenSpaces.add(greenSpace);
+            }
+        }
+        return managedGreenSpaces;
     }
 }
+

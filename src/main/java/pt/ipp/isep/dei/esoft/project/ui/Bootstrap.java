@@ -1,9 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.ui;
 
+
 import pt.ipp.isep.dei.esoft.project.application.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 import pt.ipp.isep.dei.esoft.project.domain.GSM;
+import pt.ipp.isep.dei.esoft.project.ui.console.AddAgendaEntryUI;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -54,6 +56,34 @@ public class Bootstrap implements Runnable {
 
         organizationRepository.add(organization);
     }
+    private void addEmptyToDoList() {
+        // Get the ToDoList repository
+        ToDoListRepository toDoListRepository = Repositories.getInstance().getToDoListRepository();
+
+        // Check if the repository already contains a ToDoList (optional)
+        if (toDoListRepository.getToDoLists().isEmpty()) {
+            // Create an empty ToDoList
+            ToDoList toDoList = new ToDoList(new ArrayList<>(), new GSM("gsm@this.app"));
+
+            // Add the empty ToDoList to the repository
+            toDoListRepository.addToDoList(toDoList);
+        }
+    }
+
+    private void addEmptyAgenda() {
+        // Get the Agenda repository
+        AgendaRepository agendaRepository = Repositories.getInstance().getAgendaRepository();
+
+        // Check if the repository already contains a Agenda (optional)
+        if (agendaRepository.getAgendas().isEmpty()) {
+            // Create an empty Agenda
+            Agenda agenda = new Agenda(new ArrayList<>(), new GSM("gsm@this.app"));
+
+            // Add the empty Agenda to the repository
+            agendaRepository.addAgenda(agenda);
+        }
+    }
+
 
     private void addSkills() {
         SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();
@@ -113,21 +143,6 @@ public class Bootstrap implements Runnable {
          */
 
     }
-
-    private void addEmptyToDoList() {
-        // Get the ToDoList repository
-        ToDoListRepository toDoListRepository = Repositories.getInstance().getToDoListRepository();
-
-        // Check if the repository already contains a ToDoList (optional)
-        if (toDoListRepository.getToDoLists().isEmpty()) {
-            // Create an empty ToDoList
-            ToDoList toDoList = new ToDoList(new ArrayList<>(), new GSM("gsm@this.app"));
-
-            // Add the empty ToDoList to the repository
-            toDoListRepository.addToDoList(toDoList);
-        }
-    }
-
 
     private void addUsers() {
         //TODO: add Authentication users here: should be created for each user in the organization

@@ -1,18 +1,22 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.TDLEntry;
+import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.ToDoList;
-import pt.ipp.isep.dei.esoft.project.domain.GSM;
 import pt.ipp.isep.dei.esoft.project.repository.*;
-import pt.isep.lei.esoft.auth.domain.model.Email;
 
-public class AddEntryToDoListController {
+import java.util.Date;
+import java.util.List;
+
+public class AddEntryAgendaController {
+    private ToDoList toDoList;
+
     private ToDoListRepository toDoListRepository;
     private OrganizationRepository organizationRepository;
     private GreenSpaceRepository greenSpaceRepository;
     private AuthenticationRepository authenticationRepository;
 
-    public AddEntryToDoListController() {
+    public AddEntryAgendaController() {
         Repositories repositories = Repositories.getInstance();
         this.toDoListRepository = repositories.getToDoListRepository();
         this.organizationRepository = repositories.getOrganizationRepository();
@@ -20,7 +24,7 @@ public class AddEntryToDoListController {
         this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
-    public AddEntryToDoListController(OrganizationRepository organizationRepository,
+    public AddEntryAgendaController(OrganizationRepository organizationRepository,
                                       ToDoListRepository toDoListRepository,
                                       GreenSpaceRepository greenSpaceRepository,
                                       AuthenticationRepository authenticationRepository) {
@@ -47,41 +51,20 @@ public class AddEntryToDoListController {
         return greenSpaceRepository;
     }
 
-    /**
-     * Retrieves the OrganizationRepository instance, initializing it if necessary.
-     *
-     * @return the OrganizationRepository instance
-     */
-    private OrganizationRepository getOrganizationRepository() {
-        if (organizationRepository == null) {
-            Repositories repositories = Repositories.getInstance();
-            organizationRepository = repositories.getOrganizationRepository();
+
+    public List<TDLEntry> getToDoListEntries() {
+        return toDoList.getEntries();
+    }
+
+    public void addEntryToAgenda(TDLEntry entry, GreenSpace greenSpace) {
+        if (entry.addGreenSpace(greenSpace)) {
+            toDoList.addEntry(entry);
+        } else {
+            throw new IllegalStateException("Entry already has an associated green space");
         }
-        return organizationRepository;
     }
 
-    /**
-     * Retrieves the AuthenticationRepository instance, initializing it if necessary.
-     *
-     * @return the AuthenticationRepository instance
-     */
-    private AuthenticationRepository getAuthenticationRepository() {
-        if (authenticationRepository == null) {
-            Repositories repositories = Repositories.getInstance();
-            authenticationRepository = repositories.getAuthenticationRepository();
-        }
-        return authenticationRepository;
-    }
-
-    public TDLEntry addEntry(String title, String taskDescription, String urgency, String duration) {
-        TDLEntry entry = new TDLEntry(title, taskDescription, urgency, duration);
-        ToDoList toDoList = toDoListRepository.getToDoListByGSM(getGSMFromSession());
-        toDoList.addEntry(entry);
-        return entry;
-    }
-
-    public GSM getGSMFromSession() {
-        Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
-        return new GSM(email.getEmail());
+    public List<GreenSpace> getManagedGreenSpaces() {
+        return greenSpaceRepository.getManagedGreenSpaces(toDoList.getGSM());
     }
 }

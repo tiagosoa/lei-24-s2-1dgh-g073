@@ -11,8 +11,8 @@ public class Repositories {
     private final JobRepository jobRepository;
     private final CollaboratorRepository collaboratorRepository;
     private final GreenSpaceRepository greenSpaceRepository;
-
     private final ToDoListRepository toDoListRepository;
+    private final AgendaRepository agendaRepository;
     private final AuthenticationRepository authenticationRepository;
     private final VehicleRepository vehicleRepository;
 
@@ -29,6 +29,7 @@ public class Repositories {
         vehicleRepository = new VehicleRepository();
         greenSpaceRepository = new GreenSpaceRepository();
         toDoListRepository = new ToDoListRepository();
+        agendaRepository = new AgendaRepository();
     }
 
     /**
@@ -115,5 +116,14 @@ public class Repositories {
      */
     public ToDoListRepository getToDoListRepository() {
         return toDoListRepository;
+    }
+
+    /**
+     * Returns the agenda repository.
+     *
+     * @return The agenda repository.
+     */
+    public AgendaRepository getAgendaRepository() {
+        return agendaRepository;
     }
 }
