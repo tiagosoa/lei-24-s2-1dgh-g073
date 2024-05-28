@@ -7,18 +7,18 @@ autonumber
 
 'hide footbox
 actor "Green Spaces Manager" as ADM
-participant ":AssignTeamUI" as UI
-participant ":AssignTeamController" as CTRL
+participant ":AssignVehiclesUI" as UI
+participant ":AssignVehiclesController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "agendaRepository\n:AgendaRepository" as AR
-participant "teamRepository\n:TeamRepository" as TR
+participant "vehicleRepository\n:VehicleRepository" as VR
 participant "Agenda" as AG
 participant "AgendaEntry" as ENTRADA
 
 activate ADM
 
-        ADM -> UI : asks to assign a team to an entry in the Agenda
+        ADM -> UI : asks to assign vehicles to an entry in the Agenda
 
         activate UI
 
@@ -44,10 +44,10 @@ activate ADM
                                              CTRL --> CTRL : gsm
                                          deactivate CTRL
 
-                             CTRL -> PLAT : getTeamRepository()
+                             CTRL -> PLAT : getVehicleRepository()
                                      activate PLAT
 
-                                 PLAT -> CTRL : TeamRepository
+                                 PLAT -> CTRL : VehicleRepository
                                  deactivate PLAT
 
                              CTRL -> PLAT : getAgendaRepository()
@@ -94,54 +94,61 @@ activate ADM
                                     deactivate AG
 
 
-                                 UI -> CTRL : getTeamList()
+                                 UI -> CTRL : getVehicleList()
                                  activate CTRL
 
-                                CTRL -> TR : getTeamList()
-                                activate TR
+                                CTRL -> VR : getVehicleList()
+                                activate VR
 
-                                TR --> CTRL : teams
-                                deactivate TR
+                                VR --> CTRL : vehicles
+                                deactivate VR
 
-                                CTRL --> UI : teams
+                                CTRL --> UI : vehicles
                                 deactivate CTRL
 
-    UI --> ADM : shows list of teams and asks to select one
+    UI --> ADM : shows list of vehicles and asks to select one or more
     deactivate UI
 
-        ADM -> UI : selects team
+        ADM -> UI : selects vehicle
         activate UI
+                                            loop for each selected vehicle
+                                             UI -> VR : get(selectedIndex)
+                                             activate VR
+                                             end
 
-                                             UI -> TR : get(selectedIndex)
-                                             activate TR
-
-                                            TR --> UI : team
-                                            deactivate TR
-
+                                            VR --> UI : selectedVehicles
+                                            deactivate VR
+        
             UI --> ADM : shows data and requests confirmation
             deactivate UI
-
+        
             ADM -> UI : confirms data
             activate UI
 
 
-        UI -> CTRL : assignTeam(agendaEntry, team)
+        UI -> CTRL : assignVehicles(agendaEntry, selectedVehicles)
         activate CTRL
 
             |||
 
-            CTRL -> ENTRADA: assignTeam(agendaEntry, team)
+            CTRL -> ENTRADA: assignVehicle(agendaEntry, selectedVehicles)
             activate ENTRADA
+            loop for each vehicle
+                ENTRADA -> ENTRADA: validateVehicle(Vehicle vehicle)
+                            activate ENTRADA
 
-                ref over ENTRADA
-                Assign Team
-                end
+                            ENTRADA --> ENTRADA: true
+                            deactivate ENTRADA
+
+                ENTRADA -> ENTRADA: addVehicle(vehicle)
+                activate ENTRADA
+                ENTRADA --> ENTRADA: true
                 deactivate ENTRADA
+                end
 
                 deactivate CTRL
 
             UI --> ADM: displays operation success
-            UI --> ADM: sends message to team members
     deactivate UI
 
 deactivate ADM

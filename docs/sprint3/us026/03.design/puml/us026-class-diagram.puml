@@ -18,34 +18,30 @@ class UserSession
     + getUserEmail()
 }
 
-class Team {
-    - collaborators: List<Collaborator>
-    - teamID: int
-    + boolean addCollaborator(collaborator)
-    + boolean equals(Object o)
-    + int hashCode()
-    + Team clone()
+class Vehicle {
+  - String brand
+  - String model
+  - String type
+  - Double tareWeight
+  - Double grossWeight
+  - int currentKm
+  - LocalDate registerDate
+  - LocalDate acquisitionDate
+  - int maintenanceFrequency
+  - String plateNumber
+  - LocalDate lastMaintenanceDate
+  + validateTrait(Object trait)
 }
 
-class TeamRepository {
-       - List<Team> teams
-       + Optional<Team> createTeam(List<Collaborator>)
-       + boolean addTeam(Team team)
-       + boolean validateTeam(Team team)
-       + List<Team> getTeamList()
-}
-
-class Collaborator {
-    - name: String
-    - birthdate: String
-    - admission date: String
-    - address: String
-    - mobile Contact: int
-    - email contact: String
-    - taxpayer number: int
-    - ID doc type: String
-    - ID number: int
-    + boolean addSkill(skill)
+class VehicleRepository {
+  - List<Vehicle> vehicles
+  + Vehicle getVehiclebyPlateNumber(String plateNumber)
+  + boolean validateVehicle(Vehicle vehicle)
+  + List<Vehicle> getVehicles()
+  + boolean registerMaintenance(plateNumber, currentKm, maintenanceDate)
+  + Optional<Vehicle> createVehicle(String model,String brand, String type, VFM vfm)
+  + boolean addVehicle(Vehicle vehicle)
+  + boolean vehiclesDoNotContain(Vehicle vehicle)
 }
 
 class AgendaEntry {
@@ -54,13 +50,13 @@ class AgendaEntry {
     - urgency: String
     - duration: String
     - associatedGreenSpace: GreenSpace
-    - associatedTeam: Team
+    - associatedVehicle: Vehicle
     - associatedVehicles: List<Vehicle>
     - status: String
     - startDate: LocalDate
     + AgendaEntry(String title, String taskDescription, String urgency, String duration, String status, LocalDate startDate)
     + boolean addGreenSpace(GreenSpace greenSpace)
-    + boolean addTeam(Team team)
+    + boolean addVehicle(Vehicle vehicle)
     + boolean addVehicle(Vehicle vehicle)
     + boolean equals(Object o)
     + int hashCode()
@@ -89,32 +85,32 @@ class AgendaRepository {
 
 class Repositories {
   + getInstance() : Repositories
-  + getTeamRepository() : TeamRepository
+  + getVehicleRepository() : VehicleRepository
   + getAgendaRepository() : AgendaRepository
 }
 
-class AssignTeamUI {
-  - controller: AssignTeamController
-  - team: Team
+class AssignVehiclesUI {
+  - controller: AssignVehiclesController
+  - selectedVehicles: List<Vehicles>
   - agendaEntry: AgendaEntry
-  + AssignTeamController getController()
+  + AssignVehiclesController getController()
   + void run()
   + void submitData()
   + void requestData()
   + AgendaEntry requestAgendaEntry()
-  + Team requestTeam()
+  + Vehicle requestVehicles()
   + PERGUNTAR AO PROFESSOR PPROG
 }
 
-class AssignTeamController {
-  - teamRepository: TeamRepository
+class AssignVehiclesController {
+  - vehicleRepository: VehicleRepository
   - agendaRepository: AgendaRepository
   - authenticationRepository: AuthenticationRepository
-  + AssignTeamController(teamRepository TeamRepository, AgendaRepository agendaRepository, AuthenticationRepository authenticationRepository)
-  + TeamRepository getTeamRepository()
+  + AssignVehiclesController(vehicleRepository VehicleRepository, AgendaRepository agendaRepository, AuthenticationRepository authenticationRepository)
+  + VehicleRepository getVehicleRepository()
   + AgendaRepository getAgendaRepository()
   + AuthenticationRepository getAuthenticationRepository()
-  + Optional<AgendaEntry> assignTeam(AgendaEntry entry, Team team)
+  + Optional<AgendaEntry> assignVehicle(AgendaEntry entry, List<Vehicle> selectedVehicles)
   + GSM getGSMFromSession()
 }
 
@@ -125,53 +121,51 @@ class GSM {
    - int phonenumber
 }
 
-note left of AssignTeamController
-  - Selected AgendaEntry and team are read from GSM's input.
+note left of AssignVehiclesController
+  - Selected AgendaEntry and vehicles are read from GSM's input.
   - Updates the AgendaEntry.
-  - Sends message to the collaborators of the assigned Team.
 end note
 
 note left of GSM
- - Responsible for assigning Teams to an Entry in the Agenda.
- - Communicates with the AssignTeamUI
+ - Responsible for assigning Vehicles to an Entry in the Agenda.
+ - Communicates with the AssignVehiclesUI
 end note
 
-note left of AssignTeamUI
-  - UI for GSM to assign teams to entries in the Agenda
-  - Communicates with AssignTeamController
-  - Receives repositories from AssignTeamController
+note left of AssignVehiclesUI
+  - UI for GSM to assign vehicles to entries in the Agenda
+  - Communicates with AssignVehiclesController
+  - Receives repositories from AssignVehiclesController
 end note
 
 note right of AgendaEntry
  - Registered by the GSM in the Agenda
 end note
 
-GSM --> Team: assigns
-Team -> AgendaEntry: assigned to
-Team -> Collaborator: consists of
+GSM --> Vehicle: assigns
+Vehicle -> AgendaEntry: assigned to
 GSM --> Agenda: uses
 AgendaEntry --> Agenda: shown in
-GSM -> AssignTeamUI: uses
+GSM -> AssignVehiclesUI: uses
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
-AssignTeamUI .> AssignTeamController
+AssignVehiclesUI .> AssignVehiclesController
 
-AssignTeamController -down-> Repositories : retrieves instances
+AssignVehiclesController -down-> Repositories : retrieves instances
 
 Repositories -down-> AgendaRepository : accesses
-Repositories -down-> TeamRepository : accesses
+Repositories -down-> VehicleRepository : accesses
 
-AssignTeamController ..> TeamRepository : teamRepository
-AssignTeamController ..> AgendaRepository : agendaRepository
+AssignVehiclesController ..> VehicleRepository : vehicleRepository
+AssignVehiclesController ..> AgendaRepository : agendaRepository
 
 ApplicationSession --> "1" UserSession : userSession
 
-AssignTeamController ..> ApplicationSession
-AssignTeamController ..> UserSession
+AssignVehiclesController ..> ApplicationSession
+AssignVehiclesController ..> UserSession
 
-TeamRepository ..> Team: stores
+VehicleRepository ..> Vehicle: stores
 AgendaRepository ..> Agenda: stores
 
 @enduml

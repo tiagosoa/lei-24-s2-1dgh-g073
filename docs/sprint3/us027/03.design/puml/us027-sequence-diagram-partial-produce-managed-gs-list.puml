@@ -1,0 +1,32 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+participant "GreenSpaceRepository" as GSR
+
+
+    group Produce Managed Green Space List
+
+                   -> GSR: getManagedGreenSpaces(GSM gsm)
+                               activate GSR
+
+                                   GSR -> GSR: getManagedGreenSpaces(GSM gsm)
+                                   activate GSR
+
+                                   GSR --> GSR: managedGreenSpaces
+                                   deactivate GSR
+
+                                   GSR -> GSR: sortManagedGreenSpaces(List<GreenSpace> managedGreenSpaces)
+                                                   activate GSR
+
+                                                   GSR --> GSR: managedGreenSpaces
+                                                   deactivate GSR
+
+
+                                   <-- GSR : managedGreenSpaces
+
+
+
+@enduml
