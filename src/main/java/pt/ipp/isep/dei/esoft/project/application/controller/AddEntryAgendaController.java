@@ -1,70 +1,90 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.TDLEntry;
-import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
-import pt.ipp.isep.dei.esoft.project.domain.ToDoList;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.*;
+import pt.isep.lei.esoft.auth.domain.model.Email;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class AddEntryAgendaController {
-    private ToDoList toDoList;
-
-    private ToDoListRepository toDoListRepository;
-    private OrganizationRepository organizationRepository;
-    private GreenSpaceRepository greenSpaceRepository;
-    private AuthenticationRepository authenticationRepository;
+    private final GreenSpaceRepository greenSpaceRepository;
+    private final ToDoListRepository toDoListRepository;
+    private final AgendaRepository agendaRepository;
+    private final AuthenticationRepository authenticationRepository;
 
     public AddEntryAgendaController() {
         Repositories repositories = Repositories.getInstance();
         this.toDoListRepository = repositories.getToDoListRepository();
-        this.organizationRepository = repositories.getOrganizationRepository();
+        this.agendaRepository = repositories.getAgendaRepository();
         this.greenSpaceRepository = repositories.getGreenSpaceRepository();
         this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
-    public AddEntryAgendaController(OrganizationRepository organizationRepository,
-                                      ToDoListRepository toDoListRepository,
-                                      GreenSpaceRepository greenSpaceRepository,
-                                      AuthenticationRepository authenticationRepository) {
-        this.organizationRepository = organizationRepository;
-        this.toDoListRepository = toDoListRepository;
+    public AddEntryAgendaController(GreenSpaceRepository greenSpaceRepository,
+                                    ToDoListRepository toDoListRepository,
+                                    AgendaRepository agendaRepository,
+                                    AuthenticationRepository authenticationRepository) {
         this.greenSpaceRepository = greenSpaceRepository;
+        this.toDoListRepository = toDoListRepository;
+        this.agendaRepository = agendaRepository;
         this.authenticationRepository = authenticationRepository;
     }
 
-    public ToDoListRepository getToDoListRepository() {
-        return toDoListRepository == null ? Repositories.getInstance().getToDoListRepository() : toDoListRepository;
-    }
-
-    /**
-     * Retrieves the GreenSpaceRepository instance, initializing it if necessary.
-     *
-     * @return the GreenSpaceRepository instance
-     */
     public GreenSpaceRepository getGreenSpaceRepository() {
-        if (greenSpaceRepository == null) {
-            Repositories repositories = Repositories.getInstance();
-            greenSpaceRepository = repositories.getGreenSpaceRepository();
-        }
         return greenSpaceRepository;
     }
 
+    public ToDoListRepository getToDoListRepository() {
+        return toDoListRepository;
+    }
+
+    public AgendaRepository getAgendaRepository() {
+        return agendaRepository;
+    }
+
+    public AuthenticationRepository getAuthenticationRepository() {
+        return authenticationRepository;
+    }
+
+    public Optional<AgendaEntry> addEntry(TDLEntry entry, String status, LocalDate startDate) {
+        GSM gsm = getGSMFromSession();
+        Agenda agenda = getAgenda(gsm);
+        AgendaEntry agendaEntry = new AgendaEntry(
+                entry.getTitle(),
+                entry.getTaskDescription(),
+                entry.getUrgency(),
+                entry.getDuration(),
+                status,
+                startDate
+        );
+        agendaEntry.addGreenSpace(entry.getAssociatedGreenSpace());
+        agenda.addEntry(agendaEntry);
+        agendaRepository.addAgenda(agenda);
+        return Optional.of(agendaEntry);
+    }
+
+    public ToDoList getToDoList(GSM gsm) {
+        return toDoListRepository.getToDoListByGSM(gsm);
+    }
+
+    public Agenda getAgenda(GSM gsm) {
+        return agendaRepository.getAgendaByGSM(gsm);
+    }
+
+    public GSM getGSMFromSession() {
+        Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
+        return new GSM(email.getEmail());
+    }
 
     public List<TDLEntry> getToDoListEntries() {
+        GSM gsm = getGSMFromSession();
+        ToDoList toDoList = getToDoList(gsm);
         return toDoList.getEntries();
     }
 
-    public void addEntryToAgenda(TDLEntry entry, GreenSpace greenSpace) {
-        if (entry.addGreenSpace(greenSpace)) {
-            toDoList.addEntry(entry);
-        } else {
-            throw new IllegalStateException("Entry already has an associated green space");
-        }
-    }
-
     public List<GreenSpace> getManagedGreenSpaces() {
-        return greenSpaceRepository.getManagedGreenSpaces(toDoList.getGSM());
+        return greenSpaceRepository.getGreenSpaceList();
     }
 }

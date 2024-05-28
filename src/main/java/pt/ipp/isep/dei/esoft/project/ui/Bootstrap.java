@@ -5,13 +5,10 @@ import pt.ipp.isep.dei.esoft.project.application.authorization.AuthenticationCon
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 import pt.ipp.isep.dei.esoft.project.domain.GSM;
-import pt.ipp.isep.dei.esoft.project.ui.console.AddAgendaEntryUI;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
-
 
 
 public class Bootstrap implements Runnable {

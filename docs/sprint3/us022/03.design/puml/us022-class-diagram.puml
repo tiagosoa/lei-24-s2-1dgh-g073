@@ -129,7 +129,6 @@ class AddEntryAgendaUI {
   + void submitData()
   + void requestData()
   + TDLEntry requestToDoListEntry()
-  + String requestEntryStatus()
   + LocalDate requestEntryStartingDate()
 }
 
@@ -144,6 +143,8 @@ class AddEntryAgendaController {
   + AgendaRepository getAgendaRepository()
   + AuthenticationRepository getAuthenticationRepository()
   + Optional<AgendaEntry> addEntry(TDLEntry entry, String status, LocalDate startDate)
+  + ToDoList getToDoList(GSM gsm)
+  + Agenda getAgenda(GSM gsm)
   + GSM getGSMFromSession()
 }
 

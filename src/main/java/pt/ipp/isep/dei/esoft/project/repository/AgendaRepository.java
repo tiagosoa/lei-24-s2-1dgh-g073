@@ -20,7 +20,7 @@ public class AgendaRepository {
                 return existingTDList;
             }
         }
-        throw new IllegalArgumentException("Skill does not exist.");
+        throw new IllegalArgumentException("Agenda does not exist.");
     }
 
     public boolean addAgenda(Agenda agenda) {
