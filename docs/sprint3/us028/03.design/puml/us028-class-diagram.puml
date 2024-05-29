@@ -1,0 +1,153 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
+class Collaborator {
+    - name: String
+    - birthdate: String
+    - admission date: String
+    - address: String
+    - mobile Contact: int
+    - email contact: String
+    - taxpayer number: int
+    - ID doc type: String
+    - ID number: int
+    + addSkill(skill)
+}
+
+ class CollaboratorRepository {
+   - List<Collaborator> collaborators
+   + Optional<Collaborator> add(Collaborator collaborator)
+   + Collaborator getCollaboratorByID(int IDnumber)
+   + List<Collaborator> getCollaboratorList()
+   + addCollaborator(Collaborator collaborator)
+   + Optional<Collaborator> registerCollaborator( \nname: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \ntaxpayer: int, \nIDdoctype: String, \nIDnumber: int)
+   + boolean validateCollaborator(Collaborator collaborator)
+   + void updateCollaborator(Collaborator collaborator)
+ }
+
+class Repositories {
+  + getInstance() : Repositories
+  + getCollaboratorRepository() : CollaboratorRepository
+  + getTeamRepository() : TeamRepository
+  + getTaskRepository() : TaskRepository
+  + getAuthenticationRepository() : AuthenticationRepository
+}
+
+class ConsultTasksController {
+    - teamRepository: TeamRepository
+    - collaboratorRepository: CollaboratorRepository
+    - taskRepository: TaskRepository
+    - authenticationRepository: AuthenticationRepository
+    + ConsultTasksController(TeamRepository teamRepository, CollaboratorRepository collaboratorRepository, TaskRepository taskRepository, AuthenticationRepository authenticationRepository)
+    + TeamRepository getTeamRepository()
+    + CollaboratorRepository getCollaboratorRepository()
+    + TaskRepository getTaskRepository()
+    + AuthenticationRepository getAuthenticationRepository()
+    + List<Task> getTasksForCollaborator(Team team, LocalDate firstDate, LocalDate secondDate, String status)
+    + Collaborator getCollaboratorFromSession()
+    + Team getCollaboratorTeam(Collaborator collaborator)
+}
+
+class ConsultTasksUI {
+  - collaborator: Collaborator
+  - team: Team
+  - firstDate: LocalDate
+  - secondDate: LocalDate
+  - status: String
+  + void run()
+  + void requestData()
+  + void submitData()
+  + LocalDate requestFirstDate()
+  + LocalDate requestSecondDate()
+  + String requestStatus()
+}
+
+class Team {
+    - collaborators: List<Collaborator>
+    - teamID: int
+    + boolean addCollaborator(collaborator)
+    + boolean equals(Object o)
+    + int hashCode()
+    + Team clone()
+}
+
+class TaskRepository {
+       - List<Task> tasks
+       + Optional<Task> createTask(String title, String description, String status, LocalDate startDate, String status, String duration)
+       + boolean addTask(Task task)
+       + boolean validateTeam(Task task)
+       + Task getTaskByTitle(String title)
+       + Task getTaskByTeam(Team team)
+       + List<Team> getTeamList()
+}
+
+class Task {
+    - title: String
+    - description: String
+    - status: String
+    - startDate: LocalDate
+    - duration: String
+    - associatedTeam: Team
+        + boolean addTeam(team)
+        + boolean equals(Object o)
+        + int hashCode()
+        + Task clone()
+}
+
+class TeamRepository {
+       - List<Team> teams
+       + Optional<Team> createTeam(List<Collaborator>)
+       + boolean addTeam(Team team)
+       + boolean validateTeam(Team team)
+       + Team getTeamByCollaborator(Collaborator collaborator)
+       + List<Team> getTeamList()
+}
+
+Team -> Task: assigned to
+Team -> Collaborator: consists of
+Collaborator -> ConsultTasksUI: uses
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+ConsultTasksUI .> ConsultTasksController
+
+ConsultTasksController -down-> Repositories : retrieves instances
+
+Repositories -down-> CollaboratorRepository : accesses
+Repositories -down-> TeamRepository : accesses
+Repositories -down-> TaskRepository : accesses
+
+ConsultTasksController ..> TeamRepository : teamRepository
+ConsultTasksController ..> TaskRepository : taskRepository
+ConsultTasksController ..> CollaboratorRepository : collaboratorRepository
+
+ApplicationSession --> "1" UserSession : userSession
+
+ConsultTasksController ..> ApplicationSession
+ConsultTasksController ..> UserSession
+
+TeamRepository ..> Team: stores
+TaskRepository ..> Task: stores
+CollaboratorRepository ..> Collaborator: stores
+
+@enduml

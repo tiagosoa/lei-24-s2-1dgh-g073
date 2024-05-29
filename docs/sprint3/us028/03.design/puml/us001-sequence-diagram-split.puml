@@ -6,69 +6,104 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Human Resources Manager" as ADM
-participant ":CreateSkillUI" as UI
-participant ":CreateSkillController" as CTRL
+actor "Collaborator" as ADM
+participant ":ConsultTasksUI" as UI
+participant ":ConsultTasksController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "skillrepository\n:SkillRepository" as SR
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
-participant "skill\n:Skill" as HABILIDADE
+participant "teamRepository:\nTeamRepository" as TER
+
 
 activate ADM
 
-        ADM -> UI : asks to create a new skill
+        ADM -> UI : asks to consult the tasks assigned to them between two dates.
 
         activate UI
 
-'            UI --> ADM : requests data (name)
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
             UI -> CTRL** : create
+            activate CTRL
 
-         UI -> CTRL : getSkillRepository()
-         activate CTRL
+                                  CTRL -> RepositorySingleton : getInstance()
+                                                    activate RepositorySingleton
 
-                 CTRL -> PLAT : getSkillRepository()
-                         activate PLAT
+                                                        RepositorySingleton --> CTRL: repositories
+                                                    deactivate RepositorySingleton
 
-                     PLAT -> CTRL : skillRepository
-                     deactivate PLAT
-    deactivate CTRL
-    UI --> ADM : requests name
-    deactivate UI
+                                                     CTRL -> CTRL : getCollaboratorFromSession()
+                                                     activate CTRL
 
-    ADM -> UI : types requested name
-    activate UI
+                                                     ref over CTRL
+                                                     Get Collaborator
+                                                     end
 
-        UI -> CTRL : createSkill(skillname)
+                                                         CTRL --> CTRL : collaborator
+                                                     deactivate CTRL
+
+                                                     CTRL --> UI : collaborator
+                                                     deactivate CTRL
+
+            UI -> CTRL : getTeamRepository()
+            activate CTRL
+
+                CTRL -> PLAT : getTeamRepository()
+                activate PLAT
+
+           PLAT --> CTRL : teamRepository
+           deactivate PLAT
+
+           CTRL --> UI : teamRepository
+           deactivate CTRL
+
+                       UI -> CTRL : getTaskRepository()
+                       activate CTRL
+
+                           CTRL -> PLAT : getTaskRepository()
+                           activate PLAT
+
+                      PLAT --> CTRL : taskRepository
+                      deactivate PLAT
+
+                      CTRL --> UI : taskRepository
+                      deactivate CTRL
+
+        UI --> ADM: requests dates
+        deactivate UI
+
+        ADM -> UI: types dates
+        activate UI
+
+                UI --> ADM: asks if it would like to filter the tasks by status
+                deactivate UI
+
+                ADM -> UI: either accepts or declines (in case of acceptance, selects status)
+                activate UI
+
+
+
+
+
+
+        UI -> CTRL : getCollaboratorTeam(Collaborator collaborator)
         activate CTRL
 
-            |||
-                                ref over CTRL
-                                    Get HRM
+        CTRL -> TER : getTeamByCollaborator(Collaborator collaborator)
+        activate TER
 
-                                end ref
+        TER --> CTRL : team
+        deactivate TER
 
-            |||
-            CTRL -> ORG: createSkill(skillname)
-            activate ORG
+        CTRL --> UI : team
+        deactivate CTRL
+        UI -> CTRL : getTasksForCollaborator(Team team, LocalDate firstDate, LocalDate secondDate, String status)
+         activate CTRL
+            ref over CTRL
+            Get Tasks for Collaborator
+            end
+            CTRL --> UI : taskListDTO
 
-                                    ref over ORG
-                                        Create Skill
-
-                                    end ref
-
-                ORG --> CTRL : skill
-
-            deactivate ORG
-
-            CTRL --> UI: skill
-            deactivate CTRL
-            UI --> ADM: displays operation success
+            UI --> ADM: shows tasks assigned to the collaborator
     deactivate UI
 
 deactivate ADM

@@ -103,7 +103,6 @@ class AssignTeamUI {
   + void requestData()
   + AgendaEntry requestAgendaEntry()
   + Team requestTeam()
-  + PERGUNTAR AO PROFESSOR PPROG
 }
 
 class AssignTeamController {

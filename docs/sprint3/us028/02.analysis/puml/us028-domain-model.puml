@@ -27,40 +27,25 @@ class Collaborator {
 }
 
 class Task {
-    team
-    vehicles/equipment
-    expected duration
+    title
+    description
     status
-}
-
-class AgendaEntry {
-     title
-     taskDescription
-     urgency
-     duration
-     associatedGreenSpace
-     associatedTeam
-     associatedVehicles
-     status
-     startDate
-}
-
-class AgendaRepository {
-    agendas
+    startDate
+    duration
+    associatedTeam
 }
 
 class TeamRepository {
     teams
 }
 
+class TaskRepository {
+    tasks
+}
+
 class Team {
     collaborators
     teamID
-}
-
-class Agenda {
-    entries
-    gsm
 }
 
 'class User {
@@ -72,8 +57,6 @@ class Agenda {
 Team "1" -- "*" Collaborator: consists of >
 Team "1" - "1" TeamRepository: stored in >
 Collaborator "1" - "*" Task: requests list of >
-Task "1" - "1" AgendaEntry: described in >
-Team "1" - "*" AgendaEntry: assigned to >
-AgendaEntry "1" -- "1" Agenda: shown in >
-Agenda "1" -- "1" AgendaRepository: stored in >
+Task "1" - "1" TaskRepository: stored in >
+Team "1" - "*" Task: assigned to >
 @enduml

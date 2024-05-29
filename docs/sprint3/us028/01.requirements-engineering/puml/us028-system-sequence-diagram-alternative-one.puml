@@ -12,7 +12,7 @@ participant ":System" as System
 
 activate Collaborator
 
-    Collaborator -> System : asks to consult the tasks assigned to me between two dates.
+    Collaborator -> System : asks to consult the tasks assigned to them between two dates.
     activate System
 
     System --> Collaborator : requests dates
@@ -24,7 +24,7 @@ activate Collaborator
     System --> Collaborator : asks if it would like to filter the tasks by status
     deactivate System
 
-    Collaborator -> System : either accepts or declines
+    Collaborator -> System : either accepts or declines (in case of acceptance, selects status)
     activate System
 
     System --> Collaborator : shows tasks assigned to the collaborator
