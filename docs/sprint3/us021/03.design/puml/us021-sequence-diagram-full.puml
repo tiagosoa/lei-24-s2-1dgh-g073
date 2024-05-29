@@ -49,11 +49,9 @@ activate ADM
 
 
                              UI -> CTRL : getGreenSpaceList()
-                            CTRL -> GSR : getGreenSpaceList()
-                            activate GSR
-
-                            GSR --> CTRL : greenSpaces
-                            deactivate GSR
+                            ref over CTRL
+                            Get Green Space List
+                            end
 
                             CTRL --> UI : greenSpaces
                             deactivate CTRL

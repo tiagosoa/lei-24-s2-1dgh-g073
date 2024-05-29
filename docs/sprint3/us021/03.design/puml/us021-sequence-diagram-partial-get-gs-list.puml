@@ -1,0 +1,38 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+participant ":AddEntryToDoListController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "greenSpaceRepository\n:GreenSpaceRepository" as GSR
+participant "toDoListRepository\n:ToDoListRepository" as TDR
+participant "greenSpaces" as GS
+
+
+    group Get Green Space List
+
+            -> CTRL: getGreenSpaceList()
+            activate CTRL
+
+                CTRL -> GSR: getGreenSpaceList()
+                activate GSR
+
+                GSR -> GS**: create()
+
+
+                GSR --> CTRL: greenSpaces
+                deactivate GSR
+
+                TDL -> TDL: addEntry(TDLEntry entry)
+                                activate TDL
+
+                                TDL --> TDL: true
+                                deactivate TDL
+
+
+
+@enduml
