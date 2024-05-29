@@ -93,6 +93,12 @@ activate ADM
     ADM -> UI : selects entry
     activate UI
 
+                                        UI -> TDL : get(selectedIndex)
+                                        activate AG
+
+                                       TDL --> UI : toDoListEntry
+                                       deactivate AG
+
     UI --> ADM : asks to select current status and type the starting date
     deactivate UI
 
