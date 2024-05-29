@@ -32,6 +32,9 @@
 * Made up of entries that relate to a task.
 * Comprises entries that were previously in the To-Do List.
 
+### Agenda Repository:
+* Stores Agendas.
+
 ### 2.1. Relevant Domain Model Excerpt
 
 ![Domain Model](svg/us023-domain-model.svg)

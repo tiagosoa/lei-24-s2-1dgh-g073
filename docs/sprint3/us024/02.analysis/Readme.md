@@ -14,7 +14,10 @@
 
 ### Agenda:
 * Used by the GSM.
-* Includes all entries created by the GSM.
+* Includes entries that relate to a task.
+
+### Agenda Repository:
+* Stores Agendas.
 
 ### 2.1. Relevant Domain Model Excerpt
 

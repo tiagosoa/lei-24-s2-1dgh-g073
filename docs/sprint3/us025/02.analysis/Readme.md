@@ -16,6 +16,9 @@
 * Used by the GSM.
 * Includes all entries created by the GSM.
 
+### Agenda Repository:
+* Stores Agendas.
+
 ### 2.1. Relevant Domain Model Excerpt
 
 ![Domain Model](svg/us025-domain-model.svg)

@@ -44,15 +44,29 @@ class Vehicle {
     last maintenance date
 }
 
-class Entry {
-    team
-    vehicles/equipment
-    expected duration
-    status
+class VehicleRepository {
+    vehicles
+}
+
+class AgendaEntry {
+     title
+     taskDescription
+     urgency
+     duration
+     associatedGreenSpace
+     associatedTeam
+     associatedVehicles
+     status
+     startDate
 }
 
 class Agenda {
     entries
+    gsm
+}
+
+class AgendaRepository {
+    agendas
 }
 
 'class User {
@@ -63,8 +77,10 @@ class Agenda {
 
 VFM "1" -- "1" Vehicle: registers >
 GSM "1" - "1" Vehicle: assigns >
-Vehicle "1" - "1" Entry: assigned to >
-GSM "1" -- "1" Agenda: uses >
-Entry "1" -- "1" Agenda: is shown in >
+Vehicle "1" - "1" AgendaEntry: assigned to >
+Vehicle "1" -- "1" VehicleRepository: stored in >
+GSM "1" --- "1" Agenda: uses >
+AgendaEntry "1" --- "1" Agenda: is shown in >
+Agenda "1" -- "1" AgendaRepository: stored in >
 
 @enduml

@@ -23,15 +23,25 @@ class GSM {
     email
 }
 
-class Entry {
-    team
-    vehicles/equipment
-    expected duration
-    status
+class AgendaEntry {
+     title
+     taskDescription
+     urgency
+     duration
+     associatedGreenSpace
+     associatedTeam
+     associatedVehicles
+     status
+     startDate
 }
 
 class Agenda {
     entries
+    gsm
+}
+
+class AgendaRepository {
+    agendas
 }
 
 'class User {
@@ -40,8 +50,9 @@ class Agenda {
 '    password
 '}
 
-GSM "1" - "1" Entry: cancels >
+GSM "1" - "1" AgendaEntry: cancels >
 GSM "1" -- "1" Agenda: uses >
-Entry "1" -- "1" Agenda: is shown in >
+AgendaEntry "1" -- "1" Agenda: is shown in >
+Agenda "1" -- "1" AgendaRepository: stored in >
 
 @enduml

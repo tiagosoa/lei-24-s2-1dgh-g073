@@ -40,6 +40,10 @@ class Agenda {
     gsm
 }
 
+class AgendaRepository {
+    agendas
+}
+
 'class User {
 '    name
 '    email
@@ -49,5 +53,6 @@ class Agenda {
 GSM "1" - "1" AgendaEntry: postpones >
 GSM "1" -- "1" Agenda: uses >
 AgendaEntry "1" -- "1" Agenda: is shown in >
+Agenda "1" -- "1" AgendaRepository: stored in >
 
 @enduml
