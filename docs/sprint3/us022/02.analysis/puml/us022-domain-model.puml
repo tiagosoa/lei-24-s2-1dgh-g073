@@ -24,18 +24,41 @@ class GSM {
 }
 
 class AgendaEntry {
-    team
-    vehicles/equipment
-    expected duration
-    status
+     title
+     taskDescription
+     urgency
+     duration
+     associatedGreenSpace
+     associatedTeam
+     associatedVehicles
+     status
+     startDate
+}
+
+class TDLEntry {
+    title
+    taskDescription
+    degree of urgency
+    approx. duration
+    associatedGreenSpace
 }
 
 class Agenda {
     entries
+    gsm
 }
 
 class ToDoList {
     entries
+    gsm
+}
+
+class ToDoListRepository {
+    toDoLists
+}
+
+class AgendaRepository {
+    agendas
 }
 
 'class User {
@@ -46,8 +69,12 @@ class ToDoList {
 
 GSM "1" - "*" AgendaEntry: adds >
 GSM "1" -- "1" Agenda: uses >
+GSM "1" ---- "1" ToDoList: uses >
+Agenda "1" -- "1" AgendaRepository: stored in >
 AgendaEntry "1" -- "1" Agenda: is shown in >
-AgendaEntry "1" -- "1" ToDoList: previously in >
+AgendaEntry "1" -- "1" TDLEntry: previously >
+TDLEntry "1" -- "1" ToDoList: shown in >
+ToDoList "1" -- "1" ToDoListRepository: stored in >
 Agenda "1" - "1" ToDoList: comprises entries previously in >
 
 @enduml

@@ -6,7 +6,7 @@
 * Responsible for postponing entries in the Agenda
 * Attributes include name, vatNumber, phoneNumber, and email.
 
-### Entry:
+### AgendaEntry:
 * Postponed by the GSM.
 * Attributes include the team and the vehicles/equipment assigned to it, approximate duration, and status.
 * Exists simultaneously in the To-Do List.

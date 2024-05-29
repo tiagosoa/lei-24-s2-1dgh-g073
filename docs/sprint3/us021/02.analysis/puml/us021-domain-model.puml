@@ -23,14 +23,31 @@ class GSM {
     email
 }
 
-class Entry {
-    title/description
+class TDLEntry {
+    title
+    taskDescription
     degree of urgency
     approx. duration
+    associatedGreenSpace
+}
+
+class GreenSpace {
+    name
+    type
+    area
+}
+
+class GreenSpaceRepository {
+    GreenSpaces
 }
 
 class ToDoList {
     entries
+    gsm
+}
+
+class ToDoListRepository {
+    toDoLists
 }
 
 'class User {
@@ -39,8 +56,12 @@ class ToDoList {
 '    password
 '}
 
-GSM "1" - "*" Entry: adds >
+GSM "1" -- "*" TDLEntry: adds >
+TDLEntry "1" -- "1" GreenSpace: associated with >
+GreenSpace "1" -- "1" GreenSpaceRepository: stored in >
+GSM "1" - "1" GreenSpace: manages >
 GSM "1" -- "1" ToDoList: uses >
-Entry "1" -- "1" ToDoList: is shown in >
+TDLEntry "1" - "1" ToDoList: is shown in >
+ToDoList "1" -- "1" ToDoListRepository: stored in >
 
 @enduml

@@ -26,12 +26,17 @@ class Collaborator {
     ID doc type and number
 }
 
-class Entry {
+class Task {
     team
     vehicles/equipment
     expected duration
     status
 }
+
+class AgendaEntry{
+
+}
+
 
 class Agenda {
     entries

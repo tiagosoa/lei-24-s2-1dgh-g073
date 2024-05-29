@@ -9,17 +9,29 @@
 ### AgendaEntry:
 * Added to the Agenda by the GSM.
 * Attributes include the team and the vehicles/equipment assigned to it, approximate duration, and status.
-* Exists simultaneously in the To-Do List.
+* Existed previously in the To-Do List.
+
+### TDLEntry:
+* Added to the To-Do List by the GSM.
+* Moves from the To-Do List to the Agenda.
+* Attributes include title/description, degree of urgency, approximate duration, and an associated Green Space.
 
 ### Agenda:
 * Used by the GSM.
 * Includes entries created by the GSM that relate to a task.
+* Made up of entries that relate to a task.
 * Comprises entries that were previously in the To-Do List.
 
 ### ToDoList
 * Used by the GSM.
 * Includes all pending entries created by the GSM.
-* Some entries may exist in the Agenda.
+* Some entries are moved to the Agenda.
+
+### To-Do List Repository:
+* Stores To-Do Lists.
+
+### Agenda Repository:
+* Stores Agendas.
 
 ### 2.1. Relevant Domain Model Excerpt
 

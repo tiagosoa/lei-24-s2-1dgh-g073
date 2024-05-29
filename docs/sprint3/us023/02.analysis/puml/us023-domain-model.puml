@@ -32,17 +32,24 @@ class HRM {
 
 class Team {
     collaborators
+    teamID
 }
 
-class Entry {
-    team
-    vehicles/equipment
-    expected duration
-    status
+class AgendaEntry {
+     title
+     taskDescription
+     urgency
+     duration
+     associatedGreenSpace
+     associatedTeam
+     associatedVehicles
+     status
+     startDate
 }
 
 class Agenda {
     entries
+    gsm
 }
 
 class Collaborator {
@@ -53,8 +60,16 @@ class Collaborator {
     contact info (mobile and email)
     taxpayer number
     ID doc type and number
+    collaboratorskills
 }
 
+class AgendaRepository {
+    agendas
+}
+
+class TeamRepository {
+    teams
+}
 'class User {
 '    name
 '    email
@@ -63,9 +78,11 @@ class Collaborator {
 
 HRM "1" -- "1" Team: generates >
 GSM "1" - "1" Team: assigns >
-Team "1" - "1" Entry: assigned to >
-GSM "1" -- "1" Agenda: uses >
-Entry "1" -- "1" Agenda: is shown in >
+Team "1" - "1" AgendaEntry: assigned to >
+Team "1" -- "1" TeamRepository: stored in >
+GSM "1" --- "1" Agenda: uses >
+AgendaEntry "1" --- "1" Agenda: is shown in >
+Agenda "1" -- "1" AgendaRepository: stored in
 Collaborator "*" -- "1" Team: belongs to >
 HRM "1" - "*" Collaborator: registers >
 

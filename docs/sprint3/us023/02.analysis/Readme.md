@@ -4,7 +4,7 @@
 
 ### GSM (Green Spaces Manager):
 * Responsible for assigning teams to entries in the Agenda
-* Uses the Agenda
+* Uses the Agenda.
 * Attributes include name, vatNumber, phoneNumber, and email.
 
 ### HRM (Human Resources Manager):
@@ -13,7 +13,7 @@
 
 ### Collaborator:
 * Is registered by HRM(s).
-* Might be assigned to a Team
+* Assigned to a Team.
 * Attributes include name, birthdate, admission date, address, contact info (mobile and email), taxpayer number, ID doc type and a respective number.
 
 ### Team:
@@ -21,18 +21,20 @@
 * Assigned to an entry in the Agenda.
 * Consists of collaborators.
 
-### Entry:
+### AgendaEntry:
 * Added to the Agenda by the GSM.
 * Attributes include the team and the vehicles/equipment assigned to it, approximate duration, and status.
-* Exists simultaneously in the To-Do List.
+* Existed previously in the To-Do List.
 
 ### Agenda:
 * Used by the GSM.
-* Includes all entries created by the GSM.
+* Includes entries created by the GSM that relate to a task.
+* Made up of entries that relate to a task.
+* Comprises entries that were previously in the To-Do List.
 
 ### 2.1. Relevant Domain Model Excerpt
 
-![Domain Model](svg/us022-domain-model.svg)
+![Domain Model](svg/us023-domain-model.svg)
 
 ### 2.2. Other Remarks
 
