@@ -19,20 +19,6 @@ class UserSession
     + getUserEmail()
 }
 
-class GreenSpace {
-    - name: String
-    - type: String
-    - area: double
-    + GreenSpace(String name, String type, double area)
-    + void validateGreenSpaceName(String name)
-    + void validateGreenSpaceType(String type)
-    + void validateGreenSpaceArea(double area)
-    + boolean equals(Object o)
-    + int hashCode()
-    + GreenSpace clone()
-    + boolean isOfName(String name)
-}
-
 class TDLEntry {
     - title: String
     - taskDescription: String
@@ -87,14 +73,6 @@ class Agenda {
     + AgendaEntry clone()
 }
 
-class GreenSpaceRepository {
-  - List<GreenSpace> greenSpaces
-  + Optional<GreenSpace> registerGreenSpace(String name, String type, double area, GSM gsm)
-  + boolean addGreenSpace(GreenSpace greenSpace)
-  + boolean validateGreenSpace(GreenSpace greenSpace)
-  + List<GreenSpace> getGreenSpaceList()
-}
-
 class ToDoListRepository {
   - List<ToDoList> toDoLists
   + boolean addToDoList(ToDoList toDoList)
@@ -113,7 +91,6 @@ class AgendaRepository {
 
 class Repositories {
   + getInstance() : Repositories
-  + getGreenSpaceRepository() : GreenSpaceRepository
   + getToDoListRepository() : ToDoListRepository
   + getAgendaRepository() : AgendaRepository
 }
@@ -182,8 +159,6 @@ AgendaEntry --> Agenda: shown in
 TDLEntry --> ToDoList: shown in
 TDLEntry --> AgendaEntry: related to
 GSM -> AddEntryAgendaUI: uses
-GreenSpace --> AgendaEntry: associated to
-GreenSpace -> TDLEntry: associated to
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
@@ -192,11 +167,9 @@ AddEntryAgendaUI .> AddEntryAgendaController
 
 AddEntryAgendaController -down-> Repositories : retrieves instances
 
-Repositories -down-> GreenSpaceRepository : accesses
 Repositories -down-> ToDoListRepository : accesses
 Repositories -down-> AgendaRepository : accesses
 
-AddEntryAgendaController ..> GreenSpaceRepository : greenSpaceRepository
 AddEntryAgendaController ..> ToDoListRepository : toDoListRepository
 AddEntryAgendaController ..> AgendaRepository : agendaRepository
 
@@ -205,7 +178,6 @@ ApplicationSession --> "1" UserSession : userSession
 AddEntryAgendaController ..> ApplicationSession
 AddEntryAgendaController ..> UserSession
 
-GreenSpaceRepository ..> GreenSpace: stores
 ToDoListRepository ..> ToDoList: stores
 AgendaRepository ..> Agenda: stores
 

@@ -20,6 +20,8 @@ class UserSession
     + getUserEmail()
 }
 
+class Collaborator
+
 class Skill {
     - name: String
 }
