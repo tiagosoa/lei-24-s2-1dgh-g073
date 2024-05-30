@@ -20,106 +20,132 @@ class UserSession
     + getUserEmail()
 }
 
-class Skill {
+class Collaborator {
     - name: String
+    - birthdate: String
+    - admission date: String
+    - address: String
+    - mobile Contact: int
+    - email contact: String
+    - taxpayer number: int
+    - ID doc type: String
+    - ID number: int
+    + addSkill(skill)
 }
 
-class SkillRepository {
-  - List<Skill> skills
-  + Optional<Skill> add(Skill skill)
-  + boolean validateSkill(Skill skill)
-  + List<Skill> getSkills()
-  + Skill getSkillByName(String name)
-}
-
-class Organization {
-  - String name
-  - String vatNumber
-  - String address
-  - String phone
-  - String email
-  + Optional<Skill> createSkill(String name)
-  + boolean addSkill(Skill skill)
-  + boolean validateSkill(Skill skill)
-  + boolean skillsDoNotContain(Skill skill)
-  + boolean equals(Object o)
-}
-
-class OrganizationRepository {
-  + Optional<Organization> getOrganizationByHRM(HRM hrm)
-  + Optional<Organization> getOrganizationByVFM(VFM vfm)
-  + Optional<Organization> getOrganizationByHRMEmail(String email)
-  + Optional<Organization> add(Organization organization)
-  + boolean validateOrganization(Organization organization)
-}
+ class CollaboratorRepository {
+   - List<Collaborator> collaborators
+   + Optional<Collaborator> add(Collaborator collaborator)
+   + Collaborator getCollaboratorByID(int IDnumber)
+   + List<Collaborator> getCollaboratorList()
+   + addCollaborator(Collaborator collaborator)
+   + Optional<Collaborator> registerCollaborator( \nname: String, \nbirthdate: String, \nadmissiondate: String, \naddress: String, \nmobile: int, \nemail: String, \ntaxpayer: int, \nIDdoctype: String, \nIDnumber: int)
+   + boolean validateCollaborator(Collaborator collaborator)
+   + void updateCollaborator(Collaborator collaborator)
+ }
 
 class Repositories {
   + getInstance() : Repositories
-  + getSkillRepository() : SkillRepository
-  + getOrganizationRepository() : OrganizationRepository
+  + getCollaboratorRepository() : CollaboratorRepository
+  + getTeamRepository() : TeamRepository
+  + getTaskRepository() : TaskRepository
+  + getAuthenticationRepository() : AuthenticationRepository
 }
 
-class CreateSkillController {
-  + CreateJobController(OrganizationRepository organizationRepository,
-                                   JobRepository jobRepository,
-                                   AuthenticationRepository authenticationRepository)
-  + Optional<Skill> createSkill(String name, HRM hrm)
+class RecordTaskController {
+    - teamRepository: TeamRepository
+    - collaboratorRepository: CollaboratorRepository
+    - taskRepository: TaskRepository
+    - authenticationRepository: AuthenticationRepository
+    + RecordTaskController(TeamRepository teamRepository, CollaboratorRepository collaboratorRepository, TaskRepository taskRepository, AuthenticationRepository authenticationRepository)
+    + TeamRepository getTeamRepository()
+    + CollaboratorRepository getCollaboratorRepository()
+    + TaskRepository getTaskRepository()
+    + AuthenticationRepository getAuthenticationRepository()
+    + void markTaskAsDone(Task task)
+    + Collaborator getCollaboratorFromSession()
+    + Team getCollaboratorTeam(Collaborator collaborator)
 }
 
-class CreateSkillUI {
-  + requestSkillName()
+class RecordTaskUI {
+  - collaborator: Collaborator
+  - team: Team
+  - collaboratorTasks: List<Task>
+  + void run()
+  + void requestData()
+  + void submitData()
+  + List<Task> requestTasks()
 }
 
-class HRM {
-   - String name
-   - int vatNumber
-   - String email
-   - int phonenumber
+class Team {
+    - collaborators: List<Collaborator>
+    - teamID: int
+    + boolean addCollaborator(collaborator)
+    + boolean equals(Object o)
+    + int hashCode()
+    + Team clone()
 }
 
-SkillManager --> Skill: Manages
-HRM --> SkillManager: Uses
+class TaskRepository {
+       - List<Task> tasks
+       + Optional<Task> createTask(String title, String description, String status, LocalDate startDate, String status, String duration)
+       + boolean addTask(Task task)
+       + boolean validateTask(Task task)
+       + Task getTaskByTeam(Team team)
+       + List<Task> filterTasksByStatus(List<Task> tasks, String status)
+       + void markTaskAsDone(Task task)
+       + List<Task> getTaskList()
+}
 
-note right of CreateSkillController
-  - Skill name is obtained from the HRM's input
-  - Updates the Skill Repository
-end note
+class Task {
+    - title: String
+    - description: String
+    - status: String
+    - startDate: LocalDate
+    - duration: String
+    - associatedTeam: Team
+    + boolean addTeam(team)
+    + boolean equals(Object o)
+    + int hashCode()
+    + Task clone()
+}
 
-note right of HRM
-  - HRM initiates skill creation
-end note
+class TeamRepository {
+       - List<Team> teams
+       + Optional<Team> createTeam(List<Collaborator>)
+       + boolean addTeam(Team team)
+       + boolean validateTeam(Team team)
+       + Team getTeamByCollaborator(Collaborator collaborator)
+       + List<Team> getTeamList()
+}
 
-note left of CreateSkillUI
-  - UI for HRM to input and confirm skill name
-  - Communicates with CreateSkillController
-end note
-
-note left of Organization
-  - Manages skills
-  - Handles organizational details
-end note
+Team -> Task: assigned to
+Team -> Collaborator: consists of
+Collaborator -> RecordTaskUI: uses
+TaskRepository -> Task: changes status
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
-CreateSkillUI .> CreateSkillController
+RecordTaskUI .> RecordTaskController
 
-CreateSkillController -down-> Repositories : retrieves instances
+RecordTaskController -down-> Repositories : retrieves instances
 
-Repositories -down-> SkillRepository : accesses
-Repositories -down-> OrganizationRepository : accesses
+Repositories -down-> CollaboratorRepository : accesses
+Repositories -down-> TeamRepository : accesses
+Repositories -down-> TaskRepository : accesses
 
-CreateSkillController ..> OrganizationRepository : organizationRepository
+RecordTaskController ..> TeamRepository : teamRepository
+RecordTaskController ..> TaskRepository : taskRepository
+RecordTaskController ..> CollaboratorRepository : collaboratorRepository
 
-OrganizationRepository --> "*" Organization : persists
 ApplicationSession --> "1" UserSession : userSession
 
-CreateSkillController ..> "1" Organization : organization
-CreateSkillController ..> ApplicationSession
-CreateSkillController ..> UserSession
-Organization "1" --> "*" Skill : owns
-Skill --> HRM : createdBy
+RecordTaskController ..> ApplicationSession
+RecordTaskController ..> UserSession
 
-Organization --> "*" HRM : employs
+TeamRepository ..> Team: stores
+TaskRepository ..> Task: stores
+CollaboratorRepository ..> Collaborator: stores
 
 @enduml

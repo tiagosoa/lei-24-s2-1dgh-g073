@@ -27,7 +27,7 @@ activate Collaborator
     Collaborator -> System : confirms
     activate System
 
-    System --> Collaborator : sends record to the Collaborator
+    System --> Collaborator : displays operation success
     deactivate System
 
 @enduml

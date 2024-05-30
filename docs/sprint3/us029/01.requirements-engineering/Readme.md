@@ -20,9 +20,9 @@ As a Collaborator, I want to record the completion of a task.
 > **Answer:** Maybe if optional, not mandatory.
 
 
-> **Question:** Can an employee record more than one completed task at a time?
+> **Question:** This "record" refers to the act of only changing the status of the task, or do we want to save a list of the completed tasks within each Collaborator?
 >
-> **Answer:** It's a matter of UX/UI, each dev team can decide about it.
+> **Answer:** It means to record that a task was completed (changing the status) with the finish time.
 
 ### 1.3. Acceptance Criteria
 
@@ -30,7 +30,7 @@ n/a
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US022 - Add an entry to the Agenda" and "US023 - Assign a Team", as there must be at least one entry in the Agenda with a Team assigned to it to consult the tasks.
+* There is a dependency on "US022 - Add an entry to the Agenda" and "US023 - Assign a Team", as there must be at least one entry in the Agenda with a Team assigned to it to mark it as completed
 
 ### 1.5 Input and Output Data
 
@@ -42,7 +42,6 @@ n/a
 **Output Data:**
 
 * (In)Success of the operation
-* Record of the completion of the task
 
 ### 1.6. System Sequence Diagram (SSD)
 
@@ -52,4 +51,4 @@ n/a
 
 ### 1.7 Other Relevant Remarks
 
-* The task might have to be in "Done" status.
+* The task has to be in "Planned" status.

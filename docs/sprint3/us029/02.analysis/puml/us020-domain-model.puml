@@ -16,16 +16,36 @@ hide methods
 '  -description
 '}
 
-class GSM {
+class Collaborator {
     name
-    vatNumber
-    phoneNumber
-    email
+    birthdate
+    admission date
+    address
+    contact info (mobile and email)
+    taxpayer number
+    ID doc type and number
 }
 
-class GreenSpace {
-    type
-    area
+class Task {
+    title
+    description
+    status
+    startDate
+    duration
+    associatedTeam
+}
+
+class TeamRepository {
+    teams
+}
+
+class TaskRepository {
+    tasks
+}
+
+class Team {
+    collaborators
+    teamID
 }
 
 'class User {
@@ -34,6 +54,9 @@ class GreenSpace {
 '    password
 '}
 
-GSM "1" - "1...*" GreenSpace: registers >
-
-@enduml
+Team "1" -- "*" Collaborator: consists of >
+Team "1" - "1" TeamRepository: stored in >
+Collaborator "1" - "1" Task: records completion of >
+Task "1" - "1" TaskRepository: stored in >
+Team "1" - "*" Task: assigned to >
+@endumli

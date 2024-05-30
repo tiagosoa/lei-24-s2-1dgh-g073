@@ -94,9 +94,10 @@ class TaskRepository {
        - List<Task> tasks
        + Optional<Task> createTask(String title, String description, String status, LocalDate startDate, String status, String duration)
        + boolean addTask(Task task)
-       + boolean validateTeam(Task task)
-       + Task getTaskByTitle(String title)
+       + boolean validateTask(Task task)
        + Task getTaskByTeam(Team team)
+       + List<Task> filterTasksByStatus(List<Task> tasks, String status)
+       + void markTaskAsDone(Task task)
        + List<Team> getTeamList()
 }
 

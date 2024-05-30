@@ -15,21 +15,13 @@
 
 ### Task:
 * Part of an AgendaEntry.
-* Attributes include title, description, 
+* Attributes include title, description, status, startDate, duration, and an associated Team
 
-### AgendaEntry:
-* Added to the Agenda by the GSM.
-* Attributes include the team and the vehicles/equipment assigned to it, approximate duration, and status.
-* Existed previously in the To-Do List.
+### Team Repository:
+* Stores teams and related information
 
-### Agenda:
-* Used by the GSM.
-* Includes entries created by the GSM that relate to a task.
-* Made up of entries that relate to a task.
-* Comprises entries that were previously in the To-Do List.
-
-### Agenda Repository:
-* Stores Agendas.
+### Task Repository:
+* Stores tasks and related information
 
 ### 2.1. Relevant Domain Model Excerpt 
 

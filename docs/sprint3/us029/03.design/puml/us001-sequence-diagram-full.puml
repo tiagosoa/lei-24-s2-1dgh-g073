@@ -6,116 +6,162 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Human Resources Manager" as ADM
-participant ":CreateSkillUI" as UI
-participant ":CreateSkillController" as CTRL
+actor "Collaborator" as ADM
+participant ":ConsultTasksUI" as UI
+participant ":ConsultTasksController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "skillrepository\n:SkillRepository" as SR
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
-participant "skill\n:Skill" as HABILIDADE
+participant "collaboratorrepository\n:CollaboratorRepository" as CR
+participant "taskRepository:\nTaskRepository" as TAR
+participant "teamRepository:\nTeamRepository" as TER
+participant "taskList" as TL
+participant "ListMapper" as LM
+participant "taskListDTO" as TLDTO
+participant "taskDTO" as TDTO
+
 
 activate ADM
 
-        ADM -> UI : asks to create a new skill
+        ADM -> UI : asks to consult the tasks assigned to them between two dates.
 
         activate UI
 
-'            UI --> ADM : requests data (name)
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
             UI -> CTRL** : create
-
             activate CTRL
 
-                 CTRL -> PLAT : getSkillRepository()
-                         activate PLAT
+                                  CTRL -> RepositorySingleton : getInstance()
+                                                    activate RepositorySingleton
 
-                     PLAT -> CTRL : skillRepository
-                     deactivate PLAT
-    deactivate CTRL
-    UI --> ADM : requests name
-    deactivate UI
+                                                        RepositorySingleton --> CTRL: repositories
+                                                    deactivate RepositorySingleton
 
-    ADM -> UI : types requested name
-    activate UI
+                                                     CTRL -> CTRL : getCollaboratorFromSession()
+                                                     activate CTRL
 
-        UI -> CTRL : createSkill(skillname)
-        activate CTRL
+                                                     ref over CTRL
+                                                     Get Collaborator
+                                                     end
 
-            |||
-            CTRL -> CTRL : getHRMFromSession()
+                                                         CTRL --> CTRL : collaborator
+                                                     deactivate CTRL
+
+                                                     CTRL --> UI : collaborator
+                                                     deactivate CTRL
+
+            UI -> CTRL : getTeamRepository()
             activate CTRL
 
-                CTRL -> _APP: getInstance()
-                activate _APP
-                    _APP -> CTRL: appSession
-                deactivate _APP
-
-
-                CTRL -> APP: getCurrentSession()
-                activate APP
-
-                    APP --> CTRL: currentSession
-                deactivate APP
-
-                CTRL -> SESSAO: email = getUserEmail()
-                activate SESSAO
-
-                    SESSAO --> CTRL: email
-                deactivate SESSAO
-
-
-                CTRL -> PLAT: getOrganizationRepository(email)
+                CTRL -> PLAT : getTeamRepository()
                 activate PLAT
 
-                    PLAT --> CTRL: organizationRepository
-                deactivate PLAT
+           PLAT --> CTRL : teamRepository
+           deactivate PLAT
+
+           CTRL --> UI : teamRepository
+           deactivate CTRL
+
+                       UI -> CTRL : getTaskRepository()
+                       activate CTRL
+
+                           CTRL -> PLAT : getTaskRepository()
+                           activate PLAT
+
+                      PLAT --> CTRL : taskRepository
+                      deactivate PLAT
+
+                      CTRL --> UI : taskRepository
+                      deactivate CTRL
+
+                    UI -> CTRL : getTeamByCollaborator(collaborator)
+                    activate CTRL
+
+                        CTRL -> TER : getTeamByCollaborator(collaborator)
+                        activate TER
+
+                   TER --> CTRL : team
+                   deactivate TER
+
+                   CTRL --> UI : team
+                   deactivate CTRL
+            UI -> CTRL: getTaskByTeam(Team team)
+            activate CTRL
+
+            loop for each task
+                CTRL -> TAR : getTaskByTeam(Team team)
+                activate TAR
+            end
 
 
-                CTRL -> OrganizationRepository: getOrganizationByHRMEmail(email)
-                activate OrganizationRepository
-
-                    loop [for each organization
-                        OrganizationRepository -> ORG : anyHRMHasEmail(email)
-                        activate ORG
-
-                             ORG --> OrganizationRepository : true/false
-                        deactivate ORG
-                    end
-                    OrganizationRepository --> CTRL : organization
-                deactivate OrganizationRepository
-
-                CTRL -> ORG: getHRMByEmail(email)
-                activate ORG
-
-                    ORG --> CTRL : hrm
-                deactivate ORG
-
-                CTRL --> CTRL : hrm
-            deactivate CTRL
-
-            |||
-            CTRL -> ORG: createSkill(skillname)
-            activate ORG
-
-                ORG -> HABILIDADE**: createSkill(skillname)
-
-                ORG -> ORG: validateSkill(skill)
-
-                ORG -> SR: addSkill(skill)
+            TAR -> TL**: create()
 
 
-                ORG --> CTRL : skill
+           TAR -> TAR: filterTasksByStatus(taskList)
+           activate TAR
 
-            deactivate ORG
+           TAR --> TAR: collaboratorTasks
+           deactivate TAR
 
-            CTRL --> UI: skill
-            deactivate CTRL
+            TAR --> CTRL: collaboratorTasks
+            deactivate TAR
+
+            CTRL -> LM: toDTO(collaboratorTasks)
+            activate LM
+
+            LM -> TLDTO**: create()
+
+            loop for each task in collaboratorTasks
+
+            LM -> TL: get()
+
+            LM -> LM: toDTO(task)
+            activate LM
+
+            LM --> TDTO**: create(task)
+            deactivate LM
+
+            LM -> TLDTO: add(taskDTO)
+            end
+
+                            LM --> CTRL : taskListDTO
+
+                        deactivate LM
+
+                        CTRL --> UI : taskListDTO
+                        deactivate CTRL
+        UI --> ADM: shows list of tasks the collaborator is assigned to and asks to select one
+        deactivate UI
+
+        ADM -> UI: selects task
+        activate UI
+
+        UI -> TL: get(selectedindex)
+        activate TL
+
+        TL --> UI: selectedTask
+
+                UI --> ADM: asks for confirmation
+                deactivate UI
+
+                ADM -> UI: confirms
+                activate UI
+
+
+
+
+
+
+        UI -> CTRL : markTaskAsDone(selectedTask)
+        activate CTRL
+
+        CTRL -> TAR : markTaskAsDone(selectedTask)
+        activate TAR
+
+
             UI --> ADM: displays operation success
+            deactivate CTRL
+            deactivate TAR
     deactivate UI
 
 deactivate ADM
