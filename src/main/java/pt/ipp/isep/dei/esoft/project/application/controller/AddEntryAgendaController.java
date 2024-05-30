@@ -87,4 +87,20 @@ public class AddEntryAgendaController {
     public List<GreenSpace> getManagedGreenSpaces() {
         return greenSpaceRepository.getGreenSpaceList();
     }
+
+    public List<AgendaEntry> getAgendaEntries() {
+        GSM gsm = getGSMFromSession();
+        Agenda agenda = getAgenda(gsm);
+        return agenda.getEntries();
+    }
+
+    public boolean postponeEntry(AgendaEntry entry, LocalDate newDeadline) {
+        if (newDeadline.isAfter(entry.getDeadline())) {
+            entry.setDeadline(newDeadline);
+            agendaRepository.updateAgenda(entry);
+            return true;
+        }
+        return false;
+    }
 }
+
