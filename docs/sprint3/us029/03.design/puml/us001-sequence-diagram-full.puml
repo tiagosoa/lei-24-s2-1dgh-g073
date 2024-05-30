@@ -7,8 +7,8 @@ autonumber
 
 'hide footbox
 actor "Collaborator" as ADM
-participant ":ConsultTasksUI" as UI
-participant ":ConsultTasksController" as CTRL
+participant ":RecordTaskUI" as UI
+participant ":RecordTaskController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "collaboratorrepository\n:CollaboratorRepository" as CR

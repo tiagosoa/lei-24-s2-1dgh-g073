@@ -6,21 +6,17 @@ skinparam shadowing false
 
 
 'hide footbox
-participant ":CreateSkillController" as CTRL
+participant ":RecordTaskController" as CTRL
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO
-participant ":Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
 
 autonumber 14
--> CTRL : getHRMFromSession()
+-> CTRL : getCollaboratorFromSession()
 autonumber 14.1
 activate CTRL
 
-    group Get HRM
+    group Get GSM
         CTRL -> _APP: getInstance()
         activate _APP
             _APP -> CTRL: appSession
@@ -38,35 +34,14 @@ activate CTRL
             SESSAO --> CTRL: email
         deactivate SESSAO
 
-        CTRL -> PLAT: getOrganizationRepository()
-        activate PLAT
+        CTRL -> SESSAO: getCollaboratorByEmail(email)
+        activate SESSAO
 
-            PLAT --> CTRL: organizationRepository
-        deactivate PLAT
-
-        CTRL -> OrganizationRepository: getOrganizationByUserEmail(email)
-        activate OrganizationRepository
-
-            loop [for each organization
-                OrganizationRepository -> ORG : anyHRMHasEmail(email)
-                activate ORG
-
-                     ORG --> OrganizationRepository : true/false
-                deactivate ORG
-            end
-
-            OrganizationRepository --> CTRL : organization
-
-        deactivate OrganizationRepository
-
-        CTRL -> ORG: getHRMByEmail(email)
-        activate ORG
-
-            ORG --> CTRL : hrm
-        deactivate ORG
+            SESSAO --> CTRL : collaborator
+        deactivate SESSAO
     end
     autonumber 15
-    <-- CTRL : hrm
+    <-- CTRL : collaborator
 deactivate CTRL
 
 @enduml

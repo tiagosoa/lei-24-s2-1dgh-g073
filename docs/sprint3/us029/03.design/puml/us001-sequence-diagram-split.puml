@@ -6,69 +6,126 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Human Resources Manager" as ADM
-participant ":CreateSkillUI" as UI
-participant ":CreateSkillController" as CTRL
+actor "Collaborator" as ADM
+participant ":RecordTaskUI" as UI
+participant ":RecordTaskController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "skillrepository\n:SkillRepository" as SR
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
-participant "skill\n:Skill" as HABILIDADE
+participant "collaboratorrepository\n:CollaboratorRepository" as CR
+participant "taskRepository:\nTaskRepository" as TAR
+participant "teamRepository:\nTeamRepository" as TER
+participant "taskList" as TL
+participant "ListMapper" as LM
+participant "taskListDTO" as TLDTO
+participant "taskDTO" as TDTO
+
 
 activate ADM
 
-        ADM -> UI : asks to create a new skill
+        ADM -> UI : asks to consult the tasks assigned to them between two dates.
 
         activate UI
 
-'            UI --> ADM : requests data (name)
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
             UI -> CTRL** : create
+            activate CTRL
 
-         UI -> CTRL : getSkillRepository()
-         activate CTRL
+                                  CTRL -> RepositorySingleton : getInstance()
+                                                    activate RepositorySingleton
 
-                 CTRL -> PLAT : getSkillRepository()
-                         activate PLAT
+                                                        RepositorySingleton --> CTRL: repositories
+                                                    deactivate RepositorySingleton
 
-                     PLAT -> CTRL : skillRepository
-                     deactivate PLAT
-    deactivate CTRL
-    UI --> ADM : requests name
-    deactivate UI
+                                                     CTRL -> CTRL : getCollaboratorFromSession()
+                                                     activate CTRL
 
-    ADM -> UI : types requested name
-    activate UI
+                                                     ref over CTRL
+                                                     Get Collaborator
+                                                     end
 
-        UI -> CTRL : createSkill(skillname)
+                                                         CTRL --> CTRL : collaborator
+                                                     deactivate CTRL
+
+                                                     CTRL --> UI : collaborator
+                                                     deactivate CTRL
+
+            UI -> CTRL : getTeamRepository()
+            activate CTRL
+
+                CTRL -> PLAT : getTeamRepository()
+                activate PLAT
+
+           PLAT --> CTRL : teamRepository
+           deactivate PLAT
+
+           CTRL --> UI : teamRepository
+           deactivate CTRL
+
+                       UI -> CTRL : getTaskRepository()
+                       activate CTRL
+
+                           CTRL -> PLAT : getTaskRepository()
+                           activate PLAT
+
+                      PLAT --> CTRL : taskRepository
+                      deactivate PLAT
+
+                      CTRL --> UI : taskRepository
+                      deactivate CTRL
+
+                    UI -> CTRL : getTeamByCollaborator(collaborator)
+                    activate CTRL
+
+                        CTRL -> TER : getTeamByCollaborator(collaborator)
+                        activate TER
+
+                   TER --> CTRL : team
+                   deactivate TER
+
+                   CTRL --> UI : team
+                   deactivate CTRL
+            UI -> CTRL: getTaskByTeam(Team team)
+            activate CTRL
+
+            ref over CTRL
+            Get Task List
+            end
+
+                        CTRL --> UI : taskListDTO
+                        deactivate CTRL
+        UI --> ADM: shows list of tasks the collaborator is assigned to and asks to select one
+        deactivate UI
+
+        ADM -> UI: selects task
+        activate UI
+
+        UI -> TL: get(selectedindex)
+        activate TL
+
+        TL --> UI: selectedTask
+
+                UI --> ADM: asks for confirmation
+                deactivate UI
+
+                ADM -> UI: confirms
+                activate UI
+
+
+
+
+
+
+        UI -> CTRL : markTaskAsDone(selectedTask)
         activate CTRL
 
-            |||
-                                ref over CTRL
-                                    Get HRM
+        CTRL -> TAR : markTaskAsDone(selectedTask)
+        activate TAR
 
-                                end ref
 
-            |||
-            CTRL -> ORG: createSkill(skillname)
-            activate ORG
-
-                                    ref over ORG
-                                        Create Skill
-
-                                    end ref
-
-                ORG --> CTRL : skill
-
-            deactivate ORG
-
-            CTRL --> UI: skill
-            deactivate CTRL
             UI --> ADM: displays operation success
+            deactivate CTRL
+            deactivate TAR
     deactivate UI
 
 deactivate ADM

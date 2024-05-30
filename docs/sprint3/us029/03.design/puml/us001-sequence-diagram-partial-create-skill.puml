@@ -3,26 +3,65 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "organization\n:Organization" as ORG
-participant "skill\n:Skill" as TAREFA
-participant "skillrepository\n:SkillRepository" as SR
-
--> ORG: createSkill(skillname)
-
-activate ORG
-    group Create Skill
-
-        ORG -> TAREFA**: createSkill(skillname)
-        ORG -> ORG: validateSkill(skill)
-        ORG -> SR: addSkill (skill)
 
 
+participant ":ConsultTasksController" as CTRL
+participant "taskRepository:\nTaskRepository" as TAR
+participant "taskList" as TL
+participant "ListMapper" as LM
+participant "taskListDTO" as TLDTO
+participant "taskDTO" as TDTO
+
+        -> CTRL : getTasksForCollaborator(Team team, LocalDate firstDate, LocalDate secondDate, String status)
+                  activate CTRL
+    group Get Tasks for Collaborator
+
+
+                     loop for each task
+                         CTRL -> TAR : getTaskByTeam(Team team)
+                         activate TAR
+                     end
+
+                     TAR -> TL**: create()
+
+                                TAR -> TAR: filterTasksByStatus(taskList)
+                                activate TAR
+
+                                TAR --> TAR: collaboratorTasks
+                                deactivate TAR
+
+                     TAR --> CTRL: collaboratorTasks
+                     deactivate TAR
+
+                     CTRL -> LM: toDTO(collaboratorTasks)
+                     activate LM
+
+                     LM -> TLDTO**: create()
+
+                     loop for each task in collaboratorTasks
+
+                     LM -> TL: get()
+
+                     LM -> LM: toDTO(task)
+                     activate LM
+
+                     LM --> TDTO**: create(task)
+                     deactivate LM
+
+                     LM -> TLDTO: add(taskDTO)
+                     end
+
+
+
+                     |||
+
+                         LM --> CTRL : taskListDTO
 
 
     end
 
-    <-- ORG : skill
-deactivate ORG
+    <-- CTRL : taskListDTO
+deactivate CTRL
 
 
 @enduml

@@ -70,6 +70,7 @@ class RecordTaskController {
 class RecordTaskUI {
   - collaborator: Collaborator
   - team: Team
+  - selectedTask: Task
   - collaboratorTasks: List<Task>
   + void run()
   + void requestData()
