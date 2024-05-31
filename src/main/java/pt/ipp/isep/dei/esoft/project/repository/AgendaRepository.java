@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AgendaRepository {
-
     private final List<Agenda> agendas;
 
     public AgendaRepository() {
@@ -35,17 +34,30 @@ public class AgendaRepository {
         return agendas;
     }
 
-    public void updateAgenda(AgendaEntry entry) {
+    // Method to update an Agenda
+    public void updateAgenda(Agenda updatedAgenda) {
+        for (int i = 0; i < agendas.size(); i++) {
+            if (agendas.get(i).getGSM().equals(updatedAgenda.getGSM())) {
+                agendas.set(i, updatedAgenda);
+                return;
+            }
+        }
+    }
+
+    // Method to update an AgendaEntry
+    public void updateAgendaEntry(AgendaEntry updatedEntry) {
         for (Agenda agenda : agendas) {
             for (AgendaEntry agendaEntry : agenda.getEntries()) {
-                if (agendaEntry.equals(entry)) {
-                    agendaEntry.setDeadline(entry.getDeadline());
+                if (agendaEntry.equals(updatedEntry)) {
+                    agendaEntry.setDeadline(updatedEntry.getDeadline());
+                    agendaEntry.cancel();  // Ensuring status update if required
                     return;
                 }
             }
         }
     }
 }
+
 
 
 

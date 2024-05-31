@@ -1,13 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class AgendaEntry {
-
-    private final String title, taskDescription, urgency, duration, status;
+    private final String title, taskDescription, urgency, duration;
+    private String status; // Change to non-final
     private GreenSpace associatedGreenSpace;
     private Team associatedTeam;
     private List<Vehicle> associatedVehicles;
@@ -56,6 +55,14 @@ public class AgendaEntry {
 
     public String getDuration() {
         return duration;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void cancel() {
+        this.status = "canceled";
     }
 
     @Override

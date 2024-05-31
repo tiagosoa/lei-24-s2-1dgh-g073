@@ -42,6 +42,7 @@ public class PostponeEntryAgendaUI implements Runnable {
         System.out.println("Urgency: " + selectedEntry.getUrgency());
         System.out.println("Duration: " + selectedEntry.getDuration());
         System.out.println("Current Deadline: " + selectedEntry.getDeadline());
+        System.out.println("Status:"  + selectedEntry.getStatus());
 
         System.out.println("Enter new deadline (dd-MM-yyyy):");
         String newDeadlineStr = scanner.nextLine();

@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.isep.lei.esoft.auth.AuthFacade;
 import pt.isep.lei.esoft.auth.UserSession;
+import pt.ipp.isep.dei.esoft.project.domain.GSM;
 
 /**
  * Repository class for handling authentication operations.
@@ -62,4 +63,9 @@ public class AuthenticationRepository {
     public boolean addUserWithRole(String name, String email, String pwd, String roleId) {
         return authenticationFacade.addUserWithRole(name, email, pwd, roleId);
     }
+
+    /**
+     * Retrieves the current GSM (Green Space Manager) for the logged-in user.
+     * @return the current GSM
+     */
 }
