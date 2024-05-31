@@ -75,11 +75,10 @@ activate ADM
 
 
                              UI -> CTRL : getToDoListEntries()
-                            CTRL -> TDR : getToDoListEntries()
-                            activate TDR
+                           ref over CTRL
+                           Get To-Do List entries
+                           end
 
-                            TDR --> CTRL : todoListEntries
-                            deactivate TDR
 
                             CTRL --> UI : toDoListEntries
                             deactivate CTRL
