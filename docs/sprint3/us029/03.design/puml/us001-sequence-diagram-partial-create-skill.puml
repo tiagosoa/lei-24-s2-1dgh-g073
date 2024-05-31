@@ -5,14 +5,14 @@ skinparam shadowing false
 
 
 
-participant ":ConsultTasksController" as CTRL
+participant ":RecordTaskController" as CTRL
 participant "taskRepository:\nTaskRepository" as TAR
-participant "taskList" as TL
 participant "ListMapper" as LM
+participant "taskList" as TL
 participant "taskListDTO" as TLDTO
 participant "taskDTO" as TDTO
 
-        -> CTRL : getTasksForCollaborator(Team team, LocalDate firstDate, LocalDate secondDate, String status)
+        -> CTRL : getTaskByTeam(Team team)
                   activate CTRL
     group Get Tasks for Collaborator
 
@@ -27,22 +27,22 @@ participant "taskDTO" as TDTO
                                 TAR -> TAR: filterTasksByStatus(taskList)
                                 activate TAR
 
-                                TAR --> TAR: collaboratorTasks
+                                TAR --> TAR: taskList
                                 deactivate TAR
 
-                     TAR --> CTRL: collaboratorTasks
+                     TAR --> CTRL: taskList
                      deactivate TAR
 
-                     CTRL -> LM: toDTO(collaboratorTasks)
+                     CTRL -> LM: toDTO(taskList)
                      activate LM
 
                      LM -> TLDTO**: create()
 
-                     loop for each task in collaboratorTasks
+                     loop for each task in taskList
 
-                     LM -> TL: get()
+                     LM -> TL: get(i)
 
-                     LM -> LM: toDTO(task)
+                     LM -> LM: taskDTO = toDTO(task)
                      activate LM
 
                      LM --> TDTO**: create(task)
