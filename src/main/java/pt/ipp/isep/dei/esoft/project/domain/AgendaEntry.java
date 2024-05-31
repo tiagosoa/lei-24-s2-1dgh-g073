@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.ArrayList;
 
 public class AgendaEntry {
     private final String title, taskDescription, urgency, duration;
@@ -19,6 +20,7 @@ public class AgendaEntry {
         this.duration = duration;
         this.status = status;
         this.startDate = startDate;
+        this.associatedVehicles = new ArrayList<>();
     }
 
     public boolean addGreenSpace(GreenSpace greenSpace) {
@@ -63,6 +65,15 @@ public class AgendaEntry {
 
     public void cancel() {
         this.status = "canceled";
+    }
+    public void assignVehicle(Vehicle vehicle) {
+        if (!associatedVehicles.contains(vehicle)) {
+            associatedVehicles.add(vehicle);
+        }
+    }
+
+    public List<Vehicle> getAssociatedVehicles() {
+        return associatedVehicles;
     }
 
     @Override

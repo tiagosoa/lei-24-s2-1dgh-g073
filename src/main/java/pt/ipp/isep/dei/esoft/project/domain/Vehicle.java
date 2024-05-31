@@ -62,6 +62,27 @@ public class Vehicle {
     }
 
     /**
+     * Constructs a Vehicle object with only the plate number.
+     *
+     * @param plateNumber          the plate number of the vehicle
+     */
+    public Vehicle(String plateNumber) {
+        validateTrait(plateNumber);
+
+        this.model = "";
+        this.brand = "";
+        this.type = "";
+        this.tareWeight = 0;
+        this.grossWeight = 0;
+        this.currentKm = 0;
+        this.registerDate = LocalDate.now();
+        this.acquisitionDate = LocalDate.now();
+        this.maintenanceFrequencyKm = 0;
+        this.plateNumber = plateNumber;
+        this.lastMaintenanceDate = LocalDate.now();
+    }
+
+    /**
      * Validates that a trait is not null, empty, or less than or equal to 0.
      *
      * @param trait the trait to validate

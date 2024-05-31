@@ -110,6 +110,11 @@ public class AddEntryAgendaController {
         }
         agendaRepository.updateAgenda(agenda);
     }
+
+    public void assignVehicleToEntry(AgendaEntry entry, Vehicle vehicle) {
+        entry.assignVehicle(vehicle);
+        agendaRepository.updateAgendaEntry(entry);
+    }
 }
 
 
