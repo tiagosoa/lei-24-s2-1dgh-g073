@@ -33,7 +33,7 @@ public class AgendaEntry {
         this.startDate = startDate;
     }
 
-    public LocalDate getDeadline() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 

@@ -5,7 +5,7 @@ skinparam shadowing false
 
 
 
-participant ":ConsultTasksController" as CTRL
+participant ":RecordTaskController" as CTRL
 participant "taskRepository:\nTaskRepository" as TAR
 participant "taskList" as TL
 participant "ListMapper" as LM

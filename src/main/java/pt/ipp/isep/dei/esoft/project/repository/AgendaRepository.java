@@ -45,13 +45,22 @@ public class AgendaRepository {
     }
 
     // Method to update an AgendaEntry
-    public void updateAgendaEntry(AgendaEntry updatedEntry) {
+    public void updateAgendaEntryDate(AgendaEntry updatedEntry) {
         for (Agenda agenda : agendas) {
             for (AgendaEntry agendaEntry : agenda.getEntries()) {
                 if (agendaEntry.equals(updatedEntry)) {
-                    agendaEntry.setDeadline(updatedEntry.getDeadline());
-                    agendaEntry.cancel();  // Ensuring status update if required
+                    agendaEntry.setDeadline(updatedEntry.getStartDate());
                     return;
+                }
+            }
+        }
+    }
+
+    public void cancelEntry(AgendaEntry updatedEntry) {
+        for (Agenda agenda : agendas) {
+            for (AgendaEntry agendaEntry: agenda.getEntries()){
+                if (agendaEntry.equals(updatedEntry)) {
+                    agendaEntry.cancel();  // Ensuring status update if required
                 }
             }
         }

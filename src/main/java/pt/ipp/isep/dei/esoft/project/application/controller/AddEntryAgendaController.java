@@ -95,9 +95,9 @@ public class AddEntryAgendaController {
     }
 
     public boolean postponeEntry(AgendaEntry entry, LocalDate newDeadline) {
-        if (newDeadline.isAfter(entry.getDeadline())) {
+        if (newDeadline.isAfter(entry.getStartDate())) {
             entry.setDeadline(newDeadline);
-            agendaRepository.updateAgendaEntry(entry);
+            agendaRepository.updateAgendaEntryDate(entry);
             return true;
         }
         return false;

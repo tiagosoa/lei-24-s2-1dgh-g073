@@ -65,6 +65,7 @@ class Repositories {
 class PostponeEntryUI {
   - controller: PostponeEntryController
   - agendaEntry: AgendaEntry
+  - postponeDate: LocalDate
   + PostponeEntryController getController()
   + void run()
   + void submitData()
