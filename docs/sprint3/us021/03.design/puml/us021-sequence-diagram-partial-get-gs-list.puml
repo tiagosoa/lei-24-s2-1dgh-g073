@@ -6,33 +6,57 @@ skinparam shadowing false
 
 
 participant ":AddEntryToDoListController" as CTRL
-participant ":Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
-participant "greenSpaceRepository\n:GreenSpaceRepository" as GSR
-participant "toDoListRepository\n:ToDoListRepository" as TDR
+participant "greenSpaceRepository:\nGreenSpaceRepository" as GSR
+participant "ListMapper" as LM
 participant "greenSpaces" as GS
+participant "greenSpacesDTO" as GSDTO
+participant "greenSpaceDTO" as GDTO
 
-
+        -> CTRL : getGreenSpaceList()
+                  activate CTRL
     group Get Green Space List
 
-            -> CTRL: getGreenSpaceList()
-            activate CTRL
-
-                CTRL -> GSR: getGreenSpaceList()
-                activate GSR
-
-                GSR -> GS**: create()
 
 
-                GSR --> CTRL: greenSpaces
-                deactivate GSR
+                       CTRL -> GSR : getGreenSpaceList()
+                       activate GSR
+                    
 
-                TDL -> TDL: addEntry(TDLEntry entry)
-                                activate TDL
+                     GSR -> GS**: create()
 
-                                TDL --> TDL: true
-                                deactivate TDL
+                     GSR --> CTRL: greenSpaces
+                     deactivate GSR
 
+                     CTRL -> LM: toDTO(greenSpaces)
+                     activate LM
+
+                     LM -> GSDTO**: create()
+
+                     loop for each greenSpace in greenSpaces
+
+                     LM -> GS: get(i)
+
+                     LM -> LM: greenSpaceDTO = toDTO(greenSpace)
+                     activate LM
+
+                     LM --> GDTO**: create(greenSpace)
+                     deactivate LM
+
+                     LM -> GSDTO: add(greenSpace)
+                     end
+
+
+
+                     |||
+
+                         LM --> CTRL : getGreenSpaceListDTO
+                         deactivate LM
+
+
+    end
+
+    <-- CTRL : greenSpaceListDTO
+deactivate CTRL
 
 
 @enduml

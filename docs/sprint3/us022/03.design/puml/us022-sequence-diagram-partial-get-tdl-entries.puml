@@ -1,0 +1,62 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+participant ":AddEntryAgendaController" as CTRL
+participant "toDoListRepository:\nToDoListRepository" as TDR
+participant "ListMapper" as LM
+participant "toDoListEntries" as TDLES
+participant "toDoListEntriesDTO" as TDLESDTO
+participant "toDoListEntryDTO" as TDLEDTO
+
+        -> CTRL : getToDoListEntries()
+                  activate CTRL
+    group Get To-Do List Entries
+
+
+
+                         CTRL -> TDR : getToDoListEntries()
+                         activate TDR
+
+
+                     TDR -> TDLES**: create()
+
+                     TDR --> CTRL: toDoListEntries
+                     deactivate TDR
+
+                     CTRL -> LM: toDTO(toDoListEntries)
+                     activate LM
+
+                     LM -> TDLESDTO**: create()
+
+                     loop for each entry in toDoListEntries
+
+                     LM -> TDLES: get(i)
+
+                     LM -> LM: toDoListEntryDTO = toDTO(toDoListEntry)
+                     activate LM
+
+                     LM --> TDLEDTO**: create(toDoListEntry)
+                     deactivate LM
+
+                     LM -> TDLESDTO: add(toDoListEntryDTO)
+                     end
+
+
+
+                     |||
+
+                         LM --> CTRL : toDoListEntriesDTO
+                         deactivate LM
+
+
+    end
+
+    <-- CTRL : toDoListEntriesDTO
+deactivate CTRL
+
+
+@enduml
