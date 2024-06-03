@@ -93,6 +93,10 @@ public class AddEntryAgendaController {
         Agenda agenda = getAgenda(gsm);
         return agenda.getEntries();
     }
+    public void assignVehicleToEntry(AgendaEntry entry, Vehicle vehicle) {
+        entry.assignVehicle(vehicle);
+        agendaRepository.updateAgendaEntryDate(entry);
+    }
 }
 
 
