@@ -1,21 +1,19 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.HRM;
-import pt.ipp.isep.dei.esoft.project.domain.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controller class responsible for assigning skills to collaborators.
  */
 public class AssignTeamController {
 
-    private OrganizationRepository organizationRepository;
     private TeamRepository teamRepository;
-    private CollaboratorRepository collaboratorRepository;
+    private AgendaRepository agendaRepository;
     private AuthenticationRepository authenticationRepository;
 
     /**
@@ -23,27 +21,23 @@ public class AssignTeamController {
      */
     public AssignTeamController() {
         Repositories repositories = Repositories.getInstance();
-        this.organizationRepository = repositories.getOrganizationRepository();
         this.teamRepository = repositories.getTeamRepository();
-        this.collaboratorRepository = repositories.getCollaboratorRepository();
+        this.agendaRepository = repositories.getAgendaRepository();
         this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
     /**
      * Constructor that allows passing repositories for testing purposes.
      *
-     * @param organizationRepository     Organization repository
      * @param teamRepository            Skill repository
-     * @param collaboratorRepository     Collaborator repository
+     * @param agendaRepository     Collaborator repository
      * @param authenticationRepository    Authentication repository
      */
-    public AssignTeamController(OrganizationRepository organizationRepository,
-                                TeamRepository teamRepository,
-                                CollaboratorRepository collaboratorRepository,
+    public AssignTeamController(TeamRepository teamRepository,
+                                AgendaRepository agendaRepository,
                                 AuthenticationRepository authenticationRepository) {
-        this.organizationRepository = organizationRepository;
         this.teamRepository = teamRepository;
-        this.collaboratorRepository = collaboratorRepository;
+        this.agendaRepository = agendaRepository;
         this.authenticationRepository = authenticationRepository;
     }
 
@@ -61,29 +55,16 @@ public class AssignTeamController {
     }
 
     /**
-     * Retrieves the CollaboratorRepository instance.
+     * Retrieves the AgendaRepository instance.
      *
-     * @return CollaboratorRepository instance
+     * @return AgendaRepository instance
      */
-    public CollaboratorRepository getCollaboratorRepository() {
-        if (collaboratorRepository == null) {
+    public AgendaRepository getAgendaRepository() {
+        if (agendaRepository == null) {
             Repositories repositories = Repositories.getInstance();
-            collaboratorRepository = repositories.getCollaboratorRepository();
+            agendaRepository = repositories.getAgendaRepository();
         }
-        return collaboratorRepository;
-    }
-
-    /**
-     * Retrieves the OrganizationRepository instance.
-     *
-     * @return OrganizationRepository instance
-     */
-    private OrganizationRepository getOrganizationRepository() {
-        if (organizationRepository == null) {
-            Repositories repositories = Repositories.getInstance();
-            organizationRepository = repositories.getOrganizationRepository();
-        }
-        return organizationRepository;
+        return agendaRepository;
     }
 
     /**
@@ -99,54 +80,35 @@ public class AssignTeamController {
         return authenticationRepository;
     }
 
-    /**
-     * Assigns skills to a collaborator.
-     *
-     * @param collaboratorID       ID of the collaborator
-     * @param collaboratorskills   List of skills to assign
-     */
-    public void assignSkillsToCollaborator(int collaboratorID, List<String> collaboratorskills) {
-        Collaborator collaborator = collaboratorRepository.getCollaboratorByID(collaboratorID);
-
-        if (collaborator == null) {
-            throw new IllegalArgumentException("Collaborator not found.");
+    public Optional<AgendaEntry> assignTeam(AgendaEntry entry, Team team) {
+        if (team == null) {
+            throw new IllegalArgumentException("Team not found.");
         }
-
-        for (String skillname : collaboratorskills) {
-            Skill skill = teamRepository.getSkillByName(skillname);
-            if (skill != null) {
-                collaborator.addSkill(skill);
-            }
-        }
-
-        collaboratorRepository.updateCollaborator(collaborator);
+        entry.addTeam(team);
+        return Optional.of(entry);
     }
 
     /**
-     * Retrieves the HRM (Human Resource Manager) from the current session.
+     * Retrieves a list of teams.
      *
-     * @return HRM instance
+     * @return List of teams
      */
-    public HRM getHRMFromSession() {
+    public List<Team> getTeamList() {
+        return teamRepository.getTeamList();
+    }
+
+    public Agenda getAgenda(GSM gsm) {
+        return agendaRepository.getAgendaByGSM(gsm);
+    }
+
+    public GSM getGSMFromSession() {
         Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
-        return new HRM(email.getEmail());
+        return new GSM(email.getEmail());
     }
 
-    /**
-     * Retrieves a list of collaborators.
-     *
-     * @return List of collaborators
-     */
-    public List<Collaborator> getCollaboratorList() {
-        return collaboratorRepository.getCollaboratorList();
-    }
-
-    /**
-     * Retrieves a list of skills.
-     *
-     * @return List of skills
-     */
-    public List<Skill> getSkillList() {
-        return teamRepository.getSkillList();
+    public List<AgendaEntry> getAgendaEntries() {
+        GSM gsm = getGSMFromSession();
+        Agenda agenda = getAgenda(gsm);
+        return agenda.getEntries();
     }
 }

@@ -9,6 +9,7 @@ import pt.ipp.isep.dei.esoft.project.domain.GSM;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Bootstrap implements Runnable {
@@ -22,6 +23,7 @@ public class Bootstrap implements Runnable {
         addOrganization();
         addUsers();
         addEmptyToDoList();
+        addEmptyAgenda();
     }
 
     private void addOrganization() {
@@ -105,6 +107,7 @@ public class Bootstrap implements Runnable {
 
         //get job repository
         CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
+        TeamRepository teamRepository = Repositories.getInstance().getTeamRepository();
 
         collaboratorRepository.addCollaborator(new Collaborator("Alfredo", "01-10-1964", "01-01-2019", "Porto", 923456789, "alfredo64@gmail.pt", 123456789,"CC", 123456789));
         collaboratorRepository.addCollaborator(new Collaborator("Alberto", "04-01-1974", "02-11-2022", "Gaia", 913456788, "albertoogrande@gmail.pt", 278946139,"CC", 234516799));
@@ -121,6 +124,20 @@ public class Bootstrap implements Runnable {
         collaborator1.addSkill(skill1);
         collaborator2.addSkill(skill2);
         collaborator3.addSkill(skill3);
+
+        List<Collaborator> list1 = new ArrayList<>();
+        list1.add(collaborator1);
+        list1.add(collaborator2);
+        List<Collaborator> list2 = new ArrayList<>();
+        list2.add(collaborator2);
+        list2.add(collaborator3);
+        List<Collaborator> list3 = new ArrayList<>();
+        list3.add(collaborator1);
+        list3.add(collaborator3);
+
+        teamRepository.createTeam(list1, 1);
+        teamRepository.createTeam(list2, 2);
+        teamRepository.createTeam(list3, 3);
     }
 
     private void addVehicles() {

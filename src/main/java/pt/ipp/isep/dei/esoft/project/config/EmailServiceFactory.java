@@ -3,8 +3,7 @@ package pt.ipp.isep.dei.esoft.project.config;
 import java.io.IOException;
 
 public class EmailServiceFactory {
-    public static EmailService getEmailService() throws IOException {
-        Config config = new Config("email.properties");
+    public static EmailService getEmailService(Config config) throws IOException {
         String service = config.getProperty("email.service");
 
         if ("gmail".equalsIgnoreCase(service)) {

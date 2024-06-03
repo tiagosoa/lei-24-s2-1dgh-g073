@@ -93,23 +93,6 @@ public class AddEntryAgendaController {
         Agenda agenda = getAgenda(gsm);
         return agenda.getEntries();
     }
-
-    public boolean postponeEntry(AgendaEntry entry, LocalDate newDeadline) {
-        if (newDeadline.isAfter(entry.getStartDate())) {
-            entry.setDeadline(newDeadline);
-            agendaRepository.updateAgendaEntryDate(entry);
-            return true;
-        }
-        return false;
-    }
-
-    public void cancelEntry(AgendaEntry entry) {
-        Agenda agenda = getAgenda(getGSMFromSession());
-        if (!agenda.cancelEntry(entry)) {
-            throw new IllegalStateException("Failed to cancel entry. Entry may not exist.");
-        }
-        agendaRepository.updateAgenda(agenda);
-    }
 }
 
 

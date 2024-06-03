@@ -29,6 +29,16 @@ public class AgendaEntry {
         return false;
     }
 
+    public boolean addTeam(Team team) {
+        if (associatedTeam == null) {
+            this.associatedTeam = team;
+            return true;
+        } else {
+            System.out.println("There is already a team associated to this entry.");
+        }
+        return false;
+    }
+
     public void setDeadline(LocalDate startDate) {
         this.startDate = startDate;
     }

@@ -9,17 +9,17 @@ import java.util.Objects;
  */
 public class Team {
 
-    private List<Collaborator> collaborators;
+    public List<Collaborator> collaborators;
 
     private int teamID;
 
     /**
      * Constructor for Collaborator class.
      *
-     * @param collaborators          the collaborators that make the team
-     * @param teamID                 the ID number of the team within the system
+     * @param collaborators the collaborators that make the team
+     * @param teamID        the ID number of the team within the system
      */
-    public Team(List<Collaborator> collaborators, int teamID){
+    public Team(List<Collaborator> collaborators, int teamID) {
         this.collaborators = collaborators;
         this.teamID = teamID;
     }
@@ -38,6 +38,7 @@ public class Team {
         }
         return false;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,5 +62,14 @@ public class Team {
 
     public int getTeamID() {
         return teamID;
+    }
+
+    public String listMembers() {
+        StringBuilder sb = new StringBuilder("Team Members:\n");
+        for (Collaborator collaborator : collaborators) {
+            sb.append(collaborator.getName()).append("\n");
+        }
+        return sb.toString();
+
     }
 }

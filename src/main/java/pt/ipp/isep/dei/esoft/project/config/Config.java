@@ -1,20 +1,24 @@
 package pt.ipp.isep.dei.esoft.project.config;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class Config {
-    private static Properties properties = new Properties();
+    private Properties properties;
 
-    public Config(String configFilePath) throws IOException {
+    public Config(String fileName) throws IOException {
         properties = new Properties();
-        try (FileInputStream input = new FileInputStream(configFilePath)) {
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream(fileName)) {
+            if (input == null) {
+                throw new IOException("Unable to find " + fileName);
+            }
             properties.load(input);
         }
     }
 
-    public static String getProperty(String key) {
+    public String getProperty(String key) {
         return properties.getProperty(key);
     }
 }
+
