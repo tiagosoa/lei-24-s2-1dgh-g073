@@ -45,6 +45,8 @@ public class AgendaEntry {
         this.startDate = startDate;
     }
 
+    public void setStatus(String status) {this.status = status;}
+
     public LocalDate getStartDate() {
         return startDate;
     }

@@ -26,6 +26,7 @@ public class GSMUI implements Runnable {
         options.add(new MenuItem("Postpone Agenda Entry", new PostponeEntryAgendaUI()));
         options.add(new MenuItem("Cancel an Agenda Entry", new CancelEntryAgendaUI()));
         options.add(new MenuItem("Assign Vehicle to Agenda Entry", new AssignVehicleUI()));
+        options.add(new MenuItem("List Managed Green Spaces", new ListManagedGSUI()));
 
 
         int option = 0;

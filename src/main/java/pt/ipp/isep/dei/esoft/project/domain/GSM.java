@@ -58,6 +58,8 @@ public class GSM {
         return this.email.equals(email);
     }
 
+    public String getEmail() {return email;}
+
     /**
      * Creates a clone of the GSM.
      *

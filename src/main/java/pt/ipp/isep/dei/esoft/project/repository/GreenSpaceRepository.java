@@ -3,9 +3,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import pt.ipp.isep.dei.esoft.project.domain.GSM;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Repository class for managing greenSpaces.
@@ -13,14 +11,46 @@ import java.util.Optional;
 public class GreenSpaceRepository {
 
     private List<GreenSpace> greenSpaces;
+    private Properties config;
 
     /**
      * Constructs a new GreenSpaceRepository and initializes the greenSpaces list.
      */
     public GreenSpaceRepository() {
-        // Initialize the greenSpaces list with a new ArrayList
         this.greenSpaces = new ArrayList<>();
+        this.config = new Properties();
+        loadConfig();
     }
+
+    private void loadConfig() {
+        try {
+            config.load(getClass().getResourceAsStream("listGS.properties"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<GreenSpace> getManagedGreenSpacesSorted(GSM gsm) {
+        List<GreenSpace> managedGreenSpaces = getManagedGreenSpaces(gsm);
+        String sortingAlgorithm = config.getProperty("sortingAlgorithm", "default");
+
+        Comparator<GreenSpace> comparator = getComparator(sortingAlgorithm);
+        managedGreenSpaces.sort(comparator);
+
+        return managedGreenSpaces;
+    }
+
+    private Comparator<GreenSpace> getComparator(String algorithm) {
+        switch (algorithm) {
+            case "bubbleSort":
+                return Comparator.comparing(GreenSpace::getArea).reversed();
+            case "quickSort":
+                return Comparator.comparing(GreenSpace::getArea).reversed();
+            default:
+                return Comparator.comparing(GreenSpace::getArea).reversed();
+        }
+    }
+
 
     /**
      * Retrieves an existing GreenSpace by its name.
@@ -37,15 +67,6 @@ public class GreenSpaceRepository {
             }
         }
         throw new IllegalArgumentException("GreenSpace does not exist.");
-    }
-
-    public GreenSpace findByName(String name) {
-        for (GreenSpace greenSpace : greenSpaces) {
-            if (greenSpace.getName().equals(name)) {
-                return greenSpace;
-            }
-        }
-        return null;
     }
 
     /**

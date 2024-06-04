@@ -50,6 +50,7 @@ public class AgendaRepository {
             for (AgendaEntry agendaEntry : agenda.getEntries()) {
                 if (agendaEntry.equals(updatedEntry)) {
                     agendaEntry.setDeadline(updatedEntry.getStartDate());
+                    agendaEntry.setStatus("Postponed");
                     return;
                 }
             }
