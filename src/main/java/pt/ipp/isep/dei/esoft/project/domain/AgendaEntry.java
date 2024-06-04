@@ -74,11 +74,13 @@ public class AgendaEntry {
     }
 
     public void cancel() {
-        this.status = "canceled";
+        this.status = "Cancelled";
     }
-    public void assignVehicle(Vehicle vehicle) {
-        if (!associatedVehicles.contains(vehicle)) {
-            associatedVehicles.add(vehicle);
+    public void assignVehicle(List<Vehicle> selectedVehicles) {
+        for (Vehicle vehicle: selectedVehicles) {
+            if (!associatedVehicles.contains(vehicle)) {
+                associatedVehicles.add(vehicle);
+            }
         }
     }
 

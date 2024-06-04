@@ -105,10 +105,10 @@ public class RegisterCollaboratorUI implements Runnable {
                 if (isOlderThan18(admissionDateParsed, birthdateParsed)) {
                     break; // Data válida, sai do loop
                 } else {
-                    System.out.println("A data precisa ser superior a 18 anos da data atual.");
+                    System.out.println("Date needs to be more than 18 years old.");
                 }
             } catch (DateTimeParseException e) {
-                System.out.println("Formato de data inválido. Use o formato dd-MM-yyyy.");
+                System.out.println("Invalid format. Use the format dd-MM-yyyy.");
             }
             admissiondate = requestCollaboratorAdmissionDate();
         }
