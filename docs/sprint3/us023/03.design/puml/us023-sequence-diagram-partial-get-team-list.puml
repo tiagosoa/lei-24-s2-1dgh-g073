@@ -1,0 +1,62 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+participant ":AssignTeamController" as CTRL
+participant "teamRepository:\nTeamRepository" as TR
+participant "ListMapper" as LM
+participant "teamList" as TL
+participant "teamListDTO" as TLDTO
+participant "teamDTO" as TDTO
+
+        -> CTRL : getTeamList()
+                  activate CTRL
+    group Get Team List
+
+
+
+                         CTRL -> TR : getTeamList()
+                         activate TR
+
+
+                     TR -> TL**: create()
+
+                     TR --> CTRL: teamList
+                     deactivate TR
+
+                     CTRL -> LM: toDTO(teamList)
+                     activate LM
+
+                     LM -> TLDTO**: create()
+
+                     loop for each team in teamList
+
+                     LM -> TL: get(i)
+
+                     LM -> LM: teamDTO = toDTO(team)
+                     activate LM
+
+                     LM --> TDTO**: create(team)
+                     deactivate LM
+
+                     LM -> TLDTO: add(teamDTO)
+                     end
+
+
+
+                     |||
+
+                         LM --> CTRL : teamListDTO
+                         deactivate LM
+
+
+    end
+
+    <-- CTRL : teamListDTO
+deactivate CTRL
+
+
+@enduml

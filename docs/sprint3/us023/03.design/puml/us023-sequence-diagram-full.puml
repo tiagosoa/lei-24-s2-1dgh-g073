@@ -96,11 +96,9 @@ activate ADM
                                  UI -> CTRL : getTeamList()
                                  activate CTRL
 
-                                CTRL -> TR : getTeamList()
-                                activate TR
-
-                                TR --> CTRL : teams
-                                deactivate TR
+                                ref over CTRL
+                                Get Team List
+                                end
 
                                 CTRL --> UI : teams
                                 deactivate CTRL
