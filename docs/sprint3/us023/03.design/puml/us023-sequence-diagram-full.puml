@@ -67,11 +67,10 @@ activate ADM
 
 
                              UI -> CTRL : getAgendaEntries()
-                            CTRL -> AG : getAgendaEntries()
-                            activate AG
 
-                            AG --> CTRL : agendaEntries
-                            deactivate AG
+                            ref over CTRL
+                            Get Agenda Entries
+                            end
 
                             CTRL --> UI : agendaEntries
                             deactivate CTRL
