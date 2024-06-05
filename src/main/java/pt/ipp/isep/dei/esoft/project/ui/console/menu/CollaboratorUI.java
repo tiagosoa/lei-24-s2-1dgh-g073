@@ -18,7 +18,7 @@ public class CollaboratorUI implements Runnable {
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
         options.add(new MenuItem("Consult Assigned Tasks", new ConsultTasksUI()));
-        options.add(new MenuItem("Register Maintenance", new RegisterMaintenanceUI()));
+        options.add(new MenuItem("Record Task", new RecordTaskUI()));
 
         int option = 0;
         do {

@@ -65,6 +65,24 @@ public class TaskRepository {
                 .filter(task -> task.getStatus().equalsIgnoreCase(status))
                 .collect(Collectors.toList());
     }
+
+    public List<Task> getTasksByTeam(Team team) {
+        List<Task> teamTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getAssociatedTeam().equals(team) && "Planned".equals(task.getStatus())) {
+                teamTasks.add(task);
+            }
+        }
+        return teamTasks;
+    }
+    public void updateTask(Task task) {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).equals(task)) {
+                tasks.set(i, task);
+                return;
+            }
+        }
+    }
 }
 
 

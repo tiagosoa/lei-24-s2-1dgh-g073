@@ -4,7 +4,6 @@ import pt.ipp.isep.dei.esoft.project.application.controller.ConsultTasksControll
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Task;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
-import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,7 +18,6 @@ public class ConsultTasksUI implements Runnable {
     private LocalDate firstDate;
     private LocalDate secondDate;
     private String status;
-    private CollaboratorRepository collaboratorRepository;
 
     private final ConsultTasksController controller;
 
@@ -48,7 +46,7 @@ public class ConsultTasksUI implements Runnable {
         }
         System.out.println("Tasks assigned to you:");
         for (Task task : tasks) {
-            System.out.println(task.getTitle() + ": " + task.getTaskDescription() + " - " + task.getStartDate());
+            System.out.println(task.getTitle() + ": " + task.getTaskDescription() + " - " + task.getStartDate() + " - Status: " + task.getStatus());
         }
     }
 
