@@ -95,11 +95,9 @@ activate ADM
                                  UI -> CTRL : getVehicleList()
                                  activate CTRL
 
-                                CTRL -> VR : getVehicleList()
-                                activate VR
-
-                                VR --> CTRL : vehicles
-                                deactivate VR
+                                ref over CTRL
+                                Get Vehicles List
+                                end
 
                                 CTRL --> UI : vehicles
                                 deactivate CTRL
