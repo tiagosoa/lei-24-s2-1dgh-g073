@@ -110,10 +110,6 @@ public class AddEntryAgendaController {
         return toDoList.getEntries();
     }
 
-    public List<GreenSpace> getManagedGreenSpaces() {
-        return greenSpaceRepository.getGreenSpaceList();
-    }
-
     public List<AgendaEntry> getAgendaEntries() {
         GSM gsm = getGSMFromSession();
         Agenda agenda = getAgenda(gsm);

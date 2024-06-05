@@ -53,6 +53,10 @@ public class Bootstrap implements Runnable {
         organization.addGSM(new GSM("1231219@isep.ipp.pt"));
         organization.addGSM(new GSM("gsm@this.app"));
 
+        organization.addCollaborator(new Collaborator("Alfredo", "01-10-1964", "01-01-2019", "Porto", 923456789, "alfredo64@gmail.pt", 123456789,"CC", 123456789));
+        organization.addCollaborator(new Collaborator("Alberto", "04-01-1974", "02-11-2022", "Gaia", 913456788, "albertoogrande@gmail.pt", 278946139,"CC", 234516799));
+        organization.addCollaborator(new Collaborator("Jonas", "25-09-1994", "08-07-2023", "Rio Tinto", 93761984, "jonas@gmail.pt", 275315949,"CC", 734691829));
+
         organizationRepository.add(organization);
     }
     private void addEmptyToDoList() {
@@ -165,6 +169,7 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM, AuthenticationController.ROLE_HRM);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_VFM, AuthenticationController.ROLE_VFM);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_GSM, AuthenticationController.ROLE_GSM);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_COLLABORATOR, AuthenticationController.ROLE_COLLABORATOR);
 
         authenticationRepository.addUserWithRole("Tiago Soares", "1231246@isep.ipp.pt", "1231246",
                 AuthenticationController.ROLE_ADMIN);
@@ -201,7 +206,7 @@ public class Bootstrap implements Runnable {
                 AuthenticationController.ROLE_COLLABORATOR);
                 authenticationRepository.addUserWithRole("Alfredo", "alfredo64@gmail.pt", "pwd",
                 AuthenticationController.ROLE_COLLABORATOR);
-        authenticationRepository.addUserWithRole("Alberto", "albertoogrande@gmail", "pwd",
+        authenticationRepository.addUserWithRole("Alberto", "albertoogrande@gmail.pt", "pwd",
                 AuthenticationController.ROLE_COLLABORATOR);
     }
 

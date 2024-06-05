@@ -14,6 +14,7 @@ public class Organization {
     private final List<HRM> hrms = new ArrayList<>();
     private final List<VFM> vfms = new ArrayList<>();
     private final List<GSM> gsms = new ArrayList<>();
+    private final List<Collaborator> collaborators = new ArrayList<>();
     private String name;
     private String website;
     private String phone;
@@ -58,6 +59,17 @@ public class Organization {
         return gsms.contains(gsm);
     }
 
+
+    /**
+     * Checks if the organization employs a specific collaborator
+     *
+     * @param collaborator the Collaborator to check
+     * @return true if the organization employs the Collaborator, false otherwise
+     */
+    public boolean employs(Collaborator collaborator) {
+        return collaborators.contains(collaborator);
+    }
+
     // Check if any HRM, VFM or GSM has a specific email
 
     /**
@@ -88,6 +100,16 @@ public class Organization {
      */
     public boolean anyGSMHasEmail(String email) {
         return gsms.stream().anyMatch(gsm -> gsm.hasEmail(email));
+    }
+
+    /**
+     * Checks if any Collaborator has a specific email.
+     *
+     * @param email the email to check
+     * @return true if any GSM has the email, false otherwise
+     */
+    public boolean anyCollaboratorHasEmail(String email) {
+        return collaborators.stream().anyMatch(collaborator -> collaborator.hasEmail(email));
     }
 
     // Equals, hashCode, and cloning
@@ -148,6 +170,19 @@ public class Organization {
         return false;
     }
 
+    /**
+     * Adds a Collaborator to the organization.
+     *
+     * @param collaborator the Collaborator to add
+     * @return true if the Collaborator is added, false otherwise
+     */
+    public boolean addCollaborator(Collaborator collaborator) {
+        if (validateCollaborator(collaborator)) {
+            return collaborators.add(collaborator);
+        }
+        return false;
+    }
+
     private boolean validateHRM(HRM hrm) {
         return !hrms.contains(hrm);
     }
@@ -158,6 +193,10 @@ public class Organization {
 
     private boolean validateGSM(GSM gsm) {
         return !gsms.contains(gsm);
+    }
+
+    private boolean validateCollaborator(Collaborator collaborator) {
+        return !collaborators.contains(collaborator);
     }
 
     /**
@@ -182,6 +221,10 @@ public class Organization {
 
         for (GSM gsm : this.gsms) {
             clone.gsms.add(gsm.clone());
+        }
+
+        for (Collaborator collaborator : this.collaborators) {
+            clone.collaborators.add(collaborator.clone());
         }
         return clone;
     }

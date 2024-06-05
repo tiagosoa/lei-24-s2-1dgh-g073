@@ -49,9 +49,6 @@ public class AddEntryAgendaUI implements Runnable {
         this.toDoListEntry = requestToDoListEntry();
         if (this.toDoListEntry == null) return;
 
-        this.associatedGreenSpace = requestAssociatedGreenSpace();
-        if (this.associatedGreenSpace == null) return;
-
         this.entryStatus = "Planned";
 
         this.entryStartDate = requestEntryStartingDate();
@@ -87,26 +84,6 @@ public class AddEntryAgendaUI implements Runnable {
         }
 
         return entries.get(entryIndex);
-    }
-
-    public GreenSpace requestAssociatedGreenSpace() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Select a green space to associate:");
-        List<GreenSpace> greenSpaces = controller.getManagedGreenSpaces();
-        for (int i = 0; i < greenSpaces.size(); i++) {
-            System.out.println((i + 1) + ". " + greenSpaces.get(i).getName());
-        }
-
-        int greenSpaceIndex = scanner.nextInt() - 1;
-        scanner.nextLine();  // Consume newline
-
-        if (greenSpaceIndex < 0 || greenSpaceIndex >= greenSpaces.size()) {
-            System.out.println("Invalid selection");
-            return null;
-        }
-
-        return greenSpaces.get(greenSpaceIndex);
     }
 
     public LocalDate requestEntryStartingDate() {

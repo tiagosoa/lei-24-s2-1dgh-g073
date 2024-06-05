@@ -63,9 +63,4 @@ public class AuthenticationRepository {
     public boolean addUserWithRole(String name, String email, String pwd, String roleId) {
         return authenticationFacade.addUserWithRole(name, email, pwd, roleId);
     }
-
-    /**
-     * Retrieves the current GSM (Green Space Manager) for the logged-in user.
-     * @return the current GSM
-     */
 }

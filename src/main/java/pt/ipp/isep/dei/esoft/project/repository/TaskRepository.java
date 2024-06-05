@@ -42,11 +42,15 @@ public class TaskRepository {
      * @return A list of tasks assigned to the team within the date range.
      */
     public List<Task> getTasksByTeamAndDateRange(Team team, LocalDate startDate, LocalDate endDate) {
-        return tasks.stream()
-                .filter(task -> task.getAssociatedTeam().equals(team) &&
-                        (task.getStartDate().isEqual(startDate) || task.getStartDate().isAfter(startDate)) &&
-                        (task.getStartDate().isEqual(endDate) || task.getStartDate().isBefore(endDate)))
-                .collect(Collectors.toList());
+        List<Task> result = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getAssociatedTeam().equals(team) &&
+                    (task.getStartDate().isEqual(startDate) || task.getStartDate().isAfter(startDate)) &&
+                    (task.getStartDate().isEqual(endDate) || task.getStartDate().isBefore(endDate))) {
+                result.add(task);
+            }
+        }
+        return result;
     }
 
     /**

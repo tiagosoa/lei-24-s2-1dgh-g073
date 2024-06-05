@@ -82,21 +82,9 @@ class CancelEntryController {
   + GSM getGSMFromSession()
 }
 
-class GSM {
-   - String name
-   - int vatNumber
-   - String email
-   - int phonenumber
-}
-
 note left of CancelEntryController
   - Selected AgendaEntry is read from GSM's input.
   - Updates the AgendaEntry.
-end note
-
-note left of GSM
- - Responsible for cancelling Agenda Entry.
- - Communicates with the CancelEntryUI
 end note
 
 note left of CancelEntryUI
@@ -110,10 +98,7 @@ note right of AgendaEntry
  - Cancelled by the GSM
 end note
 
-GSM --> AgendaEntry: cancels
-GSM --> Agenda: uses
-AgendaEntry --> Agenda: shown in
-GSM -> CancelEntryUI: uses
+Agenda --> AgendaEntry: shows
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance

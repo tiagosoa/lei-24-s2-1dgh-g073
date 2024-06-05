@@ -93,7 +93,7 @@ public class ConsultTasksController {
 
     public List<Task> getTasksForCollaborator(Team team, LocalDate firstDate, LocalDate secondDate, String status) {
         List<Task> tasks = taskRepository.getTasksByTeamAndDateRange(team, firstDate, secondDate);
-        if (status != null && !status.isEmpty()) {
+        if (status != null) {
             tasks = taskRepository.filterTasksByStatus(tasks, status);
         }
         return tasks;

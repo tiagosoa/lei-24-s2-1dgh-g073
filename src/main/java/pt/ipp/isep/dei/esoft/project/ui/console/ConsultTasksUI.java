@@ -8,10 +8,12 @@ import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
-public class ConsultTasksUI {
+public class ConsultTasksUI implements Runnable {
     private Collaborator collaborator;
     private Team team;
     private LocalDate firstDate;
@@ -40,7 +42,14 @@ public class ConsultTasksUI {
 
     public void submitData() {
         List<Task> tasks = controller.getTasksForCollaborator(team, firstDate, secondDate, status);
-        displayTasks(tasks);
+        if (tasks == null || tasks.isEmpty()) {
+            System.out.println("There are currently no tasks assigned to you in the inputted time frame.");
+            return;
+        }
+        System.out.println("Tasks assigned to you:");
+        for (Task task : tasks) {
+            System.out.println(task.getTitle() + ": " + task.getTaskDescription() + " - " + task.getStartDate());
+        }
     }
 
     private LocalDate requestFirstDate() {
@@ -66,20 +75,41 @@ public class ConsultTasksUI {
         do {
             yesno = scanner.nextLine();
             if (yesno.equals("no")) {
-                submitData();
+                return null;
             }
-        } while (!(yesno.equals("no") || yesno.equals("yes")));
-        if (yesno.equalsIgnoreCase("yes")) {
-            System.out.println("Enter the status (Planned, Postponed, Canceled, Done): ");
-            return scanner.nextLine();
-        }
-        return null;
-    }
+        } while (!yesno.equals("yes"));
+        String status = null;
 
-    private void displayTasks(List<Task> tasks) {
-        System.out.println("Tasks assigned to you:");
-        for (Task task : tasks) {
-            System.out.println(task);
+        while (!(Objects.equals(status, "Planned") || Objects.equals(status, "Postponed") || Objects.equals(status, "Cancelled") || Objects.equals(status, "Done"))) {
+            System.out.println("Please select the task's status:");
+            System.out.println("1. Planned");
+            System.out.println("2. Postponed");
+            System.out.println("3. Cancelled");
+            System.out.println("4. Done");
+            System.out.print("Enter your choice: ");
+            try {
+                int type = scanner.nextInt();
+                switch (type) {
+                    case 1:
+                        status = "Planned";
+                        break;
+                    case 2:
+                        status = "Postponed";
+                        break;
+                    case 3:
+                        status = "Cancelled";
+                        break;
+                    case 4:
+                        status = "Done";
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number between 1 and 3.");
+                scanner.next(); // Clear the invalid input from the scanner
+            }
         }
+        return status;
     }
 }

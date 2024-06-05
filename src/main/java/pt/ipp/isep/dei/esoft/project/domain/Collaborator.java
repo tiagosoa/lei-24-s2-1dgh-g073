@@ -194,4 +194,13 @@ public class Collaborator {
     public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
+    /**
+     * Checks if the Collaborator has the specified email.
+     *
+     * @param email the email to check
+     * @return true if the Collaborator has the specified email, false otherwise
+     */
+    public boolean hasEmail(String email) {
+        return this.email.equals(email);
+    }
 }
