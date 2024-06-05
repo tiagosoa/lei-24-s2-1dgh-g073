@@ -66,7 +66,7 @@ public class AddEntryAgendaController {
      *
      * @return AuthenticationRepository instance
      */
-    private AuthenticationRepository getAuthenticationRepository() {
+    public AuthenticationRepository getAuthenticationRepository() {
         if (authenticationRepository == null) {
             Repositories repositories = Repositories.getInstance();
             authenticationRepository = repositories.getAuthenticationRepository();
