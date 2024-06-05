@@ -71,21 +71,9 @@ class RegisterGSController {
   + GSM getGSMFromSession()
 }
 
-class GSM {
-   - String name
-   - int vatNumber
-   - String email
-   - int phonenumber
-}
-
 note right of RegisterGSController
   - Green Space data is read from GSM's input
   - Updates the Green Space Repository
-end note
-
-note right of GSM
- - Responsible for registering Green Spaces.
- - Communicates with the RegisterGSUI
 end note
 
 note left of RegisterGSUI
@@ -93,9 +81,6 @@ note left of RegisterGSUI
   - Communicates with RegisterGSController
   - Receives repositories from RegisterGSController
 end note
-
-GSM --> GreenSpace: registers and manages
-GSM -> RegisterGSUI: uses
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance

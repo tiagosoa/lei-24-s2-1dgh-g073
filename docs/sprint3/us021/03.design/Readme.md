@@ -9,17 +9,19 @@ _**Note that SSD - Alternative One is adopted.**_
 | Interaction ID | Question: Which class is responsible for...    | Answer                     | Justification (with patterns)                                                                                 |
 |:---------------|:-----------------------------------------------|:---------------------------|:--------------------------------------------------------------------------------------------------------------|
 | Step 1  		     | 	... interacting with the actor?               | AddEntryToDoListUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		        | 	... coordinating the US?                      | AddEntryToDoListController | Controller                                                                                                    |
-| 			  		        | 	... getting the GreenSpace List?              | AddEntryToDoListController | Controller                                                                                                    |
+| 			  		        | 	... coordinating the US?                      | AddEntryToDoListController | PF: Controller                                                                                                |
+| 			  		        | 	... getting the GreenSpace List?              | AddEntryToDoListController | PF: Controller                                                                                                |
 | 			  		        | ... knowing the user using the system?         | UserSession                | IE: cf. A&A component documentation.                                                                          |
 | 			  		        | 							                                        | GSM                        | IE: knows its own data (e.g. email)                                                                           |
-| Step 2  		     | 	...showing list of Green Spaces?						        | AddEntryToDoListUI         | IE: is responsible for all user interactions                                                                  |
+| Step 2  		     | 	...getting the list of Green Spaces?						    | GreenSpaceRepository       | IE: stores all GreenSpaces                                                                                    |
+|   		           | 	...transforming the list into a DTO?						    | ListMapper                 | IE: used to map objects to DTOs.                                                                              |
+| 		             | 	...showing list of Green Spaces?						        | AddEntryToDoListUI         | IE: is responsible for all user interactions                                                                  |
 | Step 3  		     | 	...getting the selected Green Space?          | AddEntryToDoListUI         | IE: is responsible for all user interactions                                                                  |                                               
 | Step 4  		     | 	...asking for the entry data?						           | AddEntryToDoListUI         | IE: is responsible for all user interactions                                                                  |              
 | Step 5  		     | 	...saving the inputted data?						            | AddEntryToDoListUI         | IE: is responsible for all user interactions                                                                  |   
 | Step 6  		     | 	...asking for confirmation?						             | AddEntryToDoListUI         | IE: is responsible for all user interactions                                                                  |   
 | Step 7 		      | 	... validating all data (local validation)?   | TDLEntry                   | IE: owns its data.                                                                                            |
-| 			  		        | 	... validating all data (global validation)?  | ToDoList                   | IE: stores all entries.                                                                                       |
+| 			  		        | 	... validating all data (global validation)?  | ToDoList                   | IE: stores all To-Do List entries.                                                                            |
 | 			  		        | 	... getting the ToDoList for the current GSM? | AddEntryToDoListController | Controller                                                                                                    |
 | 			  		        | 	... saving the created entry?                 | ToDoList                   | IE: owns all entries.                                                                                         | 
 | Step 8 		      | 	... informing operation success?              | AddEntryToDoListUI         | IE: is responsible for user interactions.                                                                     |
@@ -31,6 +33,7 @@ According to the taken rationale, the conceptual classes promoted to software cl
 * ToDoListRepository
 * TDLEntry
 * ToDoList
+* ListMapper
 
 Other software classes (i.e. Pure Fabrication) identified: 
 

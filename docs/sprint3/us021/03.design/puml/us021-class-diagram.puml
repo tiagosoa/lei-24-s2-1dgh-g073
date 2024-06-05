@@ -110,21 +110,9 @@ class AddEntryToDoListController {
   + GSM getGSMFromSession()
 }
 
-class GSM {
-   - String name
-   - int vatNumber
-   - String email
-   - int phonenumber
-}
-
 note left of AddEntryToDoListController
   - TDLEntry data is read from GSM's input
   - Updates the ToDoList
-end note
-
-note left of GSM
- - Responsible for adding Entries to the ToDoList.
- - Communicates with the AddEntryToDoListUI
 end note
 
 note left of AddEntryToDoListUI
@@ -137,10 +125,7 @@ note right of TDLEntry
  - Registered by the GSM in the ToDoList
 end note
 
-GSM --> TDLEntry: registers
-GSM -> ToDoList: uses
-TDLEntry --> ToDoList: shown in
-GSM -> AddEntryToDoListUI: uses
+ToDoList --> TDLEntry: shows
 GreenSpace -> TDLEntry: associated to
 
 Repositories -> Repositories : instance

@@ -93,6 +93,7 @@ class Repositories {
   + getInstance() : Repositories
   + getToDoListRepository() : ToDoListRepository
   + getAgendaRepository() : AgendaRepository
+  + getTaskRepository() : TaskRepository
 }
 
 class AddEntryAgendaUI {
@@ -113,6 +114,7 @@ class AddEntryAgendaController {
   - greenSpaceRepository: GreenSpaceRepository
   - toDoListRepository: ToDoListRepository
   - agendaRepository: AgendaRepository
+  - taskRepository: TaskRepository
   - authenticationRepository: AuthenticationRepository
   + AddEntryAgendaController(GreenSpaceRepository greenSpaceRepository, ToDoListRepository toDoListRepository, AgendaRepository agendaRepository, AuthenticationRepository authenticationRepository)
   + GreenSpaceRepository getGreenSpaceRepository()
@@ -125,21 +127,10 @@ class AddEntryAgendaController {
   + GSM getGSMFromSession()
 }
 
-class GSM {
-   - String name
-   - int vatNumber
-   - String email
-   - int phonenumber
-}
 
 note left of AddEntryAgendaController
   - AgendaEntry data is read from GSM's input
   - Updates the Agenda
-end note
-
-note left of GSM
- - Responsible for adding Entries to the ToDoList and the Agenda.
- - Communicates with the AddEntryAgendaUI
 end note
 
 note left of AddEntryAgendaUI
@@ -152,13 +143,9 @@ note right of AgendaEntry
  - Registered by the GSM in the Agenda
 end note
 
-GSM --> AgendaEntry: registers
-GSM --> ToDoList: uses
-GSM --> Agenda: uses
 AgendaEntry --> Agenda: shown in
 TDLEntry --> ToDoList: shown in
 TDLEntry --> AgendaEntry: related to
-GSM -> AddEntryAgendaUI: uses
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
