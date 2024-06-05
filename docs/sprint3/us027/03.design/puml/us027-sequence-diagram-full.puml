@@ -11,7 +11,6 @@ participant ":ListManagedGSUI" as UI
 participant ":ListManagedGSController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "greenSpaceRepository\n:GreenSpaceRepository" as GSR
 
 activate ADM
 
@@ -38,14 +37,7 @@ activate ADM
                                  deactivate PLAT
                                  CTRL --> UI : GreenSpaceRepository
 
-                                  UI -> CTRL : getGreenSpaceList()
-                                                             CTRL -> GSR : getGreenSpaceList()
-                                                             activate GSR
 
-                                                             GSR --> CTRL : greenSpaces
-                                                             deactivate GSR
-
-                                                             CTRL --> UI : greenSpaces
 
 
                                                                       CTRL -> CTRL : getGSMFromSession()
@@ -66,25 +58,9 @@ activate ADM
         UI -> CTRL : produceManagedGSList(GSM gsm)
         activate CTRL
 
-            CTRL -> GSR: getManagedGreenSpaces(GSM gsm)
-            activate GSR
-
-                GSR -> GSR: getManagedGreenSpaces(GSM gsm)
-                activate GSR
-
-                GSR --> GSR: managedGreenSpaces
-                deactivate GSR
-
-                GSR -> GSR: sortManagedGreenSpaces(List<GreenSpace> managedGreenSpaces)
-                                activate GSR
-
-                                GSR --> GSR: managedGreenSpaces
-                                deactivate GSR
-
-
-                GSR --> CTRL : managedGreenSpaces
-
-            deactivate GSR
+            ref over CTRL
+            Get Managed Green Spaces
+            end
 
             CTRL --> UI: managedGreenSpaces
             deactivate CTRL

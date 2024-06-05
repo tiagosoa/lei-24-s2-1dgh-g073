@@ -1,0 +1,70 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+participant ":ListManagedGSController" as CTRL
+participant "managedGreenSpaceRepository:\nGreenSpaceRepository" as GSR
+participant "ListMapper" as LM
+participant "managedGreenSpaces" as GS
+participant "managedGreenSpacesDTO" as GSDTO
+participant "managedGreenSpaceDTO" as GDTO
+
+        -> CTRL :  getManagedGreenSpaces(GSM gsm)
+                  activate CTRL
+    group Get Managed Green Space List
+
+
+
+                       CTRL -> GSR :  getManagedGreenSpaces(GSM gsm)
+                       activate GSR
+
+                       GSR -> GS**: create(GSM gsm)
+                       
+                       GSR -> GSR: sortManagedGreenSpaces(List<GreenSpace> managedGreenSpaces)
+                                                       activate GSR
+
+                       GSR --> GSR: managedGreenSpaces
+                                                       deactivate GSR
+                    
+
+                     
+
+                     GSR --> CTRL: managedGreenSpaces
+                     deactivate GSR
+
+                     CTRL -> LM: toDTO(managedGreenSpaces)
+                     activate LM
+
+                     LM -> GSDTO**: create()
+
+                     loop for each managedGreenSpace in managedGreenSpaces
+
+                     LM -> GS: get(i)
+
+                     LM -> LM: managedGreenSpaceDTO = toDTO(managedGreenSpace)
+                     activate LM
+
+                     LM --> GDTO**: create(managedGreenSpace)
+                     deactivate LM
+
+                     LM -> GSDTO: add(managedGreenSpace)
+                     end
+
+
+
+                     |||
+
+                         LM --> CTRL : managedGreenSpacesDTO
+                         deactivate LM
+
+
+    end
+
+    <-- CTRL : managedGreenSpacesDTO
+deactivate CTRL
+
+
+@enduml
