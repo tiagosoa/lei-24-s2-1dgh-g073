@@ -50,6 +50,7 @@ This diagram shows the full sequence of interactions between the classes involve
 ### Split Diagrams
 
 ![Sequence Diagram - Add Entry](svg/us022-sequence-diagram-partial-add-entry.svg)
+![Sequence Diagram - Get To-Do List Entries](svg/us022-sequence-diagram-partial-get-tdl-entries.svg)
 ![Sequence Diagram - Get GSM](svg/us022-sequence-diagram-partial-get-gsm.svg)
 
 ## 3.3. Class Diagram (CD)

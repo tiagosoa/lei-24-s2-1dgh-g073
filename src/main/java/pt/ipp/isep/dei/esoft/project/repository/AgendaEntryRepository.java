@@ -1,22 +1,22 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.TDLEntry;
+import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AgendaEntryRepository {
-    private List<TDLEntry> agendaEntries;
+    private List<AgendaEntry> agendaEntries;
 
     public AgendaEntryRepository() {
         this.agendaEntries = new ArrayList<>();
     }
 
-    public void addEntry(TDLEntry entry) {
-        agendaEntries.add(entry);
+    public void addEntry(AgendaEntry agendaEntry) {
+        agendaEntries.add(agendaEntry);
     }
 
-    public List<TDLEntry> getAgendaEntries() {
+    public List<AgendaEntry> getAgendaEntries() {
         return new ArrayList<>(agendaEntries);
     }
 }

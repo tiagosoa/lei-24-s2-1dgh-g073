@@ -12,8 +12,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class CancelEntryAgendaController {
-    private final AgendaRepository agendaRepository;
-    private final AuthenticationRepository authenticationRepository;
+    private AgendaRepository agendaRepository;
+    private AuthenticationRepository authenticationRepository;
 
     public CancelEntryAgendaController() {
         Repositories repositories = Repositories.getInstance();
@@ -32,7 +32,16 @@ public class CancelEntryAgendaController {
         return agendaRepository;
     }
 
-    public AuthenticationRepository getAuthenticationRepository() {
+    /**
+     * Retrieves the AuthenticationRepository instance.
+     *
+     * @return AuthenticationRepository instance
+     */
+    private AuthenticationRepository getAuthenticationRepository() {
+        if (authenticationRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            authenticationRepository = repositories.getAuthenticationRepository();
+        }
         return authenticationRepository;
     }
 

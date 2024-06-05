@@ -39,6 +39,22 @@ public class CollaboratorRepository {
     }
 
     /**
+     * Retrieves a Collaborator by their email.
+     *
+     * @param email The email of the collaborator to retrieve.
+     * @return The Collaborator with the specified email.
+     * @throws IllegalArgumentException if the collaborator does not exist.
+     */
+    public Collaborator getCollaboratorByEmail(String email) {
+        for (Collaborator existingCollaborator : collaborators) {
+            if (existingCollaborator.getEmail().equals(email)) {
+                return existingCollaborator;
+            }
+        }
+        throw new IllegalArgumentException("Collaborator does not exist.");
+    }
+
+    /**
      * Registers a new collaborator with the organization.
      *
      * @param name          the name of the collaborator

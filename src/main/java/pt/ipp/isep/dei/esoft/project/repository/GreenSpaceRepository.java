@@ -24,7 +24,7 @@ public class GreenSpaceRepository {
 
     private void loadConfig() {
         try {
-            config.load(getClass().getResourceAsStream("listGS.properties"));
+            config.load(getClass().getClassLoader().getResourceAsStream("listGS.properties"));
         } catch (Exception e) {
             e.printStackTrace();
         }

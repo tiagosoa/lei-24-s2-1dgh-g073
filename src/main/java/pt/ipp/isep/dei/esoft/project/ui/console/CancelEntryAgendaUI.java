@@ -12,7 +12,7 @@ public class CancelEntryAgendaUI implements Runnable {
     private AgendaEntry agendaEntry;
 
     public CancelEntryAgendaUI() {
-        this.controller = new CancelEntryAgendaController();
+        controller = new CancelEntryAgendaController();
     }
 
     @Override

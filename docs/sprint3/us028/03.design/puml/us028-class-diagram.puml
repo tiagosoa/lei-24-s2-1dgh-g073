@@ -105,13 +105,13 @@ class Task {
     - title: String
     - description: String
     - status: String
+    - urgency: String
     - startDate: LocalDate
     - duration: String
     - associatedTeam: Team
-        + boolean addTeam(team)
-        + boolean equals(Object o)
-        + int hashCode()
-        + Task clone()
+    + boolean equals(Object o)
+    + int hashCode()
+    + Task clone()
 }
 
 class TeamRepository {

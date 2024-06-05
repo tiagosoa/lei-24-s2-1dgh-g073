@@ -51,6 +51,8 @@ This diagram shows the full sequence of interactions between the classes involve
 ### Split Diagrams
 
 ![Sequence Diagram - Assign Team](svg/us023-sequence-diagram-partial-assign-team.svg)
+![Sequence Diagram - Get Agenda Entries](svg/us023-sequence-diagram-partial-get-agenda-entries.svg)
+![Sequence Diagram - Get Team List](svg/us023-sequence-diagram-partial-get-team-list.svg)
 ![Sequence Diagram - Get GSM](svg/us023-sequence-diagram-partial-get-gsm.svg)
 
 ## 3.3. Class Diagram (CD)

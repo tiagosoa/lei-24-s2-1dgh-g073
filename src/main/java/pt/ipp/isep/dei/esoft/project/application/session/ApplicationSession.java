@@ -11,7 +11,7 @@ import java.util.Properties;
 public class ApplicationSession {
     private final AuthenticationRepository authenticationRepository;
     private static final String CONFIGURATION_FILENAME = "src/main/resources/config.properties";
-    private static final String COMPANY_DESIGNATION = "Company.Designation";
+    private static final String COMPANY_DESIGNATION = "Musgo.Sublime";
 
     private ApplicationSession() {
         this.authenticationRepository = Repositories.getInstance().getAuthenticationRepository();

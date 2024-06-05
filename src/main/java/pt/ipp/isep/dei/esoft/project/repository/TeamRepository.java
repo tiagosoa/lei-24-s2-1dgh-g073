@@ -40,9 +40,25 @@ public class TeamRepository {
     }
 
     /**
+     * Retrieves a Team by a Collaborator.
+     *
+     * @param collaborator The collaborator to find the team for.
+     * @return The Team that the collaborator is part of.
+     * @throws IllegalArgumentException if the collaborator is not part of any team.
+     */
+    public Team getTeamByCollaborator(Collaborator collaborator) {
+        for (Team team : teams) {
+            if (team.getTeam().contains(collaborator)) {
+                return team;
+            }
+        }
+        throw new IllegalArgumentException("Collaborator is not part of any team.");
+    }
+
+    /**
      * Registers a new team with the organization.
      *
-     * @param collaborators the collaorators to add to the team
+     * @param collaborators the collaborators to add to the team
      * @param teamID the ID number of the team
      * @return an optional containing the registered team, or empty if registration fails
      */

@@ -14,6 +14,7 @@ public class AssignTeamController {
 
     private TeamRepository teamRepository;
     private AgendaRepository agendaRepository;
+    private TaskRepository taskRepository;
     private AuthenticationRepository authenticationRepository;
 
     /**
@@ -23,21 +24,25 @@ public class AssignTeamController {
         Repositories repositories = Repositories.getInstance();
         this.teamRepository = repositories.getTeamRepository();
         this.agendaRepository = repositories.getAgendaRepository();
+        this.taskRepository = repositories.getTaskRepository();
         this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
     /**
      * Constructor that allows passing repositories for testing purposes.
      *
-     * @param teamRepository            Skill repository
-     * @param agendaRepository     Collaborator repository
+     * @param teamRepository            Team repository
+     * @param agendaRepository     Agenda repository
+     * @param taskRepository     Task repository
      * @param authenticationRepository    Authentication repository
      */
     public AssignTeamController(TeamRepository teamRepository,
                                 AgendaRepository agendaRepository,
+                                TaskRepository taskRepository,
                                 AuthenticationRepository authenticationRepository) {
         this.teamRepository = teamRepository;
         this.agendaRepository = agendaRepository;
+        this.taskRepository = taskRepository;
         this.authenticationRepository = authenticationRepository;
     }
 
@@ -85,6 +90,7 @@ public class AssignTeamController {
             throw new IllegalArgumentException("Team not found.");
         }
         entry.addTeam(team);
+        taskRepository.assignTeam(entry, team);
         return Optional.of(entry);
     }
 

@@ -197,7 +197,12 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserWithRole("GSM", "gsm@this.app", "pwd",
                 AuthenticationController.ROLE_GSM);
 
-
+        authenticationRepository.addUserWithRole("Jonas", "jonas@gmail.pt", "pwd",
+                AuthenticationController.ROLE_COLLABORATOR);
+                authenticationRepository.addUserWithRole("Alfredo", "alfredo64@gmail.pt", "pwd",
+                AuthenticationController.ROLE_COLLABORATOR);
+        authenticationRepository.addUserWithRole("Alberto", "albertoogrande@gmail", "pwd",
+                AuthenticationController.ROLE_COLLABORATOR);
     }
 
 }

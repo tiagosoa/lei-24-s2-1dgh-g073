@@ -15,6 +15,7 @@ public class Repositories {
     private final ToDoListRepository toDoListRepository;
     private final AgendaRepository agendaRepository;
     private final AuthenticationRepository authenticationRepository;
+    private final TaskRepository taskRepository;
     private final VehicleRepository vehicleRepository;
 
     /**
@@ -32,6 +33,7 @@ public class Repositories {
         greenSpaceRepository = new GreenSpaceRepository();
         toDoListRepository = new ToDoListRepository();
         agendaRepository = new AgendaRepository();
+        taskRepository = new TaskRepository();
     }
 
     /**
@@ -136,5 +138,13 @@ public class Repositories {
      */
     public AgendaRepository getAgendaRepository() {
         return agendaRepository;
+    }
+    /**
+     * Returns the task repository.
+     *
+     * @return The task repository.
+     */
+    public TaskRepository getTaskRepository() {
+        return taskRepository;
     }
 }

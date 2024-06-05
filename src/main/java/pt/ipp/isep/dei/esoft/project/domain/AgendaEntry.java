@@ -9,7 +9,7 @@ public class AgendaEntry {
     private final String title, taskDescription, urgency, duration;
     private String status; // Change to non-final
     private GreenSpace associatedGreenSpace;
-    private Team associatedTeam;
+    public Team associatedTeam;
     private List<Vehicle> associatedVehicles;
     private LocalDate startDate;
 
@@ -53,6 +53,9 @@ public class AgendaEntry {
 
     public GreenSpace getAssociatedGreenSpace() {
         return associatedGreenSpace;
+    }
+    public Team getAssociatedTeam() {
+        return associatedTeam;
     }
 
     public String getTitle() {

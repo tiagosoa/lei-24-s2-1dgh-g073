@@ -1,12 +1,10 @@
 package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.AddEntryAgendaController;
+import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.TDLEntry;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
-import pt.ipp.isep.dei.esoft.project.repository.AgendaRepository;
-import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
-import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
-import pt.ipp.isep.dei.esoft.project.repository.ToDoListRepository;
+import pt.ipp.isep.dei.esoft.project.repository.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,8 +22,8 @@ public class AddEntryAgendaUI implements Runnable {
 
     private ToDoListRepository toDoListRepository;
     private GreenSpaceRepository greenSpaceRepository;
-
     private AgendaRepository agendaRepository;
+    private TaskRepository taskRepository;
     private AuthenticationRepository authenticationRepository;
 
     public AddEntryAgendaUI() {
@@ -34,6 +32,7 @@ public class AddEntryAgendaUI implements Runnable {
         this.greenSpaceRepository = getController().getGreenSpaceRepository();
         this.agendaRepository =  getController().getAgendaRepository();
         this.authenticationRepository = getController().getAuthenticationRepository();
+        this.taskRepository = getController().getTaskRepository();
     }
 
     private AddEntryAgendaController getController() {
