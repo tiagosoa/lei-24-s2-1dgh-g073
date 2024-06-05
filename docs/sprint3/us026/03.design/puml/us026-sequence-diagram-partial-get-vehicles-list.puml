@@ -1,0 +1,62 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+participant ":AssignVehiclesController" as CTRL
+participant "vehicleRepository:\nVehicleRepository" as VR
+participant "ListMapper" as LM
+participant "vehicleList" as VL
+participant "vehicleListDTO" as VLDTO
+participant "vehicleDTO" as VDTO
+
+        -> CTRL : getVehicleList()
+                  activate CTRL
+    group Get Vehicle List
+
+
+
+                         CTRL -> VR : getVehicleList()
+                         activate VR
+
+
+                     VR -> VL**: create()
+
+                     VR --> CTRL: vehicleList
+                     deactivate VR
+
+                     CTRL -> LM: toDTO(vehicleList)
+                     activate LM
+
+                     LM -> VLDTO**: create()
+
+                     loop for each vehicle in vehicleList
+
+                     LM -> VL: get(i)
+
+                     LM -> LM: vehicleDTO = toDTO(vehicle)
+                     activate LM
+
+                     LM --> VDTO**: create(vehicle)
+                     deactivate LM
+
+                     LM -> VLDTO: add(vehicleDTO)
+                     end
+
+
+
+                     |||
+
+                         LM --> CTRL : vehicleListDTO
+                         deactivate LM
+
+
+    end
+
+    <-- CTRL : vehicleListDTO
+deactivate CTRL
+
+
+@enduml

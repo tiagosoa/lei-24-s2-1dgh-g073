@@ -1,0 +1,62 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+
+participant ":AssignVehiclesController" as CTRL
+participant "agendaRepository:\nAgendaRepository" as TDR
+participant "ListMapper" as LM
+participant "agendaEntries" as AES
+participant "agendaEntriesDTO" as AESDTO
+participant "agendaEntryDTO" as AEDTO
+
+        -> CTRL : getAgendaEntries()
+                  activate CTRL
+    group Get Agenda Entries
+
+
+
+                         CTRL -> TDR : getAgendaEntries()
+                         activate TDR
+
+
+                     TDR -> AES**: create()
+
+                     TDR --> CTRL: agendaEntries
+                     deactivate TDR
+
+                     CTRL -> LM: toDTO(agendaEntries)
+                     activate LM
+
+                     LM -> AESDTO**: create()
+
+                     loop for each entry in agendaEntries
+
+                     LM -> AES: get(i)
+
+                     LM -> LM: agendaEntryDTO = toDTO(agendaEntry)
+                     activate LM
+
+                     LM --> AEDTO**: create(agendaEntry)
+                     deactivate LM
+
+                     LM -> AESDTO: add(agendaEntryDTO)
+                     end
+
+
+
+                     |||
+
+                         LM --> CTRL : agendaEntriesDTO
+                         deactivate LM
+
+
+    end
+
+    <-- CTRL : agendaEntriesDTO
+deactivate CTRL
+
+
+@enduml
