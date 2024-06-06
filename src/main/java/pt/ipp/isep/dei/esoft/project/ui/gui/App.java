@@ -35,6 +35,15 @@ public class App extends Application {
         primaryStage.show();
     }
 
+    public void showGSMUI(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GSMUI.fxml"));
+        Pane root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Green Space Manager");
+        stage.show();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
