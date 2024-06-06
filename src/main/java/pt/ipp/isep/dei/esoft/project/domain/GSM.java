@@ -7,9 +7,6 @@ import java.util.Objects;
  */
 public class GSM {
     private final String email; // unique identifier for the GSM
-    private String name; // name of the GSM
-    private String position; // position held by the GSM
-    private int phone; // phone number of the GSM
 
     /**
      * Constructor for creating a GSM with the specified email.
