@@ -157,7 +157,6 @@ class VehicleRepositoryTest {
     @Test
     void ensureMaintenanceIsRegisteredSuccessfully() {
         VehicleRepository vehicleRepository = new VehicleRepository();
-        // Arrange
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate acquisitionDate = LocalDate.parse("01-01-2024", formatter);
         LocalDate lastMaintenanceDate = LocalDate.parse("01-04-2024", formatter);

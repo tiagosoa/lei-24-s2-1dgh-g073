@@ -24,7 +24,7 @@ public class TaskTest {
 
     @Test
     public void ensureGetStartDateWorks() {
-        assertEquals(LocalDate.now(), task.getStartDate());
+        assertEquals(LocalDate.now().plusDays(3), task.getStartDate());
     }
 
     @Test
