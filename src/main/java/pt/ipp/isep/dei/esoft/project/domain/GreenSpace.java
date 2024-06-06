@@ -15,10 +15,6 @@ public class GreenSpace {
         this.gsm = gsm;
     }
 
-    public GreenSpace(String name) {
-        this(name, "DefaultType", 0.0, null);
-    }
-
     public String getName() {
         return name;
     }
