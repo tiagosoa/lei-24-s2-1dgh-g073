@@ -2,14 +2,33 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
+import javafx.stage.Stage;
+
+
 import pt.ipp.isep.dei.esoft.project.ui.console.*;
+import pt.ipp.isep.dei.esoft.project.ui.gui.*;
 
 public class GSMUIController {
 
     @FXML
+    private TextField greenSpaceNameField;
+
+    @FXML
+    private ComboBox<String> greenSpaceTypeComboBox;
+
+    @FXML
+    private TextField greenSpaceAreaField;
+
+
+    @FXML
     private void handleRegisterGS(ActionEvent event) {
-        new RegisterGSUI().run();
+        Stage stage = new Stage();
+        App app = new App();
+        app.showRegisterGSUI(stage);
     }
+
 
     @FXML
     private void handleAddEntryToDoList(ActionEvent event) {
