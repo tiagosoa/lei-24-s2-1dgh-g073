@@ -112,7 +112,7 @@ public class AgendaEntryTest {
         AgendaEntry sameEntry = new AgendaEntry("Podar árvores", "Podar todas as árvores no parque.", "Medium", "3 weeks", "Planned", LocalDate.now().plusDays(3));
         assertEquals(entry.hashCode(), sameEntry.hashCode());
 
-        AgendaEntry differentEntry = new AgendaEntry("Title2", "Task2", "Low", "1h", "Pending", LocalDate.now().plusDays(1));
+        AgendaEntry differentEntry = new AgendaEntry("Cortar relva", "Cortar a relva do parque", "Low", "2 weeks", "Postponed", LocalDate.now().plusDays(4));
         assertNotEquals(entry.hashCode(), differentEntry.hashCode());
     }
 
