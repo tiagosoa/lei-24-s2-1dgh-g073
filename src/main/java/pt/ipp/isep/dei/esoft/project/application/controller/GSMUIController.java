@@ -77,7 +77,10 @@ public class GSMUIController {
     }
 
     @FXML
-    private void handleListManagedGS(ActionEvent event) {
-        new ListManagedGSUI().run();
+    private void handleListManagedGS(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        App app = new App();
+        app.showListManagedGSUI(stage);
+
     }
 }

@@ -114,6 +114,14 @@ public class App extends Application {
         stage.show();
     }
 
+    public void showListManagedGSUI(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ListManagedGSUI.fxml"));
+        Pane root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Managed Green Spaces");
+        stage.show();
+    }
 
     public static void main(String[] args) {
         launch(args);
