@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="pt.ipp.isep.dei.esoft.project.application.controller.PostponeEntryAgendaUIController"
+          alignment="CENTER" hgap="10" vgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Select Agenda Entry:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="agendaEntryComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+    <Label text="New Start Date:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <DatePicker fx:id="newStartDatePicker" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Button text="Submit" onAction="#handleSubmit" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
+</GridPane>

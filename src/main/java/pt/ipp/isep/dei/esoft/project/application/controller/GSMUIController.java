@@ -56,8 +56,10 @@ public class GSMUIController {
     }
 
     @FXML
-    private void handlePostponeEntry(ActionEvent event) {
-        new PostponeEntryAgendaUI().run();
+    private void handlePostponeEntry(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        App app = new App();
+        app.showPostponeEntryAgendaUI(stage);
     }
 
     @FXML

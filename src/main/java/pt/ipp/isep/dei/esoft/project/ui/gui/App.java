@@ -87,6 +87,14 @@ public class App extends Application {
         stage.setTitle("Assign Team to Agenda Entry");
         stage.show();
     }
+    public void showPostponeEntryAgendaUI(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PostponeEntryAgendaUI.fxml"));
+        Pane root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Postpone Agenda Entry");
+        stage.show();
+    }
 
     public static void main(String[] args) {
         launch(args);

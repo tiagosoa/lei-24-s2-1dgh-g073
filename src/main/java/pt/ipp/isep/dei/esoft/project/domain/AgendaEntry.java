@@ -94,6 +94,11 @@ public class AgendaEntry {
     }
 
     @Override
+    public String toString() {
+        return getTitle(); // Assuming getTitle() returns the name of the entry
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AgendaEntry)) return false;
