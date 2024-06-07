@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.ui.console.*;
 import pt.ipp.isep.dei.esoft.project.ui.gui.*;
 
+import java.io.IOException;
+
 
 public class GSMUIController {
 
@@ -32,13 +34,18 @@ public class GSMUIController {
 
 
     @FXML
-    private void handleAddEntryToDoList(ActionEvent event) {
-        new AddEntryToDoListUI().run();
+    private void handleAddEntryToDoList(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        App app = new App();
+        app.showAddEntryToDoListUI(stage);
+
     }
 
     @FXML
-    private void handleAddEntryAgenda(ActionEvent event) {
-        new AddEntryAgendaUI().run();
+    private void handleAddEntryAgenda(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        App app = new App();
+        app.showAddEntryAgendaUI(stage);
     }
 
     @FXML

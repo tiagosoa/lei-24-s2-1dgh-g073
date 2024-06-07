@@ -36,6 +36,11 @@ public class GreenSpace {
     }
 
     @Override
+    public String toString() {
+        return this.name;  // Assuming 'name' is the field that holds the name of the GreenSpace
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof GreenSpace)) return false;

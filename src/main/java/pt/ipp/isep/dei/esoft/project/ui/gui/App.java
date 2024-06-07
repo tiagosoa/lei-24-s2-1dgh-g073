@@ -61,6 +61,24 @@ public class App extends Application {
         }
     }
 
+    public void showAddEntryToDoListUI(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AddEntryToDoListUI.fxml"));
+        Pane root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Add Entry To Do List");
+        stage.show();
+    }
+
+    public void showAddEntryAgendaUI(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AddEntryAgendaUI.fxml"));
+        Pane root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Add Entry to Agenda");
+        stage.show();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

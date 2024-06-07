@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="pt.ipp.isep.dei.esoft.project.application.controller.AddEntryToDoListUIController">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <hgap>10</hgap>
+    <vgap>10</vgap>
+
+    <Label text="Entry Title:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="entryTitleField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+    <Label text="Entry Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextArea fx:id="entryDescriptionField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Entry Urgency:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="entryUrgencyComboBox" GridPane.rowIndex="2" GridPane.columnIndex="1">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="High"/>
+                <String fx:value="Medium"/>
+                <String fx:value="Low"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <Label text="Entry Duration:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <TextField fx:id="entryDurationField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <Label text="Green Space:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="greenSpaceComboBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+    <Button text="Submit" onAction="#handleSubmit" GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
+</GridPane>
