@@ -7,11 +7,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextArea;
 import javafx.util.Callback;
+import pt.ipp.isep.dei.esoft.project.config.Config;
+import pt.ipp.isep.dei.esoft.project.config.EmailService;
+import pt.ipp.isep.dei.esoft.project.config.EmailServiceFactory;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +29,8 @@ public class AssignTeamUIController {
 
     @FXML
     private TextArea teamDetailsTextArea;
+
+    private AgendaEntry agendaEntry;
 
     private final AssignTeamController controller;
 
@@ -67,6 +73,12 @@ public class AssignTeamUIController {
                 teamDetailsTextArea.clear();
             }
         });
+        populateAgendaEntries();
+        populateTeams();
+
+        agendaEntryComboBox.setOnAction(event -> {
+            agendaEntry = agendaEntryComboBox.getValue();
+        });
     }
 
 
@@ -100,8 +112,23 @@ public class AssignTeamUIController {
     }
 
     private void sendNotifications(Team team) {
-        // Implement sending notifications
+        try {
+            Config config = new Config("config.properties");
+            EmailService emailService = EmailServiceFactory.getEmailService(config);
+            for (Collaborator member : team.collaborators) {
+                emailService.sendEmail(
+                        member.getEmail(),
+                        "Task Assignment",
+                        "You have been assigned to task: " + agendaEntry.getTitle()
+                );
+            }
+            showAlert("Success", "Notifications sent successfully.");
+        } catch (IOException e) {
+            showAlert("Error", "Failed to send notifications: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
