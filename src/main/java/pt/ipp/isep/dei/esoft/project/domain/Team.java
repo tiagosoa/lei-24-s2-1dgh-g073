@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public class Team {
 
-    private List<Collaborator> collaborators;
+    public List<Collaborator> collaborators;
     private int teamID;
 
     /**

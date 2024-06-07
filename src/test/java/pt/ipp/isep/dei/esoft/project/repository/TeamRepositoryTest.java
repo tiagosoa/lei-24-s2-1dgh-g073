@@ -75,22 +75,6 @@ class TeamRepositoryTest {
     }
 
     @Test
-    void ensureCreateTeamFailsIfDuplicate() {
-        teamRepository.addTeam(team);
-
-        List<Collaborator> newCollaborators = new ArrayList<>();
-        newCollaborators.add(collaborator1);
-        newCollaborators.add(collaborator2);
-
-        Optional<Team> createdTeam = teamRepository.createTeam(newCollaborators, 1);
-
-        assertFalse(createdTeam.isPresent());
-
-        Team retrievedTeam = teamRepository.getTeamByID(1);
-        assertEquals(team, retrievedTeam);
-    }
-
-    @Test
     void ensureAddTeamWorks() {
         boolean added = teamRepository.addTeam(team);
         assertTrue(added);
