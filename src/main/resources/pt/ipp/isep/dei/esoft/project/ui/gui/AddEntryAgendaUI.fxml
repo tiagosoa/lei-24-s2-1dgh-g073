@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.geometry.Insets?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="pt.ipp.isep.dei.esoft.project.application.controller.AddEntryAgendaUIController">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="pt.ipp.isep.dei.esoft.project.application.controller.AddEntryAgendaUIController"
+          alignment="CENTER" hgap="10" vgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0">
     <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
+        <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
-    <hgap>10</hgap>
-    <vgap>10</vgap>
 
     <Label text="To-Do List Entry:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
     <ComboBox fx:id="toDoListEntryComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
@@ -21,4 +22,18 @@
     <DatePicker fx:id="entryStartDatePicker" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
     <Button text="Submit" onAction="#handleSubmit" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
+
+    <!-- Ensure elements stretch horizontally -->
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" />
+        <ColumnConstraints hgrow="ALWAYS" />
+    </columnConstraints>
+
+    <!-- Ensure elements stretch vertically -->
+    <rowConstraints>
+        <RowConstraints vgrow="ALWAYS" />
+        <RowConstraints vgrow="ALWAYS" />
+        <RowConstraints vgrow="ALWAYS" />
+    </rowConstraints>
 </GridPane>
+
