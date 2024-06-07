@@ -25,7 +25,6 @@ public class App extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginUI.fxml"));
         Pane root = loader.load();
 
