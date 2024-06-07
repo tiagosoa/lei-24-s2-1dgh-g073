@@ -21,10 +21,10 @@ public class TaskRepository {
         tasks.add(task);
     }
 
-    public void assignTeam(AgendaEntry entry, Team team){
+    public void assignTeam(AgendaEntry entry, Team team) {
         for (Task task : tasks) {
             if (entry.getTitle().equals(task.getTitle()) && entry.getStartDate().equals(task.getStartDate()) && entry.getStatus().equals(task.getStatus())) {
-                task.associatedTeam = team;
+                task.setAssociatedTeam(team);
                 break;
             }
         }
@@ -33,18 +33,11 @@ public class TaskRepository {
     public List<Task> getTasks() {
         return new ArrayList<>(tasks);
     }
-    /**
-     * Retrieves a list of tasks assigned to a specific team within a given date range.
-     *
-     * @param team The team to retrieve tasks for.
-     * @param startDate The start date of the range.
-     * @param endDate The end date of the range.
-     * @return A list of tasks assigned to the team within the date range.
-     */
+
     public List<Task> getTasksByTeamAndDateRange(Team team, LocalDate startDate, LocalDate endDate) {
         List<Task> result = new ArrayList<>();
         for (Task task : tasks) {
-            if (task.getAssociatedTeam().equals(team) &&
+            if (task.getAssociatedTeam() != null && task.getAssociatedTeam().equals(team) &&
                     (task.getStartDate().isEqual(startDate) || task.getStartDate().isAfter(startDate)) &&
                     (task.getStartDate().isEqual(endDate) || task.getStartDate().isBefore(endDate))) {
                 result.add(task);
@@ -53,13 +46,6 @@ public class TaskRepository {
         return result;
     }
 
-    /**
-     * Filters a list of tasks by their status.
-     *
-     * @param tasks The list of tasks to filter.
-     * @param status The status to filter by.
-     * @return A list of tasks that match the specified status.
-     */
     public List<Task> filterTasksByStatus(List<Task> tasks, String status) {
         return tasks.stream()
                 .filter(task -> task.getStatus().equalsIgnoreCase(status))
@@ -69,12 +55,13 @@ public class TaskRepository {
     public List<Task> getTasksByTeam(Team team) {
         List<Task> teamTasks = new ArrayList<>();
         for (Task task : tasks) {
-            if (task.getAssociatedTeam().equals(team) && "Planned".equals(task.getStatus())) {
+            if (task.getAssociatedTeam() != null && task.getAssociatedTeam().equals(team) && "Planned".equals(task.getStatus())) {
                 teamTasks.add(task);
             }
         }
         return teamTasks;
     }
+
     public void updateTask(Task task) {
         for (int i = 0; i < tasks.size(); i++) {
             if (tasks.get(i).equals(task)) {
@@ -84,8 +71,3 @@ public class TaskRepository {
         }
     }
 }
-
-
-
-
-

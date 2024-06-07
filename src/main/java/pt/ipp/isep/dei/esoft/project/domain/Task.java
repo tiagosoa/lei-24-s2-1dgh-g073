@@ -48,6 +48,8 @@ public class Task {
         this.status = status;
     }
 
+    public void setAssociatedTeam(Team associatedTeam) {this.associatedTeam = associatedTeam;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
