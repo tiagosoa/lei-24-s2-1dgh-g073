@@ -63,8 +63,10 @@ public class GSMUIController {
     }
 
     @FXML
-    private void handleCancelEntry(ActionEvent event) {
-        new CancelEntryAgendaUI().run();
+    private void handleCancelEntry(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        App app = new App();
+        app.showCancelEntryAgendaUI(stage);
     }
 
     @FXML

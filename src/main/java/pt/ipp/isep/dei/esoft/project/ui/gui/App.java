@@ -96,6 +96,15 @@ public class App extends Application {
         stage.show();
     }
 
+    public void showCancelEntryAgendaUI(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("CancelEntryAgendaUI.fxml"));
+        Pane root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Cancel Agenda Entry");
+        stage.show();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
