@@ -14,10 +14,6 @@ participant "repositories\n:Repositories" as PLAT
 participant "collaboratorrepository\n:CollaboratorRepository" as CR
 participant "taskRepository:\nTaskRepository" as TAR
 participant "teamRepository:\nTeamRepository" as TER
-participant "taskList" as TL
-participant "ListMapper" as LM
-participant "taskListDTO" as TLDTO
-participant "taskDTO" as TDTO
 
 
 activate ADM
@@ -104,43 +100,14 @@ activate ADM
         deactivate CTRL
         UI -> CTRL : getTasksForCollaborator(Team team, LocalDate firstDate, LocalDate secondDate, String status)
          activate CTRL
-            loop for each task
-                CTRL -> TAR : getTaskByTeam(Team team)
-                activate TAR
-            end
-
-            TAR -> TL**: create()
-
-            TAR --> CTRL: collaboratorTasks
-            deactivate TAR
-
-            CTRL -> LM: toDTO(collaboratorTasks)
-            activate LM
-
-            LM -> TLDTO**: create()
-
-            loop for each task in collaboratorTasks
-
-            LM -> TL: get()
-
-            LM -> LM: toDTO(task)
-            activate LM
-
-            LM --> TDTO**: create(task)
-            deactivate LM
-
-            LM -> TLDTO: add(taskDTO)
-            end
+                        ref over CTRL
+                        Get Tasks
+                        end
 
 
-
-            |||
-
-                LM --> CTRL : taskListDTO
-
-            deactivate LM
 
             CTRL --> UI : taskListDTO
+            deactivate CTRL
 
             UI --> ADM: shows tasks assigned to the collaborator
     deactivate UI

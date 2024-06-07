@@ -120,10 +120,9 @@ class TeamRepository {
        + List<Team> getTeamList()
 }
 
-Team -> Task: assigned to
+Task -> Team: assigned with
 Team -> Collaborator: consists of
 Collaborator -> RecordTaskUI: uses
-TaskRepository -> Task: changes status
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance

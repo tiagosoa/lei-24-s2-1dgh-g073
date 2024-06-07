@@ -88,45 +88,9 @@ activate ADM
             UI -> CTRL: getTaskByTeam(Team team)
             activate CTRL
 
-            loop for each task
-                CTRL -> TAR : getTaskByTeam(Team team)
-                activate TAR
+            ref over CTRL
+            Get Collaborator Tasks
             end
-
-
-            TAR -> TL**: create()
-
-
-           TAR -> TAR: filterTasksByStatus(taskList)
-           activate TAR
-
-           TAR --> TAR: collaboratorTasks
-           deactivate TAR
-
-            TAR --> CTRL: collaboratorTasks
-            deactivate TAR
-
-            CTRL -> LM: toDTO(collaboratorTasks)
-            activate LM
-
-            LM -> TLDTO**: create()
-
-            loop for each task in collaboratorTasks
-
-            LM -> TL: get()
-
-            LM -> LM: toDTO(task)
-            activate LM
-
-            LM --> TDTO**: create(task)
-            deactivate LM
-
-            LM -> TLDTO: add(taskDTO)
-            end
-
-                            LM --> CTRL : taskListDTO
-
-                        deactivate LM
 
                         CTRL --> UI : taskListDTO
                         deactivate CTRL

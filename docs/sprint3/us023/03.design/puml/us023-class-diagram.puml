@@ -103,6 +103,7 @@ class AssignTeamUI {
   + void requestData()
   + AgendaEntry requestAgendaEntry()
   + Team requestTeam()
+  + void sendNotifications(Team team)
 }
 
 class AssignTeamController {
@@ -117,22 +118,10 @@ class AssignTeamController {
   + GSM getGSMFromSession()
 }
 
-class GSM {
-   - String name
-   - int vatNumber
-   - String email
-   - int phonenumber
-}
-
 note left of AssignTeamController
   - Selected AgendaEntry and team are read from GSM's input.
   - Updates the AgendaEntry.
   - Sends message to the collaborators of the assigned Team.
-end note
-
-note left of GSM
- - Responsible for assigning Teams to an Entry in the Agenda.
- - Communicates with the AssignTeamUI
 end note
 
 note left of AssignTeamUI
@@ -145,12 +134,12 @@ note right of AgendaEntry
  - Registered by the GSM in the Agenda
 end note
 
-GSM --> Team: assigns
-Team -> AgendaEntry: assigned to
+
+AgendaEntry -> Team: assigned with
 Team -> Collaborator: consists of
-GSM --> Agenda: uses
-AgendaEntry --> Agenda: shown in
-GSM -> AssignTeamUI: uses
+Agenda --> AgendaEntry: shows
+AssignTeamUI -> Team: sends notifications to
+
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance

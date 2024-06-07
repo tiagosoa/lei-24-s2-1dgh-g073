@@ -83,22 +83,9 @@ class PostponeEntryController {
   + Optional<AgendaEntry> postponeEntry(AgendaEntry entry, LocalDate date)
   + GSM getGSMFromSession()
 }
-
-class GSM {
-   - String name
-   - int vatNumber
-   - String email
-   - int phonenumber
-}
-
 note left of PostponeEntryController
   - Selected AgendaEntry is read from GSM's input.
   - Updates the AgendaEntry.
-end note
-
-note left of GSM
- - Responsible for postponing Agenda Entry.
- - Communicates with the PostponeEntryUI
 end note
 
 note left of PostponeEntryUI
@@ -112,10 +99,7 @@ note right of AgendaEntry
  - Postponed by the GSM
 end note
 
-GSM --> AgendaEntry: postpones
-GSM --> Agenda: uses
-AgendaEntry --> Agenda: shown in
-GSM -> PostponeEntryUI: uses
+Agenda --> AgendaEntry: shows
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance

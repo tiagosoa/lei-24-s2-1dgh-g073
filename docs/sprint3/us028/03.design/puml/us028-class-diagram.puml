@@ -123,8 +123,10 @@ class TeamRepository {
        + List<Team> getTeamList()
 }
 
-Team -> Task: assigned to
+Task -> Team: assigned with
+
 Team -> Collaborator: consists of
+
 Collaborator -> ConsultTasksUI: uses
 
 Repositories -> Repositories : instance

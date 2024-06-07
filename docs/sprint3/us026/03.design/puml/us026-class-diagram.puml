@@ -99,7 +99,6 @@ class AssignVehiclesUI {
   + void requestData()
   + AgendaEntry requestAgendaEntry()
   + Vehicle requestVehicles()
-  + PERGUNTAR AO PROFESSOR PPROG
 }
 
 class AssignVehiclesController {
@@ -114,21 +113,9 @@ class AssignVehiclesController {
   + GSM getGSMFromSession()
 }
 
-class GSM {
-   - String name
-   - int vatNumber
-   - String email
-   - int phonenumber
-}
-
 note left of AssignVehiclesController
   - Selected AgendaEntry and vehicles are read from GSM's input.
   - Updates the AgendaEntry.
-end note
-
-note left of GSM
- - Responsible for assigning Vehicles to an Entry in the Agenda.
- - Communicates with the AssignVehiclesUI
 end note
 
 note left of AssignVehiclesUI
@@ -141,11 +128,9 @@ note right of AgendaEntry
  - Registered by the GSM in the Agenda
 end note
 
-GSM --> Vehicle: assigns
 Vehicle -> AgendaEntry: assigned to
-GSM --> Agenda: uses
-AgendaEntry --> Agenda: shown in
-GSM -> AssignVehiclesUI: uses
+
+Agenda --> AgendaEntry: shows
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance

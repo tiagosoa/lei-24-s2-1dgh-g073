@@ -24,6 +24,7 @@ _**Note that SSD - Alternative One is adopted.**_
 | 			  		        | 	... validating all data (global validation)? | Agenda               | IE: stores AgendaEntries.                                                                                     |
 | 			  		        | 	... updating the entry?                      | Agenda               | IE: owns AgendaEntries.                                                                                       | 
 | Step 8 		      | 	... informing operation success?             | AssignTeamUI         | IE: is responsible for user interactions.                                                                     |
+| Step 9 		      | 	... sending the message to the team members? | AssignTeamUI         | Pure Fabrication                                                                                              |
 
 ### Systematization ##
 

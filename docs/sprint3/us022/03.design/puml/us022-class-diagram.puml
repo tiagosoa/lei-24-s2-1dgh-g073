@@ -143,8 +143,8 @@ note right of AgendaEntry
  - Registered by the GSM in the Agenda
 end note
 
-AgendaEntry --> Agenda: shown in
-TDLEntry --> ToDoList: shown in
+Agenda --> AgendaEntry: shows
+ToDoList --> TDLEntry: shows
 TDLEntry --> AgendaEntry: related to
 
 Repositories -> Repositories : instance

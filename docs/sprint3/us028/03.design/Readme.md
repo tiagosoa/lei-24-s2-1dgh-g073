@@ -20,10 +20,14 @@ _**Note that SSD - Alternative One is adopted.**_
 | Step 5  		     | 	...saving the inputted status? (optional) 						       | ConsultTasksUI         | IE: is responsible for all user interactions                                                                  |   
 | 			  		        | ... getting the team the collaborator is in?							     | TeamRepository         | IE: stores teams and all related info.                                                                        |
 | 			  		        | ... creating a list of tasks?							                    | TaskRepository         | IE: stores tasks and all related info.                                                                        |
-| 			  		        | ... transforming the list into a DTO?							            | TaskRepository         | IE: stores tasks and all related info.                                                                        |
+| 			  		        | ... transforming the list into a DTO?							            | ListMapper             | IE: responsible for transforming objects into DTOs                                                            |
 | Step 6  		     | 	...showing the list of tasks?				                      | ConsultTasksUI         | IE: is responsible for all user interactions                                                                  |
 
 ### Systematization ##
+
+According to the taken rationale, the conceptual classes promoted to software classes are:
+
+* ListMapper
 
 Other software classes (i.e. Pure Fabrication) identified:
 

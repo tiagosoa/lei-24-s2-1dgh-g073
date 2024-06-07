@@ -69,20 +69,8 @@ class ListManagedGSController {
   + GSM getGSMFromSession()
 }
 
-class GSM {
-   - String name
-   - int vatNumber
-   - String email
-   - int phonenumber
-}
-
 note right of ListManagedGSController
   - Fetches the list of managed Green Spaces
-end note
-
-note right of GSM
- - Responsible for managing Green Spaces.
- - Communicates with the ListManagedGSUI
 end note
 
 note left of ListManagedGSUI
@@ -91,9 +79,7 @@ note left of ListManagedGSUI
   - Receives repositories from ListManagedGSController
 end note
 
-GSM --> GreenSpace: manages
-GSM -> ListManagedGSUI: uses
-ListManagedGSUI --> GreenSpace: shows list of
+ListManagedGSUI --> GreenSpace: lists
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
