@@ -40,7 +40,7 @@
         <mockito-core>5.1.1</mockito-core>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>your javafx mainapp</mainClass>
+        <mainClass>App</mainClass>
         <maven.compiler.release>17</maven.compiler.release>
         <javafx.version>21</javafx.version>
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
