@@ -12,20 +12,14 @@ skinparam rectangle{
 left to right direction
 
 rectangle "System Actors" as actors {
-    actor Freelancer
     actor "Human Resources Manager" as HRM
     actor "Vehicle Fleet Manager" as VFM
     actor "Green Space Manager" as GSM
     actor "Software Quality Assessment Team Manage" as QAM
+    actor "Collaborator" as Collaborator
 }
 
-
-note right of Freelancer
-    Actor identified but still
-    no concrete use cases
-end note
-
-rectangle "Use Cases" as usecases{
+rectangle "Use Cases" as usecases {
     usecase "UC1 - Create a Skill" as UC1
     usecase "UC2 - Create a Job" as UC2
     usecase "UC3 - Register a Collaborator" as UC3
@@ -40,6 +34,21 @@ rectangle "Use Cases" as usecases{
     usecase "UC12 - Import File with Pipe Routes" as UC12
     usecase "UC13 - Apply an Algorithm" as UC13
     usecase "UC14 - Run Tests for Inputs" as UC14
+    usecase "UC15 - Predict Water Consumption Costs" as UC15
+    usecase "UC16 - Polynomial Regression Analysis" as UC16
+    usecase "UC17 - Shortest Route to Single Assembly Point" as UC17
+    usecase "UC18 - Shortest Route to Multiple Assembly Points" as UC18
+    usecase "UC19 - Analyze Worst-case Time Complexity" as UC19
+    usecase "UC20 - Register a Green Space" as UC20
+    usecase "UC21 - Add Task to To-Do List" as UC21
+    usecase "UC22 - Add Task to Agenda" as UC22
+    usecase "UC23 - Assign Team to Task" as UC23
+    usecase "UC24 - Postpone Task in Agenda" as UC24
+    usecase "UC25 - Cancel Task in Agenda" as UC25
+    usecase "UC26 - Assign Vehicles to Task" as UC26
+    usecase "UC27 - List Managed Green Spaces" as UC27
+    usecase "UC28 - Consult Assigned Tasks" as UC28
+    usecase "UC29 - Record Task Completion" as UC29
 
     HRM --> UC1
     HRM --> UC2
@@ -55,14 +64,22 @@ rectangle "Use Cases" as usecases{
     GSM --> UC12
     GSM --> UC13
     QAM --> UC14
-
+    GSM --> UC15
+    GSM --> UC16
+    GSM --> UC17
+    GSM --> UC18
+    QAM --> UC19
+    GSM --> UC20
+    GSM --> UC21
+    GSM --> UC22
+    GSM --> UC23
+    GSM --> UC24
+    GSM --> UC25
+    GSM --> UC26
+    GSM --> UC27
+    Collaborator --> UC28
+    Collaborator --> UC29
 
 }
-note right of actors
-    Rectangles and Titles are for
-    demonstration purposes only.
-    Omitt on your diagrams.
-
-end note
 
 @enduml
