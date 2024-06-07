@@ -70,8 +70,10 @@ public class GSMUIController {
     }
 
     @FXML
-    private void handleAssignVehicle(ActionEvent event) {
-        new AssignVehicleUI().run();
+    private void handleAssignVehicle(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        App app = new App();
+        app.showAssignVehicleUI(stage);
     }
 
     @FXML

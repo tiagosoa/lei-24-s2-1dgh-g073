@@ -153,12 +153,12 @@ public class Bootstrap implements Runnable {
         LocalDate date1 = LocalDate.parse("30-04-2024", formatter);
         LocalDate date2 = LocalDate.parse("29-04-2024", formatter);
         LocalDate date3 = LocalDate.parse("01-05-2024", formatter);
-        /*
+
         vehicleRepository.addVehicle(new Vehicle("Porsche", "Turbo", "Car", 1275, 1820, 30000, date1, date2, 10000, "00-AA-00", date3));
         vehicleRepository.addVehicle(new Vehicle("Ford", "Focus", "Car", 1325, 1950, 30500, date1, date2, 15000, "01-AB-01", date3));
         vehicleRepository.addVehicle(new Vehicle("Fiat", "Punto", "Car", 1005, 1020, 25000, date1, date2, 7000, "22-AC-01", date3));
 
-         */
+
 
     }
 

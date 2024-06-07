@@ -1,11 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
-import java.util.Objects;
 import java.time.LocalDate;
+import java.util.Objects;
 
-/**
- * Represents a Vehicle with its characteristics and maintenance information.
- */
 public class Vehicle {
     private final String model;
     private final String brand;
@@ -19,21 +16,6 @@ public class Vehicle {
     private final String plateNumber;
     private LocalDate lastMaintenanceDate;
 
-    /**
-     * Constructs a Vehicle object with the provided details.
-     *
-     * @param model                the model of the vehicle
-     * @param brand                the brand of the vehicle
-     * @param type                 the type of the vehicle
-     * @param tareWeight           the tare weight of the vehicle
-     * @param grossWeight          the gross weight of the vehicle
-     * @param currentKm            the current kilometers of the vehicle
-     * @param registerDate         the registration date of the vehicle
-     * @param acquisitionDate      the acquisition date of the vehicle
-     * @param maintenanceFrequencyKm the maintenance frequency in kilometers
-     * @param plateNumber          the plate number of the vehicle
-     * @param lastMaintenanceDate  the date of the last maintenance
-     */
     public Vehicle(String model, String brand, String type, double tareWeight, double grossWeight,
                    double currentKm, LocalDate registerDate, LocalDate acquisitionDate, int maintenanceFrequencyKm, String plateNumber, LocalDate lastMaintenanceDate) {
         validateTrait(model);
@@ -61,11 +43,6 @@ public class Vehicle {
         this.lastMaintenanceDate = lastMaintenanceDate;
     }
 
-    /**
-     * Constructs a Vehicle object with only the plate number.
-     *
-     * @param plateNumber          the plate number of the vehicle
-     */
     public Vehicle(String plateNumber) {
         validateTrait(plateNumber);
 
@@ -82,11 +59,6 @@ public class Vehicle {
         this.lastMaintenanceDate = LocalDate.now();
     }
 
-    /**
-     * Validates that a trait is not null, empty, or less than or equal to 0.
-     *
-     * @param trait the trait to validate
-     */
     private void validateTrait(Object trait) {
         if (trait == null || (trait instanceof String && ((String) trait).isEmpty()) || (trait instanceof Number && ((Number) trait).doubleValue() <= 0)) {
             throw new IllegalArgumentException("Trait cannot be null, empty, or less than or equal to 0.");
@@ -110,16 +82,9 @@ public class Vehicle {
         return Objects.hash(plateNumber);
     }
 
-    /**
-     * Creates a copy of the Vehicle object.
-     *
-     * @return a new Vehicle object with the same attributes
-     */
     public Vehicle clone() {
         return new Vehicle(model, brand, type, tareWeight, grossWeight, currentKm, registerDate, acquisitionDate, maintenanceFrequencyKm, plateNumber, lastMaintenanceDate);
     }
-
-    // Getters and setters for the attributes
 
     public String getModel() {
         return model;
@@ -171,5 +136,10 @@ public class Vehicle {
 
     public void setLastMaintenanceDate(LocalDate lastMaintenanceDate) {
         this.lastMaintenanceDate = lastMaintenanceDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Model: " + model + ", Brand: " + brand + ", Type: " + type + ", Tare Weight: " + tareWeight + ", Gross Weight: " + grossWeight + ", Current Km: " + currentKm + ", Register Date: " + registerDate + ", Acquisition Date: " + acquisitionDate + ", Maintenance Frequency Km: " + maintenanceFrequencyKm + ", Plate Number: " + plateNumber + ", Last Maintenance Date: " + lastMaintenanceDate;
     }
 }

@@ -62,6 +62,9 @@ public class AssignVehicleController {
         }
         return false;
     }
+    public List<Vehicle> getVehicles() {
+        return vehicleRepository.getVehicles();
+    }
 }
 
 

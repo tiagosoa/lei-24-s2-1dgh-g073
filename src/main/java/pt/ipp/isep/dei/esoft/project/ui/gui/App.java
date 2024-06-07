@@ -105,6 +105,16 @@ public class App extends Application {
         stage.show();
     }
 
+    public void showAssignVehicleUI(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pt/ipp/isep/dei/esoft/project/ui/gui/AssignVehicleUI.fxml"));
+        Pane root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Assign Vehicle to Agenda Entry");
+        stage.show();
+    }
+
+
     public static void main(String[] args) {
         launch(args);
     }
