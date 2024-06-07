@@ -11,6 +11,7 @@ import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 
 import java.util.Optional;
 
+
 public class RegisterGSUIController {
 
     @FXML

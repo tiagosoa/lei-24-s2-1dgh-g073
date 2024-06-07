@@ -33,6 +33,7 @@
     <Label text="Green Space Area (in acres):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
     <TextField fx:id="greenSpaceAreaField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
+
     <Button text="Submit" onAction="#handleSubmit" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
 </GridPane>
 

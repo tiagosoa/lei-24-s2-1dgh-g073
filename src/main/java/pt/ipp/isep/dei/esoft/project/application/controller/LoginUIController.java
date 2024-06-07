@@ -19,6 +19,7 @@ public class LoginUIController {
     @FXML
     private TextField passwordField;
 
+
     @FXML
     private void doLogin(ActionEvent event) {
         String userId = userIdField.getText();
