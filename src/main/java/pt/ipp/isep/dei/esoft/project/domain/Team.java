@@ -9,8 +9,7 @@ import java.util.Objects;
  */
 public class Team {
 
-    public List<Collaborator> collaborators;
-
+    private List<Collaborator> collaborators;
     private int teamID;
 
     /**
@@ -20,7 +19,7 @@ public class Team {
      * @param teamID        the ID number of the team within the system
      */
     public Team(List<Collaborator> collaborators, int teamID) {
-        this.collaborators = collaborators;
+        this.collaborators = new ArrayList<>(collaborators);
         this.teamID = teamID;
     }
 
@@ -30,7 +29,6 @@ public class Team {
      * @param collaborator the collaborator to be added
      * @return true if the collaborator was added successfully, false otherwise
      */
-
     public boolean addCollaborator(Collaborator collaborator) {
         if (!collaborators.contains(collaborator)) {
             collaborators.add(collaborator);
@@ -43,8 +41,8 @@ public class Team {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Team)) return false;
-        Team that = (Team) o;
-        return collaborators.equals(that.collaborators) && teamID == that.teamID;
+        Team team = (Team) o;
+        return teamID == team.teamID && Objects.equals(collaborators, team.collaborators);
     }
 
     @Override
@@ -57,7 +55,7 @@ public class Team {
     }
 
     public List<Collaborator> getTeam() {
-        return collaborators;
+        return new ArrayList<>(collaborators);
     }
 
     public int getTeamID() {
@@ -70,6 +68,5 @@ public class Team {
             sb.append(collaborator.getName()).append("\n");
         }
         return sb.toString();
-
     }
 }
