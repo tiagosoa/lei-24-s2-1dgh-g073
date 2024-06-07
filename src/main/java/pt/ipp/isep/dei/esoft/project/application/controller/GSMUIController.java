@@ -49,8 +49,10 @@ public class GSMUIController {
     }
 
     @FXML
-    private void handleAssignTeam(ActionEvent event) {
-        new AssignTeamUI().run();
+    private void handleAssignTeam(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        App app = new App();
+        app.showAssignTeamUI(stage);
     }
 
     @FXML

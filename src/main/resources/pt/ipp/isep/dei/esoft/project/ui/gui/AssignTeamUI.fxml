@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="pt.ipp.isep.dei.esoft.project.application.controller.AssignTeamUIController">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <hgap>10</hgap>
+    <vgap>10</vgap>
+
+    <Label text="Agenda Entry:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="agendaEntryComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+    <Label text="Team:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="teamComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Team Details:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextArea fx:id="teamDetailsTextArea" GridPane.rowIndex="2" GridPane.columnIndex="1" editable="false" prefRowCount="4" wrapText="true"/>
+
+    <Button text="Submit" onAction="#handleSubmit" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
+</GridPane>

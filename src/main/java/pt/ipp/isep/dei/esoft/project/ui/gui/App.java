@@ -79,6 +79,15 @@ public class App extends Application {
         stage.show();
     }
 
+    public void showAssignTeamUI(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignTeamUI.fxml"));
+        Pane root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Assign Team to Agenda Entry");
+        stage.show();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
