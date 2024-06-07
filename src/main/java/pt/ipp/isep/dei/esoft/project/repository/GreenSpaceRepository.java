@@ -11,7 +11,7 @@ import java.util.*;
 public class GreenSpaceRepository {
 
     private List<GreenSpace> greenSpaces;
-    private Properties config;
+    Properties config;
 
     /**
      * Constructs a new GreenSpaceRepository and initializes the greenSpaces list.
