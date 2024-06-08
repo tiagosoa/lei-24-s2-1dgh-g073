@@ -11,49 +11,62 @@ hide methods
 '  -description
 '}
 
+class HRM {
+    name
+    vatNumber
+    phoneNumber
+    email
+}
+
+class Skill {
+    name
+}
+
+class SkillRepository {
+    skills
+}
+
+class Job {
+    name
+}
+
+class JobRepository {
+    jobs
+}
+
 class Collaborator {
     name
     birthdate
     admission date
     address
     contact info (mobile and email)
+    taxpayer number
     ID doc type and number
+    collaboratorskills
 }
 
-class HRM {
-    name
-    email
-    position
-    phone
-}
-
-class VFM {
-    name
-    email
-    position
-    phone
-}
-
-class Skill{
-    name
-}
-
-class Job{
-    name
+class CollaboratorRepository {
+    collaborators
 }
 
 class Team {
     collaborators
+    teamID
     skill list
 }
 
-'class User {
-'    name
-'    email
-'    password
-'}
+class TeamRepository {
+    teams
+}
 
-class Vehicle{
+class VFM {
+    name
+    vatNumber
+    phoneNumber
+    email
+}
+
+class Vehicle {
     brand
     model
     type
@@ -63,29 +76,131 @@ class Vehicle{
     register date
     acquisition date
     maintenance/check-up frequency
+    plate number
+    last maintenance date
 }
 
-class MaintenanceCheckup {
-    date
+class VehicleRepository {
+    vehicles
 }
 
-class List {
-    vehicles that need maintenance
+class GSM {
+    name
+    vatNumber
+    phoneNumber
+    email
 }
 
-HRM "1" - "*" Collaborator: registers >
-HRM "1" -- "*" Skill: creates >
-HRM "1" -- "*" Job: creates >
-Collaborator "1" -left "*" Job: is assigned to <
-Collaborator "1" -- "*" Skill: is assigned to <
-HRM "1" -left "1" System: provides team size and skills to >
-System "1" - "1" Team: generates >
-HRM "1" -- "1" Team: \nis accepted or refused by <
-VFM "1" - "*" Vehicle : registers >
-VFM "1" -- "*" MaintenanceCheckup : registers >
-Vehicle "1" - "*" MaintenanceCheckup : belongs to <
-VFM "1" -- "*" List : requests creation of >
+class GreenSpace {
+    name
+    type
+    area
+}
 
-Organization "1" -left "1" PostalAddress : located At >
+class GreenSpaceRepository {
+    GreenSpaces
+}
+
+class TDLEntry {
+    title
+    taskDescription
+    degree of urgency
+    approx. duration
+    associatedGreenSpace
+}
+
+class ToDoList {
+    entries
+    gsm
+}
+
+class ToDoListRepository {
+    toDoLists
+}
+
+class AgendaEntry {
+     title
+     taskDescription
+     urgency
+     duration
+     associatedGreenSpace
+     associatedTeam
+     associatedVehicles
+     status
+     startDate
+}
+
+class Agenda {
+    entries
+    gsm
+}
+
+class AgendaRepository {
+    agendas
+}
+
+class Task {
+    title
+    description
+    status
+    startDate
+    duration
+    associatedTeam
+}
+
+class TaskRepository {
+    tasks
+}
+
+HRM "1" - "*" Skill: creates >
+Skill "1" - "1" SkillRepository: saved in >
+
+HRM "1" - "*" Job: creates >
+Job "1" - "1" JobRepository : is saved in >
+
+HRM "1" - "*" Collaborator : wants to register >
+Collaborator "1" --down "*" CollaboratorRepository : saved in >
+Collaborator "1" - "*" Job : has >
+
+Skill "*" . "1" Collaborator: is assigned to >
+
+HRM "1" . "1" Team: provides team size and skills to the system, which then creates >
+Team "1" -- "1" TeamRepository: stored in >
+
+VFM "1" - "1" Vehicle : registers >
+Vehicle "1" - "1" VehicleRepository : is saved in >
+
+VFM "1" - "1" Vehicle : wants to register one or more maintenance dates to >
+Vehicle "1" -- "1" VehicleRepository : updated in >
+
+VFM "1" -- "1" Vehicle : requests creation of list of >
+
+GreenSpace "*" - "1" GreenSpaceRepository: stored in >
+
+GSM "1" -- "*" TDLEntry: adds >
+TDLEntry "1" -- "1" GreenSpace: associated with >
+GSM "1" -- "1" ToDoList: uses >
+TDLEntry "1" - "1" ToDoList: shows <
+ToDoList "1" -- "1" ToDoListRepository: stored in >
+
+GSM "1" - "*" AgendaEntry: adds >
+GSM "1" -- "1" Agenda: uses >
+Agenda "1" -- "1" AgendaRepository: stored in >
+Agenda "1" -- "1" AgendaEntry: shows >
+AgendaEntry "1" .. "1" TDLEntry: previously >
+Agenda "1" - "1" ToDoList: comprises entries previously in >
+
+GSM "1" . "1" Team: assigns >
+Team "1" . "1" AgendaEntry: assigned to >
+
+GSM "1" - "1" Vehicle: assigns >
+Vehicle "1" - "1" AgendaEntry: assigned with <
+
+GSM "*" - "1" GreenSpace: manages >
+
+Team "1" .. "*" Collaborator: consists of >
+Collaborator "1" . "*" Task: requests list of/records completion of >
+Task "1" - "1" TaskRepository: stored in >
+Team "1" - "*" Task: assigned to >
 
 @enduml

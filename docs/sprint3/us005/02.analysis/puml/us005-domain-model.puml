@@ -28,6 +28,10 @@ class Team {
     skill list
 }
 
+class TeamRepository {
+    teams
+}
+
 class Collaborator {
     name
     birthdate
@@ -47,6 +51,7 @@ class Collaborator {
 
 HRM "1" - "1" Team: provides team size and skills to the system, which then creates >
 Team "1" -- "*" Collaborator: is made of >
+Team "1" -- "1" TeamRepository: stored in >
 Team "1" - "1" HRM : is accepted or refused by >
 Collaborator "1" - "1" HRM : is registered by >
 @enduml

@@ -23,10 +23,6 @@ class VFM {
     email
 }
 
-class MaintenanceCheckup {
-    date
-}
-
 class Vehicles {
     brand
     model
@@ -39,5 +35,4 @@ class Vehicles {
     maintenance/check-up frequency
 }
 VFM "1" -- "1" Vehicles : requests creation of list of >
-Vehicles "1" - "1..*" MaintenanceCheckup: that need >
 @enduml

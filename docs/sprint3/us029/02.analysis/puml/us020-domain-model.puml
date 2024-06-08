@@ -59,4 +59,4 @@ Team "1" - "1" TeamRepository: stored in >
 Collaborator "1" - "1" Task: records completion of >
 Task "1" - "1" TaskRepository: stored in >
 Team "1" - "*" Task: assigned to >
-@endumli
+@enduml
