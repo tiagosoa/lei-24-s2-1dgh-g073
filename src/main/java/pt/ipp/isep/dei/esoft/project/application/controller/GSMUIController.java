@@ -26,61 +26,51 @@ public class GSMUIController {
 
 
     @FXML
-    private void handleRegisterGS(ActionEvent event) {
-        Stage stage = new Stage();
-        App app = new App();
-        app.showRegisterGSUI(stage);
+    private void handleRegisterGS(ActionEvent event) throws IOException {
+        App.showRegisterGSUI();
     }
 
 
     @FXML
     private void handleAddEntryToDoList(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        App app = new App();
-        app.showAddEntryToDoListUI(stage);
+        App.showAddEntryToDoListUI();
 
     }
 
     @FXML
     private void handleAddEntryAgenda(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        App app = new App();
-        app.showAddEntryAgendaUI(stage);
+        App.showAddEntryAgendaUI();
     }
 
     @FXML
     private void handleAssignTeam(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        App app = new App();
-        app.showAssignTeamUI(stage);
+        App.showAssignTeamUI();
     }
 
     @FXML
     private void handlePostponeEntry(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        App app = new App();
-        app.showPostponeEntryAgendaUI(stage);
+        App.showPostponeEntryAgendaUI();
     }
 
     @FXML
     private void handleCancelEntry(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        App app = new App();
-        app.showCancelEntryAgendaUI(stage);
+        App.showCancelEntryAgendaUI();
     }
 
     @FXML
     private void handleAssignVehicle(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        App app = new App();
-        app.showAssignVehicleUI(stage);
+        App.showAssignVehicleUI();
     }
 
     @FXML
-    private void handleListManagedGS(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        App app = new App();
-        app.showListManagedGSUI(stage);
-
+    private void handleListManagedGS(ActionEvent event) {
+        try {
+            Stage stage = new Stage();
+            App app = new App();
+            app.showListManagedGSUI(stage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }

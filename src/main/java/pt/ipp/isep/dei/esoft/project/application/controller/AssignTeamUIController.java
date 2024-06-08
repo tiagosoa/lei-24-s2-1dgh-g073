@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
@@ -14,6 +15,7 @@ import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
+import pt.ipp.isep.dei.esoft.project.ui.gui.App;
 
 import java.io.IOException;
 import java.util.List;
@@ -129,6 +131,10 @@ public class AssignTeamUIController {
         }
     }
 
+    @FXML
+    private void handleBack(ActionEvent event) throws IOException {
+        App.showGSMUI();
+    }
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

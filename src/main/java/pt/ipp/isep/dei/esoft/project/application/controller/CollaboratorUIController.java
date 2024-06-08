@@ -4,14 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
-
-
-import pt.ipp.isep.dei.esoft.project.ui.console.*;
-import pt.ipp.isep.dei.esoft.project.ui.gui.*;
-
-import java.io.IOException;
-
+import pt.ipp.isep.dei.esoft.project.ui.gui.App;
 
 public class CollaboratorUIController {
 
@@ -24,20 +17,18 @@ public class CollaboratorUIController {
     @FXML
     private TextField greenSpaceAreaField;
 
-
     @FXML
-    private void handleConsultTasks(ActionEvent event) {
-        Stage stage = new Stage();
-        App app = new App();
-        app.showConsultTasksUI(stage);
+    private void handleConsultTasks(ActionEvent event) throws Exception {
+        App.showConsultTasksUI();
     }
 
-
     @FXML
-    private void handleRecordTask(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        App app = new App();
-        app.showRecordTaskUI(stage);
+    private void handleRecordTask(ActionEvent event) throws Exception {
+        App.showRecordTaskUI();
     }
 
+    @FXML
+    private void handleLogout(ActionEvent event) throws Exception {
+        App.showLoginUI();
+    }
 }

@@ -20,6 +20,7 @@
     <ListView fx:id="vehicleListView" GridPane.rowIndex="1" GridPane.columnIndex="1" prefHeight="200.0" prefWidth="200.0"/>
 
     <Button text="Assign Vehicles" onAction="#handleAssignVehicles" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
+    <Button text="Back to Menu" onAction="#handleBack" GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.halignment="LEFT"/>
 
     <Label fx:id="resultLabel" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
 </GridPane>

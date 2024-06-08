@@ -60,6 +60,8 @@ public class CancelEntryAgendaController {
         return agenda.getEntries();
     }
 
+
+
     public void cancelEntry(AgendaEntry entry) {
         Agenda agenda = getAgenda(getGSMFromSession());
         if (!agenda.cancelEntry(entry)) {

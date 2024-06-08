@@ -1,12 +1,15 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import pt.ipp.isep.dei.esoft.project.application.controller.AddEntryToDoListController;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.TDLEntry;
+import pt.ipp.isep.dei.esoft.project.ui.gui.App;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,6 +84,11 @@ public class AddEntryToDoListUIController {
         } else {
             showAlert("Failure", "Entry not added!");
         }
+    }
+
+    @FXML
+    private void handleBack(ActionEvent event) throws IOException {
+        App.showGSMUI();
     }
 
     private void showAlert(String title, String message) {

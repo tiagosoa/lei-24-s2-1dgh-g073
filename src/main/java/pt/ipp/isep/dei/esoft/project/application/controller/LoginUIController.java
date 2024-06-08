@@ -13,6 +13,7 @@ import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
 import java.util.List;
+import javafx.scene.control.CheckBox;
 
 public class LoginUIController {
 
@@ -21,6 +22,9 @@ public class LoginUIController {
 
     @FXML
     private TextField passwordField;
+
+    @FXML
+    private CheckBox showPasswordCheckbox;
 
     @FXML
     private void doLogin(ActionEvent event) {
@@ -34,15 +38,14 @@ public class LoginUIController {
                 if (roles != null && !roles.isEmpty()) {
                     UserRoleDTO role = roles.get(0);
                     App app = new App();
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                     // Show the corresponding UI based on the user role
                     switch (role.getDescription()) {
                         case AuthenticationController.ROLE_GSM:
-                            app.showGSMUI(stage);
+                            App.showGSMUI();
                             break;
                         case AuthenticationController.ROLE_COLLABORATOR:
-                            app.showCollaboratorUI(stage);
+                            App.showCollaboratorUI();
                             break;
                         // Add other roles and corresponding UIs here
                         default:
@@ -59,4 +62,18 @@ public class LoginUIController {
             System.out.println("Invalid credentials");
         }
     }
+
+    @FXML
+    private void togglePasswordVisibility() {
+        if (showPasswordCheckbox.isSelected()) {
+            passwordField.setPromptText(passwordField.getText());
+            passwordField.setText("");
+            passwordField.setDisable(true);
+        } else {
+            passwordField.setText(passwordField.getPromptText());
+            passwordField.setPromptText("");
+            passwordField.setDisable(false);
+        }
+    }
 }
+

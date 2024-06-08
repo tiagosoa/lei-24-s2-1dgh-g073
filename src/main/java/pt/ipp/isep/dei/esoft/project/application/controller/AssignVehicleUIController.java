@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
@@ -7,7 +8,9 @@ import javafx.collections.ObservableList;
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignVehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
+import pt.ipp.isep.dei.esoft.project.ui.gui.App;
 
+import java.io.IOException;
 import java.util.List;
 
 public class AssignVehicleUIController {
@@ -60,5 +63,9 @@ public class AssignVehicleUIController {
         } else {
             resultLabel.setText("Please select an agenda entry and vehicles.");
         }
+    }
+    @FXML
+    private void handleBack(ActionEvent event) throws IOException {
+        App.showGSMUI();
     }
 }

@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -8,7 +9,9 @@ import javafx.scene.control.Alert.AlertType;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGSController;
 import pt.ipp.isep.dei.esoft.project.domain.GSM;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.ui.gui.App;
 
+import java.io.IOException;
 import java.util.Optional;
 
 
@@ -50,6 +53,11 @@ public class RegisterGSUIController {
         } else {
             showAlert("Failure", "Green Space not registered!");
         }
+    }
+
+    @FXML
+    private void handleBack(ActionEvent event) throws IOException {
+        App.showGSMUI();
     }
 
     private void showAlert(String title, String message) {

@@ -1,13 +1,17 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.ui.gui.App;
+
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.domain.TDLEntry;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import javafx.event.ActionEvent;
 
 public class AddEntryAgendaUIController {
 
@@ -74,6 +78,11 @@ public class AddEntryAgendaUIController {
         } else {
             showAlert("Failure", "Failed to add entry to the agenda.");
         }
+    }
+
+    @FXML
+    private void handleBack(ActionEvent event) throws IOException {
+        App.showGSMUI();
     }
 
     private void showAlert(String title, String message) {

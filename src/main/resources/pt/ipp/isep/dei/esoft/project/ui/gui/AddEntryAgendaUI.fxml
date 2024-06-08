@@ -10,18 +10,23 @@
 <?import javafx.geometry.Insets?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="pt.ipp.isep.dei.esoft.project.application.controller.AddEntryAgendaUIController"
-          alignment="CENTER" hgap="10" vgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0">
+          alignment="CENTER" hgap="10" vgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0"
+          style="-fx-background-color: #f7f7f7;">
+
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="To-Do List Entry:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-    <ComboBox fx:id="toDoListEntryComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <Label text="To-Do List Entry:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
+    <ComboBox fx:id="toDoListEntryComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-background-radius: 5;"/>
 
-    <Label text="Entry Start Date:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-    <DatePicker fx:id="entryStartDatePicker" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <Label text="Entry Start Date:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
+    <DatePicker fx:id="entryStartDatePicker" GridPane.rowIndex="1" GridPane.columnIndex="1" style="-fx-background-radius: 5;"/>
 
-    <Button text="Submit" onAction="#handleSubmit" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
+    <Button text="Submit" onAction="#handleSubmit" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.halignment="RIGHT"
+            style="-fx-font-size: 14px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5;"/>
+    <Button text="Back to Menu" onAction="#handleBack" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.halignment="LEFT"
+            style="-fx-font-size: 14px; -fx-background-color: #607D8B; -fx-text-fill: white; -fx-background-radius: 5;"/>
 
     <!-- Ensure elements stretch horizontally -->
     <columnConstraints>
@@ -36,4 +41,5 @@
         <RowConstraints vgrow="ALWAYS" />
     </rowConstraints>
 </GridPane>
+
 

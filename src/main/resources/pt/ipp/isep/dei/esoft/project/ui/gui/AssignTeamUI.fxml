@@ -25,7 +25,7 @@
     <TextArea fx:id="teamDetailsTextArea" GridPane.rowIndex="2" GridPane.columnIndex="1" editable="false" prefRowCount="4" wrapText="true"/>
 
     <Button text="Submit" onAction="#handleSubmit" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
-
+    <Button text="Back to Menu" onAction="#handleBack" GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.halignment="LEFT"/>
     <!-- Ensure elements stretch horizontally -->
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" />
