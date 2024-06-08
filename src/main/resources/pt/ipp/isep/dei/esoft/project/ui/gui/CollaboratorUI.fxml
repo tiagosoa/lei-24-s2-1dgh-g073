@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="pt.ipp.isep.dei.esoft.project.application.controller.CollaboratorUIController"
+      alignment="CENTER" spacing="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="200.0">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Button text="Consult Tasks" onAction="#handleConsultTasks"/>
+    <Button text="Record Task" onAction="#handleRecordTask"/>
+
+    <!-- Ensure elements stretch vertically -->
+    <VBox.margin>
+        <Insets top="20"/>
+    </VBox.margin>
+</VBox>

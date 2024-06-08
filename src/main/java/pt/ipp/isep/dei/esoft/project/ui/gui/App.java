@@ -123,6 +123,43 @@ public class App extends Application {
         stage.show();
     }
 
+    public void showCollaboratorUI(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("CollaboratorUI.fxml"));
+        Pane root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Collaborator");
+        stage.show();
+    }
+
+    public void showConsultTasksUI(Stage stage) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsultTasksUI.fxml"));
+        try {
+            Parent root = loader.load();
+            RegisterGSUIController controller = loader.getController();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Consult Tasks");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showRecordTaskUI(Stage stage) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("RecordTaskUI.fxml"));
+        try {
+            Parent root = loader.load();
+            RegisterGSUIController controller = loader.getController();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Record Task");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

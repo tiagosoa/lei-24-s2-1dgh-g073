@@ -3,6 +3,9 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import pt.isep.lei.esoft.auth.AuthFacade;
 import pt.isep.lei.esoft.auth.UserSession;
 import pt.ipp.isep.dei.esoft.project.domain.GSM;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
+
+import java.util.List;
 
 /**
  * Repository class for handling authentication operations.
@@ -62,5 +65,16 @@ public class AuthenticationRepository {
      */
     public boolean addUserWithRole(String name, String email, String pwd, String roleId) {
         return authenticationFacade.addUserWithRole(name, email, pwd, roleId);
+    }
+    /**
+     * Retrieves the roles of the currently logged-in user.
+     * @return a list of UserRoleDTO representing the roles of the current user
+     */
+    public List<UserRoleDTO> getUserRoles() {
+        UserSession userSession = getCurrentUserSession();
+        if (userSession != null && userSession.isLoggedIn()) {
+            return userSession.getUserRoles();
+        }
+        return null;
     }
 }
