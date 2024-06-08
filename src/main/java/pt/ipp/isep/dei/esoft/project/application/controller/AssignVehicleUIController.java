@@ -64,6 +64,7 @@ public class AssignVehicleUIController {
             resultLabel.setText("Please select an agenda entry and vehicles.");
         }
     }
+
     @FXML
     private void handleBack(ActionEvent event) throws IOException {
         App.showGSMUI();

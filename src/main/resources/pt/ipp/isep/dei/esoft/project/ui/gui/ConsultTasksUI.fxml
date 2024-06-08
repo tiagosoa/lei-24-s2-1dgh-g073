@@ -27,6 +27,7 @@
         <RadioButton text="Done" fx:id="statusDone"/>
     </VBox>
 
+
     <Button text="Consult Tasks" onAction="#handleConsultTasks" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
     <ListView fx:id="tasksListView" GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2"/>

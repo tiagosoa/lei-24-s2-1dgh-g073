@@ -47,6 +47,7 @@ public class CancelEntryAgendaUIController {
         App.showGSMUI();
     }
 
+
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

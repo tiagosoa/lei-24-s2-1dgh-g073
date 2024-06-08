@@ -39,6 +39,7 @@ public class App extends Application {
         primaryStage.show();
     }
 
+
     public static void showGSMUI() throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("GSMUI.fxml"));
         Scene scene = new Scene(loader.load());

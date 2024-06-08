@@ -12,6 +12,7 @@ import pt.ipp.isep.dei.esoft.project.domain.Team;
 
 import java.util.List;
 
+
 public class RecordTaskUIController {
 
     @FXML

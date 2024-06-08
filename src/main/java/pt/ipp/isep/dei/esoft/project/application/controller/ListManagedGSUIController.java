@@ -12,6 +12,7 @@ import java.util.List;
 
 public class ListManagedGSUIController {
 
+
     @FXML
     private VBox greenSpacesContainer;
 

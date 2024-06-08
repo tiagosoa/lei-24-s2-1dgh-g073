@@ -60,6 +60,7 @@ public class RegisterGSUIController {
         App.showGSMUI();
     }
 
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(title);

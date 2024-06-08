@@ -8,6 +8,7 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.App;
 
 public class CollaboratorUIController {
 
+
     @FXML
     private TextField greenSpaceNameField;
 
