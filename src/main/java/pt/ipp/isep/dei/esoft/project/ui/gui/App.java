@@ -27,6 +27,9 @@ public class App extends Application {
             e.printStackTrace();
         }
         showLoginUI();
+
+        primaryStage.setMinWidth(800);
+        primaryStage.setMinHeight(500);
     }
 
     public static void showLoginUI() throws IOException {

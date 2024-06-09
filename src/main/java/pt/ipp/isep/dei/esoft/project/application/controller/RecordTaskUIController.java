@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -9,7 +10,9 @@ import pt.ipp.isep.dei.esoft.project.application.controller.RecordTaskController
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Task;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
+import pt.ipp.isep.dei.esoft.project.ui.gui.App;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -72,5 +75,9 @@ public class RecordTaskUIController {
             alert.setContentText("Please select a valid task.");
             alert.showAndWait();
         }
+    }
+    @FXML
+    private void handleBack(ActionEvent event) throws IOException {
+        App.showCollaboratorUI();
     }
 }

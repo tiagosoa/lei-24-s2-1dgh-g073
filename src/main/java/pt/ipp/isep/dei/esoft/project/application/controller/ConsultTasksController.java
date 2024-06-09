@@ -1,11 +1,15 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Task;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
 import pt.ipp.isep.dei.esoft.project.repository.*;
+import pt.ipp.isep.dei.esoft.project.ui.gui.App;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -98,4 +102,5 @@ public class ConsultTasksController {
         }
         return tasks;
     }
+
 }

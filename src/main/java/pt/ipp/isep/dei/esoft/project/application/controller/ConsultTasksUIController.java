@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -7,7 +8,9 @@ import pt.ipp.isep.dei.esoft.project.application.controller.ConsultTasksControll
 import pt.ipp.isep.dei.esoft.project.domain.Task;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.ui.gui.App;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -87,6 +90,10 @@ public class ConsultTasksUIController {
         } else {
             return null;
         }
+    }
+    @FXML
+    private void handleBack(ActionEvent event) throws IOException {
+        App.showCollaboratorUI();
     }
 }
 

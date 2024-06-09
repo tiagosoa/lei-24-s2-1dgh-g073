@@ -36,8 +36,10 @@
 
     <Button text="Submit" onAction="#handleSubmit" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.halignment="RIGHT"
             style="-fx-font-size: 14px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5;"/>
+
+    <!-- Updated position and alignment of the "Back to Menu" button -->
     <Button text="Back to Menu" onAction="#handleBack" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.halignment="LEFT"
-            style="-fx-font-size: 14px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5;"/>
+            style="-fx-font-size: 14px; -fx-background-color: #607D8B; -fx-text-fill: white; -fx-background-radius: 5;"/>
 
     <!-- Ensure elements stretch horizontally -->
     <columnConstraints>

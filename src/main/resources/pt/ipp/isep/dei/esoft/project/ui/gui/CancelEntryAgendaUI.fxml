@@ -4,20 +4,39 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="pt.ipp.isep.dei.esoft.project.application.controller.CancelEntryAgendaUIController"
-          alignment="CENTER" hgap="10" vgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+          alignment="CENTER" hgap="10" vgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0"
+          style="-fx-background-color: #f7f7f7;">
+
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="Select Agenda Entry to Cancel:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-    <ComboBox fx:id="agendaEntryComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <Label text="Select Agenda Entry to Cancel:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
+    <ComboBox fx:id="agendaEntryComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-background-radius: 5;" minWidth="250"/>
 
-    <Button text="Cancel Entry" onAction="#handleCancelEntry" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
-    <Button text="Back to Menu" onAction="#handleBack" GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.halignment="LEFT"/>
+    <Button text="Cancel Entry" onAction="#handleCancelEntry" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.halignment="RIGHT"
+            style="-fx-font-size: 14px; -fx-background-color: #f44336; -fx-text-fill: white; -fx-background-radius: 5;" minWidth="120"/>
+    <Button text="Back to Menu" onAction="#handleBack" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.halignment="LEFT"
+            style="-fx-font-size: 14px; -fx-background-color: #607D8B; -fx-text-fill: white; -fx-background-radius: 5;" minWidth="120"/>
 
+    <!-- Ensure elements stretch horizontally -->
+    <columnConstraints>
+        <ColumnConstraints minWidth="200" hgrow="ALWAYS" />
+        <ColumnConstraints minWidth="200" hgrow="ALWAYS" />
+    </columnConstraints>
+
+    <!-- Ensure elements stretch vertically -->
+    <rowConstraints>
+        <RowConstraints minHeight="50" vgrow="ALWAYS" />
+        <RowConstraints minHeight="50" vgrow="ALWAYS" />
+        <RowConstraints minHeight="50" vgrow="ALWAYS" />
+        <RowConstraints minHeight="50" vgrow="ALWAYS" />
+    </rowConstraints>
 </GridPane>
 
 

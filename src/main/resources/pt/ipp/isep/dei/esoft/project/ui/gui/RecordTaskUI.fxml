@@ -5,15 +5,25 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-
 <GridPane fx:controller="pt.ipp.isep.dei.esoft.project.application.controller.RecordTaskUIController"
-          xmlns:fx="http://javafx.com/fxml" alignment="CENTER" hgap="10" vgap="10">
+          xmlns:fx="http://javafx.com/fxml" alignment="CENTER" hgap="10" vgap="10" style="-fx-background-color: #f7f7f7;">
     <VBox spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2">
-        <Label text="Tasks assigned to you:"/>
-        <ListView fx:id="tasksListView"/>
+        <Label text="Tasks assigned to you:" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        <ListView fx:id="tasksListView" prefHeight="200.0" prefWidth="200.0" />
     </VBox>
-    <Button text="Mark as Done" onAction="#handleMarkAsDone" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <HBox GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2" spacing="10">
+        <Button text="Back to Menu" onAction="#handleBack"
+                style="-fx-font-size: 16px; -fx-background-color: #607D8B; -fx-text-fill: white; -fx-background-radius: 5;" />
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Mark as Done" onAction="#handleMarkAsDone"
+                style="-fx-font-size: 16px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5;" />
+    </HBox>
 </GridPane>
+
+
 

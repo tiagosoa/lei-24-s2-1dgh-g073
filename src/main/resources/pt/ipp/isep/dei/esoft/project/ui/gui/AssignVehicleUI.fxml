@@ -13,17 +13,27 @@
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="Select Agenda Entry:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-    <ComboBox fx:id="agendaComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <Label text="Assign Vehicle" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
 
-    <Label text="Select Vehicles:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-    <ListView fx:id="vehicleListView" GridPane.rowIndex="1" GridPane.columnIndex="1" prefHeight="200.0" prefWidth="200.0"/>
+    <Label text="Select Agenda Entry:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="agendaComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-    <Button text="Assign Vehicles" onAction="#handleAssignVehicles" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
-    <Button text="Back to Menu" onAction="#handleBack" GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.halignment="LEFT"/>
+    <Label text="Select Vehicles:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <ListView fx:id="vehicleListView" GridPane.rowIndex="2" GridPane.columnIndex="1" prefHeight="200.0" prefWidth="200.0"/>
 
-    <Label fx:id="resultLabel" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
+    <Button text="Assign Vehicles" onAction="#handleAssignVehicles" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.halignment="RIGHT"
+            style="-fx-font-size: 14px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5;"/>
+
+    <Button text="Back to Menu" onAction="#handleBack" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.halignment="LEFT"
+            style="-fx-font-size: 14px; -fx-background-color: #607D8B; -fx-text-fill: white; -fx-background-radius: 5;"/>
+
+
+    <Label fx:id="resultLabel" GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
 </GridPane>
+
+
+
+
 
 
 

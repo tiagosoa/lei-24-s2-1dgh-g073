@@ -72,6 +72,9 @@ public class GSMUIController {
             e.printStackTrace();
         }
     }
-
+    @FXML
+    private void handleLogout(ActionEvent event) throws Exception {
+        App.showLoginUI();
+    }
 
 }

@@ -7,9 +7,11 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="pt.ipp.isep.dei.esoft.project.application.controller.ListManagedGSUIController">
+      fx:controller="pt.ipp.isep.dei.esoft.project.application.controller.ListManagedGSUIController"
+      spacing="10"
+      alignment="CENTER">
 
-    <Label text="Managed Green Spaces" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <Label text="Managed Green Spaces" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
     <ScrollPane VBox.vgrow="ALWAYS">
         <content>
@@ -17,5 +19,6 @@
         </content>
     </ScrollPane>
 </VBox>
+
 
 
