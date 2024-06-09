@@ -59,6 +59,38 @@ public class AddEntryAgendaUIController {
                 }
             }
         });
+
+        // Disable past dates
+        entryStartDatePicker.setDayCellFactory(getDayCellFactory());
+
+        // Ensure manually entered dates are validated
+        entryStartDatePicker.setOnAction(event -> validateDate());
+    }
+
+    private Callback<DatePicker, DateCell> getDayCellFactory() {
+        return new Callback<>() {
+            @Override
+            public DateCell call(DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isBefore(LocalDate.now())) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #EEEEEE;");
+                        }
+                    }
+                };
+            }
+        };
+    }
+
+    private void validateDate() {
+        LocalDate selectedDate = entryStartDatePicker.getValue();
+        if (selectedDate != null && selectedDate.isBefore(LocalDate.now())) {
+            entryStartDatePicker.setValue(null);
+            showAlert("Input Error", "Start date cannot be in the past.");
+        }
     }
 
     @FXML
@@ -68,6 +100,11 @@ public class AddEntryAgendaUIController {
 
         if (toDoListEntry == null || entryStartDate == null) {
             showAlert("Input Error", "Please fill in all fields.");
+            return;
+        }
+
+        if (entryStartDate.isBefore(LocalDate.now())) {
+            showAlert("Input Error", "Start date cannot be in the past.");
             return;
         }
 
@@ -84,7 +121,6 @@ public class AddEntryAgendaUIController {
     private void handleBack(ActionEvent event) throws IOException {
         App.showGSMUI();
     }
-
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
