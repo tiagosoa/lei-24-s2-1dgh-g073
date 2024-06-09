@@ -1,0 +1,17 @@
+Biblioteca -> AP, Custo: 10
+Teatro -> AP, Custo: 7
+Pavilhao -> AP, Custo: 5
+Topo -> AP, Custo: 9
+ParqueInfantil -> Topo -> AP, Custo: 16
+Macieirinha -> ParqueInfantil -> Topo -> AP, Custo: 26
+Fontaine -> Miradouro -> Topo -> AP, Custo: 20
+Miradouro -> Topo -> AP, Custo: 12
+Capela -> Topo -> AP, Custo: 13
+Torreao -> Miradouro -> Topo -> AP, Custo: 21
+Lago -> AP, Custo: 9
+Escadas3 -> Escadas2 -> Escadas1 -> AP, Custo: 18
+Sentimentos -> Escadas2 -> Escadas1 -> AP, Custo: 20
+CasaRoseiral -> Escadas2 -> Escadas1 -> AP, Custo: 17
+JardimRoseiral -> Escadas2 -> Escadas1 -> AP, Custo: 16
+Escadas2 -> Escadas1 -> AP, Custo: 13
+Escadas1 -> AP, Custo: 10
