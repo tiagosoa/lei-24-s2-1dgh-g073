@@ -12,6 +12,9 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * User interface for adding an entry to the agenda.
+ */
 public class AddEntryAgendaUI implements Runnable {
     private final AddEntryAgendaController controller;
 
@@ -26,6 +29,9 @@ public class AddEntryAgendaUI implements Runnable {
     private TaskRepository taskRepository;
     private AuthenticationRepository authenticationRepository;
 
+    /**
+     * Constructor for the AddEntryAgendaUI class.
+     */
     public AddEntryAgendaUI() {
         this.controller = new AddEntryAgendaController();
         this.toDoListRepository = getController().getToDoListRepository();
@@ -45,6 +51,9 @@ public class AddEntryAgendaUI implements Runnable {
         submitData();
     }
 
+    /**
+     * Request data from the user.
+     */
     public void requestData() {
         this.toDoListEntry = requestToDoListEntry();
         if (this.toDoListEntry == null) return;
@@ -54,6 +63,9 @@ public class AddEntryAgendaUI implements Runnable {
         this.entryStartDate = requestEntryStartingDate();
     }
 
+    /**
+     * Submit the data to be added to the agenda.
+     */
     public void submitData() {
         try {
             if (controller.addEntry(toDoListEntry, entryStatus, entryStartDate).isPresent()) {
@@ -66,6 +78,11 @@ public class AddEntryAgendaUI implements Runnable {
         }
     }
 
+    /**
+     * Request the user to select an entry from the To-Do List.
+     *
+     * @return The selected To-Do List entry.
+     */
     public TDLEntry requestToDoListEntry() {
         Scanner scanner = new Scanner(System.in);
 
@@ -86,6 +103,11 @@ public class AddEntryAgendaUI implements Runnable {
         return entries.get(entryIndex);
     }
 
+    /**
+     * Request the user to input the starting date for the entry.
+     *
+     * @return The starting date for the entry.
+     */
     public LocalDate requestEntryStartingDate() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the starting date (dd-MM-yyyy):");

@@ -8,6 +8,9 @@ import pt.ipp.isep.dei.esoft.project.ui.console.menu.GSMUI;
 
 import java.util.*;
 
+/**
+ * User Interface for adding an entry to a To Do List.
+ */
 public class AddEntryToDoListUI implements Runnable {
 
     private final AddEntryToDoListController controller;
@@ -16,8 +19,10 @@ public class AddEntryToDoListUI implements Runnable {
     private ToDoListRepository toDoListRepository;
     private GreenSpaceRepository greenSpaceRepository;
 
+    /**
+     * Constructor that initializes the controller and repositories.
+     */
     public AddEntryToDoListUI() {
-
         controller = new AddEntryToDoListController();
         this.toDoListRepository = getController().getToDoListRepository();
         this.greenSpaceRepository = getController().getGreenSpaceRepository();
@@ -27,6 +32,9 @@ public class AddEntryToDoListUI implements Runnable {
         return controller;
     }
 
+    /**
+     * Runs the UI by displaying prompts and handling user input.
+     */
     public void run() {
         System.out.println("\n\n--- Add Entry to To Do List ------------------------");
 

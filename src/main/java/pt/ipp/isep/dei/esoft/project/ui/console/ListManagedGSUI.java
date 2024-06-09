@@ -7,20 +7,36 @@ import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
 
 import java.util.List;
 
+/**
+ * User Interface for listing managed Green Spaces.
+ */
 public class ListManagedGSUI implements Runnable {
     private final ListManagedGSController controller;
     private GSM gsm;
     private GreenSpaceRepository greenSpaceRepository;
 
+    /**
+     * Constructor that initializes the controller and retrieves the GreenSpaceRepository.
+     */
     public ListManagedGSUI() {
         controller = new ListManagedGSController();
         this.greenSpaceRepository = getController().getGreenSpaceRepository();
     }
-    private ListManagedGSController getController() {return controller;}
 
+    private ListManagedGSController getController() {
+        return controller;
+    }
+
+    /**
+     * Executes the UI functionality.
+     */
     public void run() {
         displayManagedGreenSpaces();
     }
+
+    /**
+     * Displays the Green Spaces managed by the logged-in GSM.
+     */
     public void displayManagedGreenSpaces() {
         gsm = getController().getGSMFromSession();
         List<GreenSpace> managedGreenSpaces = greenSpaceRepository.getManagedGreenSpaces(gsm);

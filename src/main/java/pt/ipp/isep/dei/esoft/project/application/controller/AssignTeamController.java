@@ -85,6 +85,13 @@ public class AssignTeamController {
         return authenticationRepository;
     }
 
+    /**
+     * Assigns a team to an agenda entry.
+     *
+     * @param entry Agenda entry to assign the team to
+     * @param team  Team to be assigned
+     * @return Optional of the assigned agenda entry
+     */
     public Optional<AgendaEntry> assignTeam(AgendaEntry entry, Team team) {
         if (team == null) {
             throw new IllegalArgumentException("Team not found.");
@@ -103,15 +110,31 @@ public class AssignTeamController {
         return teamRepository.getTeamList();
     }
 
+    /**
+     * Retrieves the agenda associated with a given GSM.
+     *
+     * @param gsm GSM to retrieve the agenda for
+     * @return Agenda associated with the GSM
+     */
     public Agenda getAgenda(GSM gsm) {
         return agendaRepository.getAgendaByGSM(gsm);
     }
 
+    /**
+     * Retrieves the GSM associated with the current user session.
+     *
+     * @return GSM associated with the current user session
+     */
     public GSM getGSMFromSession() {
         Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
         return new GSM(email.getEmail());
     }
 
+    /**
+     * Retrieves a list of agenda entries associated with the current user session.
+     *
+     * @return List of agenda entries
+     */
     public List<AgendaEntry> getAgendaEntries() {
         GSM gsm = getGSMFromSession();
         Agenda agenda = getAgenda(gsm);

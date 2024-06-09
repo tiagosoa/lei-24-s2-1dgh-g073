@@ -69,7 +69,7 @@ public class RegisterGSUI implements Runnable {
      * Request data from the user to register a new green space.
      */
     private void requestData() {
-        //Request the GS data from the console
+        // Request the Green Space data from the console
         greenSpaceType = requestGSType();
         greenSpaceName = requestGSName();
         greenSpaceArea = requestGSArea();
@@ -91,7 +91,7 @@ public class RegisterGSUI implements Runnable {
             System.out.println("3. Large-sized Park");
             System.out.print("Enter your choice: ");
             try {
-            int type = scanner.nextInt();
+                int type = scanner.nextInt();
                 switch (type) {
                     case 1:
                         greenSpaceType = "Garden";
@@ -105,7 +105,7 @@ public class RegisterGSUI implements Runnable {
                     default:
                         System.out.println("Invalid choice. Please try again.");
                 }
-                } catch(InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number between 1 and 3.");
                 scanner.next(); // Clear the invalid input from the scanner
             }
@@ -113,11 +113,22 @@ public class RegisterGSUI implements Runnable {
         return greenSpaceType;
     }
 
+    /**
+     * Request the Green Space Name from the user via console input.
+     *
+     * @return the Green Space Name entered by the user
+     */
     private String requestGSName() {
         Scanner input = new Scanner(System.in);
         System.out.print("Green Space name: ");
         return input.nextLine();
     }
+
+    /**
+     * Request the Green Space Area from the user via console input.
+     *
+     * @return the Green Space Area entered by the user
+     */
     private double requestGSArea() {
         Scanner input = new Scanner(System.in);
         double area = 0;

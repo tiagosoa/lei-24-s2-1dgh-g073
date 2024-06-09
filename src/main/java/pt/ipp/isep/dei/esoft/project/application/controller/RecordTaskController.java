@@ -9,15 +9,18 @@ import pt.isep.lei.esoft.auth.domain.model.Email;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller class responsible for recording tasks and managing task-related operations.
+ */
 public class RecordTaskController {
     private TeamRepository teamRepository;
     private CollaboratorRepository collaboratorRepository;
     private AgendaRepository agendaRepository;
-    private  TaskRepository taskRepository;
-    private  AuthenticationRepository authenticationRepository;
+    private TaskRepository taskRepository;
+    private AuthenticationRepository authenticationRepository;
 
     /**
-     * Default constructor that initializes the repositories.
+     * Default constructor that initializes the repositories using Repositories singleton instance.
      */
     public RecordTaskController() {
         Repositories repositories = Repositories.getInstance();
@@ -28,7 +31,15 @@ public class RecordTaskController {
         this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
-
+    /**
+     * Constructor that allows injecting repositories for testing purposes.
+     *
+     * @param teamRepository           TeamRepository instance
+     * @param collaboratorRepository   CollaboratorRepository instance
+     * @param agendaRepository         AgendaRepository instance
+     * @param taskRepository           TaskRepository instance
+     * @param authenticationRepository AuthenticationRepository instance
+     */
     public RecordTaskController(TeamRepository teamRepository, CollaboratorRepository collaboratorRepository, AgendaRepository agendaRepository, TaskRepository taskRepository, AuthenticationRepository authenticationRepository) {
         this.teamRepository = teamRepository;
         this.collaboratorRepository = collaboratorRepository;
@@ -36,6 +47,8 @@ public class RecordTaskController {
         this.taskRepository = taskRepository;
         this.authenticationRepository = authenticationRepository;
     }
+
+    // Getters for repositories
 
     /**
      * Retrieves the TeamRepository instance.
@@ -102,6 +115,14 @@ public class RecordTaskController {
         return authenticationRepository;
     }
 
+    // Task operations
+
+    /**
+     * Marks a task as done if it is in the "Planned" status.
+     *
+     * @param task Task to be marked as done
+     * @throws IllegalArgumentException if the task is not in the "Planned" status
+     */
     public void markTaskAsDone(Task task) {
         if ("Planned".equals(task.getStatus())) {
             task.setStatus("Done");
@@ -111,11 +132,24 @@ public class RecordTaskController {
         }
     }
 
+    // Collaborator operations
+
+    /**
+     * Retrieves the collaborator associated with the current user session.
+     *
+     * @return Collaborator object representing the current user
+     */
     public Collaborator getCollaboratorFromSession() {
         Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
         return collaboratorRepository.getCollaboratorByEmail(String.valueOf(email));
     }
 
+    /**
+     * Retrieves the team to which a collaborator belongs.
+     *
+     * @param collaborator Collaborator for which to retrieve the team
+     * @return Team object representing the team of the collaborator
+     */
     public Team getCollaboratorTeam(Collaborator collaborator) {
         return teamRepository.getTeamByCollaborator(collaborator);
     }

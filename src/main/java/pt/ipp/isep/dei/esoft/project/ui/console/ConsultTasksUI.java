@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * User Interface for consulting tasks assigned to a collaborator within a specified time frame.
+ */
 public class ConsultTasksUI implements Runnable {
     private Collaborator collaborator;
     private Team team;
@@ -21,15 +24,24 @@ public class ConsultTasksUI implements Runnable {
 
     private final ConsultTasksController controller;
 
+    /**
+     * Constructor for ConsultTasksUI.
+     */
     public ConsultTasksUI() {
         controller = new ConsultTasksController();
     }
 
+    /**
+     * Executes the UI functionality.
+     */
     public void run() {
         requestData();
         submitData();
     }
 
+    /**
+     * Requests input data from the user.
+     */
     public void requestData() {
         collaborator = controller.getCollaboratorFromSession();
         team = controller.getCollaboratorTeam(collaborator);
@@ -38,6 +50,9 @@ public class ConsultTasksUI implements Runnable {
         status = requestStatus();
     }
 
+    /**
+     * Submits the input data and displays the tasks assigned to the collaborator.
+     */
     public void submitData() {
         List<Task> tasks = controller.getTasksForCollaborator(team, firstDate, secondDate, status);
         if (tasks == null || tasks.isEmpty()) {
@@ -50,6 +65,11 @@ public class ConsultTasksUI implements Runnable {
         }
     }
 
+    /**
+     * Requests the user to input the first date.
+     *
+     * @return The LocalDate object representing the first date.
+     */
     private LocalDate requestFirstDate() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the first date (dd-MM-yyyy): ");
@@ -58,6 +78,11 @@ public class ConsultTasksUI implements Runnable {
         return LocalDate.parse(firstDateStr, formatter);
     }
 
+    /**
+     * Requests the user to input the second date.
+     *
+     * @return The LocalDate object representing the second date.
+     */
     private LocalDate requestSecondDate() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the second date (dd-MM-yyyy): ");
@@ -66,6 +91,11 @@ public class ConsultTasksUI implements Runnable {
         return LocalDate.parse(secondDateStr, formatter);
     }
 
+    /**
+     * Requests the user to input the task status for filtering.
+     *
+     * @return The selected task status or null if no filtering is desired.
+     */
     private String requestStatus() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Do you want to filter by task status? (yes/no)");

@@ -13,12 +13,18 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Controller class for consulting tasks.
+ */
 public class ConsultTasksController {
     private TeamRepository teamRepository;
     private CollaboratorRepository collaboratorRepository;
     private TaskRepository taskRepository;
     private AuthenticationRepository authenticationRepository;
 
+    /**
+     * Default constructor that initializes repositories.
+     */
     public ConsultTasksController() {
         Repositories repositories = Repositories.getInstance();
         this.teamRepository = repositories.getTeamRepository();
@@ -27,12 +33,22 @@ public class ConsultTasksController {
         this.authenticationRepository = repositories.getAuthenticationRepository();
     }
 
+    /**
+     * Constructor that allows injecting repositories for testing purposes.
+     *
+     * @param teamRepository          Team repository
+     * @param collaboratorRepository  Collaborator repository
+     * @param taskRepository          Task repository
+     * @param authenticationRepository Authentication repository
+     */
     public ConsultTasksController(TeamRepository teamRepository, CollaboratorRepository collaboratorRepository, TaskRepository taskRepository, AuthenticationRepository authenticationRepository) {
         this.teamRepository = teamRepository;
         this.collaboratorRepository = collaboratorRepository;
         this.taskRepository = taskRepository;
         this.authenticationRepository = authenticationRepository;
     }
+
+    // Getters for repositories
 
     /**
      * Retrieves the CollaboratorRepository instance.
@@ -61,9 +77,9 @@ public class ConsultTasksController {
     }
 
     /**
-     * Retrieves the TeamRepository instance.
+     * Retrieves the TaskRepository instance.
      *
-     * @return TeamRepository instance
+     * @return TaskRepository instance
      */
     public TaskRepository getTaskRepository() {
         if (taskRepository == null) {
@@ -86,15 +102,35 @@ public class ConsultTasksController {
         return authenticationRepository;
     }
 
+    /**
+     * Retrieves the collaborator from the current user session.
+     *
+     * @return Collaborator object
+     */
     public Collaborator getCollaboratorFromSession() {
         Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
         return collaboratorRepository.getCollaboratorByEmail(String.valueOf(email));
     }
 
+    /**
+     * Retrieves the team of a given collaborator.
+     *
+     * @param collaborator Collaborator object
+     * @return Team object
+     */
     public Team getCollaboratorTeam(Collaborator collaborator) {
         return teamRepository.getTeamByCollaborator(collaborator);
     }
 
+    /**
+     * Retrieves tasks for a specific team within a date range and optional status filter.
+     *
+     * @param team       Team object
+     * @param firstDate  Start date of the range
+     * @param secondDate End date of the range
+     * @param status     Status filter (can be null)
+     * @return List of Task objects
+     */
     public List<Task> getTasksForCollaborator(Team team, LocalDate firstDate, LocalDate secondDate, String status) {
         List<Task> tasks = taskRepository.getTasksByTeamAndDateRange(team, firstDate, secondDate);
         if (status != null) {

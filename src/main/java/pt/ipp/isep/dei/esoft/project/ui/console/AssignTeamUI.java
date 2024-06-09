@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.ui.console;
 
-
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignTeamController;
 import pt.ipp.isep.dei.esoft.project.config.Config;
 import pt.ipp.isep.dei.esoft.project.config.EmailService;
@@ -8,13 +7,17 @@ import pt.ipp.isep.dei.esoft.project.config.EmailServiceFactory;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.AgendaRepository;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
+import pt.ipp.isep.dei.esoft.project.ui.console.menu.GSMUI;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class AssignTeamUI implements Runnable{
+/**
+ * User Interface for assigning a team to an agenda entry.
+ */
+public class AssignTeamUI implements Runnable {
     // Attributes
     private final AssignTeamController controller;
     private Team team;
@@ -24,6 +27,9 @@ public class AssignTeamUI implements Runnable{
 
     private Agenda agenda;
 
+    /**
+     * Constructor for AssignTeamUI.
+     */
     public AssignTeamUI() {
         controller = new AssignTeamController();
         this.agendaRepository = getController().getAgendaRepository();
@@ -31,10 +37,19 @@ public class AssignTeamUI implements Runnable{
     }
 
     // Methods
+
+    /**
+     * Retrieves the controller.
+     *
+     * @return the AssignTeamController.
+     */
     private AssignTeamController getController() {
         return controller;
     }
 
+    /**
+     * Runs the AssignTeamUI.
+     */
     public void run() {
         requestData();
         try {
@@ -44,6 +59,11 @@ public class AssignTeamUI implements Runnable{
         }
     }
 
+    /**
+     * Submits the data for assigning a team to an agenda entry.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public void submitData() throws IOException {
         Scanner scanner = new Scanner(System.in);
         assert agendaEntry != null;
@@ -64,6 +84,11 @@ public class AssignTeamUI implements Runnable{
         }
     }
 
+    /**
+     * Sends notifications to the team members.
+     *
+     * @param team the team to notify.
+     */
     private void sendNotifications(Team team) {
         try {
             Config config = new Config("config.properties");
@@ -82,11 +107,27 @@ public class AssignTeamUI implements Runnable{
         }
     }
 
+    /**
+     * Requests data from the user.
+     */
     public void requestData() {
         agendaEntry = requestAgendaEntry();
+        if (agendaEntry == null) {
+            GSMUI gsmUI = new GSMUI();
+            gsmUI.run();
+        }
         team = requestTeam();
+        if (team == null) {
+            GSMUI gsmUI = new GSMUI();
+            gsmUI.run();
+        }
     }
 
+    /**
+     * Requests an agenda entry from the user.
+     *
+     * @return the selected AgendaEntry.
+     */
     public AgendaEntry requestAgendaEntry() {
         List<AgendaEntry> entries = controller.getAgendaEntries();
         if (entries.isEmpty()) {
@@ -101,6 +142,11 @@ public class AssignTeamUI implements Runnable{
         return entries.get(entryIndex);
     }
 
+    /**
+     * Requests a team from the user.
+     *
+     * @return the selected Team.
+     */
     public Team requestTeam() {
         List<Team> teams = teamRepository.getTeamList();
         if (teams.isEmpty()) {
@@ -114,12 +160,13 @@ public class AssignTeamUI implements Runnable{
         int teamIndex = readInput(1, teams.size()) - 1;
         return teams.get(teamIndex);
     }
+
     /**
-     * Reads the input from the user within the specified range of collaborators.
+     * Reads the input from the user within the specified range.
      *
-     * @param min minimum number of collaborators.
-     * @param max maximum number of collaborators.
-     * @return the input from the user.
+     * @param min minimum input value.
+     * @param max maximum input value.
+     * @return the user input.
      */
     private int readInput(int min, int max) {
         Scanner scanner = new Scanner(System.in);

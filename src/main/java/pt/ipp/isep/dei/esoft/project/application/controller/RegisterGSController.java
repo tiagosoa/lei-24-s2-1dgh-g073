@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-
 import pt.ipp.isep.dei.esoft.project.domain.GSM;
 import pt.ipp.isep.dei.esoft.project.domain.Organization;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
@@ -31,8 +30,8 @@ public class RegisterGSController {
     /**
      * Constructor that allows receiving repositories as parameters for testing purposes.
      *
-     * @param greenSpaceRepository            the GreenSpaceRepository to use
-     * @param authenticationRepository   the AuthenticationRepository to use
+     * @param greenSpaceRepository      the GreenSpaceRepository to use
+     * @param authenticationRepository  the AuthenticationRepository to use
      */
     public RegisterGSController(GreenSpaceRepository greenSpaceRepository,
                                 AuthenticationRepository authenticationRepository) {
@@ -53,7 +52,6 @@ public class RegisterGSController {
         return greenSpaceRepository;
     }
 
-
     /**
      * Retrieves the AuthenticationRepository instance, initializing it if necessary.
      *
@@ -70,13 +68,13 @@ public class RegisterGSController {
     /**
      * Creates a new GreenSpace for a given type, area and GSM.
      *
+     * @param name the name of the GreenSpace
      * @param type the type of the GreenSpace
      * @param area the area of the GreenSpace
      * @param gsm  the GSM associated with the GreenSpace
      * @return an Optional containing the newly created GreenSpace, or empty if the Organization is not found
      */
     public Optional<GreenSpace> registerGreenSpace(String name, String type, double area, GSM gsm) {
-
         Optional<GreenSpace> newGreenSpace;
         newGreenSpace = greenSpaceRepository.registerGreenSpace(name, type, area, gsm);
         return newGreenSpace;

@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * User Interface for assigning vehicles to agenda entries.
+ */
 public class AssignVehicleUI implements Runnable {
     private final AssignVehicleController controller;
 
@@ -20,6 +23,9 @@ public class AssignVehicleUI implements Runnable {
     private VehicleRepository vehicleRepository;
     private AgendaRepository agendaRepository;
 
+    /**
+     * Constructor for AssignVehicleUI.
+     */
     public AssignVehicleUI() {
         controller = new AssignVehicleController();
         this.vehicleRepository = getController().getVehicleRepository();
@@ -36,11 +42,17 @@ public class AssignVehicleUI implements Runnable {
         submitData();
     }
 
+    /**
+     * Request data from the user.
+     */
     public void requestData() {
         agendaEntry = selectAgendaEntry();
         selectedVehicles = selectVehicle();
     }
 
+    /**
+     * Submit the collected data.
+     */
     public void submitData() {
         Scanner scanner = new Scanner(System.in);
         assert agendaEntry != null;
@@ -67,6 +79,11 @@ public class AssignVehicleUI implements Runnable {
         }
     }
 
+    /**
+     * Select an agenda entry from a list.
+     *
+     * @return the selected agenda entry
+     */
     private AgendaEntry selectAgendaEntry() {
         Scanner scanner = new Scanner(System.in);
 
@@ -87,6 +104,11 @@ public class AssignVehicleUI implements Runnable {
         return entries.get(entryIndex);
     }
 
+    /**
+     * Select vehicles from a list to assign to the agenda entry.
+     *
+     * @return the list of selected vehicles
+     */
     private List<Vehicle> selectVehicle() {
         Scanner scanner = new Scanner(System.in);
 

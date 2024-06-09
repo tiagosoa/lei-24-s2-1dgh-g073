@@ -6,11 +6,17 @@ import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * User Interface for cancelling an entry in the Agenda.
+ */
 public class CancelEntryAgendaUI implements Runnable {
     private final CancelEntryAgendaController controller;
 
     private AgendaEntry agendaEntry;
 
+    /**
+     * Constructor for the CancelEntryAgendaUI class.
+     */
     public CancelEntryAgendaUI() {
         controller = new CancelEntryAgendaController();
     }
@@ -21,6 +27,9 @@ public class CancelEntryAgendaUI implements Runnable {
         submitData();
     }
 
+    /**
+     * Submit data for cancelling the selected entry.
+     */
     private void submitData() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Selected entry details:");
@@ -46,6 +55,9 @@ public class CancelEntryAgendaUI implements Runnable {
         }
     }
 
+    /**
+     * Request data for cancelling an entry.
+     */
     private void requestData() {
         agendaEntry = requestAgendaEntry();
         if (agendaEntry == null) {
@@ -53,6 +65,11 @@ public class CancelEntryAgendaUI implements Runnable {
         }
     }
 
+    /**
+     * Request an AgendaEntry to cancel.
+     *
+     * @return The selected AgendaEntry to cancel.
+     */
     private AgendaEntry requestAgendaEntry() {
         Scanner scanner = new Scanner(System.in);
 
@@ -73,4 +90,3 @@ public class CancelEntryAgendaUI implements Runnable {
         return entries.get(entryIndex);
     }
 }
-

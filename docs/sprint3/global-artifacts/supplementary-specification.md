@@ -3,8 +3,8 @@
 ### Functionality
 
 _Specifies functionalities that:  
-&nbsp; &nbsp; (i) are common across several US/UC;  
-&nbsp; &nbsp; (ii) are not related to US/UC, namely: Audit, Reporting and Security._
+(i) are common across several US/UC;  
+(ii) are not related to US/UC, namely: Audit, Reporting and Security._
 
 ### (i):
 * Authentication and authorization that will ensure that only HRMs and VFMs can access their respective functionalities.
