@@ -118,4 +118,14 @@ public class TaskRepository {
             }
         }
     }
+
+    public void updateTaskDate(AgendaEntry agendaEntry) {
+        for (Task task : tasks) {
+            if (task.getTitle().equals(agendaEntry.getTitle()) && task.getTaskDescription().equals(agendaEntry.getTaskDescription()) && task.getDuration().equals(agendaEntry.getDuration()) && task.getUrgency().equals(agendaEntry.getUrgency())) {
+                task.getStartDate().equals(agendaEntry.getStartDate());
+                task.setStatus("Postponed");
+                return;
+            }
+        }
+    }
 }

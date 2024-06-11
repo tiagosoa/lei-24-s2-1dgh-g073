@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class PostponeEntryAgendaController {
     private final AgendaRepository agendaRepository;
+    private final TaskRepository taskRepository;
     private final AuthenticationRepository authenticationRepository;
 
     /**
@@ -21,6 +22,7 @@ public class PostponeEntryAgendaController {
         Repositories repositories = Repositories.getInstance();
         this.agendaRepository = repositories.getAgendaRepository();
         this.authenticationRepository = repositories.getAuthenticationRepository();
+        this.taskRepository = repositories.getTaskRepository();
     }
 
     /**
@@ -30,9 +32,11 @@ public class PostponeEntryAgendaController {
      * @param authenticationRepository the authentication repository
      */
     public PostponeEntryAgendaController(AgendaRepository agendaRepository,
+                                         TaskRepository taskRepository,
                                          AuthenticationRepository authenticationRepository) {
         this.agendaRepository = agendaRepository;
         this.authenticationRepository = authenticationRepository;
+        this.taskRepository = taskRepository;
     }
 
     /**
@@ -95,6 +99,7 @@ public class PostponeEntryAgendaController {
         if (postponeDate.isAfter(agendaEntry.getStartDate())) {
             agendaEntry.setDeadline(postponeDate);
             agendaRepository.updateAgendaEntryDate(agendaEntry);
+            taskRepository.updateTaskDate(agendaEntry);
             return true;
         }
         return false;

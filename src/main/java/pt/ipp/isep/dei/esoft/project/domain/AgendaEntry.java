@@ -43,6 +43,7 @@ public class AgendaEntry {
 
     public void setDeadline(LocalDate startDate) {
         this.startDate = startDate;
+        setStatus("Postponed");
     }
 
     public void setStatus(String status) {this.status = status;}
