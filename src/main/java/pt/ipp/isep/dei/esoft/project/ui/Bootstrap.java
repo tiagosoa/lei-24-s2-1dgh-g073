@@ -190,6 +190,7 @@ public class Bootstrap implements Runnable {
                 AuthenticationController.ROLE_VFM);
 
 
+
         authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin",
                 AuthenticationController.ROLE_ADMIN);
 
