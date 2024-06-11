@@ -171,19 +171,19 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserRole(AuthenticationController.ROLE_GSM, AuthenticationController.ROLE_GSM);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_COLLABORATOR, AuthenticationController.ROLE_COLLABORATOR);
 
-        authenticationRepository.addUserWithRole("Tiago Soares", "1231246@isep.ipp.pt", "1231246",
+        authenticationRepository.addUserWithRole("Tiago Soares", "1231246@isep.ipp.pt", "TIAgo46",
                 AuthenticationController.ROLE_ADMIN);
 
-        authenticationRepository.addUserWithRole("Diogo Cabral", "1230603@isep.ipp.pt", "1230603",
+        authenticationRepository.addUserWithRole("Diogo Cabral", "1230603@isep.ipp.pt", "DIOgo03",
                 AuthenticationController.ROLE_ADMIN);
 
-        authenticationRepository.addUserWithRole("Diogo Vilela", "1230804@isep.ipp.pt", "1230804",
+        authenticationRepository.addUserWithRole("Diogo Vilela", "1230804@isep.ipp.pt", "DIOgo04",
                 AuthenticationController.ROLE_ADMIN);
 
-        authenticationRepository.addUserWithRole("Guilherme Miranda", "1230582@isep.ipp.pt", "1230582",
+        authenticationRepository.addUserWithRole("Guilherme Miranda", "1230582@isep.ipp.pt", "GUImi82",
                 AuthenticationController.ROLE_ADMIN);
 
-        authenticationRepository.addUserWithRole("Hugo Ramos", "1231219@isep.ipp.pt", "1231219",
+        authenticationRepository.addUserWithRole("Hugo Ramos", "1231219@isep.ipp.pt", "HUGor19",
                 AuthenticationController.ROLE_ADMIN);
 
         authenticationRepository.addUserWithRole("Tiago Soares", "1231246@isep.ipp.pt", "isep",
@@ -193,20 +193,20 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin",
                 AuthenticationController.ROLE_ADMIN);
 
-        authenticationRepository.addUserWithRole("HRM", "hrm@this.app", "pwd",
+        authenticationRepository.addUserWithRole("HRM", "hrm@this.app", "HRMpw33",
                 AuthenticationController.ROLE_HRM);
 
-        authenticationRepository.addUserWithRole("VFM", "vfm@this.app", "pwd",
+        authenticationRepository.addUserWithRole("VFM", "vfm@this.app", "VFMpw44",
                 AuthenticationController.ROLE_VFM);
 
-        authenticationRepository.addUserWithRole("GSM", "gsm@this.app", "pwd",
+        authenticationRepository.addUserWithRole("GSM", "gsm@this.app", "GSMpw55",
                 AuthenticationController.ROLE_GSM);
 
-        authenticationRepository.addUserWithRole("Jonas", "jonas@gmail.pt", "pwd",
+        authenticationRepository.addUserWithRole("Jonas", "jonas@gmail.pt", "JONpw78",
                 AuthenticationController.ROLE_COLLABORATOR);
-                authenticationRepository.addUserWithRole("Alfredo", "alfredo64@gmail.pt", "pwd",
+                authenticationRepository.addUserWithRole("Alfredo", "alfredo64@gmail.pt", "ALFpw12",
                 AuthenticationController.ROLE_COLLABORATOR);
-        authenticationRepository.addUserWithRole("Alberto", "albertoogrande@gmail.pt", "pwd",
+        authenticationRepository.addUserWithRole("Alberto", "albertoogrande@gmail.pt", "ALBpw45",
                 AuthenticationController.ROLE_COLLABORATOR);
     }
 
